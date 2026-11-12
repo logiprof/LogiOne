@@ -92,12 +92,15 @@
 					if (d) { d.open = true; }
 				});
 				app.classList.remove('is-error');
+				app._llvBackoff = 0;
 				setLive(app, fmt(i18n.updated, payload.data.time || ''));
 				applyFilters(app);
 			})
 			.catch(function () {
 				app.classList.add('is-error');
 				setLive(app, i18n.offline || '');
+				// 1.38.1 : serveur en difficulté → on espace les actualisations (jusqu'à 2 min).
+				app._llvBackoff = Math.min(120000, app._llvBackoff ? app._llvBackoff * 2 : 15000);
 			})
 			.finally(function () {
 				app._llvBusy = false;
@@ -106,7 +109,7 @@
 	}
 
 	function bind(app) {
-		var refreshMs = parseInt(app.getAttribute('data-refresh-ms') || '5000', 10);
+		var refreshMs = Math.max(10000, parseInt(app.getAttribute('data-refresh-ms') || '15000', 10));
 		var select = app.querySelector('[data-llv-group-select]');
 		var form = app.querySelector('[data-llv-group-form]');
 		var param = app.getAttribute('data-group-param');
@@ -155,13 +158,15 @@
 			}
 		});
 
-		if (refreshMs >= 5000) {
+		if (refreshMs >= 10000) {
+			var last = Date.now();
 			window.setInterval(function () {
 				// Pas d'actualisation quand l'onglet est caché : moins de charge pour le serveur.
-				if (!document.hidden) {
+				if (!document.hidden && Date.now() - last >= refreshMs + (app._llvBackoff || 0)) {
+					last = Date.now();
 					refresh(app);
 				}
-			}, refreshMs);
+			}, 2500);
 		}
 
 		document.addEventListener('visibilitychange', function () {

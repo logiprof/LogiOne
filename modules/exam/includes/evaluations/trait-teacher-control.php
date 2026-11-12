@@ -113,6 +113,7 @@ trait LogiEval_Secure_Evaluations_Teacher_Control {
 				<input type="hidden" name="op" value="<?php echo esc_attr( $op ); ?>">
 				<input type="hidden" name="ctl_attempt_id" value="<?php echo esc_attr( $attempt['id'] ); ?>">
 				<input type="hidden" name="les_ctl_return" value="<?php echo esc_attr( $return ); ?>">
+				<input type="hidden" name="ctl_request" value="<?php echo esc_attr( wp_generate_uuid4() ); ?>">
 				<?php wp_nonce_field( self::NONCE_ACTION ); ?>
 				<?php if ( $minutes ) : ?>
 					<label class="les-ctl-minutes"><?php esc_html_e( 'Temps en plus', 'logieval-secure' ); ?>
@@ -168,6 +169,7 @@ trait LogiEval_Secure_Evaluations_Teacher_Control {
 								<input type="hidden" name="minutes" value="<?php echo esc_attr( $m ); ?>">
 								<input type="hidden" name="ctl_attempt_id" value="<?php echo esc_attr( $attempt['id'] ); ?>">
 								<input type="hidden" name="les_ctl_return" value="<?php echo esc_attr( $return ); ?>">
+								<input type="hidden" name="ctl_request" value="<?php echo esc_attr( wp_generate_uuid4() ); ?>">
 								<?php wp_nonce_field( self::NONCE_ACTION ); ?>
 								<button type="submit" class="button button-small">+<?php echo esc_html( $m ); ?> min</button>
 							</form>
@@ -221,7 +223,24 @@ trait LogiEval_Secure_Evaluations_Teacher_Control {
 		$attempt = self::require_managed_attempt( absint( $_POST['ctl_attempt_id'] ?? 0 ) );
 		$op      = sanitize_key( wp_unslash( $_POST['op'] ?? '' ) );
 		$minutes = min( 120, max( 0, absint( $_POST['minutes'] ?? 0 ) ) );
-		$error   = self::apply_attempt_control( $attempt, $op, $minutes );
+		// 1.38.1 : chaque clic n'est appliqué qu'UNE fois. Un double clic, ou le navigateur qui renvoie le formulaire
+		// quand le serveur est lent, ajoutait les minutes deux fois (+5 min → 10 min).
+		$request = preg_replace( '/[^a-f0-9-]/', '', strtolower( (string) wp_unslash( $_POST['ctl_request'] ?? '' ) ) );
+		$seen    = $request ? 'les_ctl_' . md5( $request . '|' . (int) $attempt['id'] ) : '';
+		if ( $seen && get_transient( $seen ) ) {
+			$error = (string) get_transient( $seen ) === 'ok' ? '' : (string) get_transient( $seen );
+		} else {
+			if ( $seen ) {
+				set_transient( $seen, 'busy', 10 * MINUTE_IN_SECONDS ); // posé AVANT d'agir : un 2e envoi simultané est ignoré
+			}
+			$error = self::apply_attempt_control( $attempt, $op, $minutes );
+			if ( $seen ) {
+				set_transient( $seen, '' === $error ? 'ok' : $error, 10 * MINUTE_IN_SECONDS );
+			}
+		}
+		if ( 'busy' === $error ) {
+			$error = '';
+		}
 
 		$fallback = admin_url( 'admin.php?page=logiexam-monitoring&evaluation_id=' . absint( $attempt['evaluation_id'] ) );
 		$return   = wp_validate_redirect( esc_url_raw( wp_unslash( $_POST['les_ctl_return'] ?? '' ) ), $fallback );

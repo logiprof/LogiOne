@@ -5620,3 +5620,15 @@
 		if (!e.target.closest || !e.target.closest('details.les-more-actions')) { closeAll(); }
 	});
 }());
+
+/* LogiOne 1.38.1 : actions « Gérer » d'une copie (ajouter du temps, débloquer, rouvrir) — bouton désactivé dès le
+   premier clic, pour qu'un double clic n'envoie pas l'action deux fois (le serveur l'ignore aussi). */
+document.addEventListener('submit', function (e) {
+	var f = e.target;
+	if (!f || !f.classList || !f.classList.contains('les-ctl-form') || e.defaultPrevented) { return; }
+	if (f.dataset.lesSent === '1') { e.preventDefault(); return; }
+	f.dataset.lesSent = '1';
+	Array.prototype.forEach.call(f.querySelectorAll('button[type="submit"], button:not([type])'), function (b) {
+		setTimeout(function () { b.disabled = true; b.setAttribute('aria-busy', 'true'); b.textContent = b.textContent + ' …'; }, 0);
+	});
+}, false);

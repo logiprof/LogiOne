@@ -1,4 +1,4 @@
-# LogiOne 1.38.0
+# LogiOne 1.38.1
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,19 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.38.1 (LogiLive allégé, temps ajouté exact dans LogiExam)
+
+- **LogiLive envoie beaucoup moins de requêtes au serveur** (cause probable des erreurs 50x) :
+  - signal de présence toutes les **30 s** au lieu de 10 s (2 min si l’onglet est caché, plus rien après 10 min cachées) ;
+  - défilement et clics regroupés : au plus un envoi toutes les 15 s, joint au signal de présence ;
+  - les enseignants et administrateurs ne sont plus suivis (aucun signal de leur part) ;
+  - un signal reçu moins de 12 s après le précédent n’écrit plus rien en base ;
+  - quand le serveur répond mal (erreur 5xx, 429, coupure), les envois s’espacent automatiquement (jusqu’à 5 min) ;
+  - tableau du professeur actualisé toutes les **15 s** (au lieu de 5 s), et moins souvent si le serveur peine.
+  Un élève reste « en ligne en ce moment » jusqu’à 90 s après son dernier signal.
+- **LogiExam : « Ajouter du temps » ajoute exactement le temps choisi.** Chaque clic n’est appliqué qu’une fois : un double clic, ou le navigateur qui renvoie le formulaire quand le serveur est lent, ajoutait les minutes deux fois (+5 → 10 min). Le bouton se désactive dès le premier clic.
+- **Surveillance : temps restant exact pendant un blocage.** L’affichage « ⏸ arrêté » laissait croire que le temps était rendu au déblocage ; il continue (depuis 1.33.7). Le vrai temps restant et l’heure de fin sont affichés.
 
 ## Nouveautés 1.38.0 (mises à jour automatiques depuis GitHub)
 

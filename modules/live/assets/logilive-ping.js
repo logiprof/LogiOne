@@ -1,6 +1,9 @@
 /*
  * LogiLive — signale que l'utilisateur connecté est sur la page, et sa dernière action.
- * - Présence : un signal toutes les 10 s (60 s si l'onglet est caché) ; « page fermée » envoyé à la fermeture.
+ * - Présence : un signal toutes les 30 s (2 min si l'onglet est caché, plus rien après 10 min cachées) ;
+ *   « page fermée » envoyé à la fermeture.
+ * - LogiOne 1.38.1 : charge serveur réduite — défilement / clics regroupés (au plus un envoi toutes les 15 s, joint au
+ *   signal de présence), et si le serveur répond mal (erreur 5xx, 429, réseau), les envois s'espacent (jusqu'à 5 min).
  * - Actions (si l'école les active) : seul le TYPE est envoyé (défilement en %, clic, vidéo, copie, onglet quitté,
  *   inactivité). Jamais le texte copié, jamais ce qui est tapé : les touches servent seulement à savoir que l'élève
  *   n'est pas inactif.
@@ -13,13 +16,17 @@
 		return;
 	}
 
-	var HEART = parseInt(cfg.intervalMs || '10000', 10);
-	if (!(HEART >= 5000)) {
-		HEART = 10000;
+	var HEART = parseInt(cfg.intervalMs || '30000', 10);
+	if (!(HEART >= 15000)) {
+		HEART = 30000;
 	}
-	var HIDDEN_HEART = 60000;
+	var HIDDEN_HEART = 120000;
+	var HIDDEN_STOP = 600000; // onglet caché depuis 10 min : plus aucun signal jusqu'au retour
 	var IDLE_AFTER = 60000;
-	var MIN_GAP = 3000; // au plus une action envoyée toutes les 3 s (la dernière gagne)
+	var MIN_GAP = 15000; // défilement / clic : au plus un envoi toutes les 15 s (le dernier gagne)
+	var URGENT_GAP = 4000; // copie, vidéo, onglet quitté… : au plus un envoi toutes les 4 s
+	var backoff = 0; // délai supplémentaire quand le serveur est surchargé
+	var hiddenSince = 0;
 	var track = String(cfg.actions) === '1';
 
 	var lastSent = 0;
@@ -45,6 +52,13 @@
 	}
 
 	function send(event, value, beacon) {
+		// Une action en attente part avec ce signal (une seule requête au lieu de deux).
+		if (pending && (!event || event === 'heartbeat')) {
+			event = pending.event;
+			value = pending.value;
+			pending = null;
+			if (timer) { window.clearTimeout(timer); timer = null; }
+		}
 		var data = body(event, value);
 		lastSent = Date.now();
 		if (beacon && navigator.sendBeacon) {
@@ -60,7 +74,13 @@
 			keepalive: !!beacon,
 			headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
 			body: data
-		}).catch(function () {});
+		}).then(function (r) {
+			if (r.status === 429 || r.status >= 500) { slowDown(); } else { backoff = 0; }
+		}).catch(slowDown);
+	}
+
+	function slowDown() {
+		backoff = Math.min(300000, backoff ? backoff * 2 : 30000);
 	}
 
 	function flush() {
@@ -77,7 +97,7 @@
 		}
 		pending = { event: event, value: value };
 		if (!timer) {
-			timer = window.setTimeout(flush, Math.max(0, MIN_GAP - (Date.now() - lastSent)));
+			timer = window.setTimeout(flush, Math.max(0, MIN_GAP + backoff - (Date.now() - lastSent)));
 		}
 	}
 
@@ -88,6 +108,12 @@
 		if (timer) {
 			window.clearTimeout(timer);
 			timer = null;
+		}
+		var wait = URGENT_GAP + backoff - (Date.now() - lastSent);
+		if (wait > 0) {
+			pending = { event: event, value: value };
+			timer = window.setTimeout(flush, wait);
+			return;
 		}
 		pending = null;
 		send(event, value);
@@ -109,10 +135,13 @@
 			now('idle');
 			return;
 		}
-		if (Date.now() - lastSent >= (document.hidden ? HIDDEN_HEART : HEART) - 500) {
+		if (document.hidden && hiddenSince && Date.now() - hiddenSince > HIDDEN_STOP) {
+			return; // onglet oublié en arrière-plan : on ne charge plus le serveur
+		}
+		if (Date.now() - lastSent >= (document.hidden ? HIDDEN_HEART : HEART) + backoff - 500) {
 			send('heartbeat');
 		}
-	}, 2500);
+	}, 5000);
 
 	// Onglet quitté : envoyé après un court instant, pour ne pas le confondre avec le passage à une autre page.
 	var leaving = false;
@@ -122,6 +151,7 @@
 		if (leaving) {
 			return;
 		}
+		hiddenSince = document.hidden ? Date.now() : 0;
 		if (document.hidden) {
 			hiddenTimer = window.setTimeout(function () {
 				hiddenTimer = null;

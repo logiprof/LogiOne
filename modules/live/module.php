@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 final class LogiOne_LogiLive {
-	const VERSION        = '1.1.0';
+	const VERSION        = '1.2.0'; // 1.38.1 : nouveau script (moins de requêtes) — force le rechargement
 	const ADMIN_PAGE     = 'logilive';
 	const SHORTCODE      = 'logilive';
 	const OLD_SHORTCODE  = 'logiprof_sensei_live_activity';
@@ -44,7 +44,8 @@ final class LogiOne_LogiLive {
 	const META_NOTICE_SEEN     = '_lslca_notice_seen';
 	const OPTION               = 'logilive_settings';
 	const PURGE_HOOK           = 'logilive_purge_actions';
-	const LIVE_SECONDS         = 45;       // Signal reçu il y a moins de 45 s : l'élève est là, en ce moment.
+	const LIVE_SECONDS         = 90;       // Signal reçu il y a moins de 90 s : l'élève est là (signal toutes les 30 s).
+	const PING_MIN_GAP         = 12;       // 1.38.1 : deux signaux de présence du même élève à moins de 12 s → le 2e ne réécrit rien.
 	const RETENTION            = DAY_IN_SECONDS; // Les actions sont effacées après 24 h.
 	const MAX_ACTIONS          = 8;
 
@@ -255,7 +256,7 @@ final class LogiOne_LogiLive {
 				<div class="llv-admin-card">
 					<h2><?php esc_html_e( 'Réglages par défaut', 'logilive' ); ?></h2>
 					<ul>
-						<li><?php esc_html_e( 'Actualisation : toutes les 5 secondes (refresh_seconds, minimum 5).', 'logilive' ); ?></li>
+						<li><?php esc_html_e( 'Actualisation : toutes les 15 secondes (refresh_seconds, minimum 10).', 'logilive' ); ?></li>
 						<li><?php esc_html_e( 'Connecté : activité dans les 5 dernières minutes (online_minutes).', 'logilive' ); ?></li>
 						<li><?php esc_html_e( 'Heures au format 24 h, selon le fuseau horaire de WordPress.', 'logilive' ); ?></li>
 					</ul>
@@ -285,7 +286,7 @@ final class LogiOne_LogiLive {
 					'group_id'        => 0,
 					'show_filters'    => 'yes',
 					'filter_id'       => 'admin',
-					'refresh_seconds' => 5,
+					'refresh_seconds' => 15,
 					'online_minutes'  => 5,
 					'empty_text'      => __( 'Choisissez un groupe classe pour afficher les élèves.', 'logilive' ),
 					'class'           => '',
@@ -338,6 +339,10 @@ final class LogiOne_LogiLive {
 	/** Petit script d'activité, pour tout utilisateur connecté (élève compris). Ne contient aucun accès au tableau. */
 	public static function enqueue_tracking_ping() {
 		if ( ! is_user_logged_in() || is_admin() ) {
+			return;
+		}
+		// 1.38.1 : les enseignants et administrateurs ne sont pas suivis : pas de signal (moins de requêtes).
+		if ( self::current_user_can_access() || current_user_can( 'manage_options' ) ) {
 			return;
 		}
 		self::register_assets();
@@ -436,6 +441,14 @@ final class LogiOne_LogiLive {
 		$url   = self::is_local_url( $url ) ? $url : '';
 		$title = mb_substr( $title, 0, 200 );
 
+		// 1.38.1 : simple signal de présence reçu juste après un autre (plusieurs onglets ouverts, page rechargée) :
+		// rien n'a changé pour le tableau du professeur → réponse immédiate, sans écriture en base.
+		$last_tracked = absint( get_user_meta( $user_id, self::META_TRACKED_AT, true ) );
+		if ( ( '' === $event || 'heartbeat' === $event ) && $last_tracked && ( time() - $last_tracked ) < self::PING_MIN_GAP
+			&& ( ! $token || get_user_meta( $user_id, self::META_PAGE_TOKEN, true ) === $token ) ) {
+			wp_send_json_success( array( 'tracked_at' => $last_tracked, 'skipped' => 1 ) );
+		}
+
 		self::store_activity( $user_id, $context, $lesson_id, $course_id, $title, $url, $token );
 		if ( $event && 'heartbeat' !== $event && isset( self::ACTIONS[ $event ] ) && self::settings()['actions'] ) {
 			self::record_action( $user_id, $event, $value );
@@ -446,7 +459,9 @@ final class LogiOne_LogiLive {
 	private static function store_activity( $user_id, $context, $lesson_id, $course_id, $title, $url, $token = '' ) {
 		$now = time();
 
-		delete_user_meta( $user_id, self::META_LEFT_AT );
+		if ( '' !== (string) get_user_meta( $user_id, self::META_LEFT_AT, true ) ) {
+			delete_user_meta( $user_id, self::META_LEFT_AT );
+		}
 		// Nouvelle page du site ouverte juste après : ce n'était pas une fermeture, on retire « a quitté la page ».
 		if ( $token && get_user_meta( $user_id, self::META_PAGE_TOKEN, true ) !== $token ) {
 			$list = self::get_actions( $user_id );
@@ -479,14 +494,18 @@ final class LogiOne_LogiLive {
 			update_user_meta( $user_id, self::META_SENSEI_LESSON, $lesson_id );
 			update_user_meta( $user_id, self::META_SENSEI_AT, $now );
 		} else {
-			delete_user_meta( $user_id, self::META_CURRENT_LESSON );
+			if ( '' !== (string) get_user_meta( $user_id, self::META_CURRENT_LESSON, true ) ) {
+				delete_user_meta( $user_id, self::META_CURRENT_LESSON );
+			}
 		}
 
 		if ( $course_id ) {
 			update_user_meta( $user_id, self::META_CURRENT_COURSE, $course_id );
 			update_user_meta( $user_id, self::META_SENSEI_COURSE, $course_id );
 		} else {
-			delete_user_meta( $user_id, self::META_CURRENT_COURSE );
+			if ( '' !== (string) get_user_meta( $user_id, self::META_CURRENT_COURSE, true ) ) {
+				delete_user_meta( $user_id, self::META_CURRENT_COURSE );
+			}
 		}
 	}
 
@@ -515,7 +534,7 @@ final class LogiOne_LogiLive {
 			'title'      => $post_id ? wp_strip_all_tags( get_the_title( $post_id ) ) : wp_get_document_title(),
 			'url'        => self::get_current_url(),
 			'token'      => wp_generate_password( 16, false, false ), // Identifie cette page ouverte (fermeture).
-			'intervalMs' => 10000,
+			'intervalMs' => 30000,
 		);
 		return self::$payload;
 	}
@@ -545,7 +564,7 @@ final class LogiOne_LogiLive {
 				'group_id'        => 0,
 				'show_filters'    => 'yes',
 				'filter_id'       => 'default',
-				'refresh_seconds' => 5,
+				'refresh_seconds' => 15,
 				'online_minutes'  => 5,
 				'empty_text'      => __( 'Choisissez un groupe classe pour afficher les élèves.', 'logilive' ),
 				'class'           => '',
@@ -568,7 +587,7 @@ final class LogiOne_LogiLive {
 		$group_param     = 'lslca_group_' . $filter_id;
 		$group_id        = absint( $atts['group_id'] );
 		$show_filters    = 'yes' === strtolower( (string) $atts['show_filters'] );
-		$refresh_seconds = max( 5, absint( $atts['refresh_seconds'] ) );
+		$refresh_seconds = max( 10, absint( $atts['refresh_seconds'] ) );
 		$online_minutes  = max( 1, absint( $atts['online_minutes'] ) );
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- simple choix d'affichage.

@@ -194,13 +194,9 @@ trait LogiEval_Secure_Evaluations_Monitoring {
 		$end  = (int) strtotime( (string) $attempt['expires_at'] . ' UTC' );
 		$left = $end ? $end - time() : 0;
 		if ( $is_blocked ) {
-			// Pendant un blocage, le temps est mis de côté : il est rendu au déblocage.
-			$since = self::unresolved_security_block_started_at( (int) $attempt['id'] );
-			$dt    = $since ? DateTimeImmutable::createFromFormat( 'Y-m-d H:i:s', $since, wp_timezone() ) : false;
-			if ( $dt && $end ) {
-				$left = $end - $dt->getTimestamp();
-			}
-			echo '<span class="les-time-left is-paused" title="' . esc_attr__( 'Le temps est arrêté pendant le blocage : il est rendu au déblocage.', 'logieval-secure' ) . '">⏸ ' . esc_html( self::format_time_left( max( 0, $left ) ) ) . '</span><br><small>' . esc_html__( 'arrêté (bloqué)', 'logieval-secure' ) . '</small>';
+			// 1.38.1 : depuis 1.33.7, le temps n'est PAS rendu au déblocage (il continue pendant le blocage) : l'affichage
+			// « arrêté » faisait croire au contraire. On montre le vrai temps restant.
+			echo '<span class="les-time-left is-paused" title="' . esc_attr__( 'Le temps continue pendant le blocage. Utilisez « Ajouter du temps » si l’élève doit le récupérer.', 'logieval-secure' ) . '">⏸ ' . esc_html( $left > 0 ? self::format_time_left( $left ) : __( 'Temps écoulé', 'logieval-secure' ) ) . '</span><br><small>' . esc_html( sprintf( __( 'bloqué · fin à %s', 'logieval-secure' ), wp_date( 'H:i', $end ) ) ) . '</small>';
 			return;
 		}
 		$class = $left <= 0 ? 'is-over' : ( $left <= 5 * MINUTE_IN_SECONDS ? 'is-low' : '' );
