@@ -1,0 +1,1635 @@
+/* LogiProgress 4 (LogiOne 1.22) : interface enseignant. */
+.psgpt {
+	--psgpt-ink: #17233c;
+	--psgpt-muted: #5d6b78;
+	--psgpt-line: #dfe3e8;
+	--psgpt-line-soft: #eef0f2;
+	--psgpt-soft: #f6f8f7;
+	--psgpt-green: #047857;
+	--psgpt-green-dark: #065f46;
+	--psgpt-green-mid: #059669;
+	--psgpt-green-soft: #ecfdf5;
+	--psgpt-dark: #313a45;
+	--psgpt-yellow: #f5c400;
+	--psgpt-gold: #b45309;
+	--psgpt-amber: #f59e0b;
+	--psgpt-amber-soft: #fef3c7;
+	--psgpt-amber-ink: #92400e;
+	--psgpt-blue: #1d4ed8;
+	--psgpt-blue-soft: #dbeafe;
+	--psgpt-blue-ink: #1e40af;
+	--psgpt-red: #b83232;
+	--psgpt-red-soft: #fde8e8;
+	display: grid;
+	gap: 18px;
+	color: var(--psgpt-ink);
+	font-size: 15px;
+	line-height: 1.45;
+}
+
+.psgpt *,
+.psgpt *::before,
+.psgpt *::after {
+	box-sizing: border-box;
+	letter-spacing: 0;
+}
+
+.psgpt [hidden] {
+	display: none !important;
+}
+
+.psgpt a {
+	color: var(--psgpt-green);
+}
+
+.psgpt a:hover {
+	color: var(--psgpt-green-dark);
+}
+
+.psgpt :focus-visible {
+	outline: 3px solid rgba(4, 120, 87, 0.45);
+	outline-offset: 2px;
+}
+
+.psgpt-sr {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+}
+
+.psgpt-muted {
+	color: var(--psgpt-muted);
+}
+
+.psgpt-small {
+	font-size: 13px;
+}
+
+.psgpt-card {
+	background: #fff;
+	border: 1px solid var(--psgpt-line);
+	border-radius: 12px;
+}
+
+.psgpt-empty,
+.psgpt-alert {
+	margin: 0;
+	padding: 16px 20px;
+	border: 1px dashed #cfd5dc;
+	border-radius: 12px;
+	background: #fff;
+	color: var(--psgpt-muted);
+}
+
+.psgpt-alert {
+	border-style: solid;
+	border-color: #fcd34d;
+	background: #fffbeb;
+	color: #78350f;
+}
+
+.psgpt-kicker {
+	color: var(--psgpt-green);
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.psgpt-kicker-muted {
+	color: var(--psgpt-muted);
+}
+
+.psgpt-section-title {
+	margin: 6px 0 0;
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 1.3;
+}
+
+/* En-tête et vues */
+.psgpt-hero {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	gap: 16px;
+	padding: 24px 28px;
+}
+
+.psgpt-hero-text {
+	display: grid;
+	flex: 1 1 380px;
+	gap: 6px;
+}
+
+.psgpt .psgpt-title {
+	margin: 0;
+	font-size: 28px;
+	font-weight: 500;
+	line-height: 1.2;
+	color: var(--psgpt-ink);
+}
+
+.psgpt-lead {
+	margin: 0;
+	color: var(--psgpt-muted);
+}
+
+.psgpt-views {
+	display: flex;
+	gap: 4px;
+	padding: 4px;
+	border-radius: 10px;
+	background: #f1f3f5;
+}
+
+.psgpt .psgpt-views a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 40px;
+	padding: 0 16px;
+	border-radius: 8px;
+	color: #374151;
+	font-size: 14px;
+	font-weight: 500;
+	text-decoration: none;
+}
+
+.psgpt .psgpt-views a.is-active {
+	background: #fff;
+	color: var(--psgpt-ink);
+	font-weight: 600;
+	box-shadow: 0 1px 2px rgba(23, 35, 60, 0.12);
+}
+
+/* Étapes du choix */
+.psgpt-select {
+	display: grid;
+	gap: 18px;
+	margin: 0;
+}
+
+.psgpt-step {
+	display: grid;
+	gap: 14px;
+	padding: 22px 28px;
+}
+
+.psgpt-step-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px 12px;
+}
+
+.psgpt-step-head h3 {
+	margin: 0;
+	font-size: 18px;
+	font-weight: 600;
+	line-height: 1.3;
+	color: var(--psgpt-ink);
+}
+
+.psgpt-step-num {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background: var(--psgpt-dark);
+	color: var(--psgpt-yellow);
+	font-size: 14px;
+	font-weight: 700;
+}
+
+.psgpt-step-hint {
+	color: var(--psgpt-muted);
+	font-size: 14px;
+}
+
+.psgpt-step-tools,
+.psgpt-seg {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin-left: auto;
+}
+
+.psgpt-seg {
+	gap: 4px;
+	padding: 4px;
+	border-radius: 10px;
+	background: #f1f3f5;
+}
+
+.psgpt .psgpt-seg button {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	min-height: 36px;
+	padding: 0 14px;
+	border: 0;
+	border-radius: 8px;
+	background: transparent;
+	color: var(--psgpt-ink);
+	font: inherit;
+	font-size: 14px;
+	font-weight: 500;
+	cursor: pointer;
+}
+
+.psgpt .psgpt-seg button[aria-pressed="true"] {
+	background: #fff;
+	font-weight: 600;
+	box-shadow: 0 1px 2px rgba(23, 35, 60, 0.12);
+}
+
+.psgpt-seg .psgpt-icon {
+	fill: var(--psgpt-yellow);
+	stroke: var(--psgpt-gold);
+	stroke-width: 1.6;
+	stroke-linejoin: round;
+	width: 16px;
+	height: 16px;
+}
+
+.psgpt-tools {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px 16px;
+	padding: 10px 14px;
+	border: 1px solid var(--psgpt-line-soft);
+	border-radius: 10px;
+	background: #f8f9fa;
+}
+
+.psgpt-search {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	position: relative;
+	flex: 1 1 240px;
+	max-width: 360px;
+	height: 42px;
+	margin: 0;
+	padding: 0 12px;
+	border: 1px solid #cfd5dc;
+	border-radius: 8px;
+	background: #fff;
+	color: var(--psgpt-muted);
+}
+
+.psgpt-search:focus-within {
+	border-color: var(--psgpt-green-mid);
+	box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.18);
+}
+
+.psgpt .psgpt-search input {
+	flex: 1;
+	min-width: 0;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: none;
+	background: transparent;
+	box-shadow: none;
+	color: var(--psgpt-ink);
+	font: inherit;
+	font-size: 14px;
+}
+
+.psgpt-btn,
+.psgpt .psgpt-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 42px;
+	padding: 0 14px;
+	border: 1px solid #cfd5dc;
+	border-radius: 8px;
+	background: #fff;
+	color: var(--psgpt-ink);
+	font: inherit;
+	font-size: 14px;
+	font-weight: 600;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.psgpt .psgpt-btn:hover {
+	border-color: var(--psgpt-green-mid);
+	color: var(--psgpt-ink);
+}
+
+.psgpt-linkbtn,
+.psgpt .psgpt-linkbtn {
+	justify-self: start;
+	min-height: 36px;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: var(--psgpt-green);
+	font: inherit;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.psgpt-nomatch {
+	margin: 0;
+	padding: 12px 16px;
+	border: 1px dashed #cfd5dc;
+	border-radius: 10px;
+	color: #4b5563;
+	font-size: 14px;
+}
+
+/* Boutons ronds (groupe : un seul choix ; cours : plusieurs choix) */
+.psgpt-choices {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+	gap: 10px;
+}
+
+.psgpt-choices-courses {
+	grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+.psgpt-choice-wrap {
+	display: flex;
+	align-items: center;
+	border: 2px solid var(--psgpt-line);
+	border-radius: 10px;
+	background: #fff;
+	transition: border-color 0.15s, background-color 0.15s;
+}
+
+.psgpt-choice-wrap:hover {
+	border-color: var(--psgpt-green-mid);
+}
+
+.psgpt-choice-wrap.is-checked,
+.psgpt-choice-wrap:has(input:checked) {
+	border-color: var(--psgpt-green-mid);
+	background: var(--psgpt-green-soft);
+}
+
+.psgpt .psgpt-choice {
+	display: flex;
+	flex: 1;
+	align-items: center;
+	gap: 14px;
+	min-width: 0;
+	min-height: 60px;
+	margin: 0;
+	padding: 10px 16px;
+	color: var(--psgpt-ink);
+	cursor: pointer;
+	font-weight: 400;
+}
+
+.psgpt-choice input {
+	position: absolute;
+	opacity: 0;
+	width: 1px;
+	height: 1px;
+	margin: 0;
+}
+
+.psgpt-mark {
+	display: inline-flex;
+	flex: none;
+	align-items: center;
+	justify-content: center;
+	width: 22px;
+	height: 22px;
+	border: 2px solid #9aa5b1;
+	border-radius: 50%;
+	background: #fff;
+}
+
+.psgpt-mark::after {
+	content: "";
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	background: transparent;
+	transition: background-color 0.15s;
+}
+
+.psgpt-choice input:checked + .psgpt-mark {
+	border-color: var(--psgpt-green);
+}
+
+.psgpt-choice input:checked + .psgpt-mark::after {
+	background: var(--psgpt-green);
+}
+
+.psgpt-choice input:focus-visible + .psgpt-mark {
+	outline: 3px solid rgba(4, 120, 87, 0.45);
+	outline-offset: 2px;
+}
+
+.psgpt-choice-text {
+	display: grid;
+	gap: 2px;
+	min-width: 0;
+}
+
+.psgpt-choice-text strong {
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 1.3;
+	overflow-wrap: anywhere;
+}
+
+.psgpt-choice-text small {
+	color: var(--psgpt-muted);
+	font-size: 13px;
+}
+
+.psgpt .psgpt-star {
+	display: inline-flex;
+	flex: none;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	margin-right: 6px;
+	border-radius: 8px;
+	text-decoration: none;
+}
+
+.psgpt .psgpt-star:hover {
+	background: rgba(23, 35, 60, 0.06);
+}
+
+.psgpt-star .psgpt-icon {
+	width: 22px;
+	height: 22px;
+	fill: none;
+	stroke: #9aa5b1;
+	stroke-width: 1.6;
+	stroke-linejoin: round;
+}
+
+.psgpt-star.is-fav .psgpt-icon {
+	fill: var(--psgpt-yellow);
+	stroke: var(--psgpt-gold);
+}
+
+.psgpt-star.is-busy {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+.psgpt-choices[data-mode="fav"] .psgpt-choice-wrap[data-fav="0"]:not(.is-checked) {
+	display: none;
+}
+
+/* Barre de validation collée en bas */
+.psgpt-bar {
+	position: sticky;
+	bottom: 0;
+	z-index: 5;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 12px 20px;
+	padding: 14px 20px;
+	border: 1px solid var(--psgpt-line);
+	border-radius: 12px;
+	background: #fff;
+	box-shadow: 0 -6px 20px rgba(23, 35, 60, 0.08);
+}
+
+.psgpt-bar-text {
+	display: grid;
+	flex: 1 1 300px;
+	gap: 2px;
+}
+
+.psgpt-bar-text strong {
+	font-weight: 600;
+}
+
+.psgpt-bar-text small {
+	color: var(--psgpt-muted);
+	font-size: 13px;
+}
+
+.psgpt-primary,
+.psgpt .psgpt-primary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 46px;
+	padding: 0 24px;
+	border: 0;
+	border-radius: 10px;
+	background: var(--psgpt-green);
+	color: #fff;
+	font: inherit;
+	font-size: 15px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.psgpt .psgpt-primary:hover {
+	background: var(--psgpt-green-dark);
+}
+
+.psgpt .psgpt-primary:disabled {
+	background: #e5e7eb;
+	color: #4b5563;
+	cursor: not-allowed;
+}
+
+/* Résultats */
+.psgpt-resultbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 14px 20px;
+	padding: 20px 28px;
+}
+
+.psgpt-resultbar-text {
+	display: grid;
+	flex: 1 1 380px;
+	gap: 6px;
+}
+
+.psgpt .psgpt-group-title {
+	margin: 0;
+	font-size: 24px;
+	font-weight: 500;
+	line-height: 1.25;
+	color: var(--psgpt-ink);
+}
+
+.psgpt-chips {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+}
+
+.psgpt-chip {
+	padding: 3px 10px;
+	border: 1px solid #a7f3d0;
+	border-radius: 999px;
+	background: var(--psgpt-green-soft);
+	color: var(--psgpt-green-dark);
+	font-size: 13px;
+	font-weight: 500;
+}
+
+.psgpt .psgpt-edit-link {
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.psgpt .psgpt-export-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	min-height: 44px;
+	padding: 0 18px;
+	border-radius: 10px;
+	background: var(--psgpt-dark);
+	color: #fff;
+	font-size: 14px;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.psgpt .psgpt-export-button:hover {
+	background: #1f2730;
+	color: #fff;
+}
+
+.psgpt-export-button .psgpt-icon {
+	color: var(--psgpt-yellow);
+}
+
+.psgpt-kpis {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap: 12px;
+}
+
+.psgpt-kpi {
+	display: grid;
+	gap: 2px;
+	padding: 16px 18px;
+	border: 1px solid var(--psgpt-line);
+	border-radius: 12px;
+	background: #fff;
+}
+
+.psgpt-kpi strong {
+	font-size: 28px;
+	font-weight: 600;
+	line-height: 1.2;
+}
+
+.psgpt-kpi span {
+	color: var(--psgpt-muted);
+	font-size: 14px;
+}
+
+.psgpt-kpi.is-good strong {
+	color: var(--psgpt-green);
+}
+
+.psgpt-kpi.is-warn {
+	border-color: #fcd34d;
+	background: #fffbeb;
+}
+
+.psgpt-kpi.is-warn strong {
+	color: var(--psgpt-amber-ink);
+}
+
+.psgpt-kpi.is-warn span {
+	color: #78350f;
+}
+
+.psgpt-kpi.is-info {
+	border-color: #bfdbfe;
+	background: #eff6ff;
+}
+
+.psgpt-kpi.is-info strong {
+	color: var(--psgpt-blue-ink);
+}
+
+.psgpt-kpi.is-info span {
+	color: #1e3a8a;
+}
+
+.psgpt-board {
+	overflow: hidden;
+}
+
+.psgpt-tabs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	padding: 10px 14px 0;
+	border-bottom: 1px solid var(--psgpt-line);
+	background: #f8f9fa;
+}
+
+.psgpt .psgpt-tabs button {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	min-height: 44px;
+	margin-bottom: -1px;
+	padding: 0 16px;
+	border: 1px solid transparent;
+	border-bottom: 0;
+	border-radius: 10px 10px 0 0;
+	background: transparent;
+	color: var(--psgpt-ink);
+	font: inherit;
+	font-size: 15px;
+	font-weight: 500;
+	cursor: pointer;
+}
+
+.psgpt .psgpt-tabs button[aria-selected="true"] {
+	border-color: var(--psgpt-line);
+	background: #fff;
+	font-weight: 600;
+}
+
+.psgpt-badge {
+	padding: 2px 8px;
+	border-radius: 999px;
+	background: #e5e7eb;
+	color: #374151;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.psgpt-tabs [aria-selected="true"] .psgpt-badge {
+	background: var(--psgpt-green-soft);
+	color: var(--psgpt-green-dark);
+}
+
+.psgpt-course-section + .psgpt-course-section {
+	border-top: 1px solid var(--psgpt-line);
+}
+
+.psgpt .psgpt-course-title {
+	margin: 0;
+	padding: 18px 20px 0;
+	font-size: 18px;
+	font-weight: 600;
+	color: var(--psgpt-ink);
+}
+
+.psgpt-board.has-tabs .psgpt-course-title {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+}
+
+.psgpt-board-tools {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px 16px;
+	padding: 14px 20px;
+	border-bottom: 1px solid var(--psgpt-line-soft);
+}
+
+.psgpt-filters-chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.psgpt .psgpt-filters-chips button {
+	min-height: 36px;
+	padding: 0 14px;
+	border: 1px solid #cfd5dc;
+	border-radius: 999px;
+	background: #fff;
+	color: var(--psgpt-ink);
+	font: inherit;
+	font-size: 14px;
+	font-weight: 500;
+	cursor: pointer;
+}
+
+.psgpt .psgpt-filters-chips button[aria-pressed="true"] {
+	border-color: var(--psgpt-dark);
+	background: var(--psgpt-dark);
+	color: #fff;
+}
+
+.psgpt-legend {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px 14px;
+	margin: 0 0 0 auto;
+	padding: 0;
+	list-style: none;
+	color: #374151;
+	font-size: 13px;
+}
+
+.psgpt-legend li {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin: 0;
+}
+
+.psgpt-legend .psgpt-dot {
+	width: 18px;
+	height: 18px;
+	font-size: 11px;
+}
+
+/* Pastilles d'état */
+.psgpt-dot {
+	display: inline-flex;
+	flex: none;
+	align-items: center;
+	justify-content: center;
+	width: 26px;
+	height: 26px;
+	border-radius: 50%;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+}
+
+.psgpt-dot.is-done {
+	background: var(--psgpt-green);
+}
+
+.psgpt-dot.is-done::before {
+	content: "✓";
+}
+
+.psgpt-dot.is-progress {
+	border: 2px solid var(--psgpt-gold);
+	background: linear-gradient(90deg, var(--psgpt-amber) 50%, #fff 50%);
+}
+
+.psgpt-dot.is-wait {
+	background: var(--psgpt-blue);
+}
+
+.psgpt-dot.is-wait::before {
+	content: "…";
+	margin-top: -4px;
+}
+
+.psgpt-dot.is-failed {
+	background: var(--psgpt-red);
+}
+
+.psgpt-dot.is-failed::before {
+	content: "↺";
+}
+
+.psgpt-dot.is-empty {
+	border: 2px dashed #9aa5b1;
+	background: #fff;
+}
+
+.psgpt-pill {
+	display: inline-flex;
+	align-items: center;
+	padding: 3px 10px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 600;
+	white-space: nowrap;
+}
+
+.psgpt-pill.is-done {
+	background: var(--psgpt-green-soft);
+	color: var(--psgpt-green-dark);
+}
+
+.psgpt-pill.is-progress {
+	background: var(--psgpt-amber-soft);
+	color: var(--psgpt-amber-ink);
+}
+
+.psgpt-pill.is-wait {
+	background: var(--psgpt-blue-soft);
+	color: var(--psgpt-blue-ink);
+}
+
+.psgpt-pill.is-failed {
+	background: var(--psgpt-red-soft);
+	color: #8f1d1d;
+}
+
+.psgpt-pill.is-empty {
+	background: #f1f3f5;
+	color: #374151;
+}
+
+.psgpt-pill-lg {
+	padding: 6px 12px;
+	font-size: 14px;
+}
+
+/* Tableau */
+.psgpt-table-wrap {
+	overflow-x: auto;
+}
+
+.psgpt .psgpt-grid {
+	width: 100%;
+	min-width: 760px;
+	margin: 0;
+	border: 0;
+	border-collapse: separate;
+	border-spacing: 0;
+	font-size: 14px;
+}
+
+.psgpt .psgpt-grid thead th {
+	padding: 12px 10px;
+	border: 0;
+	background: var(--psgpt-dark);
+	color: #fff;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.3;
+	text-align: center;
+	vertical-align: bottom;
+}
+
+.psgpt .psgpt-grid thead th.psgpt-student-col,
+.psgpt .psgpt-grid thead th.psgpt-pct-col,
+.psgpt .psgpt-grid thead th.psgpt-last-col {
+	font-size: 14px;
+	text-align: left;
+}
+
+.psgpt .psgpt-grid thead .psgpt-lesson-link {
+	display: block;
+	min-width: 84px;
+	max-width: 130px;
+	margin: 0 auto;
+	color: #fff;
+	font-weight: 500;
+	text-decoration: none;
+	overflow-wrap: break-word;
+}
+
+.psgpt .psgpt-grid thead .psgpt-lesson-link:hover {
+	color: var(--psgpt-yellow);
+	text-decoration: underline;
+}
+
+.psgpt .psgpt-grid tbody th,
+.psgpt .psgpt-grid tbody td {
+	padding: 8px 10px;
+	border: 0;
+	border-bottom: 1px solid var(--psgpt-line-soft);
+	background: #fff;
+	vertical-align: middle;
+}
+
+.psgpt .psgpt-grid tbody tr:hover th,
+.psgpt .psgpt-grid tbody tr:hover td {
+	background: #f8faf9;
+}
+
+.psgpt .psgpt-grid .psgpt-student-col {
+	position: sticky;
+	left: 0;
+	z-index: 1;
+	min-width: 210px;
+	text-align: left;
+}
+
+.psgpt .psgpt-grid thead .psgpt-student-col {
+	z-index: 2;
+}
+
+.psgpt .psgpt-name-link {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	color: var(--psgpt-ink);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.psgpt .psgpt-name-link:hover .psgpt-student-name {
+	color: var(--psgpt-green);
+	text-decoration: underline;
+}
+
+.psgpt-avatar {
+	display: inline-flex;
+	flex: none;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	border-radius: 50%;
+	background: #e7f5ef;
+	color: var(--psgpt-green-dark);
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.psgpt-avatar-lg {
+	width: 56px;
+	height: 56px;
+	background: var(--psgpt-dark);
+	color: var(--psgpt-yellow);
+	font-size: 20px;
+	font-weight: 700;
+}
+
+.psgpt-avatar-warn {
+	width: 44px;
+	height: 44px;
+	background: var(--psgpt-amber-soft);
+	color: var(--psgpt-amber-ink);
+	font-weight: 700;
+}
+
+.psgpt .psgpt-progress-cell {
+	display: table-cell;
+	min-width: 150px;
+	white-space: nowrap;
+}
+
+.psgpt-progress-cell strong {
+	display: inline-block;
+	min-width: 44px;
+	margin-right: 8px;
+	text-align: right;
+	vertical-align: middle;
+}
+
+.psgpt-progress-cell.is-done strong {
+	color: var(--psgpt-green);
+}
+
+.psgpt-progress-cell.is-late strong {
+	color: var(--psgpt-gold);
+}
+
+.psgpt-progress {
+	display: inline-block;
+	position: relative;
+	width: 90px;
+	height: 8px;
+	overflow: hidden;
+	border-radius: 999px;
+	background: #e5e7eb;
+	vertical-align: middle;
+}
+
+.psgpt-progress > span {
+	display: block;
+	height: 100%;
+	border-radius: 999px;
+	background: var(--psgpt-green-mid);
+}
+
+.psgpt-progress-cell.is-late .psgpt-progress > span,
+.psgpt-progress > span.is-late {
+	background: var(--psgpt-amber);
+}
+
+.psgpt-cell-td {
+	text-align: center;
+}
+
+.psgpt-cell {
+	display: inline-flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 3px;
+	cursor: default;
+}
+
+.psgpt-cell small {
+	color: #4b5563;
+	font-size: 12px;
+	line-height: 1.2;
+}
+
+.psgpt-cell .psgpt-quiz-score {
+	color: var(--psgpt-green-dark);
+	font-weight: 600;
+}
+
+.psgpt-last {
+	color: #374151;
+	font-size: 13px;
+	white-space: nowrap;
+}
+
+.psgpt-last.is-stale {
+	padding: 3px 8px;
+	border-radius: 999px;
+	background: var(--psgpt-amber-soft);
+	color: var(--psgpt-amber-ink);
+	font-weight: 600;
+}
+
+.psgpt-board-foot {
+	margin: 0;
+	padding: 12px 20px;
+	background: #f8f9fa;
+	color: var(--psgpt-muted);
+	font-size: 13px;
+}
+
+/* Détail par élève */
+.psgpt-student-summary {
+	display: grid;
+	gap: 12px;
+	scroll-margin-top: 20px;
+}
+
+.psgpt-detail {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	gap: 18px;
+}
+
+.psgpt-student-list {
+	display: grid;
+	flex: 1 1 260px;
+	gap: 2px;
+	max-width: 340px;
+	padding: 10px;
+}
+
+.psgpt-student-summary.is-enhanced .psgpt-student-list {
+	position: sticky;
+	top: 16px;
+}
+
+.psgpt-student-list .psgpt-kicker {
+	padding: 8px 10px;
+}
+
+.psgpt .psgpt-st {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-height: 52px;
+	padding: 8px 10px;
+	border: 2px solid transparent;
+	border-radius: 10px;
+	color: var(--psgpt-ink);
+	text-decoration: none;
+}
+
+.psgpt .psgpt-st:hover {
+	background: #f3f6f4;
+	color: var(--psgpt-ink);
+}
+
+.psgpt .psgpt-st.is-active {
+	border-color: var(--psgpt-green-mid);
+	background: var(--psgpt-green-soft);
+}
+
+.psgpt-st .psgpt-avatar {
+	width: 32px;
+	height: 32px;
+	font-size: 12px;
+}
+
+.psgpt-st-main {
+	display: grid;
+	flex: 1;
+	gap: 4px;
+	min-width: 0;
+}
+
+.psgpt-st-name {
+	font-size: 14px;
+	font-weight: 600;
+	overflow-wrap: anywhere;
+}
+
+.psgpt-st-main .psgpt-progress {
+	width: 100%;
+	height: 6px;
+}
+
+.psgpt-st-pct {
+	min-width: 40px;
+	color: var(--psgpt-green);
+	font-size: 13px;
+	font-weight: 600;
+	text-align: right;
+}
+
+.psgpt-st-pct.is-late {
+	color: var(--psgpt-gold);
+}
+
+.psgpt-panels {
+	display: grid;
+	flex: 999 1 520px;
+	gap: 16px;
+	min-width: 0;
+}
+
+.psgpt-student-panel {
+	display: grid;
+	gap: 16px;
+	scroll-margin-top: 20px;
+}
+
+.psgpt-student-summary.is-enhanced .psgpt-student-panel:not(.is-active) {
+	display: none;
+}
+
+.psgpt-student-summary:not(.is-enhanced) .psgpt-student-panel + .psgpt-student-panel {
+	padding-top: 16px;
+	border-top: 2px dashed var(--psgpt-line);
+}
+
+.psgpt-student-panel:focus {
+	outline: none;
+}
+
+.psgpt-panel-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 16px;
+	padding: 20px 24px;
+}
+
+.psgpt-panel-who {
+	display: grid;
+	flex: 1 1 220px;
+	gap: 2px;
+}
+
+.psgpt .psgpt-panel-who h4 {
+	margin: 0;
+	font-size: 22px;
+	font-weight: 600;
+	color: var(--psgpt-ink);
+}
+
+.psgpt-panel-who small {
+	color: var(--psgpt-muted);
+	font-size: 14px;
+}
+
+.psgpt-panel-stats {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.psgpt-panel-stats > span {
+	display: grid;
+	padding: 10px 16px;
+	border: 1px solid var(--psgpt-line);
+	border-radius: 10px;
+}
+
+.psgpt-panel-stats strong {
+	font-size: 22px;
+	font-weight: 600;
+}
+
+.psgpt-panel-stats strong.is-good {
+	color: var(--psgpt-green);
+}
+
+.psgpt-panel-stats small {
+	color: var(--psgpt-muted);
+	font-size: 13px;
+}
+
+.psgpt-student-summary-course {
+	padding: 16px 24px 10px;
+}
+
+.psgpt-summary-course-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px 16px;
+}
+
+.psgpt-summary-course-title {
+	font-size: 17px;
+	font-weight: 600;
+}
+
+.psgpt-summary-bar {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.psgpt-summary-bar .psgpt-progress {
+	width: 180px;
+}
+
+.psgpt-summary-course-pct {
+	color: var(--psgpt-green);
+	font-weight: 600;
+}
+
+.psgpt-summary-course-count {
+	display: block;
+	margin-top: 2px;
+	color: var(--psgpt-muted);
+	font-size: 13px;
+}
+
+.psgpt .psgpt-summary-lessons {
+	display: grid;
+	margin: 8px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.psgpt .psgpt-summary-lessons li {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px 14px;
+	margin: 0;
+	padding: 10px 0;
+	border-top: 1px solid #f1f3f5;
+	list-style: none;
+}
+
+.psgpt-summary-lesson {
+	flex: 1 1 220px;
+	font-size: 15px;
+	font-weight: 500;
+}
+
+.psgpt-summary-date {
+	flex: 0 1 260px;
+	color: #4b5563;
+	font-size: 13px;
+	text-align: right;
+}
+
+.psgpt-retry {
+	color: var(--psgpt-red);
+}
+
+.psgpt-revision-history {
+	padding: 16px 24px;
+}
+
+.psgpt .psgpt-revision-history h5 {
+	margin: 0 0 4px;
+	font-size: 16px;
+	font-weight: 600;
+	color: var(--psgpt-ink);
+}
+
+.psgpt .psgpt-revision-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 8px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.psgpt .psgpt-revision-list li {
+	margin: 0;
+	padding: 8px 12px;
+	border: 1px solid var(--psgpt-line);
+	border-radius: 8px;
+	font-size: 13px;
+}
+
+/* Élèves inactifs */
+.psgpt-inactive-head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 6px 16px;
+}
+
+.psgpt-inactive-list {
+	display: grid;
+	gap: 12px;
+}
+
+.psgpt-inactive-card {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 14px 20px;
+	padding: 18px 24px;
+}
+
+.psgpt-inactive-student {
+	display: grid;
+	flex: 1 1 260px;
+	gap: 4px;
+}
+
+.psgpt-inactive-student strong {
+	font-size: 17px;
+	font-weight: 600;
+}
+
+.psgpt-inactive-module {
+	color: #4b5563;
+	font-size: 14px;
+}
+
+/* Réglages (back-office) */
+.psgpt-admin-settings {
+	margin: 18px 0 22px;
+	padding: 16px;
+	border: 1px solid var(--psgpt-line, #dfe3e8);
+	border-radius: 8px;
+	background: #fff;
+}
+
+.psgpt-admin-settings h2 {
+	margin: 0 0 12px;
+	font-size: 1.05rem;
+	line-height: 1.25;
+}
+
+.psgpt-admin-settings form {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	align-items: center;
+}
+
+.psgpt-admin-settings input[type="number"] {
+	width: 90px;
+	min-height: 36px;
+}
+
+.psgpt-settings-grid {
+	display: grid;
+	grid-template-columns: minmax(220px, 0.7fr) minmax(320px, 1.3fr);
+	gap: 16px;
+	width: 100%;
+}
+
+.psgpt-settings-section {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px 12px;
+	align-items: center;
+	padding: 14px;
+	border: 1px solid rgba(20, 32, 51, 0.1);
+	border-radius: 8px;
+	background: rgba(255, 255, 255, 0.82);
+}
+
+.psgpt-settings-section h3 {
+	flex-basis: 100%;
+	margin: 0 0 2px;
+	font-size: 0.95rem;
+	font-weight: 700;
+	line-height: 1.25;
+}
+
+.psgpt-color-field {
+	display: grid;
+	grid-template-columns: minmax(150px, 1fr) 44px;
+	gap: 8px;
+	align-items: center;
+	min-width: 210px;
+	margin: 0;
+	color: #5d6b78;
+	font-size: 0.82rem;
+	font-weight: 700;
+}
+
+.psgpt-color-field input[type="color"] {
+	width: 44px;
+	height: 34px;
+	padding: 2px;
+	border: 1px solid rgba(20, 32, 51, 0.16);
+	border-radius: 6px;
+	background: #fff;
+	cursor: pointer;
+}
+
+/* Petits écrans */
+@media (max-width: 720px) {
+	.psgpt {
+		gap: 14px;
+		font-size: 14px;
+	}
+
+	.psgpt-hero,
+	.psgpt-step,
+	.psgpt-resultbar {
+		padding: 16px;
+	}
+
+	.psgpt .psgpt-title {
+		font-size: 22px;
+	}
+
+	.psgpt-views {
+		width: 100%;
+	}
+
+	.psgpt .psgpt-views a {
+		flex: 1;
+		justify-content: center;
+	}
+
+	.psgpt-step-tools,
+	.psgpt-seg {
+		width: 100%;
+		margin-left: 0;
+	}
+
+	.psgpt-seg {
+		flex-wrap: nowrap;
+	}
+
+	.psgpt .psgpt-seg button {
+		flex: 1;
+		justify-content: center;
+		padding: 0 8px;
+		font-size: 13px;
+	}
+
+	.psgpt-search {
+		max-width: none;
+	}
+
+	.psgpt-choices,
+	.psgpt-choices-courses {
+		grid-template-columns: 1fr;
+	}
+
+	.psgpt-bar {
+		padding: 12px;
+	}
+
+	.psgpt .psgpt-primary,
+	.psgpt .psgpt-export-button {
+		width: 100%;
+	}
+
+	.psgpt-legend {
+		margin-left: 0;
+	}
+
+	.psgpt-student-list {
+		max-width: none;
+	}
+
+	.psgpt-student-summary.is-enhanced .psgpt-student-list {
+		position: static;
+	}
+
+	.psgpt-summary-date {
+		text-align: left;
+	}
+
+	.psgpt-settings-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Réinitialiser l'avancement (LogiOne 1.26.0). */
+.psgpt-reset-form { display: inline-flex; margin: 0; }
+.psgpt-reset-btn { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border: 1px solid #e5b4b4; border-radius: 999px; background: #fff; color: #a32020; font-size: 12px; font-weight: 700; line-height: 1.4; cursor: pointer; white-space: nowrap; }
+.psgpt-reset-btn:hover, .psgpt-reset-btn:focus-visible { background: #fdecec; border-color: #c62828; }
+.psgpt-reset-btn.is-lesson span { display: none; }
+.psgpt-summary-lessons li:hover .psgpt-reset-btn.is-lesson span, .psgpt-reset-btn.is-lesson:focus-visible span { display: inline; }
+.psgpt-summary-course-head .psgpt-reset-form { margin-left: auto; }
+.psgpt-notice { margin: 8px 0 12px; padding: 10px 14px; border-radius: 8px; font-weight: 600; }
+.psgpt-notice.is-ok { border-left: 4px solid #0f8a61; background: #e7f6ef; color: #0f5132; }
+.psgpt-notice.is-error { border-left: 4px solid #c62828; background: #fdecec; color: #7f1d1d; }
+
+/* Cours organisés en modules Sensei : en-tête de module dans le détail d'un élève (LogiOne 1.26.2). */
+.psgpt .psgpt-summary-lessons li.psgpt-module-head { justify-content: space-between; margin-top: 8px; padding: 8px 10px; border-top: 0; border-radius: 8px; background: #f1f5f9; }
+.psgpt .psgpt-summary-lessons li.psgpt-module-head strong { color: #1e293b; font-size: 14px; }
+.psgpt .psgpt-summary-lessons.has-modules li:not(.psgpt-module-head) { padding-left: 12px; }
+.psgpt-reset-btn.is-module { background: #fff; }
+
+/* Rythme suspect (LogiOne 1.26.3). */
+.psgpt-suspect { display: inline-grid; place-items: center; width: 22px; height: 22px; margin-left: 6px; border-radius: 50%; background: #fde2e1; color: #b42318; font-size: 13px; font-weight: 800; vertical-align: middle; box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba(180, 35, 24, .35); animation: psgpt-suspect-pulse 1.8s ease-in-out 3; cursor: help; }
+@keyframes psgpt-suspect-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.18); } }
+@media (prefers-reduced-motion: reduce) { .psgpt-suspect { animation: none; } }
+.psgpt-st.is-active .psgpt-suspect { box-shadow: 0 0 0 2px rgba(255, 255, 255, .8), 0 0 0 4px rgba(180, 35, 24, .5); }
+.psgpt-suspect-panel { margin: 10px 0; padding: 12px 16px; border-left: 5px solid #b42318; background: #fff5f5; color: #7a1a12; }
+.psgpt-suspect-panel strong { font-size: 15px; }
+.psgpt-suspect-panel p { margin: 6px 0; color: #5b1a14; }
+.psgpt-suspect-panel ul { margin: 4px 0 0 18px; padding: 0; }
+.psgpt-fast { display: inline-block; margin-left: 6px; padding: 0 7px; border-radius: 999px; background: #fde2e1; color: #b42318; font-size: 12px; font-weight: 700; white-space: nowrap; }
+
+/* 1.33.1 — barre « Classe / Modules » au-dessus des résultats */
+.psgpt .psgpt-quickbar { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 16px; padding: 14px 20px; position: relative; z-index: 5; }
+.psgpt .psgpt-qb-field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.psgpt .psgpt-qb-group { flex: 1 1 220px; }
+.psgpt .psgpt-qb-courses { flex: 2 1 300px; position: relative; }
+.psgpt .psgpt-qb-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--psgpt-muted); }
+.psgpt .psgpt-qb-group select,
+.psgpt .psgpt-qb-dd > summary { box-sizing: border-box; width: 100%; min-height: 42px; padding: 8px 12px; border: 1px solid var(--psgpt-line); border-radius: 10px; background: #fff; color: var(--psgpt-ink); font-size: 15px; }
+.psgpt .psgpt-qb-dd > summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; }
+.psgpt .psgpt-qb-dd > summary::-webkit-details-marker { display: none; }
+.psgpt .psgpt-qb-dd > summary::after { content: '▾'; color: var(--psgpt-muted); margin-left: 8px; }
+.psgpt .psgpt-qb-dd[open] > summary { border-color: var(--psgpt-green); box-shadow: 0 0 0 3px var(--psgpt-green-soft); }
+.psgpt .psgpt-qb-panel { position: absolute; left: 0; right: 0; top: calc(100% + 6px); background: #fff; border: 1px solid var(--psgpt-line); border-radius: 12px; box-shadow: 0 14px 34px rgba(23, 35, 60, .16); padding: 10px; z-index: 20; }
+.psgpt .psgpt-qb-panel input[type="search"] { box-sizing: border-box; width: 100%; padding: 8px 10px; border: 1px solid var(--psgpt-line); border-radius: 8px; margin-bottom: 8px; }
+.psgpt .psgpt-qb-list { max-height: 300px; overflow: auto; display: grid; gap: 2px; }
+.psgpt .psgpt-qb-item { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 8px; cursor: pointer; font-size: 14px; color: var(--psgpt-ink); }
+.psgpt .psgpt-qb-item:hover { background: var(--psgpt-soft); }
+.psgpt .psgpt-qb-item[hidden] { display: none; }
+.psgpt .psgpt-qb-item input { accent-color: var(--psgpt-green); width: 16px; height: 16px; }
+.psgpt .psgpt-qb-actions { display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px solid var(--psgpt-line-soft); margin-top: 6px; }
+.psgpt .psgpt-qb-submit { min-height: 42px; }
+.psgpt .psgpt-qb-msg { flex-basis: 100%; margin: 0; color: var(--psgpt-red); font-weight: 600; }
+.psgpt .psgpt-qb-msg[hidden] { display: none; }
+@media (max-width: 640px) { .psgpt .psgpt-quickbar { padding: 12px; } .psgpt .psgpt-qb-submit { width: 100%; } }
+
+/* 1.37.0 : quiz de la leçon (présence et nombre de questions) */
+.psgpt-quiz-badge { display: inline-block; margin: 4px 0 0; padding: 1px 7px; border-radius: 999px; font-size: 11px; font-weight: 600; line-height: 17px; white-space: nowrap; vertical-align: middle; }
+.psgpt-lesson-col .psgpt-quiz-badge { display: block; width: max-content; margin: 5px auto 0; }
+.psgpt-quiz-badge.is-quiz { background: #ede9fe; color: #5b21b6; border: 1px solid #c4b5fd; }
+.psgpt-quiz-badge.is-none { background: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
+
+/* 1.37.1 : nom du cours / module cliquable (nouvel onglet) */
+a.psgpt-course-link { color: inherit !important; text-decoration: none !important; border-bottom: 1px dashed currentColor; }
+a.psgpt-course-link:hover, a.psgpt-course-link:focus-visible { color: #047857 !important; border-bottom-style: solid; }
+a.psgpt-course-link .psgpt-ext { font-size: .8em; opacity: .65; }

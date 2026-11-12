@@ -1,0 +1,704 @@
+.lpee-root,
+.lpee-root * {
+	box-sizing: border-box;
+}
+
+.lpee-root {
+	width: min(100%, var(--lpee-max-width, 980px));
+	margin: 0 auto;
+	padding: 24px;
+	color: var(--lpee-text, #183039);
+	background: var(--lpee-bg, #eef6f5);
+	border: 1px solid rgba(21, 94, 117, 0.14);
+	border-radius: calc(var(--lpee-radius, 14px) + 6px);
+	box-shadow: 0 18px 38px rgba(24, 48, 57, 0.08);
+	font-family: inherit;
+	line-height: 1.45;
+	overflow-wrap: anywhere;
+}
+
+.lpee-root a,
+.lpee-root button {
+	font-family: inherit;
+}
+
+.lpee-block-title {
+	margin: 0 0 18px;
+	color: var(--lpee-text, #183039);
+	font-size: clamp(1.35rem, 2.2vw, 1.9rem);
+	font-weight: 800;
+	line-height: 1.18;
+	letter-spacing: 0;
+}
+
+.lpee-list {
+	display: grid;
+	gap: 12px;
+	margin: 0 !important;
+	padding: 0 !important;
+	list-style: none !important;
+}
+
+.lpee-panel .lpee-list {
+	gap: 10px;
+	margin-top: 16px !important;
+	margin-left: 6px !important;
+	padding-left: 28px !important;
+	border-left: 2px solid rgba(21, 94, 117, 0.16);
+}
+
+.lpee-panel .lpee-panel .lpee-list {
+	margin-top: 14px !important;
+	padding-left: 24px !important;
+	border-left-color: rgba(21, 94, 117, 0.12);
+}
+
+.lpee-node {
+	min-width: 0;
+	margin: 0 !important;
+	padding: 0;
+	list-style: none !important;
+}
+
+.lpee-node::before,
+.lpee-node::marker {
+	content: none !important;
+	display: none !important;
+}
+
+.lpee-row {
+	display: grid;
+	grid-template-columns: 34px minmax(0, 1fr) auto;
+	align-items: center;
+	width: 100%;
+	min-height: 62px;
+	gap: 12px;
+	padding: 15px 16px;
+	color: var(--lpee-text, #183039);
+	background: var(--lpee-item-bg, #ffffff);
+	border: 1px solid rgba(24, 48, 57, 0.12);
+	border-radius: var(--lpee-radius, 14px);
+	box-shadow: 0 8px 22px rgba(24, 48, 57, 0.055);
+	text-align: left;
+	text-decoration: none;
+	transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease, background-color 180ms ease;
+}
+
+.lpee-toggle {
+	cursor: pointer;
+}
+
+.lpee-toggle,
+.lpee-toggle:hover,
+.lpee-toggle:focus {
+	appearance: none;
+}
+
+button.lpee-toggle {
+	margin: 0;
+}
+
+.lpee-row:hover {
+	border-color: color-mix(in srgb, var(--lpee-primary, #155e75) 36%, #ffffff);
+	box-shadow: 0 12px 28px rgba(24, 48, 57, 0.09);
+	transform: translateY(-1px);
+}
+
+.lpee-row:focus,
+.lpee-row:focus-visible {
+	outline: 3px solid color-mix(in srgb, var(--lpee-primary, #155e75) 32%, #ffffff);
+	outline-offset: 3px;
+}
+
+.lpee-node-folder > .lpee-row {
+	border-color: rgba(21, 94, 117, 0.2);
+}
+
+.lpee-level-0 > .lpee-node-folder > .lpee-row {
+	background:
+		linear-gradient(90deg, color-mix(in srgb, var(--lpee-primary, #155e75) 10%, var(--lpee-item-bg, #ffffff)), var(--lpee-item-bg, #ffffff) 42%);
+	border-color: color-mix(in srgb, var(--lpee-primary, #155e75) 34%, #ffffff);
+	box-shadow: 0 12px 30px rgba(21, 94, 117, 0.1);
+}
+
+.lpee-panel .lpee-row {
+	min-height: 56px;
+	padding: 13px 14px;
+	box-shadow: 0 5px 16px rgba(24, 48, 57, 0.045);
+}
+
+.lpee-panel .lpee-panel .lpee-row {
+	background: color-mix(in srgb, var(--lpee-item-bg, #ffffff) 92%, var(--lpee-bg, #eef6f5));
+}
+
+.lpee-row-icon,
+.lpee-chevron,
+.lpee-external {
+	display: inline-grid;
+	place-items: center;
+	width: 28px;
+	height: 28px;
+	color: var(--lpee-primary, #155e75);
+	font-size: 24px;
+	line-height: 1;
+	flex: 0 0 auto;
+}
+
+.lpee-row-icon {
+	border-radius: 8px;
+	background: color-mix(in srgb, var(--lpee-primary, #155e75) 11%, #ffffff);
+}
+
+.lpee-row-copy {
+	display: grid;
+	min-width: 0;
+	gap: 4px;
+}
+
+.lpee-row-title {
+	display: block;
+	min-width: 0;
+	color: var(--lpee-text, #183039);
+	font-size: 1rem;
+	font-weight: 800;
+	line-height: 1.25;
+	overflow-wrap: anywhere;
+}
+
+.lpee-row-description {
+	display: block;
+	min-width: 0;
+	color: color-mix(in srgb, var(--lpee-text, #183039) 72%, #ffffff);
+	font-size: 0.93rem;
+	font-weight: 500;
+	line-height: 1.42;
+	overflow-wrap: anywhere;
+	white-space: normal;
+}
+
+.lpee-chevron {
+	transition: transform 180ms ease;
+}
+
+.lpee-node-folder.is-open > .lpee-toggle .lpee-chevron {
+	transform: rotate(90deg);
+}
+
+.lpee-external {
+	font-size: 20px;
+}
+
+.lpee-shortcode-panel {
+	margin-top: 0;
+}
+
+.lpee-shortcode-content {
+	margin-top: 14px;
+	padding: 18px;
+	background: #ffffff;
+	border: 1px solid rgba(21, 94, 117, 0.14);
+	border-radius: var(--lpee-radius, 14px);
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.65);
+	overflow-x: auto;
+}
+
+.lpee-shortcode-content > :first-child {
+	margin-top: 0;
+}
+
+.lpee-shortcode-content > :last-child {
+	margin-bottom: 0;
+}
+
+.lpee-panel {
+	overflow: hidden;
+	max-height: 0;
+	opacity: 0;
+	visibility: hidden;
+	transition: max-height 240ms ease, opacity 200ms ease, visibility 200ms ease;
+}
+
+.lpee-empty {
+	margin: 10px 0 0;
+	padding: 13px 15px;
+	color: color-mix(in srgb, var(--lpee-text, #183039) 68%, #ffffff);
+	background: rgba(255, 255, 255, 0.62);
+	border: 1px dashed rgba(21, 94, 117, 0.24);
+	border-radius: max(8px, calc(var(--lpee-radius, 14px) - 4px));
+	font-size: 0.94rem;
+}
+
+.lpee-link.is-unavailable,
+.lpee-node-link.is-disabled .lpee-row {
+	cursor: not-allowed;
+	opacity: 0.72;
+}
+
+.lpee-status {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 26px;
+	padding: 3px 9px;
+	color: #5a6266;
+	background: #eef1f2;
+	border-radius: 999px;
+	font-size: 0.78rem;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.lpee-spacing-compact {
+	padding: 18px;
+}
+
+.lpee-spacing-compact .lpee-list {
+	gap: 8px;
+}
+
+.lpee-spacing-compact .lpee-row {
+	min-height: 52px;
+	padding: 11px 13px;
+}
+
+.lpee-spacing-compact .lpee-row-description {
+	font-size: 0.88rem;
+}
+
+@media (max-width: 600px) {
+	.lpee-root {
+		padding: 16px;
+		border-radius: max(10px, var(--lpee-radius, 14px));
+	}
+
+	.lpee-block-title {
+		margin-bottom: 14px;
+		font-size: 1.28rem;
+	}
+
+	.lpee-list {
+		gap: 9px;
+	}
+
+	.lpee-panel .lpee-list {
+		gap: 8px;
+		margin-top: 12px !important;
+		margin-left: 2px !important;
+		padding-left: 14px !important;
+	}
+
+	.lpee-panel .lpee-panel .lpee-list {
+		margin-top: 10px !important;
+		padding-left: 12px !important;
+	}
+
+	.lpee-row {
+		grid-template-columns: 30px minmax(0, 1fr) auto;
+		gap: 9px;
+		min-height: 58px;
+		padding: 13px 12px;
+	}
+
+	.lpee-row-icon {
+		width: 26px;
+		height: 26px;
+		font-size: 21px;
+	}
+
+	.lpee-chevron,
+	.lpee-external {
+		width: 22px;
+		height: 22px;
+		font-size: 18px;
+	}
+
+	.lpee-status {
+		justify-self: start;
+		grid-column: 2 / -1;
+	}
+
+	.lpee-shortcode-content {
+		margin-top: 10px;
+		padding: 12px;
+	}
+}
+
+@media (max-width: 360px) {
+	.lpee-root {
+		padding: 12px;
+	}
+
+	.lpee-row {
+		grid-template-columns: 26px minmax(0, 1fr) auto;
+		padding: 12px 10px;
+	}
+
+	.lpee-row-title {
+		font-size: 0.96rem;
+	}
+
+	.lpee-row-description {
+		font-size: 0.88rem;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.lpee-row,
+	.lpee-chevron,
+	.lpee-panel {
+		transition: none;
+	}
+
+	.lpee-row:hover {
+		transform: none;
+	}
+}
+
+/* =====================================================================
+   Présentation LogiOne (par défaut depuis 0.2.0) : couleurs LogiProf, logo tuiles de contenu.
+   Les couleurs personnalisées ne s'appliquent qu'au thème « custom ».
+   ===================================================================== */
+@font-face { font-family: "LogiOne Poppins"; src: url("fonts/poppins-regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "LogiOne Poppins"; src: url("fonts/poppins-medium.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "LogiOne Poppins"; src: url("fonts/poppins-bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+
+.lpee-theme-logione {
+	--ink: #313a45; --green: #067030; --green-bright: #2fae5f; --paper: #eef0eb; --yellow: #f5c400; --muted: #5b6672;
+	--lpee-primary: #067030; --lpee-text: #313a45; --lpee-radius: 8px;
+	padding: 0;
+	background: var(--paper);
+	color: var(--ink);
+	border: 0;
+	border-radius: 10px;
+	box-shadow: none;
+	overflow: hidden;
+	font-family: "LogiOne Poppins", "Poppins", system-ui, sans-serif;
+	line-height: 1.5;
+}
+.lpee-theme-logione > .lpee-list { padding: 22px !important; }
+.lpee-theme-logione.lpee-single { padding: 0; background: transparent; }
+.lpee-theme-logione.lpee-single > .lpee-list { padding: 0 !important; }
+
+.lpee-theme-logione .lpee-head {
+	display: flex; flex-wrap: wrap; align-items: center; gap: 10px 24px;
+	padding: 20px 22px 22px; background: var(--ink); color: #fff;
+}
+.lpee-theme-logione .lpee-logo { display: block; height: 46px; width: auto; max-width: 100%; }
+.lpee-theme-logione .lpee-head .lpee-block-title {
+	margin: 0; padding-left: 24px; border-left: 3px solid var(--green-bright);
+	color: #fff; font-family: inherit; font-size: clamp(1.4rem, 2.6vw, 2rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1;
+}
+
+.lpee-theme-logione .lpee-row {
+	grid-template-columns: 44px minmax(0, 1fr) auto;
+	min-height: 64px; padding: 14px 16px; gap: 14px;
+	background: #fff; color: var(--ink); border: 0; border-radius: var(--lpee-radius);
+	box-shadow: inset 4px 0 0 var(--row-edge, transparent);
+}
+.lpee-theme-logione .lpee-row:hover { box-shadow: inset 4px 0 0 var(--green); transform: none; border: 0; }
+.lpee-theme-logione .lpee-row:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+.lpee-theme-logione .lpee-row-icon {
+	width: 44px; height: 44px; border-radius: 8px; font-size: 22px;
+	background: #e3f1e8; color: var(--green);
+}
+.lpee-theme-logione .lpee-row-title { color: inherit; font-weight: 700; font-size: 1.04rem; }
+.lpee-theme-logione .lpee-row-description { color: var(--muted); font-weight: 400; }
+.lpee-theme-logione .lpee-chevron, .lpee-theme-logione .lpee-external { color: var(--green); }
+
+/* Rubriques principales : bandeau anthracite quand elles sont ouvertes */
+.lpee-theme-logione .lpee-level-0 > .lpee-node-folder > .lpee-row { background: #fff; --row-edge: var(--green); box-shadow: inset 4px 0 0 var(--row-edge); }
+.lpee-theme-logione .lpee-level-0 > .lpee-node-folder.is-open > .lpee-row { background: var(--ink); color: #fff; --row-edge: var(--green-bright); }
+.lpee-theme-logione .lpee-level-0 > .lpee-node-folder.is-open > .lpee-row .lpee-row-description { color: #c9d1d9; }
+.lpee-theme-logione .lpee-level-0 > .lpee-node-folder.is-open > .lpee-row .lpee-row-icon { background: var(--green); color: #fff; }
+.lpee-theme-logione .lpee-level-0 > .lpee-node-folder.is-open > .lpee-row .lpee-chevron { color: var(--green-bright); }
+
+.lpee-theme-logione .lpee-panel .lpee-list { border-left: 3px solid #cfd8d2; margin-left: 20px !important; padding-left: 18px !important; }
+.lpee-theme-logione .lpee-panel .lpee-row { min-height: 56px; background: #fff; box-shadow: none; }
+.lpee-theme-logione .lpee-panel .lpee-row:hover { box-shadow: inset 4px 0 0 var(--green); }
+.lpee-theme-logione .lpee-panel .lpee-row-icon { width: 36px; height: 36px; font-size: 20px; }
+.lpee-theme-logione .lpee-node-folder .lpee-node-folder.is-open > .lpee-row { box-shadow: inset 4px 0 0 var(--green); }
+
+.lpee-theme-logione .lpee-node-link .lpee-row-icon { background: #fff4c7; color: #7a6000; }
+.lpee-theme-logione .lpee-shortcode-content { background: #fff; border: 0; border-radius: var(--lpee-radius); box-shadow: inset 0 0 0 1px #dfe4e0; }
+.lpee-theme-logione .lpee-empty { background: transparent; border: 2px dashed #cfd8d2; color: var(--muted); }
+.lpee-theme-logione .lpee-status { background: #eef0eb; color: var(--muted); }
+
+@media (max-width: 600px) {
+	.lpee-theme-logione > .lpee-list { padding: 14px !important; }
+	.lpee-theme-logione .lpee-head { padding: 16px; }
+	.lpee-theme-logione .lpee-logo { height: 38px; }
+	.lpee-theme-logione .lpee-head .lpee-block-title { padding-left: 0; border-left: 0; width: 100%; }
+	.lpee-theme-logione .lpee-row { grid-template-columns: 36px minmax(0, 1fr) auto; }
+	.lpee-theme-logione .lpee-row-icon { width: 36px; height: 36px; }
+	.lpee-theme-logione .lpee-panel .lpee-list { margin-left: 8px !important; padding-left: 10px !important; }
+}
+.lpee-theme-logione .lpee-row:focus:not(:focus-visible) { outline: none; }
+
+/* =====================================================================
+   Présentation en tuiles (0.4.0) : comme LogiOne by LogiProf, tout dans la même page.
+   Tuile de rubrique → panneau déplié dessous, sous-rubriques en onglets, liens en lignes compactes.
+   ===================================================================== */
+.lpee-root.lph {
+	--ink: #313a45; --green: #067030; --green-bright: #2fae5f; --green-deep: #0b4d22;
+	--paper: #eef0eb; --white: #ffffff; --yellow: #f5c400; --mint: #dcefe3; --muted: #5b6672; --on-ink: #c9d1d9;
+	position: relative; left: 50%; transform: translateX(-50%);
+	width: 100vw; max-width: 100vw; margin: 0 0 32px; padding: 0;
+	background: var(--paper); color: var(--ink); border: 0; border-radius: 0; box-shadow: none;
+	font-family: "LogiOne Poppins", "Poppins", system-ui, sans-serif; font-size: 16px; line-height: 1.55; text-align: left;
+}
+.lph a { text-decoration: none; box-shadow: none; }
+.lph :focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+.lph [hidden] { display: none !important; }
+
+/* Bandeau */
+.lph-hero { background: var(--hero-bg, var(--ink)); color: var(--hero-fg, var(--white)); padding: 0 clamp(16px, 5vw, 64px); }
+.lph-hero > * { max-width: 1240px; margin-left: auto; margin-right: auto; }
+.lph-hero-top { padding: 22px 0 6px; }
+.lph-logo { display: block; height: 46px; width: auto; }
+.lph-hero-main { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 24px; }
+.lph-hero-main.no-art { grid-template-columns: minmax(0, 1fr); }
+.lph-hero-text { padding: 10px 0 46px; }
+.lph-hello { margin: 0 0 6px; color: var(--hero-accent, var(--green-bright)); font-size: 18px; font-weight: 600; }
+.lph .lph-title { margin: 0; padding: 0; border: 0; color: var(--hero-fg, var(--white)); font-family: inherit; font-size: clamp(32px, 4.6vw, 54px); font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; }
+.lph-lead { margin: 14px 0 0; max-width: 56ch; color: var(--hero-sub, var(--on-ink)); font-size: 17px; }
+.lph-art { width: clamp(150px, 19vw, 250px); margin-bottom: -38px; position: relative; z-index: 1; }
+.lph-art svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+/* Recherche */
+.lph-search { position: relative; max-width: 540px; margin-top: 24px; }
+.lph-search:has(> input[hidden]) { display: none; }
+.lph-search .dashicons { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+.lph .lph-search-input { display: block; width: 100%; height: 54px; margin: 0; padding: 0 20px 0 50px; border: 2px solid transparent; border-radius: 999px; background: var(--white); color: var(--ink); font: inherit; font-size: 16px; box-shadow: none; }
+.lph .lph-search-input:focus { border-color: var(--yellow); outline: none; }
+
+/* Cubes isométriques (même dessin que LogiOne) */
+.lph-iso polygon { stroke: var(--ink); stroke-width: 2.5; stroke-linejoin: round; }
+.lph-iso .t { fill: var(--green-bright); }
+.lph-iso .l { fill: var(--green-deep); }
+.lph-iso .r { fill: var(--green); }
+.lph-iso .mark .t, .lph-iso .mark .r { fill: var(--yellow); }
+.lph-iso .mark .l { fill: #d9a900; }
+.lph-iso .shelf .t { fill: #8d97a2; } .lph-iso .shelf .l { fill: #5f6975; } .lph-iso .shelf .r { fill: #76808b; }
+.lph-art .c { animation: lph-drop .5s cubic-bezier(.2, .9, .3, 1.2) both; }
+.lph-art .c:nth-child(2) { animation-delay: .1s; } .lph-art .c:nth-child(3) { animation-delay: .2s; }
+.lph-art .c:nth-child(4) { animation-delay: .3s; } .lph-art .c:nth-child(5) { animation-delay: .4s; }
+@keyframes lph-drop { from { opacity: 0; transform: translateY(-26px); } to { opacity: 1; transform: none; } }
+
+/* Tuiles */
+.lph-body { max-width: 1240px; margin: 0 auto; padding: 46px clamp(16px, 5vw, 64px) 64px; box-sizing: content-box; }
+.lph-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); grid-auto-flow: row dense; }
+.lph-tile {
+	--bg: var(--white); --fg: var(--ink); --sub: var(--muted); --cta: var(--green); --icon-bg: var(--mint); --icon-fg: var(--green);
+	position: relative; display: flex; flex-direction: column; gap: 16px; min-height: 196px; padding: 24px 24px 22px;
+	background: var(--bg); color: var(--fg) !important; border-radius: 6px; cursor: pointer;
+	transition: transform .2s ease, box-shadow .2s ease;
+}
+.lph-tile.is-wide { grid-column: span 2; }
+a.lph-tile:hover { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(49, 58, 69, .16); }
+.lph .lph-tile-icon.dashicons { display: block; width: 54px; height: 54px; border-radius: 12px; background: var(--icon-bg); color: var(--icon-fg); font-size: 28px; line-height: 54px; text-align: center; }
+.lph-tile-body { display: flex; flex: 1; flex-direction: column; gap: 5px; }
+.lph-tile-title { font-size: 22px; font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; }
+.lph-tile-text { color: var(--sub); font-size: 15px; }
+.lph-tile-meta { color: var(--sub); font-size: 12.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+.lph-tile-cta { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; margin-top: auto; padding: 12px 0 3px; border-bottom: 3px solid var(--cta); font-weight: 700; }
+.lph-tile-cta .dashicons { width: 18px; height: 18px; font-size: 18px; transition: transform .2s ease; }
+.lph-cta-close, .lph-tile.is-active .lph-cta-open { display: none; }
+.lph-tile.is-active .lph-cta-close { display: inline; }
+.lph-tile.is-active .lph-tile-cta .dashicons-arrow-down-alt2 { transform: rotate(180deg); }
+.lph-tile-status { align-self: flex-start; margin-top: auto; padding: 4px 12px; border-radius: 999px; background: #e3e6e1; color: #5b6672; font-size: 13px; font-weight: 700; }
+/* Tuile ouverte : anneau jaune et pointe vers le panneau */
+.lph-tile.is-active { box-shadow: 0 0 0 3px var(--yellow); transform: none; }
+.lph-tile.is-active::after { content: ""; position: absolute; left: 50%; bottom: -19px; width: 0; height: 0; margin-left: -12px; border: 12px solid transparent; border-bottom-color: var(--white); border-top: 0; }
+
+/* Couleurs (gamme LogiProf) */
+.lph-c-ink { --bg: var(--ink); --fg: var(--white); --sub: var(--on-ink); --cta: var(--green-bright); --icon-bg: rgba(255, 255, 255, .1); --icon-fg: var(--green-bright); }
+.lph-c-green { --bg: var(--green); --fg: var(--white); --sub: #d4ecdc; --cta: var(--yellow); --icon-bg: rgba(255, 255, 255, .15); --icon-fg: var(--white); }
+.lph-c-yellow { --bg: var(--yellow); --fg: var(--ink); --sub: #4b4320; --cta: var(--ink); --icon-bg: rgba(49, 58, 69, .1); --icon-fg: var(--ink); }
+.lph-c-mint { --bg: var(--mint); --fg: var(--ink); --sub: #3f5a48; --cta: var(--green); --icon-bg: var(--white); --icon-fg: var(--green); }
+.lph-tile.is-unavailable { --bg: transparent; --fg: #7b858f; --sub: #8a939c; --icon-bg: #e3e6e1; --icon-fg: #8a939c; border: 2px dashed #c3c9c2; cursor: default; }
+
+/* Panneau déplié sous la tuile */
+.lph-panel { grid-column: 1 / -1; margin: 2px 0 6px; padding: clamp(18px, 2.4vw, 30px); background: var(--white); border-radius: 6px; border-top: 6px solid var(--accent, var(--ink)); box-shadow: 0 18px 40px rgba(49, 58, 69, .12); animation: lph-open .22s ease-out; }
+@keyframes lph-open { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+.lph-panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+.lph .lph-panel-title { margin: 0; padding: 0; border: 0; color: var(--ink); font-family: inherit; font-size: clamp(22px, 2.2vw, 28px); font-weight: 700; line-height: 1.2; }
+.lph .lph-panel-title:focus { outline: none; }
+.lph-close { display: grid; place-items: center; flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; background: var(--paper); color: var(--ink) !important; }
+.lph-close:hover { background: var(--mint); }
+
+/* Onglets des sous-rubriques (ex. CFC / AFP) */
+.lph-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+.lph-tab { display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 8px 20px 8px 14px; border: 2px solid transparent; border-radius: 999px; background: var(--paper); color: var(--ink) !important; font-weight: 600; transition: background .15s ease; }
+.lph-tab:hover { background: var(--mint); }
+.lph .lph-tab-icon.dashicons { width: 20px; height: 20px; font-size: 20px; color: var(--green); }
+.lph-tab.is-selected { background: var(--ink); color: var(--white) !important; }
+.lph-tab.is-selected .lph-tab-icon { color: var(--green-bright); }
+.lph-tabpanel .lph-tabs .lph-tab { min-height: 40px; padding: 6px 16px 6px 12px; background: var(--white); border-color: #d8ddd6; font-size: 15px; }
+.lph-tabpanel .lph-tabs .lph-tab.is-selected { background: var(--green); border-color: var(--green); }
+.lph-tabpanel .lph-tabs .lph-tab.is-selected .lph-tab-icon { color: var(--white); }
+.lph-tabpanel { animation: lph-open .18s ease-out; }
+.lph-tabpanel > .lph-tabs { margin-top: 4px; padding-top: 16px; border-top: 1px solid #e3e6e1; }
+.lph-tab-description { margin: -4px 0 14px; color: var(--muted); }
+
+/* Liens et outils : lignes compactes */
+.lph-links { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); margin: 0 0 18px; padding: 0; list-style: none; }
+.lph-links > li { margin: 0; padding: 0; }
+.lph-links > li:has(> details[open]) { grid-column: 1 / -1; }
+.lph-link { display: flex; align-items: center; gap: 14px; min-height: 64px; padding: 12px 16px; border-radius: 8px; background: var(--paper); color: var(--ink) !important; cursor: pointer; transition: background .15s ease, transform .15s ease; }
+a.lph-link:hover, summary.lph-link:hover { background: var(--mint); transform: translateY(-1px); }
+.lph .lph-link-icon.dashicons { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 8px; background: var(--white); color: var(--green); font-size: 22px; line-height: 40px; text-align: center; }
+.lph-link-copy { display: flex; flex: 1; flex-direction: column; min-width: 0; }
+.lph-link-copy strong { font-size: 16px; font-weight: 600; line-height: 1.3; }
+.lph-link-copy small { color: var(--muted); font-size: 13.5px; line-height: 1.4; }
+.lph .lph-link-go.dashicons { flex: 0 0 auto; color: var(--green); transition: transform .2s ease; }
+.lph-link.is-unavailable { background: transparent; border: 2px dashed #d0d5ce; color: #7b858f !important; cursor: default; }
+.lph-link-status { flex: 0 0 auto; padding: 3px 10px; border-radius: 999px; background: #e3e6e1; color: #5b6672; font-size: 12.5px; font-weight: 700; }
+.lph-toolbox > summary { list-style: none; }
+.lph-toolbox > summary::-webkit-details-marker { display: none; }
+.lph-toolbox[open] > summary { background: var(--ink); color: var(--white) !important; }
+.lph-toolbox[open] > summary small { color: var(--on-ink); }
+.lph-toolbox[open] .lph-link-go { transform: rotate(180deg); color: var(--green-bright); }
+.lph-toolbox .lph-tool { margin-top: 10px; }
+.lph-tool { padding: clamp(12px, 2vw, 24px); background: var(--white); border: 1px solid #e3e6e1; border-radius: 8px; overflow-x: auto; }
+.lph-panel > .lph-tool { border: 0; padding: 0; }
+.lph-empty { margin: 0; padding: 20px; background: var(--paper); border-radius: 8px; color: var(--muted); }
+@keyframes lph-flash { 0%, 40% { box-shadow: 0 0 0 4px var(--yellow); } 100% { box-shadow: 0 0 0 0 rgba(245, 196, 0, 0); } }
+.lph .is-flash, .lph .is-flash > summary { animation: lph-flash 1.8s ease-out; }
+
+/* Résultats de recherche */
+.lph-results-count { margin: 0 0 14px; color: var(--muted); font-weight: 600; }
+.lph-results-list { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); margin: 0; padding: 0; list-style: none; }
+.lph-results-list li { margin: 0; }
+.lph .lph-result { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; width: 100%; min-height: 72px; padding: 12px 16px; border: 0; border-radius: 8px; background: var(--white); color: var(--ink) !important; font: inherit; text-align: left; cursor: pointer; box-shadow: 0 1px 0 rgba(49, 58, 69, .06); }
+.lph .lph-result:hover { background: var(--mint); }
+.lph-result strong { font-size: 16px; font-weight: 600; }
+.lph-result small { color: var(--muted); font-size: 13px; }
+.lph-result-kind { color: var(--green); font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+
+/* Aperçu dans l'éditeur */
+.lpee-root.lph.is-preview { left: auto; transform: none; width: 100%; max-width: 100%; margin: 0; border-radius: 12px; overflow: hidden; }
+.lph.is-preview .lph-hero { padding: 0 18px; }
+.lph.is-preview .lph-logo { height: 34px; }
+.lph.is-preview .lph-hero-text { padding-bottom: 22px; }
+.lph.is-preview .lph-title { font-size: 28px; }
+.lph.is-preview .lph-lead { font-size: 14px; }
+.lph.is-preview .lph-search { margin-top: 14px; }
+.lph.is-preview .lph-search-input { height: 42px; font-size: 14px; }
+.lph.is-preview .lph-body { padding: 18px; }
+.lph.is-preview .lph-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+.lph.is-preview .lph-tile { min-height: 0; padding: 16px; gap: 10px; cursor: default; }
+.lph.is-preview .lph-tile-title { font-size: 17px; }
+.lph.is-preview .lph-tile-text { font-size: 13px; }
+.lph.is-preview .lph-tile-icon { width: 40px; height: 40px; font-size: 22px; line-height: 40px; }
+
+@media (max-width: 720px) {
+	.lph-hero-main { grid-template-columns: 1fr; }
+	.lph-art { width: 130px; margin: -10px 0 -28px auto; }
+	.lph-hero-text { padding-bottom: 0; }
+	.lph-body { padding-top: 38px; }
+	.lph-grid { grid-template-columns: 1fr; gap: 12px; }
+	.lph-tile.is-wide { grid-column: auto; }
+	.lph-tile { min-height: 0; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 14px; padding: 18px; }
+	.lph-tile-body { flex: 1 1 60%; }
+	.lph-tile-title { font-size: 20px; }
+	.lph-tabs { flex-wrap: nowrap; overflow-x: auto; margin-left: -4px; padding: 0 4px 4px; scrollbar-width: thin; }
+	.lph-tab { flex: 0 0 auto; }
+	.lph-links, .lph-results-list { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+	.lph-art .c, .lph-panel, .lph-tabpanel, .lph .is-flash { animation: none; }
+	.lph-tile, .lph-link, .lph-tile-cta .dashicons { transition: none; }
+}
+
+/* Icônes importées (0.5.0) : image de la médiathèque à la place du pictogramme */
+.lph .lph-tile-icon.is-image, .lph .lph-link-icon.is-image, .lph .lph-tab-icon.is-image { display: grid; place-items: center; flex: 0 0 auto; overflow: hidden; }
+.lph .lph-tile-icon.is-image { width: 64px; height: 64px; border-radius: 14px; background: var(--icon-bg); }
+.lph .lph-tile-icon.is-image img { width: 84%; height: 84%; }
+.lph .lph-link-icon.is-image { width: 40px; height: 40px; border-radius: 8px; background: var(--white); }
+.lph .lph-tab-icon.is-image { width: 22px; height: 22px; border-radius: 5px; }
+.lph .is-image img { display: block; width: 72%; height: 72%; object-fit: contain; margin: 0; border: 0; box-shadow: none; }
+.lph .lph-tab-icon.is-image img { width: 100%; height: 100%; }
+.lph.is-preview .lph-tile-icon.is-image { width: 40px; height: 40px; }
+
+/* Noki, la mascotte LogiProf, sur sa palette (remplace les cubes, comme dans LogiOne) */
+.lph-art { width: clamp(170px, 19vw, 250px); margin-bottom: -46px; }
+.lph-art picture, .lph .lph-noki { display: block; width: 100%; height: auto; margin: 0; border: 0; box-shadow: none; }
+.lph-noki { filter: drop-shadow(0 14px 22px rgba(0, 0, 0, .28)); animation: lph-noki-in .6s cubic-bezier(.2, .9, .3, 1.15) both .1s; }
+@keyframes lph-noki-in { from { opacity: 0; transform: translateY(24px) scale(.96); } to { opacity: 1; transform: none; } }
+@media (max-width: 720px) { .lph-art { width: 140px; margin: -6px 0 -30px auto; } }
+@media (prefers-reduced-motion: reduce) { .lph-noki { animation: none; } }
+
+/* Page du site lue dans tuiles de contenu (0.6.0) : même onglet, bouton Retour */
+.lph-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; padding: 8px 0 20px; }
+.lph-back { display: inline-flex; align-items: center; gap: 4px; padding: 10px 18px 10px 12px; border-radius: 999px; background: var(--yellow); color: var(--ink) !important; font-weight: 700; }
+.lph-back:hover { background: #ffd83d; }
+.lph-crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; color: var(--hero-sub, var(--on-ink)); font-size: 15px; }
+.lph-crumbs a { color: var(--hero-fg, var(--white)) !important; border-bottom: 2px solid transparent; }
+.lph-crumbs a:hover { border-bottom-color: var(--hero-accent, var(--green-bright)); }
+.lph-sep { color: #7f8a96; }
+.lph-reader-head { display: flex; align-items: center; gap: 18px; padding: 0 0 38px; }
+.lph .lph-reader-icon.dashicons, .lph .lph-reader-icon.is-image { display: grid; place-items: center; flex: 0 0 auto; width: 60px; height: 60px; border-radius: 12px; background: var(--green); color: var(--white); font-size: 32px; line-height: 60px; text-align: center; overflow: hidden; }
+.lph .lph-reader-icon.is-image { background: rgba(255, 255, 255, .12); }
+.lph.is-reading .lph-title { font-size: clamp(28px, 3.6vw, 44px); }
+.lph-reader { max-width: 900px; margin: 0 auto; padding: clamp(20px, 3.4vw, 46px); background: var(--white); border-radius: 6px; color: var(--ink); font-size: 17px; line-height: 1.7; overflow-wrap: anywhere; }
+.lph-reader > :first-child { margin-top: 0; } .lph-reader > :last-child { margin-bottom: 0; }
+.lph-reader h1, .lph-reader h2, .lph-reader h3, .lph-reader h4 { color: var(--ink); font-family: inherit; line-height: 1.2; margin: 1.4em 0 .5em; }
+.lph-reader a { color: var(--green); text-decoration: underline; }
+.lph-reader img, .lph-reader video, .lph-reader iframe { max-width: 100%; height: auto; }
+.lph-reader table { width: 100%; border-collapse: collapse; } .lph-reader td, .lph-reader th { padding: 8px 10px; border: 1px solid #e3e6e1; }
+.lph-reader-full { max-width: 900px; margin: 16px auto 0; text-align: right; font-size: 14px; }
+.lph-reader-full a { color: var(--muted) !important; text-decoration: underline; }
+
+/* Éléments masqués : toujours cachés, même si le thème du site impose un affichage (ex. section { display: block }) */
+.lpee-root [hidden], .lpee-root[hidden], .lph [hidden] { display: none !important; }
+
+/* Texte d'accueil mis en forme (0.8.0) */
+.lph-lead p { margin: 0 0 .6em; } .lph-lead p:last-child { margin-bottom: 0; }
+.lph-lead strong, .lph-lead b { color: var(--hero-fg, var(--white)); font-weight: 700; }
+.lph-lead a { color: var(--hero-accent, var(--green-bright)) !important; text-decoration: underline; }
+.lph-lead mark { padding: 0 .25em; border-radius: 3px; background: var(--yellow); color: var(--ink); }
+.lph-lead ul, .lph-lead ol { margin: .4em 0 .6em 1.2em; padding: 0; }
+.lph-lead li { margin: .15em 0; }
+.lph-lead h1, .lph-lead h2, .lph-lead h3, .lph-lead h4, .lph-embed-intro h1, .lph-embed-intro h2, .lph-embed-intro h3, .lph-embed-intro h4 { margin: .5em 0 .35em; padding: 0; border: 0; background: none; color: inherit; font-family: inherit; font-weight: 700; line-height: 1.2; letter-spacing: 0; text-transform: none; }
+.lph-lead h1, .lph-embed-intro h1 { font-size: 1.75em; } .lph-lead h2, .lph-embed-intro h2 { font-size: 1.45em; }
+.lph-lead h3, .lph-embed-intro h3 { font-size: 1.2em; } .lph-lead h4, .lph-embed-intro h4 { font-size: 1.05em; }
+.lph-lead > :first-child, .lph-embed-intro > :first-child { margin-top: 0; }
+.lph-lead h1, .lph-lead h2, .lph-lead h3, .lph-lead h4 { color: var(--hero-fg, var(--white)); }
+
+/* Menu affiché dans un panneau, sans bandeau (vue="panneau", utilisé par LogiOne) */
+.lpee-root.lph.lph-embed { left: auto; transform: none; width: 100%; max-width: 100%; margin: 0; background: transparent; }
+.lph-embed-intro { margin: 0 0 18px; color: var(--ink); font-size: 16.5px; }
+.lph-embed-intro p { margin: 0 0 .6em; } .lph-embed-intro p:last-child { margin: 0; }
+.lph-embed-intro strong, .lph-embed-intro b { font-weight: 700; }
+.lph-embed-intro a { color: var(--green) !important; text-decoration: underline; }
+.lph-embed-intro mark { padding: 0 .25em; border-radius: 3px; background: var(--yellow); color: var(--ink); }
+.lph-embed-intro ul, .lph-embed-intro ol { margin: .4em 0 .6em 1.2em; padding: 0; }
+
+/* Blocs de texte mis en forme (élément « Bloc de texte ») */
+.lph-text { margin: 0 0 16px; padding: 18px 22px; background: var(--white, #fff); border-radius: 6px; border-left: 4px solid var(--tile-bg, var(--green, #067030)); color: var(--ink, #313a45); font-size: 16px; line-height: 1.6; overflow-wrap: anywhere; }
+.lph-panel > .lph-text, .lph-embed > .lph-text { padding: 0; border-left: 0; background: transparent; }
+.lph-tabpanel .lph-text, .lph-panel .lph-links + .lph-text { margin-top: 4px; }
+.lph-text > :first-child { margin-top: 0; } .lph-text > :last-child { margin-bottom: 0; }
+.lph-text p { margin: 0 0 .7em; }
+.lph-text h1, .lph-text h2, .lph-text h3, .lph-text h4, .lpee-text h1, .lpee-text h2, .lpee-text h3, .lpee-text h4 { margin: .8em 0 .4em; padding: 0; border: 0; background: none; color: inherit; font-family: inherit; font-weight: 700; line-height: 1.2; letter-spacing: 0; text-transform: none; }
+.lph-text h1, .lpee-text h1 { font-size: 1.75em; } .lph-text h2, .lpee-text h2 { font-size: 1.45em; } .lph-text h3, .lpee-text h3 { font-size: 1.2em; } .lph-text h4, .lpee-text h4 { font-size: 1.05em; }
+.lph-text strong, .lph-text b, .lpee-text strong, .lpee-text b { font-weight: 700; }
+.lph-text a, .lpee-text a { color: var(--green, #067030) !important; text-decoration: underline; }
+.lph-text mark, .lpee-text mark { padding: 0 .25em; border-radius: 3px; background: var(--yellow, #f5c400); color: var(--ink, #313a45); }
+.lph-text ul, .lph-text ol, .lpee-text ul, .lpee-text ol { margin: .4em 0 .7em 1.3em; padding: 0; }
+.lph-text li, .lpee-text li { margin: .2em 0; }
+.lph-text.is-hit { box-shadow: 0 0 0 3px var(--yellow, #f5c400); }
+.lpee-node-text { list-style: none; }
+.lpee-text { margin: 6px 0 10px; padding: 14px 18px; border-radius: 8px; background: rgba(255, 255, 255, .7); color: inherit; line-height: 1.6; }
+.lpee-text > :first-child { margin-top: 0; } .lpee-text > :last-child { margin-bottom: 0; } .lpee-text p { margin: 0 0 .7em; }
+
+/* En-tête clair : la recherche garde un contour visible */
+.lph-hero.is-light .lph-search-input { border-color: rgba(49, 58, 69, .22); }
+.lph-hero.is-light .lph-search-input:focus { border-color: var(--hero-accent, #067030); }
+
+/* Contenu ouvert sur toute la largeur de l'écran (LogiOne 1.24.8). */
+.lph-panel.is-fullbleed { border-radius: 0; padding-left: clamp(16px, 3vw, 48px); padding-right: clamp(16px, 3vw, 48px); max-width: none; box-sizing: border-box; }
+.lph-panel .logieval-app, .lph-panel .lpl-app, .lph-panel .llv-app, .lph-panel .psgpt, .lph-panel .gca-shortcode-fullwidth, .lph-panel .gne-app, .lph-panel .gne-access,
+.lph-panel .logieval-secure.les-teacher.les-app-shell {
+	position: static !important; left: auto !important; transform: none !important;
+	width: 100% !important; max-width: 100% !important; margin-left: 0 !important; margin-right: 0 !important; }

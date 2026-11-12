@@ -1,0 +1,3569 @@
+.logieval-secure {
+	--les-bg: #f6f8fb;
+	--les-panel: var(--logiprof-white, #ffffff);
+	--les-panel-soft: #f8fafc;
+	--les-border: var(--logiprof-border, #d9e1ea);
+	--les-border-strong: #b9c6d5;
+	--les-ink: var(--logiprof-text, #172033);
+	--les-muted: #647084;
+	--les-accent: var(--logiprof-green, #0f8a61);
+	--les-accent-dark: var(--logiprof-green-dark, #096445);
+	--les-accent-soft: #e7f6ef;
+	--les-blue: #1f5f99;
+	--les-blue-soft: #eaf3fb;
+	--les-warn: #9a5b00;
+	--les-warn-bg: #fff7df;
+	--les-danger: #b42318;
+	--les-danger-bg: #ffe8e4;
+	--les-shadow: var(--logiprof-shadow-soft, 0 16px 36px rgba(23, 32, 51, .07));
+	--les-shadow-light: 0 8px 20px rgba(23, 32, 51, .045);
+	color: var(--les-ink);
+	font-family: var(--logiprof-font, inherit);
+	font-size: 15px;
+	line-height: 1.5;
+}
+
+.logieval-secure *,
+.logieval-secure *::before,
+.logieval-secure *::after {
+	box-sizing: border-box;
+}
+
+.logieval-secure [hidden] {
+	display: none !important;
+}
+
+.logieval-secure h1,
+.logieval-secure h2,
+.logieval-secure h3,
+.logieval-secure h4,
+.logieval-secure p {
+	margin-top: 0;
+}
+
+.logieval-secure h1 {
+	margin-bottom: 14px;
+	font-size: 28px;
+	font-weight: 800;
+	letter-spacing: 0;
+}
+
+.logieval-secure h2 {
+	font-size: 24px;
+	line-height: 1.2;
+	letter-spacing: 0;
+}
+
+.logieval-secure h3 {
+	font-size: 17px;
+	letter-spacing: 0;
+}
+
+.logieval-secure p,
+.logieval-secure small {
+	color: var(--les-muted);
+}
+
+.logieval-secure.les-app-shell,
+.logieval-secure .les-screen {
+	background: var(--les-bg);
+}
+
+.logieval-secure.les-app-shell {
+	width: 100%;
+	max-width: none;
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	padding: 18px;
+	box-shadow: var(--les-shadow);
+}
+
+.logieval-secure.les-teacher {
+	margin: 0 auto;
+	text-align: left;
+}
+
+.logieval-secure.les-teacher.les-app-shell {
+	/* 1.36.1 : centrage par « left » (les thèmes blocs imposent margin-left: 0 aux enfants du contenu,
+	   ce qui décalait toute l'application de moitié hors de l'écran sur la page web). */
+	position: relative;
+	left: 50%;
+	width: min(1600px, calc(100vw - 32px));
+	max-width: none;
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+	transform: translateX(-50%);
+	box-sizing: border-box;
+}
+
+.logieval-secure .les-hero {
+	display: flex;
+	justify-content: space-between;
+	gap: 24px;
+	align-items: center;
+	margin-bottom: 18px;
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: #fff;
+	padding: 22px;
+	box-shadow: var(--les-shadow-light);
+}
+
+.logieval-secure .les-hero h2 {
+	margin-bottom: 8px;
+	font-size: 28px;
+}
+
+.logieval-secure .les-hero p {
+	max-width: 680px;
+	margin-bottom: 0;
+}
+
+.logieval-secure .les-hero-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: flex-end;
+	min-width: 260px;
+}
+
+.logieval-secure .nav-tab-wrapper {
+	margin: 0 0 16px;
+	border-bottom-color: var(--les-border);
+}
+
+.logieval-secure .nav-tab {
+	border-radius: 7px 7px 0 0;
+	font-weight: 700;
+}
+
+.logieval-secure .les-front-tabs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: 0 0 18px;
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: #fff;
+	padding: 6px;
+	box-shadow: var(--les-shadow-light);
+}
+
+.logieval-secure .les-front-tabs a {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 38px;
+	padding: 8px 11px;
+	border: 1px solid transparent;
+	border-radius: 7px;
+	background: transparent;
+	color: var(--les-ink);
+	font-weight: 800;
+	text-decoration: none;
+}
+
+.logieval-secure .les-front-tabs a:hover,
+.logieval-secure .les-front-tabs a.is-active {
+	border-color: var(--les-accent);
+	background: var(--les-accent-soft);
+	color: var(--les-accent-dark);
+}
+
+.logieval-secure .notice.inline {
+	border-radius: 8px;
+}
+
+.logieval-secure .button,
+.logieval-secure button.button,
+.logieval-secure input[type="submit"].button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 38px;
+	padding: 8px 13px;
+	border: 1px solid var(--les-accent);
+	border-radius: 7px;
+	background: var(--les-accent);
+	color: #fff;
+	font-weight: 800;
+	line-height: 1.2;
+	text-decoration: none;
+	cursor: pointer;
+	box-shadow: none;
+	white-space: nowrap;
+}
+
+.logieval-secure .button:hover,
+.logieval-secure button.button:hover,
+.logieval-secure input[type="submit"].button:hover {
+	background: var(--les-accent-dark);
+	color: #fff;
+}
+
+.logieval-secure .button.les-button-secondary,
+.logieval-secure .les-button-secondary,
+.logieval-secure button.les-button-secondary {
+	border-color: var(--les-border-strong);
+	background: #fff;
+	color: var(--les-ink);
+}
+
+.logieval-secure .button.les-button-secondary:hover,
+.logieval-secure .les-button-secondary:hover,
+.logieval-secure button.les-button-secondary:hover {
+	border-color: var(--les-accent);
+	background: var(--les-accent-soft);
+	color: var(--les-accent-dark);
+}
+
+.logieval-secure .les-screen,
+.logieval-secure .les-panel,
+.les-panel,
+.logieval-secure .les-box,
+.logieval-secure .les-empty-state {
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: var(--les-panel);
+	box-shadow: var(--les-shadow-light);
+}
+
+.logieval-secure .les-panel,
+.les-panel,
+.logieval-secure .les-box {
+	padding: 18px;
+}
+
+.logieval-secure .les-empty-state {
+	max-width: 760px;
+	margin: 20px auto;
+	padding: 28px;
+	text-align: center;
+}
+
+.logieval-secure .les-empty-state h2 {
+	margin-bottom: 8px;
+}
+
+.logieval-secure .les-grid,
+.les-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	gap: 18px;
+}
+
+.logieval-secure .les-access {
+	display: grid;
+	grid-template-columns: minmax(0, 1.05fr) minmax(320px, .75fr);
+	gap: 24px;
+	align-items: stretch;
+	padding: 0;
+	overflow: hidden;
+}
+
+.logieval-secure .les-access-intro {
+	padding: 34px;
+	background: #f7fafc;
+	border-right: 1px solid var(--les-border);
+}
+
+.logieval-secure .les-access-intro h2 {
+	max-width: 520px;
+	margin-bottom: 10px;
+	font-size: 32px;
+}
+
+.logieval-secure .les-access-card {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-height: 320px;
+	padding: 30px;
+	background: #fff;
+}
+
+.logieval-secure .les-fullscreen-guard {
+	position: fixed;
+	z-index: 999999;
+	inset: 0;
+	display: grid;
+	place-items: center;
+	padding: 24px;
+	background: rgba(15, 23, 42, .72);
+}
+
+.logieval-secure .les-fullscreen-guard .les-empty-state {
+	width: min(620px, 100%);
+	border: 2px solid var(--les-danger);
+	box-shadow: 0 24px 60px rgba(15, 23, 42, .28);
+}
+
+.logieval-secure [data-les-questions-area].is-fullscreen-blocked {
+	pointer-events: none;
+	filter: blur(2px);
+	user-select: none;
+}
+
+.logieval-secure .les-submit-confirm {
+	margin: 18px 0;
+}
+
+.logieval-secure .les-submit-confirm-card {
+	padding: 22px;
+	background: #fff7ed;
+	border: 2px solid #f59e0b;
+	border-radius: 8px;
+	box-shadow: 0 16px 34px rgba(15, 23, 42, .12);
+}
+
+.logieval-secure .les-submit-confirm-card h3 {
+	margin: 0 0 8px;
+	color: var(--les-ink);
+	font-size: 22px;
+	line-height: 1.2;
+}
+
+.logieval-secure .les-submit-confirm-card p {
+	max-width: 820px;
+	margin: 0;
+	color: var(--les-muted);
+	font-weight: 700;
+}
+
+.logieval-secure .les-submit-confirm-card .les-actions {
+	margin-top: 18px;
+}
+
+.logieval-secure .les-kicker {
+	display: inline-block;
+	margin-bottom: 10px;
+	color: var(--les-blue);
+	font-size: 12px;
+	font-weight: 800;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+}
+
+.logieval-secure .les-checklist {
+	display: grid;
+	gap: 8px;
+	margin: 20px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.logieval-secure .les-checklist li {
+	position: relative;
+	padding-left: 24px;
+	color: #27364a;
+	font-weight: 700;
+}
+
+.logieval-secure .les-checklist li::before {
+	position: absolute;
+	left: 0;
+	top: 1px;
+	content: "";
+	width: 15px;
+	height: 15px;
+	border-radius: 999px;
+	background: var(--les-accent);
+	box-shadow: inset 0 0 0 4px #fff;
+	border: 1px solid var(--les-accent);
+	color: var(--les-accent);
+}
+
+.logieval-secure label {
+	display: block;
+	margin: 12px 0;
+	font-weight: 700;
+	color: #243249;
+}
+
+.logieval-secure input,
+.logieval-secure textarea,
+.logieval-secure select {
+	width: 100%;
+	max-width: 100%;
+	min-height: 40px;
+	margin-top: 6px;
+	border: 1px solid var(--les-border-strong);
+	border-radius: 7px;
+	background: #fff;
+	color: var(--les-ink);
+	padding: 9px 11px;
+	box-shadow: none;
+}
+
+.logieval-secure input[type="checkbox"],
+.logieval-secure input[type="radio"] {
+	accent-color: var(--les-accent);
+}
+
+.logieval-secure textarea {
+	min-height: 110px;
+	resize: vertical;
+}
+
+.logieval-secure input:focus,
+.logieval-secure textarea:focus,
+.logieval-secure select:focus {
+	border-color: var(--les-accent);
+	box-shadow: 0 0 0 3px rgba(15, 118, 110, .14);
+	outline: 0;
+}
+
+.logieval-secure .les-form-row {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+	gap: 12px;
+}
+
+.logieval-secure button,
+.logieval-secure .button,
+.logieval-secure .les-button-secondary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-height: 38px;
+	border: 1px solid transparent;
+	border-radius: 7px;
+	background: var(--les-accent);
+	color: #fff;
+	padding: 9px 14px;
+	font-weight: 800;
+	line-height: 1.2;
+	cursor: pointer;
+	text-decoration: none;
+	transition: background .16s ease, border-color .16s ease, transform .16s ease;
+}
+
+.logieval-secure button:hover,
+.logieval-secure .button:hover {
+	background: var(--les-accent-dark);
+	color: #fff;
+	transform: translateY(-1px);
+}
+
+.logieval-secure .les-button-secondary,
+.logieval-secure .button-secondary,
+.logieval-secure .button.secondary {
+	border-color: var(--les-border-strong);
+	background: #fff;
+	color: var(--les-ink);
+}
+
+.logieval-secure .les-button-secondary:hover,
+.logieval-secure .button-secondary:hover,
+.logieval-secure .button.secondary:hover {
+	border-color: var(--les-accent);
+	background: var(--les-accent-soft);
+	color: var(--les-accent-dark);
+}
+
+.logieval-secure .les-button-danger,
+.logieval-secure .button.les-button-danger {
+	border-color: #f3b5ae;
+	background: var(--les-danger-bg);
+	color: var(--les-danger);
+}
+
+.logieval-secure .les-button-danger:hover,
+.logieval-secure .button.les-button-danger:hover {
+	border-color: var(--les-danger);
+	background: var(--les-danger);
+	color: #fff;
+}
+
+.logieval-secure .les-inline {
+	display: inline-block;
+	margin: 3px 4px 3px 0;
+}
+
+.logieval-secure .les-table-scroll {
+	width: 100%;
+	overflow-x: auto;
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: #fff;
+}
+
+/* 1.36.1 : un tableau large hors de .les-table-scroll défile dans son cadre au lieu de déborder de la page. */
+.logieval-secure form:has(> table.widefat),
+.logieval-secure .les-panel:has(> table.widefat) {
+	min-width: 0;
+	max-width: 100%;
+	overflow-x: auto;
+}
+
+.logieval-secure table.widefat {
+	width: 100%;
+	min-width: 860px;
+	border-collapse: collapse;
+	border: 0;
+	background: #fff;
+	color: var(--les-ink);
+}
+
+.logieval-secure table.widefat th,
+.logieval-secure table.widefat td {
+	padding: 13px 14px;
+	border: 0;
+	border-bottom: 1px solid var(--les-border);
+	text-align: left;
+	vertical-align: middle;
+}
+
+.logieval-secure table.widefat th {
+	background: #f8fafc;
+	color: var(--les-ink);
+	font-size: 13px;
+	font-weight: 900;
+	text-transform: uppercase;
+	letter-spacing: .02em;
+}
+
+.logieval-secure table.widefat.striped tbody tr:nth-child(odd) {
+	background: #fcfdff;
+}
+
+.logieval-secure .les-evaluations-table td:first-child {
+	min-width: 180px;
+}
+
+.logieval-secure .les-evaluations-table td:last-child {
+	min-width: 300px;
+}
+
+.logieval-secure .les-row-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 7px;
+	align-items: center;
+}
+
+.logieval-secure .les-row-actions .les-inline {
+	margin: 0;
+}
+
+.logieval-secure .les-security-steps {
+	display: grid;
+	gap: 10px;
+	margin: 10px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.logieval-secure .les-security-steps li {
+	display: grid;
+	grid-template-columns: 150px minmax(0, 1fr);
+	gap: 10px;
+	align-items: start;
+}
+
+.logieval-secure .les-security-steps span {
+	display: inline-flex;
+	white-space: nowrap;
+	justify-content: center;
+	padding: 3px 8px;
+	border-radius: 999px;
+	background: var(--les-danger-bg);
+	color: var(--les-danger);
+	font-weight: 900;
+}
+
+.logieval-secure .les-class-heading {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin: 24px 0 8px;
+	padding: 10px 12px;
+	border-left: 4px solid var(--les-accent);
+	background: #f8fafc;
+	color: var(--les-text);
+}
+
+.logieval-secure .les-class-heading span {
+	color: var(--les-muted);
+	font-size: 13px;
+	font-weight: 800;
+}
+
+.logieval-secure .les-alert-badge {
+	display: inline-flex;
+	align-items: center;
+	min-height: 28px;
+	padding: 4px 9px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 900;
+	white-space: nowrap;
+}
+
+.logieval-secure .les-alert-badge.is-ok {
+	border: 1px solid #bbf7d0;
+	background: #f0fdf4;
+	color: #166534;
+}
+
+.logieval-secure .les-alert-badge.is-warning {
+	border: 1px solid #fde68a;
+	background: #fffbeb;
+	color: #92400e;
+}
+
+.logieval-secure .les-alert-badge.is-critical {
+	border: 1px solid #fecaca;
+	background: #fef2f2;
+	color: #991b1b;
+}
+
+.logieval-secure .les-corrections-table {
+	margin-bottom: 18px;
+}
+
+.logieval-secure .les-corrections-table .les-correction-row > td {
+	padding: 0 12px 18px;
+	background: #fff;
+}
+
+.logieval-secure .les-correction-fullwidth {
+	width: 100%;
+	padding: 14px;
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: #fff;
+}
+
+.logieval-secure .les-correction-fullwidth details {
+	width: 100%;
+}
+
+.logieval-secure .les-correction-fullwidth details[open] {
+	display: block;
+}
+
+.logieval-secure .les-correction-fullwidth summary {
+	display: flex;
+	align-items: center;
+	min-height: 36px;
+	color: var(--les-primary);
+	font-weight: 900;
+	cursor: pointer;
+}
+
+.logieval-secure .les-correction-fullwidth .les-answer-grade,
+.logieval-secure .les-correction-fullwidth .les-security-log-table,
+.logieval-secure .les-correction-fullwidth textarea,
+.logieval-secure .les-correction-fullwidth input[type="number"] {
+	width: 100%;
+	max-width: none;
+}
+
+.logieval-secure .les-evaluation-heading {
+	margin-top: 22px;
+	padding-top: 14px;
+	border-top: 1px solid var(--les-border);
+}
+
+.logieval-secure .les-security-summary {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 10px;
+	margin: 12px 0;
+	padding: 12px;
+	border: 1px solid #bfdbfe;
+	border-radius: 8px;
+	background: #eff6ff;
+}
+
+.logieval-secure .les-security-summary.is-ok {
+	border-color: #bbf7d0;
+	background: #f0fdf4;
+}
+
+.logieval-secure .les-security-summary.is-warning {
+	border-color: #fde68a;
+	background: #fffbeb;
+}
+
+.logieval-secure .les-security-summary strong,
+.logieval-secure .les-security-summary span {
+	display: block;
+}
+
+.logieval-secure .les-security-summary strong {
+	color: var(--les-muted);
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: .04em;
+}
+
+.logieval-secure .les-security-summary span {
+	margin-top: 4px;
+	color: var(--les-text);
+	font-weight: 900;
+}
+
+.logieval-secure .les-security-log-table {
+	margin: 12px 0 18px;
+}
+
+.logieval-secure .les-security-log-table code {
+	display: inline-block;
+	margin-top: 4px;
+	color: var(--les-muted);
+	font-size: 12px;
+	white-space: normal;
+}
+
+.logieval-secure .les-check {
+	display: flex;
+	gap: 9px;
+	align-items: flex-start;
+	font-weight: 600;
+	color: var(--les-muted);
+}
+
+.logieval-secure .les-checklist-panel {
+	display: grid;
+	gap: 8px;
+	max-height: 260px;
+	overflow: auto;
+	padding: 10px;
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: #f8fafc;
+}
+
+.logieval-secure .les-check input,
+.logieval-secure .les-options input {
+	width: auto;
+	min-height: 0;
+	margin-top: 4px;
+}
+
+.logieval-secure .les-warning,
+.les-warning {
+	background: var(--les-warn-bg);
+	border-color: #f2c94c;
+}
+
+.logieval-secure .les-message {
+	min-height: 20px;
+	margin: 10px 0 0;
+	color: var(--les-accent-dark);
+	font-weight: 800;
+}
+
+.logieval-secure .les-message.is-error {
+	color: var(--les-danger);
+}
+
+.logieval-secure .les-exam {
+	padding: 22px;
+	background: #fff;
+}
+
+.logieval-secure .les-exam-header,
+.logieval-secure .les-dashboard-header,
+.logieval-secure .les-section-title {
+	display: flex;
+	justify-content: space-between;
+	gap: 16px;
+	align-items: flex-start;
+}
+
+.logieval-secure .les-exam-header {
+	position: sticky;
+	top: 32px;
+	z-index: 5;
+	margin: -22px -22px 18px;
+	padding: 18px 22px;
+	border-bottom: 1px solid var(--les-border);
+	background: rgba(255, 255, 255, .96);
+	backdrop-filter: blur(10px);
+}
+
+.logieval-secure .les-exam-header h2 {
+	margin-bottom: 6px;
+}
+
+.logieval-secure .les-exam-meta {
+	display: grid;
+	gap: 6px;
+	justify-items: end;
+	min-width: 130px;
+}
+
+.logieval-secure .les-timer {
+	border-radius: 8px;
+	background: #172033;
+	color: #fff;
+	padding: 9px 12px;
+	font-size: 20px;
+	font-weight: 900;
+	font-variant-numeric: tabular-nums;
+}
+
+.logieval-secure .les-progress-wrap {
+	margin: 0 0 18px;
+	padding: 14px;
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: #f8fafc;
+}
+
+.logieval-secure .les-company-context {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: 16px;
+	align-items: start;
+	margin: 0 0 18px;
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: #fff;
+	padding: 16px;
+	box-shadow: var(--les-shadow-light);
+}
+
+.logieval-secure .les-company-logo img,
+.logieval-secure .les-company-logo-preview img {
+	display: block;
+	max-width: 120px;
+	max-height: 82px;
+	object-fit: contain;
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: #fff;
+	padding: 8px;
+}
+
+.logieval-secure .les-company-body h3 {
+	margin-bottom: 6px;
+	font-size: 20px;
+}
+
+.logieval-secure .les-company-body p {
+	margin-bottom: 8px;
+}
+
+.logieval-secure .les-apprentice-role {
+	margin: 8px 0;
+}
+
+.logieval-secure .les-apprentice-role strong {
+	display: block;
+	margin-bottom: 4px;
+	color: var(--les-ink);
+}
+
+.logieval-secure .les-company-logo-preview {
+	margin-top: 10px;
+}
+
+.logieval-secure .les-security-notice,
+.logieval-secure .les-story-intro {
+	margin: 0 0 16px;
+	border-radius: 8px;
+	padding: 18px;
+	line-height: 1.6;
+}
+
+.logieval-secure .les-security-notice {
+	border: 1px solid #fecaca;
+	border-left: 6px solid var(--les-danger);
+	background: #fff7f5;
+	color: #7f1d1d;
+}
+
+.logieval-secure .les-security-notice strong {
+	display: block;
+	margin-bottom: 6px;
+	color: #7f1d1d;
+}
+
+.logieval-secure .les-secure-start {
+	align-items: stretch;
+	text-align: left;
+}
+
+.logieval-secure .les-secure-start .les-security-notice {
+	margin-bottom: 18px;
+}
+
+.logieval-secure .les-evaluation-start {
+	display: grid;
+	gap: 16px;
+}
+
+.logieval-secure .les-secure-start h2 {
+	margin-bottom: 8px;
+	font-size: 30px;
+}
+
+.logieval-secure .les-security-hero h3 {
+	margin: 0 0 8px;
+	font-size: 24px;
+}
+
+.logieval-secure .les-security-rule-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 16px;
+	margin-top: 18px;
+}
+
+.logieval-secure .les-security-rule-grid > div {
+	border: 1px solid rgba(185, 28, 28, .18);
+	border-radius: 8px;
+	background: #fff;
+	padding: 16px;
+}
+
+.logieval-secure .les-security-rule-grid ul,
+.logieval-secure .les-security-rule-grid ol {
+	margin: 8px 0 0 20px;
+	padding: 0;
+}
+
+.logieval-secure .les-security-alert {
+	margin-top: 16px;
+	border-radius: 8px;
+	background: #fee2e2;
+	padding: 14px 16px;
+	color: #7f1d1d;
+	font-weight: 700;
+}
+
+.logieval-secure .les-security-confirm {
+	margin: 18px 0;
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: #fff;
+	padding: 14px 16px;
+	font-weight: 800;
+}
+
+.logieval-secure .les-story-intro {
+	border: 1px solid var(--les-border);
+	background: #fff;
+	box-shadow: var(--les-shadow-light);
+	font-size: 16px;
+}
+
+.logieval-secure .les-story-intro p:last-child,
+.logieval-secure .les-security-notice p:last-child {
+	margin-bottom: 0;
+}
+
+@media (max-width: 760px) {
+	.logieval-secure .les-security-rule-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+.logieval-secure .les-story-builder {
+	display: grid;
+	gap: 14px;
+}
+
+.logieval-secure .les-story-section {
+	border: 1px solid var(--les-border);
+	border-left: 5px solid var(--les-accent);
+	border-radius: 8px;
+	background: #fff;
+	padding: 16px;
+	box-shadow: var(--les-shadow-light);
+}
+
+.logieval-secure .les-story-section + .les-story-section {
+	margin-top: 14px;
+}
+
+.logieval-secure .les-story-question {
+	margin: 14px 0 0;
+	border-left-color: #94a3b8;
+	background: #f8fafc;
+}
+
+.logieval-secure .les-story-step,
+.logieval-secure .les-story-section-intro {
+	margin: 0 0 18px;
+}
+
+.logieval-secure .les-story-section-intro {
+	border: 1px solid var(--les-border);
+	border-left: 5px solid var(--les-accent);
+	border-radius: 8px;
+	background: #fff;
+	padding: 18px;
+	box-shadow: var(--les-shadow-light);
+}
+
+.logieval-secure .les-story-intro-text {
+	margin: 10px 0 14px;
+	line-height: 1.65;
+}
+
+.logieval-secure .les-options label.is-correct-answer {
+	border-color: #22c55e;
+	background: #ecfdf5;
+}
+
+.logieval-secure .les-options label.is-correct-answer strong {
+	margin-left: 8px;
+	color: #166534;
+}
+
+.logieval-secure .les-type-fields {
+	margin-top: 12px;
+}
+
+.logieval-secure .les-qcm-builder {
+	display: grid;
+	gap: 10px;
+	margin-top: 10px;
+}
+
+.logieval-secure .les-qcm-option {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: 10px;
+	align-items: center;
+	margin: 0;
+}
+
+.logieval-secure .les-calculator {
+	width: min(260px, 100%);
+	margin: 0;
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: #fff;
+	padding: 12px;
+	box-shadow: var(--les-shadow-light);
+}
+
+.logieval-secure .les-calculator:focus,
+.logieval-secure .les-calculator.is-active {
+	border-color: var(--les-accent);
+	box-shadow: 0 0 0 3px rgba(15, 143, 90, .14), var(--les-shadow-light);
+	outline: none;
+}
+
+.logieval-secure .les-calculation-answer {
+	display: grid;
+	grid-template-columns: minmax(260px, 1fr) minmax(230px, 280px);
+	gap: 16px;
+	align-items: start;
+}
+
+.logieval-secure .les-calculation-fields {
+	display: grid;
+	gap: 12px;
+}
+
+.logieval-secure .les-calculation-answer input,
+.logieval-secure .les-calculation-answer textarea {
+	width: 100%;
+}
+
+.logieval-secure .les-question-calculator {
+	justify-self: end;
+}
+
+.logieval-secure .les-calculator-title {
+	margin-bottom: 8px;
+	color: var(--les-muted);
+	font-size: 13px;
+	font-weight: 900;
+	text-transform: uppercase;
+	letter-spacing: .06em;
+}
+
+.logieval-secure .les-calculator-screen {
+	margin-bottom: 10px;
+	border-radius: 6px;
+	background: #172033;
+	padding: 8px 10px;
+}
+
+.logieval-secure .les-calculator-expression {
+	min-height: 20px;
+	color: #a9b4c6;
+	text-align: right;
+	font-size: 13px;
+	font-weight: 800;
+	font-variant-numeric: tabular-nums;
+	overflow-wrap: anywhere;
+}
+
+.logieval-secure .les-calculator-display {
+	min-height: 42px;
+	color: #fff;
+	text-align: right;
+	font-size: 28px;
+	line-height: 1.25;
+	font-weight: 900;
+	font-variant-numeric: tabular-nums;
+	overflow-wrap: anywhere;
+}
+
+.logieval-secure .les-calculator-keys {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 6px;
+}
+
+.logieval-secure .les-calculator-keys button {
+	min-height: 38px;
+	padding: 6px;
+	border-radius: 6px;
+}
+
+.logieval-secure .les-calculator-equals {
+	grid-column: 1 / -1;
+}
+
+@media (max-width: 720px) {
+	.logieval-secure .les-calculation-answer {
+		grid-template-columns: 1fr;
+	}
+
+	.logieval-secure .les-question-calculator {
+		justify-self: stretch;
+		width: 100%;
+	}
+}
+
+.logieval-secure .les-progress-meta {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 8px;
+	font-weight: 800;
+}
+
+.logieval-secure .les-progress-track {
+	height: 10px;
+	overflow: hidden;
+	border-radius: 999px;
+	background: var(--les-accent-soft);
+}
+
+.logieval-secure .les-progress-track span {
+	display: block;
+	width: 0;
+	height: 100%;
+	border-radius: inherit;
+	background: var(--les-accent);
+	transition: width .2s ease;
+}
+
+.logieval-secure .les-question-nav {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin-top: 10px;
+}
+
+.logieval-secure .les-question-nav-section {
+	display: inline-flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 6px;
+	padding: 6px;
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: #f8fafc;
+}
+
+.logieval-secure .les-question-nav-section-title {
+	width: auto !important;
+	min-height: 30px !important;
+	padding: 0 8px !important;
+	border-radius: 7px !important;
+	background: transparent !important;
+	color: var(--les-muted);
+	font-size: 12px;
+	font-weight: 800;
+	text-transform: uppercase;
+	box-shadow: none !important;
+}
+
+.logieval-secure .les-question-nav-section-title:hover,
+.logieval-secure .les-question-nav-section-title:focus {
+	background: var(--les-accent-soft) !important;
+	color: var(--les-accent-dark);
+}
+
+.logieval-secure .les-question-nav button:not(.les-question-nav-section-title) {
+	width: 34px;
+	min-height: 34px;
+	padding: 0 !important;
+	border-radius: 999px;
+	background: #fff;
+	color: var(--les-ink);
+}
+
+.logieval-secure .les-question-nav button.is-answered {
+	background: var(--les-accent);
+	color: #fff;
+}
+
+.logieval-secure .les-question {
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	margin: 14px 0;
+	padding: 16px;
+	background: #fff;
+	box-shadow: var(--les-shadow-light);
+}
+
+.logieval-secure .les-inline-question {
+	margin: 14px 0;
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: #fff;
+	padding: 16px;
+	box-shadow: var(--les-shadow-light);
+}
+
+.logieval-secure .les-inline-question h4 {
+	margin: 0;
+	font-size: 17px;
+}
+
+.logieval-secure .les-question legend {
+	display: flex;
+	align-items: flex-start;
+	gap: 16px;
+	justify-content: space-between;
+	width: 100%;
+	padding: 0 4px;
+	color: #172033;
+	font-weight: 900;
+	line-height: 1.35;
+}
+
+.logieval-secure .les-question-title {
+	flex: 1 1 auto;
+	min-width: 0;
+	white-space: normal;
+	overflow-wrap: anywhere;
+}
+
+.logieval-secure .les-question-points,
+.logieval-secure .les-question legend > span:not(.les-question-title) {
+	flex: 0 0 auto;
+	color: var(--les-muted);
+	font-size: 13px;
+	font-weight: 800;
+	white-space: nowrap;
+}
+
+.logieval-secure .les-prompt {
+	margin: 8px 0 12px;
+	color: #27364a;
+}
+
+.logieval-secure .les-question-context {
+	margin: 10px 0 12px;
+	border-left: 4px solid var(--les-blue);
+	border-radius: 7px;
+	background: var(--les-blue-soft);
+	padding: 12px 14px;
+	color: #233044;
+}
+
+.logieval-secure .les-options {
+	display: grid;
+	gap: 8px;
+}
+
+.logieval-secure .les-options label {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	margin: 0;
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: #fff;
+	padding: 10px 12px;
+	font-weight: 700;
+}
+
+.logieval-secure .les-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: flex-end;
+	margin-top: 18px;
+}
+
+.logieval-secure .les-correction-alert-screen {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 18px;
+	align-items: start;
+	margin: 18px 0;
+	border: 2px solid #fecaca;
+	border-radius: 10px;
+	background: #fff1f2;
+	box-shadow: 0 16px 38px rgba(127, 29, 29, .14);
+	padding: 22px;
+	color: #7f1d1d;
+}
+
+.logieval-secure .les-correction-alert-screen h3 {
+	margin: 4px 0 10px;
+	color: #7f1d1d;
+	font-size: 26px;
+	line-height: 1.2;
+}
+
+.logieval-secure .les-correction-alert-screen p {
+	margin: 8px 0;
+	max-width: 860px;
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.5;
+}
+
+.logieval-secure .les-correction-alert-screen .les-kicker {
+	color: #991b1b;
+}
+
+.logieval-secure .les-correction-alert-icon {
+	display: grid;
+	place-items: center;
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	background: #dc2626;
+	color: #fff;
+	font-size: 30px;
+	font-weight: 900;
+	line-height: 1;
+}
+
+.logieval-secure .les-answer-grade {
+	position: relative;
+	margin-top: 26px;
+	padding-top: 22px;
+}
+
+.logieval-secure .les-answer-grade + .les-answer-grade {
+	margin-top: 34px;
+}
+
+.logieval-secure .les-answer-grade + .les-answer-grade::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: min(520px, 48%);
+	height: 1px;
+	transform: translateX(-50%);
+	background: var(--les-border-strong);
+}
+
+.logieval-secure .les-answer-grade pre {
+	white-space: pre-wrap;
+	border-radius: 8px;
+	background: #f1f5f9;
+	padding: 12px;
+	color: #233044;
+}
+
+.logieval-secure .les-expected-answer {
+	margin: 12px 0;
+	border-left: 4px solid var(--les-accent);
+	border-radius: 8px;
+	background: var(--les-accent-soft);
+	padding: 12px 14px;
+	color: var(--les-ink);
+}
+
+.logieval-secure .les-expected-answer strong {
+	display: block;
+	margin-bottom: 4px;
+	color: var(--les-accent-dark);
+}
+
+.logieval-secure .les-points-tools {
+	display: grid;
+	gap: 8px;
+	margin: 12px 0;
+}
+
+.logieval-secure .les-points-buttons {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.logieval-secure .les-ai-grade-tools {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+	margin-top: 2px;
+}
+
+.logieval-secure .les-ai-bulk-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	align-items: center;
+	margin: 14px 0 18px;
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: #f8fafc;
+	padding: 12px;
+}
+
+.logieval-secure .les-ai-bulk-toolbar.is-question {
+	margin: 8px 0 14px;
+}
+
+.logieval-secure .les-ai-bulk-toolbar .description {
+	flex-basis: 100%;
+	margin: 0;
+}
+
+.logieval-secure .les-ai-grade-status {
+	color: var(--les-muted);
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.logieval-secure .les-ai-grade-status.is-ok {
+	color: var(--les-accent-dark);
+}
+
+.logieval-secure .les-ai-grade-status.is-error {
+	color: #991b1b;
+}
+
+.logieval-secure .les-ai-analysis {
+	margin: 10px 0;
+	border-left: 4px solid var(--les-accent);
+	border-radius: 8px;
+	background: #ecfdf5;
+	padding: 10px 12px;
+	color: var(--les-text);
+	font-size: 13px;
+	line-height: 1.45;
+}
+
+.logieval-secure .les-ai-analysis[hidden] {
+	display: none;
+}
+
+.logieval-secure .les-ai-analysis strong {
+	display: block;
+	margin-bottom: 4px;
+	color: var(--les-accent-dark);
+}
+
+.logieval-secure .les-ai-analysis p {
+	margin: 4px 0 0;
+}
+
+.logieval-secure .les-progress-inline {
+	display: inline-block;
+	width: 130px;
+	height: 10px;
+	margin-right: 8px;
+	overflow: hidden;
+	border-radius: 999px;
+	background: #e2e8f0;
+	vertical-align: middle;
+}
+
+.logieval-secure .les-progress-inline span {
+	display: block;
+	height: 100%;
+	border-radius: inherit;
+	background: var(--les-accent);
+}
+
+.logieval-secure .les-question-correction-mode {
+	margin: 16px 0;
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: #fff;
+	padding: 14px;
+}
+
+.logieval-secure .les-question-correction-section {
+	position: relative;
+	margin: 30px 0;
+	padding-top: 24px;
+}
+
+.logieval-secure .les-question-correction-section + .les-question-correction-section {
+	margin-top: 40px;
+}
+
+.logieval-secure .les-question-correction-section + .les-question-correction-section::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: min(520px, 48%);
+	height: 1px;
+	transform: translateX(-50%);
+	background: var(--les-border-strong);
+}
+
+.logieval-secure .les-question-correction-section h4 {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.logieval-secure .les-correction-savebar {
+	position: sticky;
+	top: 12px;
+	z-index: 20;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 10px;
+	margin: 10px 0 16px;
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: rgba(255, 255, 255, .94);
+	box-shadow: var(--les-shadow-light);
+	padding: 10px;
+	backdrop-filter: blur(6px);
+}
+
+.logieval-secure .les-correction-savebar .les-ai-grade-status {
+	margin-right: auto;
+}
+
+.wp-admin .logieval-secure .les-correction-savebar {
+	top: 44px;
+}
+
+.logieval-secure .les-question-correction-scroll {
+	overflow-x: visible;
+}
+
+.logieval-secure table.widefat.les-question-correction-table {
+	min-width: 0;
+	table-layout: fixed;
+}
+
+.logieval-secure .les-question-correction-table th:nth-child(1),
+.logieval-secure .les-question-correction-table td:nth-child(1) {
+	width: 11%;
+}
+
+.logieval-secure .les-question-correction-table th:nth-child(2),
+.logieval-secure .les-question-correction-table td:nth-child(2) {
+	width: 45%;
+}
+
+.logieval-secure .les-question-correction-table th:nth-child(3),
+.logieval-secure .les-question-correction-table td:nth-child(3) {
+	width: 18%;
+}
+
+.logieval-secure .les-question-correction-table th:nth-child(4),
+.logieval-secure .les-question-correction-table td:nth-child(4) {
+	width: 18%;
+}
+
+.logieval-secure .les-question-correction-table th:nth-child(5),
+.logieval-secure .les-question-correction-table td:nth-child(5) {
+	width: 8%;
+}
+
+.logieval-secure .les-question-correction-table pre {
+	margin: 0;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+	word-break: normal;
+	font-family: inherit;
+	line-height: 1.5;
+}
+
+.logieval-secure .les-question-correction-table textarea {
+	min-height: 86px;
+}
+
+.logieval-secure .les-question-correction-table .les-points-tools {
+	margin: 0;
+}
+
+.logieval-secure .les-question-correction-table .les-points-buttons {
+	gap: 5px;
+}
+
+.logieval-secure .les-question-correction-table .les-points-buttons .button {
+	min-height: 32px;
+	padding: 6px 9px;
+	font-size: 12px;
+}
+
+.logieval-secure .les-question-grade-form {
+	display: block;
+	gap: 10px;
+	align-items: start;
+}
+
+.logieval-secure .les-dashboard-header {
+	margin-bottom: 16px;
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: var(--les-panel);
+	box-shadow: var(--les-shadow);
+	padding: 18px;
+}
+
+.logieval-secure .les-dashboard-header h2 {
+	margin-bottom: 6px;
+}
+
+.logieval-secure .les-stat-grid {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 12px;
+	margin-bottom: 16px;
+}
+
+.logieval-secure .les-stat {
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: var(--les-panel);
+	padding: 14px;
+	box-shadow: var(--les-shadow-light);
+}
+
+.logieval-secure .les-stat strong {
+	display: block;
+	margin-bottom: 3px;
+	font-size: 27px;
+	line-height: 1;
+	color: var(--les-blue);
+}
+
+.logieval-secure .les-stat span {
+	color: var(--les-muted);
+	font-size: 13px;
+	font-weight: 800;
+}
+
+.logieval-secure .les-dashboard-layout {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 18px;
+}
+
+.logieval-secure .les-section-title {
+	margin-bottom: 12px;
+}
+
+.logieval-secure .les-section-title h3 {
+	margin-bottom: 0;
+}
+
+.logieval-secure .les-section-title span {
+	color: var(--les-muted);
+	font-size: 13px;
+	font-weight: 700;
+}
+
+.logieval-secure .les-preview-toolbar {
+	display: flex;
+	justify-content: space-between;
+	gap: 18px;
+	align-items: flex-start;
+	margin-bottom: 16px;
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: #f8fafc;
+	padding: 18px;
+}
+
+.logieval-secure .les-preview-toolbar h2 {
+	margin-bottom: 6px;
+}
+
+.logieval-secure .les-preview-toolbar p {
+	max-width: 760px;
+	margin-bottom: 0;
+}
+
+.logieval-secure .les-preview-meta {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 10px;
+	margin-bottom: 16px;
+}
+
+.logieval-secure .les-preview-meta div {
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: #fff;
+	padding: 12px;
+	box-shadow: var(--les-shadow-light);
+}
+
+.logieval-secure .les-preview-meta strong,
+.logieval-secure .les-preview-meta span {
+	display: block;
+}
+
+.logieval-secure .les-preview-meta strong {
+	color: var(--les-muted);
+	font-size: 12px;
+	text-transform: uppercase;
+}
+
+.logieval-secure .les-preview-meta span {
+	margin-top: 4px;
+	color: var(--les-ink);
+	font-size: 17px;
+	font-weight: 900;
+}
+
+.logieval-secure .les-preview-exam {
+	margin-top: 0;
+}
+
+.logieval-secure .les-list {
+	display: grid;
+	gap: 8px;
+}
+
+.logieval-secure .les-eval-link {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+	align-items: center;
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: #fff;
+	padding: 12px 14px;
+	text-decoration: none;
+	color: inherit;
+	transition: border-color .16s ease, background .16s ease, transform .16s ease;
+}
+
+.logieval-secure .les-eval-link:hover {
+	border-color: var(--les-accent);
+	background: var(--les-accent-soft);
+	color: inherit;
+	transform: translateY(-1px);
+}
+
+.logieval-secure .les-eval-link strong,
+.logieval-secure .les-eval-link small {
+	display: block;
+}
+
+.logieval-secure .les-eval-link small {
+	margin-top: 3px;
+	color: var(--les-muted);
+}
+
+.logieval-secure .les-eval-link em {
+	border-radius: 999px;
+	background: var(--les-accent-soft);
+	color: var(--les-accent-dark);
+	padding: 4px 8px;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 900;
+	white-space: nowrap;
+}
+
+.logieval-secure table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 14px;
+	background: #fff;
+}
+
+.logieval-secure th,
+.logieval-secure td {
+	border-bottom: 1px solid var(--les-border);
+	padding: 12px 10px;
+	text-align: left;
+	vertical-align: top;
+}
+
+.logieval-secure th {
+	background: #f8fafc;
+	color: #42526a;
+	font-size: 12px;
+	font-weight: 900;
+	text-transform: uppercase;
+}
+
+.logieval-secure tbody tr:hover {
+	background: #fbfdff;
+}
+
+.logieval-secure code {
+	border: 1px solid var(--les-border);
+	border-radius: 6px;
+	background: #f8fafc;
+	padding: 2px 6px;
+	color: #172033;
+}
+
+.logieval-secure details {
+	border: 1px solid var(--les-border);
+	border-radius: 8px;
+	background: #fff;
+	padding: 10px 12px;
+}
+
+.logieval-secure summary {
+	cursor: pointer;
+	font-weight: 900;
+	color: var(--les-blue);
+}
+
+.logieval-secure .notice.inline {
+	margin: 12px 0;
+	border-radius: 8px;
+	box-shadow: none;
+}
+
+@media (max-width: 900px) {
+	.logieval-secure .les-access {
+		grid-template-columns: 1fr;
+	}
+
+	.logieval-secure .les-access-card {
+		min-height: auto;
+	}
+
+	.logieval-secure .les-stat-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.logieval-secure .les-preview-toolbar {
+		display: block;
+	}
+
+	.logieval-secure .les-preview-meta {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 700px) {
+	.logieval-secure {
+		font-size: 14px;
+	}
+
+	.logieval-secure .les-access-intro,
+	.logieval-secure .les-access-card,
+	.logieval-secure .les-panel,
+	.les-panel {
+		padding: 16px;
+	}
+
+	.logieval-secure .les-access-intro h2 {
+		font-size: 25px;
+	}
+
+	.logieval-secure .les-exam-header,
+	.logieval-secure .les-dashboard-header,
+	.logieval-secure .les-section-title {
+		display: block;
+	}
+
+	.logieval-secure .les-exam-header {
+		position: static;
+		margin: -22px -22px 16px;
+	}
+
+	.logieval-secure .les-exam-meta {
+		justify-items: start;
+		margin-top: 10px;
+	}
+
+	.logieval-secure .les-stat-grid,
+	.logieval-secure .les-grid,
+	.les-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.logieval-secure .les-actions {
+		justify-content: stretch;
+	}
+
+	.logieval-secure .les-actions button,
+	.logieval-secure .les-actions .button,
+	.logieval-secure .les-button-secondary {
+		width: 100%;
+	}
+
+	.logieval-secure table {
+		display: block;
+		overflow-x: auto;
+		white-space: nowrap;
+	}
+}
+
+/* Monitoring : élèves bloqués / demandes de déblocage (v3.1.11) */
+.logieval-secure .les-blocked-alert {
+	margin: 16px 0;
+	padding: 16px 18px;
+	border: 2px solid var(--les-danger, #dc2626);
+	border-radius: 12px;
+	background: #fff1f2;
+}
+
+.logieval-secure .les-blocked-alert h3 {
+	margin: 0 0 12px;
+	color: var(--les-danger, #dc2626);
+}
+
+.logieval-secure .les-blocked-alert tr.les-row-request td {
+	background: #ffe4e6;
+	font-weight: 600;
+}
+
+.logieval-secure .les-blocked-alert .button-primary {
+	white-space: nowrap;
+}
+
+/* Copies annulées pour tricherie (v3.1.14) */
+.logieval-secure .les-cheating-banner {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px 12px;
+	align-items: baseline;
+	margin: 14px 0;
+	padding: 14px 18px;
+	border: 2px solid var(--les-danger, #b42318);
+	border-left-width: 8px;
+	border-radius: 10px;
+	background: #fff1f2;
+	color: var(--les-danger, #b42318);
+}
+
+.logieval-secure .les-cheating-banner span {
+	color: #7a271a;
+}
+
+.logieval-secure tr.les-row-cancelled > td {
+	background: #fee4e2 !important;
+	color: #7a271a;
+}
+
+.logieval-secure tr.les-row-cancelled:not(.les-correction-row) > td:first-child {
+	box-shadow: inset 6px 0 0 var(--les-danger, #b42318);
+	font-weight: 700;
+}
+
+.logieval-secure .les-cancelled-badge {
+	display: inline-block;
+	padding: 4px 10px;
+	border-radius: 999px;
+	background: var(--les-danger, #b42318);
+	color: #fff;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.logieval-secure .les-cancelled-dash {
+	font-weight: 700;
+	color: var(--les-danger, #b42318);
+	text-transform: uppercase;
+	letter-spacing: .03em;
+	font-size: .85em;
+}
+
+.logieval-secure .les-cheating-notice {
+	padding: 18px 20px;
+	border: 2px dashed var(--les-danger, #b42318);
+	border-radius: 12px;
+	background: repeating-linear-gradient(-45deg, #fff5f4, #fff5f4 14px, #ffe9e7 14px, #ffe9e7 28px);
+}
+
+.logieval-secure .les-cheating-notice-head {
+	display: flex;
+	gap: 14px;
+	align-items: flex-start;
+}
+
+.logieval-secure .les-cheating-icon {
+	font-size: 32px;
+	line-height: 1;
+}
+
+.logieval-secure .les-cheating-notice-head strong {
+	display: block;
+	font-size: 1.15em;
+	color: var(--les-danger, #b42318);
+	text-transform: uppercase;
+	letter-spacing: .02em;
+}
+
+.logieval-secure .les-cheating-notice-head p {
+	margin: 6px 0 0;
+	color: #7a271a;
+}
+
+.logieval-secure .les-cheating-exits {
+	margin: 12px 0 8px 46px;
+	color: #7a271a;
+}
+
+.logieval-secure .les-cheating-details {
+	margin-top: 10px;
+	background: #fff;
+	border-radius: 8px;
+	padding: 8px 12px;
+}
+
+.logieval-secure .les-cheating-details summary {
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.logieval-secure .les-cancelled-grade {
+	font-size: 1.15em;
+	color: var(--les-danger, #b42318);
+}
+
+/* Multi-enseignants, bibliothèque partagée, réglages IA (v3.2.0) */
+.logieval-secure .les-scope-switch {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	align-items: center;
+	margin: 10px 0 14px;
+	font-size: 13px;
+}
+
+.logieval-secure .les-scope-switch a {
+	padding: 5px 12px;
+	border: 1px solid #cbd5e1;
+	border-radius: 999px;
+	background: #fff;
+	color: #334155;
+	text-decoration: none;
+}
+
+.logieval-secure .les-scope-switch a.is-active {
+	border-color: #1f5e7a;
+	background: #1f5e7a;
+	color: #fff;
+}
+
+.logieval-secure .les-shared-badge {
+	display: inline-block;
+	margin-left: 6px;
+	padding: 2px 8px;
+	border-radius: 999px;
+	background: #e0f2fe;
+	color: #075985;
+	font-size: 11px;
+	font-weight: 700;
+	vertical-align: middle;
+}
+
+.logieval-secure .les-share-option small {
+	color: #64748b;
+}
+
+.logieval-secure .les-library-search {
+	display: flex;
+	gap: 8px;
+	margin: 12px 0 16px;
+}
+
+.logieval-secure .les-library-search input[type="search"] {
+	flex: 1;
+	min-width: 0;
+}
+
+.logieval-secure .les-ai-hint {
+	padding: 10px 12px;
+	border-left: 4px solid #1f5e7a;
+	background: #f0f9ff;
+}
+
+.logieval-secure [data-les-ai-base-url][hidden] {
+	display: none;
+}
+
+.logieval-secure .les-checkbox-line,
+.logieval-secure .les-share-option {
+	display: flex;
+	gap: 9px;
+	align-items: flex-start;
+}
+
+.logieval-secure .les-checkbox-line input,
+.logieval-secure .les-share-option input {
+	width: auto;
+	min-height: 0;
+	margin-top: 4px;
+	flex: none;
+}
+
+/* Groupe classe : boutons radio (v3.2.1) */
+.logieval-secure .les-group-radios {
+	margin: 12px 0;
+	padding: 0;
+	border: 0;
+}
+
+.logieval-secure .les-group-radios legend {
+	margin-bottom: 6px;
+	font-weight: 700;
+	color: #243249;
+}
+
+.logieval-secure .les-group-radios .les-check {
+	margin: 0;
+	padding: 6px 8px;
+	border-radius: 6px;
+	color: #243249;
+	cursor: pointer;
+}
+
+.logieval-secure .les-group-radios .les-check:has(input:checked) {
+	background: #e7f6ef;
+	color: #0b5d3b;
+}
+
+.logieval-secure .les-duplicate-notice {
+	border-left-color: #d97706;
+}
+
+/* Bonus / Malus (v3.2.5) */
+.logieval-secure .les-bonus-malus {
+	margin: 14px 0 18px;
+	padding: 14px 16px;
+	border: 1px solid #c7d2fe;
+	border-radius: 10px;
+	background: #f5f7ff;
+}
+
+.logieval-secure .les-bonus-malus-title {
+	display: block;
+	margin-bottom: 4px;
+	color: #3730a3;
+}
+
+.logieval-secure .les-bonus-malus-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	gap: 8px 20px;
+}
+
+.logieval-secure .les-bonus-field label { color: #0b5d3b; }
+.logieval-secure .les-malus-field label { color: #b42318; }
+
+.logieval-secure .les-bonus-malus .les-points-buttons .button {
+	min-width: 0;
+	padding: 4px 10px;
+}
+
+.logieval-secure .les-bonus-malus-summary {
+	margin: 10px 0 0;
+	padding: 8px 10px;
+	border-radius: 6px;
+	background: #fff;
+	font-weight: 700;
+	color: #1e293b;
+}
+
+.logieval-secure .les-bonus-malus-table input {
+	max-width: 120px;
+}
+
+/* Critères d'évaluation (v3.3.0) */
+.logieval-secure .les-criteria-editor {
+	margin: 12px 0;
+	padding: 12px 14px;
+	border: 1px dashed #94a3b8;
+	border-radius: 10px;
+	background: #fbfcfe;
+}
+
+.logieval-secure .les-criteria-row {
+	display: grid;
+	grid-template-columns: 1fr 96px auto;
+	gap: 8px;
+	align-items: center;
+	margin: 6px 0;
+}
+
+.logieval-secure .les-criteria-row input {
+	margin: 0;
+}
+
+.logieval-secure .les-criteria-footer {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+	align-items: center;
+	margin: 8px 0 0;
+}
+
+.logieval-secure .les-criteria-total {
+	font-weight: 700;
+	font-size: 13px;
+}
+
+.logieval-secure .les-criteria-total.is-ok { color: #0b5d3b; }
+.logieval-secure .les-criteria-total.is-warning { color: #b45309; }
+
+.logieval-secure .les-criteria-check,
+.logieval-secure .les-criteria-summary {
+	margin: 10px 0;
+	padding: 10px 12px;
+	border-left: 4px solid #6366f1;
+	border-radius: 6px;
+	background: #f5f7ff;
+}
+
+.logieval-secure .les-criteria-check .les-check {
+	margin: 4px 0;
+	color: #1e293b;
+	font-weight: 500;
+}
+
+.logieval-secure .les-criteria-check em {
+	color: #4338ca;
+	font-style: normal;
+	font-weight: 700;
+}
+
+.logieval-secure .les-criteria-check.is-compact {
+	margin: 6px 0 0;
+	padding: 6px 8px;
+	font-size: 12px;
+}
+
+.logieval-secure .les-criteria-summary ul {
+	margin: 6px 0 0 18px;
+}
+
+/* Correction terminée / réouverture (v3.3.0) */
+.logieval-secure .les-correction-done {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px 16px;
+	align-items: center;
+	justify-content: space-between;
+	margin: 0 0 10px;
+	padding: 10px 14px;
+	border: 1px solid #a7f3d0;
+	border-radius: 10px;
+	background: #ecfdf5;
+	color: #065f46;
+	font-weight: 700;
+}
+
+.logieval-secure .les-locked-fieldset {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	min-width: 0;
+}
+
+.logieval-secure .les-locked-fieldset:disabled {
+	opacity: .75;
+}
+
+.logieval-secure .les-finished-note {
+	padding: 8px 12px;
+	border-left: 4px solid #10b981;
+	background: #f0fdf4;
+}
+
+/* Images des questions + agrandissement (v3.4.0) */
+.logieval-secure .les-question-image {
+	margin: 12px 0;
+}
+
+.logieval-secure .les-zoomable {
+	position: relative;
+	display: inline-block;
+	max-width: 100%;
+	padding: 0;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	background: #fff;
+	cursor: zoom-in;
+	overflow: hidden;
+}
+
+.logieval-secure .les-zoomable img {
+	display: block;
+	max-width: 100%;
+	max-height: 360px;
+	height: auto;
+}
+
+.logieval-secure .les-question-image.is-small .les-zoomable img {
+	max-height: 160px;
+}
+
+.logieval-secure .les-zoom-hint {
+	position: absolute;
+	right: 8px;
+	bottom: 8px;
+	padding: 4px 10px;
+	border-radius: 999px;
+	background: rgba(15, 23, 42, .78);
+	color: #fff;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.les-zoom-overlay.logieval-secure {
+	position: fixed;
+	inset: 0;
+	z-index: 2147483000;
+	display: flex;
+	flex-direction: column;
+	background: #0f172a;
+}
+
+.les-zoom-overlay .les-zoom-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
+	justify-content: center;
+	padding: 10px;
+	color: #fff;
+}
+
+.les-zoom-overlay .les-zoom-toolbar button {
+	min-width: 44px;
+	padding: 8px 14px;
+	border: 1px solid rgba(255, 255, 255, .4);
+	border-radius: 8px;
+	background: rgba(255, 255, 255, .12);
+	color: #fff;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.les-zoom-overlay .les-zoom-toolbar .les-zoom-close {
+	margin-left: 16px;
+	background: #fff;
+	color: #0f172a;
+}
+
+.les-zoom-overlay [data-zoom-level] {
+	min-width: 70px;
+	text-align: center;
+	font-weight: 700;
+}
+
+.les-zoom-overlay .les-zoom-stage {
+	flex: 1;
+	display: flex;
+	min-height: 0;
+	overflow: auto;
+	padding: 10px;
+}
+
+.les-zoom-overlay .les-zoom-stage img {
+	max-width: 100%;
+	max-height: 100%;
+	margin: auto;
+	background: #fff;
+}
+
+.les-zoom-overlay .les-zoom-help {
+	margin: 0;
+	padding: 8px;
+	color: #cbd5e1;
+	font-size: 13px;
+	text-align: center;
+}
+
+.logieval-secure .les-question-image-field {
+	margin: 12px 0;
+	padding: 12px 14px;
+	border: 1px dashed #94a3b8;
+	border-radius: 10px;
+}
+
+.logieval-secure .les-question-image-current {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+	margin: 8px 0;
+}
+
+.logieval-secure .les-question-image-current img {
+	max-width: 140px;
+	max-height: 100px;
+	border-radius: 6px;
+	border: 1px solid #e2e8f0;
+}
+
+.logieval-secure .les-ai-strictness {
+	margin-bottom: 12px;
+}
+
+.logieval-secure .les-ai-strictness label {
+	margin: 0 0 4px;
+}
+
+.logieval-secure .les-ai-strictness-scale {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	max-width: 520px;
+	font-size: 12px;
+	color: #64748b;
+}
+
+.logieval-secure .les-ai-strictness-scale input[type="range"] {
+	flex: 1;
+	padding: 0;
+	accent-color: #4f46e5;
+}
+
+.logieval-secure .les-ai-strictness-status {
+	font-size: 12px;
+	color: #0b5d3b;
+}
+
+/* Sévérité IA : 5 niveaux explicites (v3.4.1) */
+.logieval-secure .les-ai-strictness {
+	margin: 0 0 14px;
+	padding: 12px 14px;
+	border: 1px solid #c7d2fe;
+	border-radius: 10px;
+	background: #fff;
+}
+
+.logieval-secure .les-ai-strictness legend {
+	padding: 0 6px;
+	font-weight: 700;
+	color: #3730a3;
+}
+
+.logieval-secure .les-ai-levels {
+	display: grid;
+	grid-template-columns: repeat(5, minmax(0, 1fr));
+	gap: 8px;
+	margin-top: 8px;
+}
+
+@media (max-width: 900px) {
+	.logieval-secure .les-ai-levels {
+		grid-template-columns: 1fr;
+	}
+}
+
+.logieval-secure .les-ai-level {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	margin: 0;
+	padding: 10px 10px 10px 34px;
+	border: 2px solid #e2e8f0;
+	border-radius: 10px;
+	background: #f8fafc;
+	cursor: pointer;
+	font-weight: 500;
+}
+
+.logieval-secure .les-ai-level input {
+	position: absolute;
+	top: 12px;
+	left: 10px;
+	width: auto;
+	min-height: 0;
+	margin: 0;
+}
+
+.logieval-secure .les-ai-level small {
+	color: #64748b;
+	font-size: 12px;
+	line-height: 1.35;
+}
+
+.logieval-secure .les-ai-level-num {
+	font-size: 11px;
+	font-weight: 800;
+	color: #6366f1;
+}
+
+.logieval-secure .les-ai-level:has(input:checked) {
+	border-color: #4f46e5;
+	background: #eef2ff;
+	box-shadow: 0 0 0 3px rgba(79, 70, 229, .15);
+}
+
+.logieval-secure .les-ai-strictness.is-locked .les-ai-level:not(:has(input:checked)) {
+	opacity: .45;
+	cursor: not-allowed;
+}
+
+.logieval-secure .les-ai-lock-note {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 12px;
+	align-items: center;
+	margin: 10px 0 0;
+	color: #92400e;
+	font-weight: 600;
+}
+
+.logieval-secure .les-ai-lock-note[hidden] {
+	display: none;
+}
+
+.logieval-secure .les-ai-level-badge {
+	display: inline-block;
+	margin: 0 0 8px;
+	padding: 4px 10px;
+	border-radius: 999px;
+	background: #eef2ff;
+	color: #3730a3;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+/* ===== 3.5.0 : navigation simplifiée + page par évaluation ===== */
+.logieval-secure .les-main-nav{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:14px 0 18px;padding:6px;background:#f1f5f9;border-radius:12px}
+.logieval-secure .les-main-nav a{padding:9px 16px;border-radius:9px;text-decoration:none;color:#334155;font-weight:600}
+.logieval-secure .les-main-nav a:hover{background:#e2e8f0}
+.logieval-secure .les-main-nav a.is-active{background:#fff;color:#0f172a;box-shadow:0 1px 3px rgba(15,23,42,.12)}
+.logieval-secure .les-main-nav a.les-main-nav-create{margin-left:auto;background:#2563eb;color:#fff}
+.logieval-secure .les-main-nav a.les-main-nav-create:hover{background:#1d4ed8}
+.logieval-secure .les-home-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.logieval-secure .les-home-head h2{margin:0 0 4px}
+.logieval-secure .les-eval-cards{display:grid;gap:12px;margin:16px 0}
+.logieval-secure .les-eval-card{display:flex;justify-content:space-between;gap:16px;align-items:center;flex-wrap:wrap;padding:14px 16px;border:1px solid #e2e8f0;border-left:5px solid #94a3b8;border-radius:12px;background:#fff}
+.logieval-secure .les-eval-card.is-draft{border-left-color:#94a3b8}
+.logieval-secure .les-eval-card.is-ready{border-left-color:#2563eb}
+.logieval-secure .les-eval-card.is-running{border-left-color:#f59e0b}
+.logieval-secure .les-eval-card.is-to_grade{border-left-color:#dc2626}
+.logieval-secure .les-eval-card.is-graded{border-left-color:#16a34a}
+.logieval-secure .les-eval-card h3{margin:0 0 6px;font-size:1.1em}
+.logieval-secure .les-eval-card h3 a{text-decoration:none;color:#0f172a}
+.logieval-secure .les-eval-card-main{flex:1 1 320px;min-width:0}
+.logieval-secure .les-eval-card-meta{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;color:#475569;font-size:.92em}
+.logieval-secure .les-eval-card-progress{margin:8px 0 0;color:#334155;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.logieval-secure .les-eval-card-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.logieval-secure .les-status-badge{display:inline-block;padding:2px 10px;border-radius:999px;font-weight:700;font-size:.85em;background:#e2e8f0;color:#334155}
+.logieval-secure .les-status-badge.is-ready{background:#dbeafe;color:#1e40af}
+.logieval-secure .les-status-badge.is-running{background:#fef3c7;color:#92400e}
+.logieval-secure .les-status-badge.is-to_grade{background:#fee2e2;color:#991b1b}
+.logieval-secure .les-status-badge.is-graded{background:#dcfce7;color:#166534}
+.logieval-secure .les-shared-badge{display:inline-block;padding:2px 8px;border-radius:999px;background:#ede9fe;color:#5b21b6;font-size:.85em;font-weight:600}
+.logieval-secure .les-more-actions{position:relative}
+.logieval-secure .les-more-actions summary{cursor:pointer;list-style:none;padding:6px 10px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;color:#334155}
+.logieval-secure .les-more-actions summary::-webkit-details-marker{display:none}
+.logieval-secure .les-more-actions-menu{position:absolute;right:0;top:calc(100% + 4px);z-index:20;min-width:230px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;box-shadow:0 10px 25px rgba(15,23,42,.15);padding:6px;display:grid;gap:2px}
+.logieval-secure .les-more-actions-menu form{margin:0}
+.logieval-secure .les-more-actions-menu a,.logieval-secure .les-more-actions-menu button{display:block;width:100%;text-align:left;padding:8px 10px;border:0;background:none;border-radius:6px;color:#0f172a;text-decoration:none;cursor:pointer;font:inherit}
+.logieval-secure .les-more-actions-menu a:hover,.logieval-secure .les-more-actions-menu button:hover{background:#f1f5f9}
+.logieval-secure .les-more-actions-menu .is-danger{color:#b91c1c}
+.logieval-secure .les-deleted-history{margin-top:18px}
+.logieval-secure .les-deleted-history summary{cursor:pointer;color:#475569}
+.logieval-secure .les-empty-state{text-align:center;padding:30px 16px;border:2px dashed #cbd5e1;border-radius:14px;margin:16px 0}
+.logieval-secure .les-breadcrumb{margin:0 0 8px}
+.logieval-secure .les-breadcrumb a{text-decoration:none}
+.logieval-secure .les-eval-header{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.logieval-secure .les-eval-header h2{margin:0 0 6px}
+.logieval-secure .les-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 16px}
+.logieval-secure .les-step{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid #e2e8f0;border-radius:12px;background:#fff;text-decoration:none;color:#334155;font-weight:600}
+.logieval-secure .les-step:hover{border-color:#93c5fd}
+.logieval-secure .les-step.is-active{border-color:#2563eb;background:#eff6ff;color:#1e3a8a;box-shadow:inset 0 -3px 0 #2563eb}
+.logieval-secure .les-step-num{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#e2e8f0;font-size:.9em}
+.logieval-secure .les-step.is-active .les-step-num{background:#2563eb;color:#fff}
+.logieval-secure .les-step-badge{margin-left:auto;padding:1px 8px;border-radius:999px;background:#e2e8f0;font-size:.82em}
+.logieval-secure .les-step-badge.is-run{background:#fef3c7;color:#92400e}
+.logieval-secure .les-step-badge.is-grade{background:#fee2e2;color:#991b1b}
+.logieval-secure .les-step-badge.is-results{background:#dcfce7;color:#166534}
+.logieval-secure .les-next-action{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 14px;margin:0 0 14px;border-radius:10px;background:#f8fafc;border:1px dashed #cbd5e1}
+.logieval-secure .les-step-content > .les-panel,.logieval-secure .les-step-content > details.les-panel{margin-bottom:16px}
+.logieval-secure .les-security-log-panel summary{cursor:pointer;font-weight:600}
+.logieval-secure .les-results-class{margin-top:18px}
+.logieval-secure .les-results-class-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.logieval-secure .les-results-class-head h4{margin:0}
+.logieval-secure .les-results-class-head h4 span{font-weight:400;color:#64748b;margin-left:6px}
+.logieval-secure .les-row-cancelled td{background:#fef2f2 !important}
+.logieval-secure .les-results-summary{margin:8px 0 0;color:#334155;font-weight:600}
+@media (max-width:782px){.logieval-secure .les-steps{grid-template-columns:repeat(2,minmax(0,1fr))}.logieval-secure .les-main-nav a.les-main-nav-create{margin-left:0}}
+
+/* ===== 3.5.0 : correction par élève / par question ===== */
+.logieval-secure .les-grade-toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;margin-bottom:12px}
+.logieval-secure .les-grade-toolbar .les-ai-bulk-toolbar{flex:1 1 420px;margin:0}
+.logieval-secure .les-segmented{display:inline-flex;background:#f1f5f9;border-radius:10px;padding:4px;gap:4px}
+.logieval-secure .les-segmented a{padding:8px 16px;border-radius:8px;text-decoration:none;color:#334155;font-weight:600}
+.logieval-secure .les-segmented a.is-active{background:#fff;color:#1e3a8a;box-shadow:0 1px 3px rgba(15,23,42,.15)}
+.logieval-secure .les-grade-layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:16px;align-items:start}
+.logieval-secure .les-grade-roster{position:sticky;top:40px;display:flex;flex-direction:column;gap:2px;max-height:calc(100vh - 80px);overflow:auto;padding:8px;border:1px solid #e2e8f0;border-radius:12px;background:#f8fafc}
+.logieval-secure .les-roster-class{font-size:.78em;text-transform:uppercase;letter-spacing:.04em;color:#64748b;margin:8px 6px 2px;font-weight:700}
+.logieval-secure .les-roster-item{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:8px;text-decoration:none;color:#0f172a}
+.logieval-secure .les-roster-item:hover{background:#e2e8f0}
+.logieval-secure .les-roster-item.is-current{background:#2563eb;color:#fff}
+.logieval-secure .les-roster-icon{width:16px;text-align:center;font-size:.85em}
+.logieval-secure .les-roster-item.is-todo .les-roster-icon{color:#dc2626}
+.logieval-secure .les-roster-item.is-progress .les-roster-icon{color:#d97706}
+.logieval-secure .les-roster-item.is-done .les-roster-icon{color:#16a34a}
+.logieval-secure .les-roster-item.is-current .les-roster-icon{color:#fff}
+.logieval-secure .les-roster-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.logieval-secure .les-roster-grade{font-weight:700;font-size:.9em}
+.logieval-secure .les-roster-item.is-cancelled{color:#991b1b}
+.logieval-secure .les-roster-item.is-cancelled.is-current{background:#b91c1c;color:#fff}
+.logieval-secure .les-grade-copy{min-width:0}
+.logieval-secure .les-grade-copy-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;padding-bottom:10px;margin-bottom:12px;border-bottom:1px solid #e2e8f0}
+.logieval-secure .les-grade-copy-head h3{margin:0 0 4px}
+.logieval-secure .les-grade-nav{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.logieval-secure .les-security-collapsed{margin:0 0 12px;border:1px solid #e2e8f0;border-radius:10px;padding:8px 12px;background:#fff}
+.logieval-secure .les-security-collapsed summary{cursor:pointer;display:flex;align-items:center;gap:10px;font-weight:600;color:#334155}
+.logieval-secure .les-security-collapsed[open] summary{margin-bottom:10px}
+.logieval-secure .les-sticky-grade-bar{position:sticky;bottom:0;z-index:15;display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:12px 14px;margin:16px -4px 0;background:rgba(255,255,255,.97);border:1px solid #cbd5e1;border-radius:12px;box-shadow:0 -6px 18px rgba(15,23,42,.08)}
+.logieval-secure .les-sticky-summary{flex:1 1 260px;font-weight:700;color:#0f172a}
+@media (max-width:900px){.logieval-secure .les-grade-layout{grid-template-columns:1fr}.logieval-secure .les-grade-roster{position:static;max-height:220px}}
+
+/* ── Vrai / Faux argumenté et Remettre dans l'ordre (LogiOne 1.18) ───────────── */
+.logieval-secure .les-tfj-answer { display: grid; gap: 12px; }
+.logieval-secure .les-tfj-choices { grid-template-columns: repeat(2, minmax(0, 220px)); }
+.logieval-secure .les-tfj-justify { display: grid; gap: 6px; font-weight: 700; }
+.logieval-secure .les-tfj-justify textarea { width: 100%; }
+
+.logieval-secure .les-order-help { margin: 0 0 8px; color: var(--les-muted); font-size: 14px; }
+.logieval-secure .les-order-status { margin: 6px 0 0; color: var(--les-muted); font-size: 13px; }
+.logieval-secure ol.les-order { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; counter-reset: lesorder; }
+.logieval-secure .les-order-item {
+	counter-increment: lesorder;
+	display: flex; align-items: center; gap: 12px;
+	border: 1px solid var(--les-border); border-radius: 10px; background: #fff;
+	padding: 10px 12px; font-weight: 700; cursor: grab; touch-action: none; user-select: none;
+	transition: box-shadow .15s, border-color .15s;
+}
+.logieval-secure .les-order-item::before {
+	content: counter(lesorder); flex: none; display: inline-grid; place-items: center;
+	width: 28px; height: 28px; border-radius: 50%; background: var(--les-accent-soft); color: var(--les-accent-dark); font-size: 14px;
+}
+.logieval-secure .les-order-item:focus-visible { outline: 3px solid var(--les-accent); outline-offset: 2px; }
+.logieval-secure .les-order-item.is-dragging { cursor: grabbing; border-color: var(--les-accent); box-shadow: 0 10px 24px rgba(23, 32, 51, .18); position: relative; z-index: 2; }
+.logieval-secure .les-order-grip { color: var(--les-muted); letter-spacing: -2px; }
+.logieval-secure .les-order-label { flex: 1 1 auto; min-width: 0; }
+.logieval-secure .les-order-item img { max-height: 96px; max-width: 160px; border-radius: 8px; object-fit: contain; background: var(--les-panel-soft); pointer-events: none; }
+.logieval-secure .les-order-move { margin-left: auto; display: inline-flex; gap: 4px; flex: none; }
+.logieval-secure .les-order-move button {
+	width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--les-border); background: var(--les-panel-soft);
+	font-size: 16px; font-weight: 700; color: var(--les-ink); cursor: pointer; padding: 0;
+}
+.logieval-secure .les-order-move button:hover { border-color: var(--les-accent); color: var(--les-accent-dark); }
+/* Images : cartes en grille */
+.logieval-secure ol.les-order.has-images { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
+.logieval-secure ol.les-order.has-images .les-order-item { flex-direction: column; align-items: stretch; text-align: center; position: relative; padding-top: 14px; }
+.logieval-secure ol.les-order.has-images .les-order-item::before { position: absolute; top: 8px; left: 8px; }
+.logieval-secure ol.les-order.has-images .les-order-grip { display: none; }
+.logieval-secure ol.les-order.has-images .les-order-item img { max-width: 100%; max-height: 140px; margin: 0 auto; }
+.logieval-secure ol.les-order.has-images .les-order-move { margin: 0 auto; }
+/* Lettres : tuiles en ligne */
+.logieval-secure ol.les-order.is-letters { display: flex; flex-wrap: wrap; gap: 8px; }
+.logieval-secure ol.les-order.is-letters .les-order-item { flex-direction: column; gap: 5px; padding: 6px 5px; min-width: 56px; }
+.logieval-secure ol.les-order.is-letters .les-order-item::before { width: 22px; height: 22px; font-size: 12px; }
+.logieval-secure ol.les-order.is-letters .les-order-grip { display: none; }
+.logieval-secure ol.les-order.is-letters .les-order-label { font-size: 30px; line-height: 1; text-align: center; }
+.logieval-secure ol.les-order.is-letters .les-order-move { margin: 0; }
+.logieval-secure ol.les-order.is-letters .les-order-move { gap: 2px; }
+.logieval-secure ol.les-order.is-letters .les-order-move button { width: 22px; height: 24px; font-size: 12px; border-radius: 6px; }
+
+/* Éditeur */
+.logieval-secure .les-order-rows { list-style: none; margin: 8px 0; padding: 0; display: grid; gap: 8px; }
+.logieval-secure .les-order-row { display: grid; grid-template-columns: 32px minmax(0, 1fr) auto auto; gap: 10px; align-items: center; border: 1px solid var(--les-border); border-radius: 10px; padding: 8px 10px; background: #fff; }
+.logieval-secure .les-order-num { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--les-accent-soft); color: var(--les-accent-dark); font-weight: 700; }
+.logieval-secure .les-order-text { width: 100%; }
+.logieval-secure .les-order-image { display: inline-flex; align-items: center; gap: 8px; }
+.logieval-secure .les-order-image img { height: 44px; width: auto; border-radius: 6px; }
+.logieval-secure .les-order-file { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 13px; }
+.logieval-secure .les-order-file input[type="file"] { max-width: 190px; font-size: 12px; }
+.logieval-secure .les-order-tools { display: inline-flex; gap: 4px; }
+@media (max-width: 760px) {
+	.logieval-secure .les-order-row { grid-template-columns: 32px minmax(0, 1fr); }
+	.logieval-secure .les-order-image, .logieval-secure .les-order-tools { grid-column: 2; }
+	.logieval-secure .les-tfj-choices { grid-template-columns: 1fr 1fr; }
+}
+
+/* Correction */
+.logieval-secure .les-order-review { margin: 8px 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.logieval-secure .les-order-review li { display: flex; align-items: center; gap: 10px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--les-border); background: #fff; }
+.logieval-secure .les-order-review li.is-right { border-color: #9fd8bf; background: var(--les-accent-soft); }
+.logieval-secure .les-order-review li.is-wrong { border-color: #f3b8b0; background: #fdf0ee; }
+.logieval-secure .les-order-review img { height: 48px; width: auto; border-radius: 6px; }
+.logieval-secure .les-order-review.is-letters { display: flex; flex-wrap: wrap; }
+.logieval-secure .les-order-mark { font-weight: 800; width: 18px; text-align: center; }
+.logieval-secure .is-right .les-order-mark { color: var(--les-accent-dark); }
+.logieval-secure .is-wrong .les-order-mark { color: var(--les-danger); }
+.logieval-secure .les-order-score { margin: 4px 0 10px; font-weight: 700; color: var(--les-muted); }
+
+/* LogiOne 1.19.2 : encadré « J'ai lu les règles » aussi large que les règles, bouton centré ;
+   écran après la remise (« Évaluation envoyée / clôturée ») plus large et centré. */
+.logieval-secure .les-secure-start .les-empty-state,
+.logieval-secure .les-evaluation-start .les-empty-state {
+	max-width: none;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 18px 0 0;
+}
+.logieval-secure .les-secure-start .les-actions,
+.logieval-secure .les-evaluation-start .les-actions {
+	justify-content: center;
+}
+.logieval-secure .les-post-submit-lock:not([hidden]) {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+.logieval-secure .les-post-submit-lock .les-empty-state {
+	width: min(960px, 100%);
+	max-width: none;
+	box-sizing: border-box;
+	margin: 40px auto;
+	padding: 36px 32px;
+}
+/* Règles « Actions interdites » / « Conséquences » : côte à côte si la place suffit, sinon l'une sous l'autre. */
+.logieval-secure .les-security-rule-grid {
+	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+/* Barème (éditeur) et export de l'évaluation */
+.logieval-secure .les-bareme { margin: 18px 0; }
+.logieval-secure .les-bareme-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
+.logieval-secure .les-bareme-head h3 { margin: 0; }
+.logieval-secure .les-bareme-head p { margin: 0; color: var(--les-muted); }
+.logieval-secure .les-bareme-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-top: 12px; }
+.logieval-secure .les-bareme-cell { display: flex; align-items: baseline; gap: 10px; border: 1px solid var(--les-border); border-radius: 8px; padding: 8px 12px; background: #fff; }
+.logieval-secure .les-bareme-cell strong { font-size: 18px; min-width: 2.2em; }
+.logieval-secure .les-bareme-cell span { color: var(--les-muted); font-size: 13px; }
+.logieval-secure .les-export-evaluation { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 0 16px; padding: 12px 16px; border: 1px solid var(--les-border); border-radius: 8px; background: var(--les-panel-soft); }
+/* Exports de l'évaluation : version élève (papier) et corrigé */
+.logieval-secure .les-export-evaluation + .les-export-evaluation { margin-top: -8px; }
+.logieval-secure .les-export-evaluation .les-export-label { display: flex; flex-direction: column; gap: 2px; flex: 1 1 320px; min-width: 0; }
+.logieval-secure .les-export-evaluation .les-export-label small { color: var(--les-muted, #5b6672); font-size: 12px; line-height: 1.4; }
+.logieval-secure .les-export-evaluation[data-les-export-version="eleve"] { border-left: 4px solid #f5c400; }
+
+/* LogiOne 1.22.1 : grand avertissement « touches du clavier » (touche Windows, Échap, Alt + Tab…). */
+.logieval-secure .les-keys-warning {
+	display: grid;
+	gap: 12px;
+	margin: 16px 0;
+	padding: 20px 22px;
+	border: 3px solid #b91c1c;
+	border-radius: 14px;
+	background: #fff7ed;
+	color: #431407;
+}
+.logieval-secure .les-keys-warning p { margin: 0; }
+.logieval-secure .les-keys-title {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	color: #b91c1c;
+	font-size: clamp(22px, 3.2vw, 30px);
+	font-weight: 800;
+	line-height: 1.15;
+	text-transform: uppercase;
+	letter-spacing: 0.01em;
+}
+.logieval-secure .les-keys-icon {
+	display: inline-flex;
+	flex: none;
+	align-items: center;
+	justify-content: center;
+	width: 1.6em;
+	height: 1.6em;
+	border-radius: 50%;
+	background: #b91c1c;
+	color: #fff;
+	font-size: 0.85em;
+}
+.logieval-secure .les-keys-lead { font-size: 18px; line-height: 1.45; }
+.logieval-secure .les-keys-main {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 12px 16px;
+	padding: 14px 16px;
+	border-radius: 10px;
+	background: #fee2e2;
+	font-size: 18px;
+	line-height: 1.45;
+}
+.logieval-secure .les-keys-main strong { color: #991b1b; }
+.logieval-secure .les-keys-warning kbd {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 2em;
+	padding: 2px 8px;
+	border: 1px solid #9ca3af;
+	border-bottom-width: 3px;
+	border-radius: 6px;
+	background: #fff;
+	color: #111827;
+	font-family: inherit;
+	font-size: 0.9em;
+	font-weight: 700;
+	line-height: 1.5;
+	white-space: nowrap;
+}
+.logieval-secure .les-keys-warning kbd.les-key-win {
+	padding: 8px 14px;
+	border-color: #b91c1c;
+	color: #b91c1c;
+	font-size: 22px;
+	text-decoration: line-through;
+	text-decoration-thickness: 3px;
+}
+.logieval-secure .les-keys-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+	gap: 8px 16px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.logieval-secure .les-keys-list li {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px 10px;
+	margin: 0;
+	font-size: 15px;
+}
+.logieval-secure .les-keys-combo { display: inline-flex; align-items: center; gap: 4px; }
+.logieval-secure .les-keys-help { font-weight: 700; font-size: 16px; }
+.logieval-secure .les-keys-warning.is-compact { padding: 16px 18px; }
+.logieval-secure .les-keys-warning.is-compact .les-keys-title { font-size: clamp(19px, 2.6vw, 24px); }
+.logieval-secure .les-keys-warning.is-compact .les-keys-lead { font-size: 16px; }
+.logieval-secure .les-keys-warning strong { font-weight: 800; }
+.logieval-secure .les-keys-lead strong { color: #991b1b; }
+.logieval-secure .les-keys-wide { grid-column: 1 / -1; margin: 0 24px 24px; }
+.logieval-secure .les-keys-warning p { color: #431407; }
+
+/* LogiOne 1.23 : Ma bibliothèque (non partagée) et ordre aléatoire des questions. */
+.les-library-tabs { display: flex; flex-wrap: wrap; gap: 4px; margin: 0 0 14px; padding: 4px; border-radius: 10px; background: #f1f3f5; width: fit-content; max-width: 100%; }
+.les-library-tabs a { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 16px; border-radius: 8px; color: #374151; font-weight: 500; text-decoration: none; }
+.les-library-tabs a.is-active { background: #fff; color: #17233c; font-weight: 600; box-shadow: 0 1px 2px rgba(23, 35, 60, .12); }
+.les-library-tabs small { color: #5d6b78; font-weight: 400; }
+.les-library-course { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 12px 0 6px; }
+.les-library-course label { font-weight: 600; }
+.les-library-course select { min-width: 280px; max-width: 100%; min-height: 40px; }
+.les-library-course-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin: 22px 0 8px; padding-bottom: 6px; border-bottom: 2px solid #f5c400; font-size: 18px; }
+.les-library-course-title span { color: #5d6b78; font-size: 14px; font-weight: 400; }
+.les-library-badge, .les-shuffle-badge { display: inline-flex; align-items: center; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+.les-library-badge { background: #fef3c7; color: #92400e; }
+.les-shuffle-badge { background: #e0e7ff; color: #3730a3; }
+.les-shuffle-option, .les-library-option { display: block; }
+
+/* Barre de progression de l'élève toujours visible (collée en haut pendant le défilement). */
+.logieval-secure .les-progress-wrap {
+	position: sticky;
+	top: var(--les-sticky-top, 0px);
+	z-index: 30;
+	transition: box-shadow .15s, padding .15s;
+}
+.logieval-secure .les-progress-wrap.is-stuck {
+	padding: 10px 14px;
+	border-radius: 0 0 10px 10px;
+	box-shadow: 0 10px 24px rgba(15, 23, 42, .14);
+}
+.logieval-secure [data-les-answer-form] > *,
+.logieval-secure .les-question {
+	scroll-margin-top: calc(var(--les-progress-h, 0px) + var(--les-sticky-top, 0px) + 14px);
+}
+
+/* Création d'une évaluation : bouton « Ajouter une question » flottant, toujours accessible. */
+.les-fab {
+	position: fixed;
+	right: 28px;
+	bottom: 28px;
+	z-index: 9990;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	min-height: 52px;
+	padding: 0 22px 0 18px;
+	border: 0;
+	border-radius: 999px;
+	background: #047857;
+	color: #fff;
+	font: inherit;
+	font-size: 15px;
+	font-weight: 700;
+	box-shadow: 0 10px 28px rgba(4, 120, 87, .35), 0 2px 6px rgba(15, 23, 42, .18);
+	cursor: pointer;
+}
+.les-fab span { font-size: 24px; line-height: 1; font-weight: 400; }
+.les-fab:hover { background: #065f46; color: #fff; }
+.les-fab:focus-visible { outline: 3px solid #f5c400; outline-offset: 3px; }
+@media (max-width: 600px) {
+	.les-fab { right: 14px; bottom: 14px; padding: 0 16px 0 14px; }
+}
+
+/* Classes favorites (étoiles) dans le choix du groupe classe. */
+.logieval-secure .les-groups-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 0 10px; }
+.logieval-secure .les-groups-seg { display: inline-flex; gap: 4px; padding: 4px; border-radius: 10px; background: #eef1f4; }
+.logieval-secure .les-groups-seg button { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 0 12px; border: 0; border-radius: 8px; background: transparent; color: #17233c; font: inherit; font-size: 13px; font-weight: 500; cursor: pointer; }
+.logieval-secure .les-groups-seg button[aria-pressed="true"] { background: #fff; font-weight: 700; box-shadow: 0 1px 2px rgba(23,35,60,.12); }
+.logieval-secure .les-star-icon { color: #d4a300; }
+.logieval-secure .les-groups-search { min-width: 220px; min-height: 36px; }
+.logieval-secure .les-group-row { display: flex; align-items: center; gap: 4px; }
+.logieval-secure .les-group-row .les-check { flex: 1; }
+.logieval-secure .les-group-star { flex: none; width: 38px; height: 38px; border: 0; border-radius: 8px; background: transparent; color: #b6bec8; font-size: 22px; line-height: 1; cursor: pointer; }
+.logieval-secure .les-group-star:hover { background: rgba(23,35,60,.06); }
+.logieval-secure .les-group-star.is-fav { color: #e0a800; }
+.logieval-secure .les-groups-showall { margin-top: 8px; color: #047857; font-weight: 600; text-decoration: none; }
+.logieval-secure [data-les-groups] [hidden] { display: none !important; }
+
+/* Minuteur masquable + alertes (mi-parcours, un tiers du temps, 5 dernières minutes). */
+.logieval-secure .les-timer.is-masked { background: #eef1f4; color: #475569; font-size: 14px; font-weight: 700; }
+.logieval-secure .les-timer.is-ending { background: #b91c1c; color: #fff; }
+.logieval-secure .les-timer-toggle { min-height: 34px; padding: 0 12px; border: 1px solid #cbd5e1; border-radius: 8px; background: #fff; color: #17233c; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+.logieval-secure .les-timer-toggle:hover { border-color: #047857; }
+.logieval-secure .les-timer-toggle:disabled { opacity: .7; cursor: default; }
+.logieval-secure .les-timer-toast { position: fixed; top: 18px; left: 50%; z-index: 99999; display: flex; align-items: center; gap: 16px; max-width: min(560px, calc(100vw - 32px)); padding: 14px 18px; border: 2px solid #f5c400; border-radius: 12px; background: #313a45; color: #fff; font-size: 17px; font-weight: 700; box-shadow: 0 14px 30px rgba(15, 23, 42, .3); transform: translateX(-50%); }
+.logieval-secure .les-timer-toast button { flex: none; min-height: 36px; padding: 0 14px; border: 0; border-radius: 8px; background: #f5c400; color: #1f2937; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+form.les-library-search.les-library-course { display: flex !important; flex-wrap: wrap; align-items: center; gap: 10px; }
+form.les-library-course select#les-library-course { width: auto !important; min-width: 280px; max-width: 460px; }
+
+/* Bouton « Mettre à jour » / « Créer l'évaluation » flottant, sous « Ajouter une question ». */
+.button.les-fab-save,
+.les-fab-save {
+	position: fixed;
+	right: 28px;
+	bottom: 28px;
+	z-index: 9991;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	min-height: 52px !important;
+	padding: 0 22px !important;
+	border: 0 !important;
+	border-radius: 999px !important;
+	background: #2563eb !important;
+	color: #fff !important;
+	font-size: 15px !important;
+	font-weight: 700;
+	line-height: 1 !important;
+	box-shadow: 0 10px 28px rgba(37, 99, 235, .35), 0 2px 6px rgba(15, 23, 42, .18) !important;
+	cursor: pointer;
+}
+.les-fab-save:hover { background: #1d4ed8 !important; }
+.les-fab-save:focus-visible { outline: 3px solid #f5c400; outline-offset: 3px; }
+.les-fab { bottom: 92px; }
+form:has(.les-fab-save) { padding-bottom: 150px; }
+@media (max-width: 600px) {
+	.les-fab-save { right: 14px; bottom: 14px; }
+	.les-fab { bottom: 76px; }
+}
+.les-fab, .les-fab-save { transition: opacity .2s, transform .2s; }
+body.les-fabs-off .les-fab, body.les-fabs-off .les-fab-save { opacity: 0 !important; pointer-events: none; transform: translateY(16px); }
+
+/* « Mes évaluations » en colonnes par classe (comme LogiNotes). */
+.logieval-secure .les-board-intro { margin: 14px 0 8px; }
+.logieval-secure .les-eval-board { display: flex; gap: 14px; align-items: flex-start; overflow-x: auto; padding: 4px 2px 14px; scroll-snap-type: x proximity; }
+.logieval-secure .les-board-col { flex: 0 0 340px; max-width: 86vw; padding: 12px; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; scroll-snap-align: start; }
+.logieval-secure .les-board-col.is-unassigned { background: #fffbeb; border-color: #fcd34d; }
+.logieval-secure .les-board-col-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 2px 4px 10px; margin-bottom: 10px; border-bottom: 2px solid #1e3a8a; }
+.logieval-secure .les-board-col.is-unassigned .les-board-col-head { border-bottom-color: #d97706; }
+.logieval-secure .les-board-col-head h3 { margin: 0; font-size: 17px; font-weight: 600; color: #0f172a; }
+.logieval-secure .les-board-count { display: inline-flex; align-items: center; justify-content: center; min-width: 28px; height: 28px; padding: 0 8px; border: 1px solid #a7f3d0; border-radius: 999px; background: #ecfdf5; color: #065f46; font-size: 13px; font-weight: 700; }
+.logieval-secure .les-board-hint { margin: -4px 4px 10px; color: #92400e; font-size: 13px; }
+.logieval-secure .les-board-cards { display: grid; gap: 10px; }
+.logieval-secure .les-eval-card.is-in-board { display: grid; gap: 10px; padding: 12px 14px; }
+.logieval-secure .les-eval-card.is-in-board .les-eval-card-main { flex: none; }
+.logieval-secure .les-eval-card.is-in-board h3 { font-size: 16px; margin: 2px 0 6px; }
+.logieval-secure .les-eval-card.is-in-board .les-eval-card-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: flex-start; }
+.logieval-secure .les-eval-card.is-in-board .les-eval-card-actions .button { white-space: normal; text-align: center; }
+.logieval-secure .les-eval-card-when { display: block; color: #1d4ed8; font-size: 13px; font-weight: 700; }
+.logieval-secure .les-eval-card-when.is-none { color: #92400e; }
+
+/* Deux boutons d'enregistrement flottants : brouillon (blanc) et version définitive (bleu). */
+.button.les-fab-draft,
+.les-fab-draft {
+	position: fixed;
+	right: 28px;
+	bottom: 92px;
+	z-index: 9991;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	min-height: 52px !important;
+	padding: 0 22px !important;
+	border: 2px solid #94a3b8 !important;
+	border-radius: 999px !important;
+	background: #fff !important;
+	color: #1e293b !important;
+	font-size: 15px !important;
+	font-weight: 700;
+	line-height: 1 !important;
+	box-shadow: 0 10px 24px rgba(15, 23, 42, .18) !important;
+	cursor: pointer;
+	transition: opacity .2s, transform .2s;
+}
+.les-fab-draft:hover { border-color: #475569 !important; background: #f8fafc !important; }
+.les-fab-draft:focus-visible { outline: 3px solid #f5c400; outline-offset: 3px; }
+form:has(.les-fab-draft) .les-fab { bottom: 156px; }
+form:has(.les-fab-draft) { padding-bottom: 220px; }
+body.les-fabs-off .les-fab-draft { opacity: 0 !important; pointer-events: none; transform: translateY(16px); }
+@media (max-width: 600px) {
+	.les-fab-draft { right: 14px; bottom: 76px; }
+	form:has(.les-fab-draft) .les-fab { bottom: 138px; }
+}
+.logieval-secure .les-ai-redo { display: inline-flex; align-items: center; gap: 6px; margin: 0 10px; font-size: 13px; color: #475569; }
+
+/* Correction : la question est toujours lisible en entier (LogiOne 1.24.4). */
+.logieval-secure .les-correction-qhead {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 6px 10px;
+	margin-bottom: 6px;
+}
+.logieval-secure .les-correction-qnum {
+	font-weight: 700;
+	color: var(--les-accent-dark);
+	text-transform: uppercase;
+	font-size: 12px;
+	letter-spacing: .04em;
+}
+.logieval-secure .les-correction-qhead strong {
+	font-size: 15px;
+	color: var(--les-ink);
+}
+.logieval-secure .les-correction-qpts {
+	margin-left: auto;
+	padding: 2px 9px;
+	border-radius: 999px;
+	background: var(--les-accent-soft);
+	color: var(--les-accent-dark);
+	font-weight: 700;
+	font-size: 12px;
+	white-space: nowrap;
+}
+.logieval-secure .les-correction-prompt {
+	margin: 10px 0 12px;
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 1.5;
+	color: var(--les-ink);
+	overflow-wrap: anywhere;
+}
+.logieval-secure .les-correction-prompt p {
+	margin: 0 0 6px;
+	font-size: inherit;
+	color: inherit;
+}
+
+/* Attribuer les points proposés par l'IA (LogiOne 1.24.4). */
+.logieval-secure .button.les-ai-accept {
+	border-color: #7c6cf0;
+	background: #f1efff;
+	color: #4b3bc4;
+	font-weight: 700;
+}
+.logieval-secure .button.les-ai-accept:hover { background: #e6e1ff; color: #3a2ca3; }
+.logieval-secure .button.les-ai-accept.is-applied { border-color: var(--les-accent); background: var(--les-accent-soft); color: var(--les-accent-dark); }
+.logieval-secure .les-ai-accept[hidden], .logieval-secure .les-ai-accept-all[hidden] { display: none !important; }
+.logieval-secure .les-ai-accept-all-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 10px 0 14px; }
+.logieval-secure .button.les-ai-accept-all { border-color: #7c6cf0; background: #4b3bc4; color: #fff; font-weight: 700; }
+.logieval-secure .button.les-ai-accept-all:hover { background: #3a2ca3; color: #fff; }
+.logieval-secure .les-ai-accept-status { color: var(--les-accent-dark); font-weight: 600; }
+
+/* Corbeille des évaluations (LogiOne 1.24.4). */
+.logieval-secure .les-home-head-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.logieval-secure .les-trash { margin-top: 22px; border: 1px solid var(--les-border); border-radius: 10px; background: var(--les-panel-soft); padding: 10px 14px; scroll-margin-top: 60px; }
+.logieval-secure .les-trash summary { font-weight: 700; color: var(--les-ink); padding: 4px 0; }
+.logieval-secure .les-trash[open] summary { margin-bottom: 6px; }
+.logieval-secure .les-trash-table small { color: var(--les-muted); }
+
+/* Correction : commentaire replié, question suivante (LogiOne 1.24.5). */
+.logieval-secure .les-comment-box { margin: 10px 0 4px; }
+.logieval-secure .les-comment-box > summary { display: inline-flex; align-items: center; cursor: pointer; list-style: none; font-weight: 600; color: var(--les-blue); padding: 4px 0; }
+.logieval-secure .les-comment-box > summary::-webkit-details-marker { display: none; }
+.logieval-secure .les-comment-box > summary:hover .les-comment-add { text-decoration: underline; }
+.logieval-secure .les-comment-box .les-comment-title { display: none; color: var(--les-ink); }
+.logieval-secure .les-comment-box[open] .les-comment-add { display: none; }
+.logieval-secure .les-comment-box[open] .les-comment-title { display: inline; }
+.logieval-secure .les-comment-box textarea { display: block; width: 100%; min-height: 70px; margin-top: 6px; }
+.logieval-secure .les-comment-box.is-compact > summary { font-size: 13px; }
+.logieval-secure .les-comment-box.is-compact textarea { min-height: 56px; }
+.logieval-secure .les-answer-grade { scroll-margin-top: 90px; }
+.logieval-secure .les-answer-grade.les-next-focus, .logieval-secure tr.les-next-focus > td { animation: les-next-flash 1.4s ease-out; }
+@keyframes les-next-flash { 0% { background: #e7f6ef; } 100% { background: transparent; } }
+.logieval-secure .les-auto-next { margin: 6px 0 12px; color: var(--les-muted); }
+
+/* Analyse IA : un point par ligne (LogiOne 1.24.5). */
+.logieval-secure .les-ai-analysis-list { margin: 6px 0 8px; padding: 0; list-style: none; }
+.logieval-secure .les-ai-analysis-list li { position: relative; margin: 0 0 5px; padding-left: 20px; line-height: 1.5; }
+.logieval-secure .les-ai-analysis-list li::before { content: "•"; position: absolute; left: 6px; top: 0; color: var(--les-muted); font-weight: 700; }
+.logieval-secure .les-ai-analysis-list li.is-ok::before { content: "✓"; left: 3px; color: #0f8a61; }
+.logieval-secure .les-ai-analysis-list li.is-partial::before { content: "◐"; left: 2px; color: #b26a00; }
+.logieval-secure .les-ai-analysis-list li.is-miss::before { content: "✗"; left: 3px; color: #c62828; }
+
+/* Une question à la fois (LogiOne 1.24.5). */
+.logieval-secure .les-q-hidden { display: none !important; }
+.logieval-secure .les-qpager { position: sticky; top: calc(var(--les-sticky-top, 32px) + 4px); z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin: 12px 0 6px; padding: 10px 12px; border: 1px solid var(--les-border); border-radius: 10px; background: var(--les-panel); box-shadow: 0 4px 14px rgba(15, 30, 60, .06); scroll-margin-top: 80px; }
+.logieval-secure .les-qpager-label { min-width: 110px; color: var(--les-ink); }
+.logieval-secure .les-qpager-dots { display: flex; flex-wrap: wrap; gap: 5px; flex: 1 1 auto; }
+.logieval-secure .les-qpager-dot { min-width: 30px; height: 30px; padding: 0 6px; border: 1px solid var(--les-border-strong); border-radius: 999px; background: #fff; color: var(--les-ink); font-weight: 700; cursor: pointer; }
+.logieval-secure .les-qpager-dot.is-done { background: var(--les-accent-soft); border-color: var(--les-accent); color: var(--les-accent-dark); }
+.logieval-secure .les-qpager-dot.is-current { background: var(--les-accent); border-color: var(--les-accent); color: #fff; box-shadow: 0 0 0 3px rgba(15, 138, 97, .2); }
+.logieval-secure .les-qpager-all { margin-left: auto; font-size: 12px; }
+.logieval-secure form:not(.les-qpager-on) .les-qpager-prev, .logieval-secure form:not(.les-qpager-on) .les-qpager-next { display: none; }
+.logieval-secure .les-qnext-bar { display: flex; justify-content: flex-end; margin-top: 12px; }
+.logieval-secure form:not(.les-qpager-on) .les-qnext-bar { display: none; }
+.logieval-secure .les-qpager-on .les-answer-grade + .les-answer-grade::before { display: none; }
+.logieval-secure .les-qpager-on .les-answer-grade { margin-top: 8px; padding-top: 8px; }
+
+/* Case « Refaire aussi les réponses déjà pré-corrigées » : vraie petite case, sur une ligne. */
+.logieval-secure .les-ai-redo { display: inline-flex !important; align-items: center; gap: 6px; width: auto !important; margin: 0 4px; font-weight: 500; font-size: 13px; white-space: nowrap; }
+.logieval-secure .les-ai-redo input[type="checkbox"] { width: 16px !important; height: 16px !important; min-height: 0 !important; min-width: 0 !important; margin: 0 !important; padding: 0 !important; flex: 0 0 auto; }
+
+/* Correction : réponse de l'élève à côté de la réponse attendue (LogiOne 1.24.6). */
+.logieval-secure .les-answer-compare { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; align-items: stretch; margin: 10px 0 12px; }
+.logieval-secure .les-answer-compare.is-single { grid-template-columns: minmax(0, 1fr); }
+.logieval-secure .les-answer-compare > .les-expected-answer { margin: 0; }
+.logieval-secure .les-student-answer { border: 2px solid var(--les-blue); border-left-width: 6px; border-radius: 8px; background: #fff; padding: 12px 14px; box-shadow: 0 2px 8px rgba(31, 95, 153, .08); }
+.logieval-secure .les-student-answer-label { display: block; margin-bottom: 6px; color: var(--les-blue); font-size: 14px; }
+.logieval-secure .les-student-answer-text { font-size: 15px; line-height: 1.55; color: var(--les-ink); white-space: normal; overflow-wrap: anywhere; }
+@media (max-width: 860px) { .logieval-secure .les-answer-compare { grid-template-columns: minmax(0, 1fr); } }
+
+/* Commentaire toujours replié, aperçu quand il est rempli (LogiOne 1.24.6). */
+.logieval-secure .les-comment-box .les-comment-has { display: none; min-width: 0; max-width: 100%; color: var(--les-ink); font-weight: 500; }
+.logieval-secure .les-comment-box.is-filled:not([open]) .les-comment-add { display: none; }
+.logieval-secure .les-comment-box.is-filled:not([open]) .les-comment-has { display: inline-flex; gap: 6px; align-items: baseline; }
+.logieval-secure .les-comment-box > summary { max-width: 100%; }
+.logieval-secure .les-comment-preview { display: inline-block; max-width: min(560px, 60vw); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; vertical-align: bottom; font-style: italic; color: #334155; }
+.logieval-secure .les-comment-box.is-compact .les-comment-preview { max-width: 180px; }
+.logieval-secure .les-comment-edit, .logieval-secure .les-comment-close { color: var(--les-blue); font-weight: 600; font-size: 12px; }
+.logieval-secure .les-comment-close { font-weight: 500; }
+
+/* Avis de l'IA sur chaque critère (LogiOne 1.24.6). */
+.logieval-secure .les-ai-crit { display: inline-block; margin-left: 6px; padding: 0 7px; border-radius: 999px; font-size: 11px; font-weight: 700; line-height: 18px; vertical-align: middle; }
+.logieval-secure .les-ai-crit[hidden] { display: none; }
+.logieval-secure .les-ai-crit.is-ok { background: #e7f6ef; color: #0f6b4c; }
+.logieval-secure .les-ai-crit.is-partial { background: #fff4e0; color: #8a5300; }
+.logieval-secure .les-ai-crit.is-miss { background: #fdecec; color: #a32020; }
+
+/* Lecture audio des questions (LogiOne 1.24.7). */
+.logieval-secure .les-tts-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 2px 0 10px; }
+.logieval-secure .les-tts-bar button { display: inline-flex; align-items: center; gap: 4px; min-height: 34px; padding: 4px 12px; border: 1px solid var(--les-blue); border-radius: 999px; background: var(--les-blue-soft); color: var(--les-blue); font-weight: 700; font-size: 14px; cursor: pointer; }
+.logieval-secure .les-tts-bar button:hover { background: #dbeaf8; }
+.logieval-secure .les-tts-bar[data-mode="speaking"] .les-tts-play { background: var(--les-blue); color: #fff; }
+.logieval-secure .les-tts-bar .les-tts-stop { border-color: var(--les-border-strong); background: #fff; color: var(--les-ink); }
+.logieval-secure .les-tts-bar .les-tts-stop[hidden] { display: none; }
+.logieval-secure .les-tts-rate { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--les-muted); }
+.logieval-secure .les-tts-rate select { width: auto; min-height: 30px; padding: 2px 8px; font-size: 13px; }
+.logieval-secure .les-tts-note { font-size: 12px; color: #8a5300; }
+.logieval-secure .les-tts-current { background: #fff6cc !important; box-shadow: 0 0 0 3px #fff6cc; border-radius: 6px; transition: background .2s; }
+.logieval-secure .les-tts-intro { margin: 12px 0; padding: 10px 14px; border-left: 4px solid var(--les-blue); border-radius: 8px; background: var(--les-blue-soft); color: var(--les-ink); }
+.logieval-secure .les-tts-bar button.les-tts-play, .logieval-secure .les-tts-bar button.les-tts-stop { opacity: 1 !important; text-shadow: none !important; }
+.logieval-secure .les-tts-bar button.les-tts-play { background: var(--les-blue-soft) !important; color: var(--les-blue) !important; border-color: var(--les-blue) !important; }
+.logieval-secure .les-tts-bar[data-mode="speaking"] button.les-tts-play, .logieval-secure .les-tts-bar[data-mode="paused"] button.les-tts-play { background: #1f5f99 !important; color: #fff !important; border-color: #1f5f99 !important; }
+.logieval-secure .les-tts-bar button.les-tts-stop { background: #fff !important; color: var(--les-ink) !important; border-color: var(--les-border-strong) !important; }
+.logieval-secure .les-tts-bar button.les-tts-play:hover, .logieval-secure .les-tts-bar button.les-tts-play:focus { background: #dbeaf8 !important; color: #174a78 !important; }
+.logieval-secure .les-tts-bar[data-mode="speaking"] button.les-tts-play:hover, .logieval-secure .les-tts-bar[data-mode="speaking"] button.les-tts-play:focus, .logieval-secure .les-tts-bar[data-mode="paused"] button.les-tts-play:hover, .logieval-secure .les-tts-bar[data-mode="paused"] button.les-tts-play:focus { background: #174a78 !important; color: #fff !important; }
+
+/* Correction : critères (1/3) et analyse IA (2/3) côte à côte ; analyse séparée réussi / pas réussi (LogiOne 1.25.0). */
+.logieval-secure .les-crit-ai { display: block; }
+.logieval-secure .les-crit-ai:has(> .les-criteria-check):has(> .les-ai-analysis:not([hidden])) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 14px; align-items: stretch; margin: 10px 0; }
+.logieval-secure .les-crit-ai:has(> .les-criteria-check):has(> .les-ai-analysis:not([hidden])) > * { margin: 0; }
+@media (max-width: 900px) { .logieval-secure .les-crit-ai:has(> .les-criteria-check):has(> .les-ai-analysis:not([hidden])) { grid-template-columns: minmax(0, 1fr); } }
+.logieval-secure .les-ai-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; margin: 8px 0; }
+@media (max-width: 700px) { .logieval-secure .les-ai-split { grid-template-columns: minmax(0, 1fr); } }
+.logieval-secure .les-ai-col { padding: 8px 10px; border-radius: 8px; background: #fff; border: 1px solid #d7e8df; }
+.logieval-secure .les-ai-col.is-ok { border-top: 3px solid #0f8a61; }
+.logieval-secure .les-ai-col.is-miss { border-top: 3px solid #c62828; }
+.logieval-secure .les-ai-col-title { display: block; margin-bottom: 4px; font-size: 13px; }
+.logieval-secure .les-ai-col.is-ok .les-ai-col-title { color: #0f6b4c; }
+.logieval-secure .les-ai-col.is-miss .les-ai-col-title { color: #a32020; }
+.logieval-secure .les-ai-col-empty { margin: 2px 0; color: var(--les-muted); font-style: italic; }
+.logieval-secure .les-ai-col .les-ai-analysis-list { margin: 0; }
+.logieval-secure .les-ai-notes { margin-top: 4px; }
+.logieval-secure .les-ai-analysis-list li.is-end::before { content: "→"; left: 2px; color: var(--les-accent-dark); }
+.logieval-secure .les-ai-analysis-list li.is-end { font-weight: 600; }
+
+.logieval-secure .les-comment-auto-note { margin: 4px 0 0; color: #5b4bc4; font-size: 12px; font-weight: 600; }
+.logieval-secure .les-ai-crit { white-space: nowrap; }
+
+/* Panneau de pré-correction IA réductible : une ligne avec le niveau d'exigence une fois la pré-correction faite (LogiOne 1.25.1). */
+.logieval-secure details.les-ai-panel { display: block; padding: 0; }
+.logieval-secure .les-ai-panel-summary { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; padding: 10px 14px; cursor: pointer; list-style: none; border-radius: 8px; }
+.logieval-secure .les-ai-panel-summary::-webkit-details-marker { display: none; }
+.logieval-secure .les-ai-panel-summary:hover { background: #eef2ff; }
+.logieval-secure .les-ai-panel-title { font-weight: 700; color: #3730a3; }
+.logieval-secure .les-ai-panel-level { color: var(--les-ink); }
+.logieval-secure .les-ai-panel-level strong { color: #4338ca; }
+.logieval-secure .les-ai-panel-count { color: var(--les-muted); font-size: 13px; }
+.logieval-secure .les-ai-panel-toggle { margin-left: auto; padding: 4px 12px; border: 1px solid #c7d2fe; border-radius: 999px; background: #fff; color: #3730a3; font-weight: 700; font-size: 13px; }
+.logieval-secure .les-ai-panel-toggle::after { content: " ▾"; }
+.logieval-secure details.les-ai-panel[open] .les-ai-panel-toggle::after { content: " ▴"; }
+.logieval-secure details.les-ai-panel .les-ai-panel-close, .logieval-secure details.les-ai-panel[open] .les-ai-panel-open { display: none; }
+.logieval-secure details.les-ai-panel[open] .les-ai-panel-close { display: inline; }
+.logieval-secure details.les-ai-panel[open] .les-ai-panel-summary { border-bottom: 1px solid var(--les-border); border-radius: 8px 8px 0 0; }
+.logieval-secure .les-ai-panel-body { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 12px; }
+.logieval-secure .les-ai-panel-body .description { flex-basis: 100%; margin: 0; }
+
+/* LogiOne 1.26.5 : menu « Gérer » (main totale de l'enseignant sur les blocages). */
+.les-ctl { display: inline-block; position: relative; margin-top: 4px; text-align: left; }
+.les-ctl > summary { cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border: 1px solid #c3c4c7; border-radius: 6px; background: #fff; font-size: 13px; white-space: nowrap; }
+.les-ctl > summary::-webkit-details-marker { display: none; }
+.les-ctl[open] > summary { background: #f0f6fc; border-color: #2271b1; }
+.les-ctl-dot { width: 8px; height: 8px; border-radius: 50%; background: #d63638; display: inline-block; }
+.les-ctl-body { margin-top: 6px; padding: 10px 12px; border: 1px solid #dcdcde; border-radius: 8px; background: #fff; box-shadow: 0 6px 18px rgba(0,0,0,.08); min-width: 280px; max-width: 420px; white-space: normal; }
+.les-ctl-state { margin: 0 0 8px; font-size: 12px; color: #50575e; }
+.les-ctl-row { display: flex; flex-direction: column; gap: 3px; padding: 6px 0; border-top: 1px solid #f0f0f1; }
+.les-ctl-row small { color: #646970; line-height: 1.35; }
+.les-ctl-time { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 6px; }
+.les-ctl-form { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0; }
+.les-ctl-minutes { font-size: 12px; display: inline-flex; align-items: center; gap: 4px; }
+.les-ctl-note { margin: 6px 0 0; font-size: 12px; color: #8a6d00; }
+.les-grade-copy .les-ctl { margin: 0 0 10px; }
+
+/* LogiOne 1.26.5 : temps restant dans le suivi en direct. */
+.les-time-left { font-variant-numeric: tabular-nums; font-weight: 700; font-size: 15px; white-space: nowrap; color: #1d2327; }
+.les-time-left.is-low { color: #b32d2e; }
+.les-time-left.is-over { color: #b32d2e; font-weight: 600; font-size: 13px; }
+.les-time-left.is-paused { color: #8a6d00; }
+.les-time-left.is-waiting { font-weight: 500; font-size: 13px; color: #646970; }
+.les-time-cell small { color: #646970; white-space: nowrap; }
+
+/* LogiOne 1.26.8 : compte à rebours de sortie, grand et rouge, par-dessus toute la page. */
+.les-guard-host { position: static; }
+.les-exit-countdown[hidden] { display: none !important; }
+.les-exit-countdown {
+	position: fixed; inset: 0; z-index: 2147483647;
+	display: flex; align-items: center; justify-content: center; padding: 24px;
+	background: #b91212;
+	color: #fff; font-family: inherit; text-align: center;
+	animation: les-exit-pulse 1s ease-in-out infinite alternate;
+}
+.les-exit-countdown .les-exit-box { max-width: 900px; width: 100%; }
+.les-exit-countdown .les-exit-title { font-size: clamp(30px, 5vw, 56px); font-weight: 900; line-height: 1.1; text-transform: uppercase; letter-spacing: .02em; }
+.les-exit-countdown .les-exit-number { font-size: clamp(140px, 28vw, 300px); font-weight: 900; line-height: 1; margin: 12px 0; font-variant-numeric: tabular-nums; text-shadow: 0 6px 30px rgba(0,0,0,.35); }
+.les-exit-countdown .les-exit-text { font-size: clamp(20px, 2.6vw, 30px); font-weight: 700; line-height: 1.3; margin: 0 auto 28px; max-width: 800px; }
+.les-exit-countdown .les-exit-button {
+	appearance: none; border: 0; cursor: pointer; font-family: inherit;
+	padding: 22px 40px; border-radius: 14px;
+	background: #fff; color: #b91212; font-size: clamp(20px, 2.4vw, 30px); font-weight: 900;
+	box-shadow: 0 10px 30px rgba(0,0,0,.3);
+}
+.les-exit-countdown .les-exit-button:hover, .les-exit-countdown .les-exit-button:focus { background: #ffe9e9; outline: 4px solid #fff; outline-offset: 4px; }
+@keyframes les-exit-pulse { from { background: #b91212; } to { background: #d81e1e; } }
+@media (prefers-reduced-motion: reduce) { .les-exit-countdown { animation: none; } }
+
+/* LogiOne 1.26.8 : réponse attendue manquante dans la correction. */
+.les-expected-answer.is-missing { border-style: dashed; background: #fff8e6; }
+.les-expected-answer .les-expected-missing { margin: 4px 0 6px; color: #8a5a00; font-weight: 600; }
+.les-expected-add summary { cursor: pointer; color: #1f5f99; font-weight: 600; }
+.les-expected-add textarea { display: block; width: 100%; margin: 8px 0; }
+.les-expected-add small { display: block; margin-top: 6px; color: #646970; }
+.les-expected-status { display: block; margin-top: 4px; color: #b42318; font-weight: 600; }
+
+/* LogiOne 1.26.9 : « Question suivante → » flottant dans la barre du bas de la correction. */
+.logieval-secure .les-qfloat { display: inline-flex; gap: 6px; align-items: center; order: -1; }
+.logieval-secure .les-qfloat[hidden] { display: none !important; }
+.logieval-secure .les-qfloat .les-qfloat-next { font-size: 15px; font-weight: 800; padding: 8px 18px; min-height: 40px; }
+.logieval-secure .les-qfloat .les-qfloat-prev { min-height: 40px; padding: 8px 12px; font-weight: 800; }
+.logieval-secure .les-qfloat.is-fixed { position: fixed; right: 24px; bottom: 24px; z-index: 50; padding: 8px; border-radius: 12px; background: #fff; box-shadow: 0 8px 24px rgba(15, 23, 42, .18); }
+
+/* LogiOne 1.27.0 : « Créer avec l'IA ». */
+.logieval-secure .les-gen-head h2 { margin: 0 0 6px; }
+.logieval-secure .les-gen-step { margin-top: 18px; padding: 16px; border: 1px solid var(--les-border); border-radius: 12px; background: #fff; }
+.logieval-secure .les-gen-step h3 { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; }
+.logieval-secure .les-gen-num { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--les-accent); color: #fff; font-size: 14px; }
+.logieval-secure .les-gen-field { display: flex; flex-direction: column; gap: 4px; margin: 8px 0; font-weight: 600; flex: 1 1 240px; }
+.logieval-secure .les-gen-field.is-small { flex: 0 0 170px; }
+.logieval-secure .les-gen-field textarea, .logieval-secure .les-gen-field input[type="text"], .logieval-secure .les-gen-field select { width: 100%; font-weight: 400; }
+.logieval-secure .les-gen-row { display: flex; flex-wrap: wrap; gap: 0 16px; }
+.logieval-secure .les-gen-types { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 8px 0; padding: 10px 12px; border: 1px solid var(--les-border); border-radius: 10px; }
+.logieval-secure .les-gen-lessons { display: flex; flex-direction: column; gap: 4px; max-height: 260px; overflow: auto; padding: 10px; border: 1px dashed var(--les-border-strong); border-radius: 10px; margin: 6px 0; }
+.logieval-secure .les-gen-lessons .button { align-self: flex-start; margin-top: 6px; }
+.logieval-secure .les-gen-sourcelist { margin: 6px 0; padding: 0; list-style: none; }
+.logieval-secure .les-gen-sourcelist li { display: flex; justify-content: space-between; gap: 10px; padding: 6px 10px; border-radius: 8px; background: var(--les-blue-soft); margin-bottom: 4px; }
+.logieval-secure .les-gen-status { margin-left: 10px; font-weight: 600; color: var(--les-accent-dark); }
+.logieval-secure .les-gen-status.is-error { color: var(--les-danger); }
+.logieval-secure .les-gen-card { margin: 12px 0; border: 1px solid var(--les-border); border-left: 4px solid var(--les-accent); border-radius: 10px; background: var(--les-panel-soft); }
+.logieval-secure .les-gen-card.is-off { opacity: .5; border-left-color: #cbd5e1; }
+.logieval-secure .les-gen-card header { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--les-border); }
+.logieval-secure .les-gen-type { padding: 2px 10px; border-radius: 999px; background: var(--les-blue-soft); color: var(--les-blue); font-size: 12px; font-weight: 700; }
+.logieval-secure .les-gen-pts { padding: 2px 10px; border-radius: 999px; background: var(--les-accent-soft); color: var(--les-accent-dark); font-size: 12px; font-weight: 800; }
+.logieval-secure .les-gen-delete { margin-left: auto; color: var(--les-danger); }
+.logieval-secure .les-gen-body { padding: 4px 14px 12px; }
+.logieval-secure .les-gen-option, .logieval-secure .les-gen-crit { display: flex; align-items: center; gap: 8px; margin: 4px 0; font-weight: 400; }
+.logieval-secure .les-gen-option input[type="text"], .logieval-secure .les-gen-crit input[type="text"] { flex: 1; }
+.logieval-secure .les-gen-crit input[type="number"] { width: 80px; }
+.logieval-secure .les-gen-source { margin: 6px 0 0; font-size: 12px; color: var(--les-muted); }
+.logieval-secure .les-gen-total { margin: 14px 0 6px; font-size: 16px; font-weight: 800; }
+.logieval-secure .les-gen-option input[type="radio"] { flex: 0 0 auto; width: 20px !important; height: 20px; min-height: 0; margin: 0; padding: 0; }
+.logieval-secure .les-gen-option input[type="text"] { flex: 1 1 auto; min-width: 0; width: auto !important; }
+.logieval-secure .les-gen-field > .button-link, .logieval-secure .les-gen-field [data-gen-crit-add] { align-self: flex-start; }
+
+/* LogiOne 1.27.0 : plusieurs fournisseurs d'IA. */
+.logieval-secure .les-ai-providers { margin: 12px 0; padding: 10px 14px; border: 1px solid var(--les-border); border-radius: 10px; }
+.logieval-secure .les-ai-provider-row { margin: 6px 0; padding: 8px 12px; border: 1px solid var(--les-border); border-radius: 8px; background: #fff; }
+.logieval-secure .les-ai-provider-row summary { cursor: pointer; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.logieval-secure .les-ai-provider-row.is-on { border-color: var(--les-accent); }
+.logieval-secure .les-ai-provider-badge { padding: 2px 10px; border-radius: 999px; background: var(--les-accent-soft); color: var(--les-accent-dark); font-size: 12px; font-weight: 700; }
+.logieval-secure .les-ai-provider-badge.is-off { background: #f1f5f9; color: var(--les-muted); }
+.logieval-secure .les-ai-provider-choice { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 8px 12px 8px 0; font-weight: 600; }
+.logieval-secure .les-ai-provider-choice select { min-width: 240px; }
+.logieval-secure .les-ai-provider-add { font-weight: 400; font-size: 13px; }
+
+/* LogiOne 1.27.1 : texte des questions non sélectionnable (les extensions d'IA s'appuient sur la sélection). */
+.logieval-secure[data-les-student] [data-les-answer-form],
+.logieval-secure [data-les-student] [data-les-answer-form],
+[data-les-student] [data-les-answer-form] { -webkit-user-select: none; user-select: none; }
+[data-les-student] [data-les-answer-form] textarea,
+[data-les-student] [data-les-answer-form] input { -webkit-user-select: text; user-select: text; }
+
+/* 1.28.1 : information des élèves sur ce qui est enregistré */
+.logieval-secure .les-privacy-note { font-size: .92em; line-height: 1.45; background: #f3f6fb; border-left: 4px solid #3b6fd8; padding: 10px 12px; border-radius: 6px; margin: 0 0 14px; color: #1f2a3d; }
+
+/* 1.29 : Safe Exam Browser */
+.logieval-secure .les-seb-banner { margin: 0 0 12px; padding: 8px 12px; border-radius: 6px; font-weight: 600; font-size: .95em; }
+.logieval-secure .les-seb-banner.is-ok { background: #e7f6ec; color: #135c2c; border: 1px solid #9ad3ad; }
+.logieval-secure .les-seb-banner.is-ko { background: #fdecec; color: #8a1c1c; border: 1px solid #f1a9a9; }
+.logieval-secure .les-seb-panel { margin: 14px 0; padding: 14px 16px; border-radius: 8px; background: #eef3fd; border: 1px solid #b9cbf2; color: #1f2a3d; }
+.logieval-secure .les-seb-panel ol { margin: 8px 0 10px 20px; }
+.logieval-secure .les-seb-panel .les-seb-open { font-weight: 700; }
+.logieval-secure .les-seb-help { font-size: .9em; margin: 10px 0 0; }
+.logieval-secure .les-seb-quit { margin-top: 14px; display: inline-block; }
+.les-seb-settings .les-seb-links code { word-break: break-all; }
+
+/* 1.30 : écran « sortir de l'évaluation » et compte à rebours de déblocage */
+.logieval-secure .les-exit-rules[hidden], .logieval-secure .les-security-ack-step[hidden] { display: none !important; }
+.logieval-secure .les-exit-rules { border: 4px solid #c8102e; background: #fff4f4; border-radius: 12px; padding: 22px 24px; margin: 0 0 16px; color: #3b0a0a; }
+.logieval-secure .les-exit-rules-title { font-size: clamp(22px, 3vw, 30px); font-weight: 900; color: #c8102e; margin-bottom: 12px; line-height: 1.2; }
+.logieval-secure .les-exit-rules-steps { font-size: 1.08em; line-height: 1.5; margin: 0 0 16px 22px; }
+.logieval-secure .les-exit-rules-steps li { margin: 6px 0; }
+.logieval-secure .les-exit-rules-steps li:nth-child(4) { font-weight: 800; color: #a00d24; }
+.logieval-secure .les-exit-rules-confirm { font-weight: 700; display: flex; gap: 8px; align-items: flex-start; }
+.les-unlock-countdown .les-exit-title { letter-spacing: .01em; }
+
+/* 1.31.2 : régénérer le commentaire avec l'IA */
+.les-regen-comment { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+.les-regen-comment.is-compact { margin-top: 4px; }
+.les-regen-status { font-size: .9em; color: #475569; }
+.les-regen-status.is-ok { color: #166534; }
+.les-regen-status.is-error { color: #b91c1c; }
+
+/* 1.31.2 : captures d'écran — questions masquées quand la fenêtre perd la main, filigrane au nom de l'élève */
+.logieval-secure [data-les-questions-area] { position: relative; }
+.logieval-secure [data-les-questions-area].les-veiled > *:not(.les-watermark) { filter: blur(14px); opacity: .25; transition: none; }
+.logieval-secure [data-les-questions-area].les-veiled::after { content: "Contenu masqué : revenez dans l’évaluation"; position: absolute; inset: 0; display: flex; align-items: flex-start; justify-content: center; padding-top: 120px; font-size: 22px; font-weight: 800; color: #7f1d1d; z-index: 5; }
+.logieval-secure .les-watermark { position: absolute; inset: 0; pointer-events: none; z-index: 4; background-repeat: repeat; }
+@media print { .logieval-secure [data-les-questions-area] { display: none !important; } }
+.les-shot-toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 2147483000; max-width: min(720px, calc(100vw - 32px)); background: #7f1d1d; color: #fff; font-weight: 700; padding: 14px 18px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,.35); font-size: 16px; line-height: 1.4; }
+.les-shot-toast[hidden] { display: none !important; }
+
+/* 1.31.3 : invitation à reformuler le commentaire quand les points diffèrent de l'IA */
+.les-comment-review { margin: 8px 0; padding: 12px 14px; border-radius: 8px; background: #fff7ed; border: 1px solid #fdba74; color: #7c2d12; line-height: 1.45; }
+.les-comment-review-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 10px; }
+.les-comment-review.is-info { background: #eff6ff; border-color: #93c5fd; color: #1e3a8a; }
+
+/* 1.32 : consignes IA, choix et comparaison de deux IA */
+.les-ai-prompts .les-ai-prompt-group { margin: 10px 0; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 12px; background: #fff; }
+.les-ai-prompts .les-ai-prompt { margin: 12px 0 16px; }
+.les-ai-prompts .les-ai-prompt textarea { width: 100%; font-family: inherit; font-size: 13px; line-height: 1.45; margin: 6px 0; }
+.les-ai-prompt-state { margin-left: 8px; font-size: 12px; padding: 1px 8px; border-radius: 10px; background: #f1f5f9; color: #475569; font-weight: 600; }
+.les-ai-prompt-state.is-custom { background: #ede9fe; color: #5b21b6; }
+.les-ai-compare-stats { margin-top: 10px; padding: 8px 12px; background: #f8fafc; border-radius: 6px; }
+.les-ai-compare-stats p { margin: 4px 0; }
+.les-ai-provider-choice.is-compact { display: inline-flex; align-items: center; gap: 6px; margin: 0 6px; font-size: 13px; }
+.les-ai-provider-choice.is-compact select { max-width: 230px; }
+.les-ai-compare { margin: 12px 0; padding: 12px 14px; border: 1px solid #c7d2fe; border-radius: 10px; background: #f8faff; }
+.les-ai-compare[hidden] { display: none !important; }
+.les-cmp-head { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.les-cmp-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+@media (max-width: 900px) { .les-cmp-cols { grid-template-columns: 1fr; } }
+.les-cmp-col { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px 12px; }
+.les-cmp-col h4 { margin: 0 0 6px; }
+.les-cmp-points { margin: 0 0 8px; }
+.les-cmp-q { border-top: 1px solid #f1f5f9; padding: 8px 0; }
+.les-cmp-q .is-right { font-weight: 700; color: #166534; }
+.les-cmp-type { font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: .03em; }
+
+/* 1.32.1 — médiathèque */
+.logieval-secure .les-media-pick { margin: 6px 0; font-size: 13px; }
+.logieval-secure .les-media-picked { display: inline-flex; align-items: center; gap: 8px; margin-left: 8px; font-size: 13px; color: #166534; font-weight: 600; }
+.logieval-secure .les-media-picked[hidden] { display: none; }
+.logieval-secure .les-media-picked img { max-width: 90px; max-height: 60px; border-radius: 6px; border: 1px solid #d1d5db; object-fit: cover; }
+.logieval-secure .les-company-logo-field { display: flex; flex-direction: column; gap: 4px; }
+
+/* 1.33.0 — objectifs du générateur */
+.logieval-secure .les-gen-objectives { margin-top: 14px; padding: 12px 14px; border: 1px solid #fcd34d; background: #fffbeb; border-radius: 10px; }
+.logieval-secure .les-gen-objectives h4 { margin: 0 0 4px; font-size: 15px; }
+.logieval-secure .les-gen-objectives textarea { width: 100%; }
+.logieval-secure .les-gen-lesson-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.logieval-secure .les-gen-lesson-row.is-objectives { background: #fffbeb; border-radius: 6px; padding: 2px 6px; }
+.logieval-secure .les-gen-obj-btn { white-space: nowrap; font-weight: 600; }
+.logieval-secure .les-gen-objective { color: #92400e; }
+
+/* 1.33.4 — minuteur dans la barre de progression (une seule fois), avec « Masquer le minuteur » */
+.logieval-secure .les-progress-meta { align-items: center; flex-wrap: wrap; }
+.logieval-secure .les-progress-meta .les-progress-timer { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; }
+.logieval-secure .les-progress-meta .les-timer { padding: 5px 10px; font-size: 18px; line-height: 1.2; white-space: nowrap; }
+.logieval-secure .les-progress-meta .les-timer.is-masked { font-size: 13px; }
+.logieval-secure .les-progress-meta .les-timer-toggle { min-height: 30px; padding: 0 10px; font-size: 12px; }
+.logieval-secure .les-progress-meta .les-timer-toggle[hidden] { display: none; }
+
+/* 1.33.5 — « Conséquences automatiques » : étiquette au-dessus du texte (plus de chevauchement) */
+.logieval-secure .les-security-steps li { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+.logieval-secure .les-security-steps li > span { white-space: normal; text-align: left; max-width: 100%; }
+.logieval-secure .les-security-steps li > p { margin: 0; line-height: 1.45; }
+
+/* 1.33.6 — question de calcul : la mention « Résultat exact demandé… » prenait la 1re colonne et repoussait la
+   calculatrice sous les champs. La mention est maintenant en tête des champs (à gauche), calculatrice tout à droite. */
+.logieval-secure .les-calculation-answer > .les-calculation-fields { grid-column: 1; grid-row: 1; }
+.logieval-secure .les-calculation-answer > .les-question-calculator { grid-column: 2; grid-row: 1; justify-self: end; }
+.logieval-secure .les-calculation-fields > .les-precision-badge { margin: 0; }
+@media (max-width: 720px) {
+	.logieval-secure .les-calculation-answer > .les-calculation-fields,
+	.logieval-secure .les-calculation-answer > .les-question-calculator { grid-column: 1; grid-row: auto; }
+}
+
+/* 1.34 — aménagements : gros caractères, résumé pour l'élève, écran enseignant */
+.logieval-secure.les-zoom-125 [data-les-answer-form], .logieval-secure.les-zoom-125 .les-company-context, .logieval-secure.les-zoom-125 .les-story-intro { zoom: 1.25; }
+.logieval-secure.les-zoom-150 [data-les-answer-form], .logieval-secure.les-zoom-150 .les-company-context, .logieval-secure.les-zoom-150 .les-story-intro { zoom: 1.5; }
+.logieval-secure.les-zoom-125 [data-les-answer-form] .les-calculation-answer,
+.logieval-secure.les-zoom-150 [data-les-answer-form] .les-calculation-answer { grid-template-columns: 1fr; }
+.logieval-secure .les-acc-student { margin: 12px 0; padding: 12px 16px; border: 2px solid #047857; border-radius: 10px; background: #ecfdf5; color: #064e3b; }
+.logieval-secure .les-acc-student ul { margin: 6px 0 0 18px; }
+.logieval-secure .les-acc-filter { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 18px; margin: 12px 0 16px; }
+.logieval-secure .les-acc-filter label { display: flex; flex-direction: column; gap: 4px; font-weight: 600; }
+.logieval-secure .les-acc-table td { vertical-align: middle; }
+.logieval-secure .les-acc-table tr.has-acc td:first-child { box-shadow: inset 4px 0 0 #047857; }
+.logieval-secure .les-acc-badge { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 999px; background: #ecfdf5; color: #065f46; font-size: 12px; font-weight: 700; white-space: nowrap; }
+
+/* 1.35 — « 🧠 Compris par l'IA » */
+.logieval-secure .les-ai-understood { margin: 0 0 10px; padding: 8px 12px; border-left: 4px solid #6366f1; border-radius: 8px; background: #eef2ff; color: #312e81; font-size: 14px; line-height: 1.45; }
+
+/* 1.35.1 — sous-menus des réglages */
+.logieval-secure .les-settings-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 16px; padding: 6px; border: 1px solid var(--les-border); border-radius: 12px; background: #f6f8f7; }
+.logieval-secure .les-settings-tabs[hidden] { display: none; }
+.logieval-secure .les-settings-tabs a { padding: 8px 14px; border-radius: 8px; color: #17233c; font-weight: 600; text-decoration: none; }
+.logieval-secure .les-settings-tabs a:hover { background: #fff; }
+.logieval-secure .les-settings-tabs a.is-active { background: #fff; color: #047857; box-shadow: 0 1px 4px rgba(15, 30, 60, .12); }
+.logieval-secure .les-settings-pane[hidden], .logieval-secure [data-les-settings-section][hidden] { display: none !important; }
+
+/* 1.36 — conteneur des boutons flottants placés sous <body> (pages du thème avec transformation) */
+.logieval-secure.les-portal { position: static; margin: 0; padding: 0; border: 0; background: none; box-shadow: none; max-width: none; width: 0; height: 0; overflow: visible; }
+.logieval-secure.les-portal .les-qfloat.is-fixed { z-index: 9990; }
+
+/* 1.36 — calculatrice sur toute question */
+.logieval-secure .les-with-calculator { display: grid; grid-template-columns: minmax(260px, 1fr) minmax(230px, 280px); gap: 16px; align-items: start; }
+.logieval-secure .les-with-calculator > .les-question-calculator { justify-self: end; }
+.logieval-secure .les-with-calculator-main > textarea, .logieval-secure .les-with-calculator-main > input { width: 100%; }
+@media (max-width: 720px) { .logieval-secure .les-with-calculator { grid-template-columns: 1fr; } }
+.logieval-secure.les-zoom-125 [data-les-answer-form] .les-with-calculator, .logieval-secure.les-zoom-150 [data-les-answer-form] .les-with-calculator { grid-template-columns: 1fr; }
+.logieval-secure .les-calc-option { margin: 8px 0 4px; }
+
+/* 1.36 — Relier */
+.logieval-secure .les-match-help, .logieval-secure .les-blanks-help { margin: 0 0 10px; color: #475569; font-size: 14px; }
+.logieval-secure .les-match-board { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(48px, 120px) minmax(0, 1fr); gap: 0; align-items: start; }
+.logieval-secure .les-match-col { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; position: relative; z-index: 2; }
+.logieval-secure .les-match-col.is-left { grid-column: 1; }
+.logieval-secure .les-match-col.is-right { grid-column: 3; }
+.logieval-secure .les-match-col.is-left li { display: flex; align-items: center; gap: 6px; }
+.logieval-secure .les-match-lines { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: visible; }
+.logieval-secure .les-match-item { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 46px; padding: 8px 12px; border: 2px solid #cbd5e1; border-radius: 10px; background: #fff; color: #17233c; font: inherit; font-size: 15px; text-align: left; cursor: pointer; }
+.logieval-secure .les-match-item:hover { border-color: #047857; }
+.logieval-secure .les-match-item.is-active { border-color: #047857; box-shadow: 0 0 0 3px rgba(4, 120, 87, .25); background: #ecfdf5; }
+.logieval-secure .les-match-item.is-linked { border-color: var(--les-match-color, #047857); }
+.logieval-secure .les-match-num { flex: none; display: inline-flex; align-items: center; justify-content: center; min-width: 28px; height: 28px; border-radius: 999px; background: #eef1f4; font-weight: 800; }
+.logieval-secure .les-match-item.is-linked .les-match-num { background: var(--les-match-color, #047857); color: #fff; }
+.logieval-secure .les-match-col.is-left select { flex: none; width: 64px; min-height: 40px; }
+.logieval-secure .les-match-preview { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.logieval-secure .les-match-preview .les-match-col li { padding: 6px 10px; border: 1px solid #cbd5e1; border-radius: 8px; }
+@media (max-width: 640px) { .logieval-secure .les-match-board { grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr); } .logieval-secure .les-match-item { font-size: 14px; padding: 6px 8px; } }
+.logieval-secure .les-match-editor .les-match-head, .logieval-secure .les-match-editor .les-match-row { display: grid; grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1.4fr) 40px; gap: 8px; align-items: center; margin-bottom: 6px; }
+.logieval-secure .les-match-editor .les-match-head { font-size: 13px; font-weight: 700; color: #475569; }
+.logieval-secure .les-match-editor .les-match-row input[type="text"] { width: 100%; }
+.logieval-secure .les-match-arrow { text-align: center; color: #64748b; font-weight: 800; }
+.logieval-secure .les-match-review { list-style: none; margin: 0 0 6px; padding: 0; display: grid; gap: 4px; }
+.logieval-secure .les-match-review li.is-right .les-order-mark { color: #047857; }
+.logieval-secure .les-match-review li.is-wrong .les-order-mark { color: #b91c1c; }
+
+/* 1.36 — Texte à trous */
+.logieval-secure .les-blanks-text { line-height: 2.4; font-size: 16px; }
+.logieval-secure .les-blank { display: inline-block; width: 9ch; min-width: 7ch; margin: 0 4px; padding: 3px 8px !important; min-height: 0 !important; border: 0 !important; border-bottom: 2px solid #047857 !important; border-radius: 4px 4px 0 0 !important; background: #f0fdf4 !important; font: inherit; font-weight: 700; color: #064e3b; text-align: center; }
+.logieval-secure .les-blank:focus { outline: 2px solid #047857; outline-offset: 1px; }
+.logieval-secure .les-blanks-bank { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 10px; padding: 10px 12px; border: 1px dashed #94a3b8; border-radius: 10px; background: #f8fafc; }
+.logieval-secure .les-blanks-bank > span { font-weight: 700; color: #475569; }
+.logieval-secure .les-blanks-bank button, .logieval-secure p.les-blanks-bank span { padding: 4px 12px; border: 1px solid #cbd5e1; border-radius: 999px; background: #fff; font: inherit; font-weight: 700; cursor: pointer; }
+.logieval-secure .les-blanks-bank button.is-used { opacity: .45; text-decoration: line-through; }
+.logieval-secure .les-blanks-preview { margin: 4px 0 8px; color: #065f46; font-weight: 600; }
+.logieval-secure .les-blanks-review { line-height: 2; }
+.logieval-secure .les-blank-mark { display: inline-block; padding: 0 8px; border-radius: 6px; font-weight: 700; }
+.logieval-secure .les-blank-mark.is-right { background: #dcfce7; color: #065f46; }
+.logieval-secure .les-blank-mark.is-wrong { background: #fee2e2; color: #991b1b; }
+.logieval-secure .les-blank-expected { color: #475569; }
+
+/* 1.36 — boutons flottants placés sous <body> : même empilement que dans le formulaire */
+#les-fixed-portal:has(.les-fab-draft) .les-fab { bottom: 156px; }
+@media (max-width: 600px) { #les-fixed-portal:has(.les-fab-draft) .les-fab { bottom: 138px; } }
+.logieval-secure .les-blanks-bank button { color: #17233c !important; background: #fff !important; text-transform: none; letter-spacing: normal; }
+.logieval-secure .les-match-item, .logieval-secure .les-match-item:hover, .logieval-secure .les-match-item:focus { color: #17233c !important; background: #fff; text-transform: none; letter-spacing: normal; }
+.logieval-secure .les-match-item.is-active { background: #ecfdf5 !important; }
+
+/* LogiOne 1.36.2 : mode tablette (iPad / iPhone) — pas de plein écran du navigateur. */
+.logieval-secure .les-tablet-note { margin: 0 0 16px; padding: 14px 16px; border: 2px solid #1d4ed8; border-radius: 10px; background: #eff6ff; color: #1e3a8a; line-height: 1.45; }
+.logieval-secure .les-tablet-note p { margin: 6px 0; }
+.logieval-secure .les-tablet-note ul { margin: 6px 0 0 18px; padding: 0; }
+.logieval-secure.les-tablet [data-les-fullscreen] { display: none !important; }
+
+/* 1.36.3 : annuler la réécriture du commentaire par la pré-correction */
+.les-comment-undo { display: inline-block; margin: 6px 0 0; padding: 0; border: 0; background: none; color: #1d4ed8; font-size: 13px; text-decoration: underline; cursor: pointer; }
+
+/* 1.36.4 : « Points manuels » à côté des boutons de points ; encadré quand les points sont saisis à la main. */
+.logieval-secure .les-points-buttons { align-items: center; }
+.logieval-secure .les-points-buttons .les-manual-points { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 0 6px; padding: 4px 10px; border: 2px solid transparent; border-radius: 10px; font-weight: 600; white-space: nowrap; }
+.logieval-secure .les-points-buttons .les-manual-points input { width: 86px !important; min-width: 0; margin: 0 !important; padding: 8px 10px; border: 1px solid var(--les-border-strong); border-radius: 8px; font-weight: 700; font-size: 16px; text-align: center; }
+.logieval-secure .les-manual-points .les-manual-tag { display: none; font-style: normal; font-size: 12px; font-weight: 700; color: #1d4ed8; }
+.logieval-secure .les-manual-points.is-manual { border-color: #2563eb; background: #eff6ff; }
+.logieval-secure .les-manual-points.is-manual input { border-color: #2563eb; box-shadow: 0 0 0 2px rgba(37, 99, 235, .18); }
+.logieval-secure .les-manual-points.is-manual .les-manual-tag { display: inline; }
+.logieval-secure .les-question-correction-table input.is-manual { border-color: #2563eb !important; background: #eff6ff; box-shadow: 0 0 0 2px rgba(37, 99, 235, .18); }
+@media (max-width: 700px) { .logieval-secure .les-points-buttons .les-manual-points { margin-left: 0; } }
+
+/* 1.36.4 : questions restées vides — pastille orange, badge « Non répondu : 0 pt ». */
+.logieval-secure .les-qpager-dot.is-blank { background: #fff7ed; border-color: #ea580c; color: #c2410c; }
+.logieval-secure .les-qpager-dot.is-blank.is-current { background: #ea580c; border-color: #ea580c; color: #fff; box-shadow: 0 0 0 3px rgba(234, 88, 12, .25); }
+.logieval-secure .les-blank-badge { display: inline-block; margin-left: 8px; padding: 2px 10px; border-radius: 999px; background: #fff7ed; border: 1px solid #ea580c; color: #c2410c; font-size: 12px; font-weight: 700; }
+
+/* 1.36.4 : menu « Autres actions » affiché par-dessus la page (plus coupé par la colonne). */
+.logieval-secure .les-more-actions-menu.is-floating { position: fixed; right: auto; z-index: 100050; max-width: calc(100vw - 16px); }
+.logieval-secure details.les-more-actions { border: 0 !important; padding: 0 !important; margin: 0; background: none !important; box-shadow: none !important; }
+
+/* 1.36.5 : consigne de correction dans la liste des critères (pas notée) */
+.logieval-secure .les-criteria-note { margin: 6px 0 2px; padding: 6px 10px; border-left: 3px solid #94a3b8; background: #f8fafc; color: #334155; font-size: 13px; }
+.logieval-secure .les-criteria-note em { color: #64748b; }
+
+/* 1.36.6 : points obtenus sous chaque numéro de question (barre de progression de la correction). */
+.logieval-secure .les-qpager-dots { align-items: flex-start; }
+.logieval-secure .les-qpager-cell { display: inline-flex; flex-direction: column; align-items: center; gap: 2px; }
+.logieval-secure .les-qpager-pts { min-width: 30px; padding: 0 4px; border-radius: 6px; font-size: 10.5px; font-weight: 700; line-height: 15px; text-align: center; white-space: nowrap; cursor: pointer; font-variant-numeric: tabular-nums; }
+.logieval-secure .les-qpager-pts.is-todo { color: #94a3b8; }
+.logieval-secure .les-qpager-pts.is-full { background: #dcfce7; color: #166534; }
+.logieval-secure .les-qpager-pts.is-part { background: #fef3c7; color: #92400e; }
+.logieval-secure .les-qpager-pts.is-zero { background: #fee2e2; color: #b91c1c; }

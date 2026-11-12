@@ -1,0 +1,7 @@
+Poppins — Copyright 2020 The Poppins Project Authors (https://github.com/itfoundry/Poppins)
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+The full license text is available at https://openfontlicense.org/open-font-license-official-text/
+
+Les fichiers poppins-*.woff2 sont des sous-ensembles (caractères latins) des polices Poppins
+Regular, Medium et Bold, intégrés au plugin pour ne charger aucune police depuis un service externe.

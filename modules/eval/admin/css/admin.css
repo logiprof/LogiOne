@@ -1,0 +1,77 @@
+/* ── Couleurs LogiProf (comme LogiOne / LogiHub) ─────────────── */
+@font-face { font-family: "LogiEval Poppins"; src: url("../../public/fonts/poppins-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "LogiEval Poppins"; src: url("../../public/fonts/poppins-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+:root {
+    --logieval-blue-dark:   #313a45;  /* anthracite */
+    --logieval-blue-med:    #067030;  /* vert LogiProf */
+    --logieval-blue-light:  #dcefe3;
+    --logieval-blue-pale:   #eef0eb;
+    --logieval-accent:      #f5c400;
+    --logieval-green:       #067030;
+    --logieval-orange:      #8a6d00;
+    --logieval-red:         #b42318;
+    --logieval-grey:        #5b6672;
+    --logieval-radius:      6px;
+}
+
+/* ── Layout ────────────────────────────────────────────────── */
+.logieval-wrap h1 { font-family: "LogiEval Poppins", system-ui, sans-serif; font-weight: 700; color: var(--logieval-blue-dark);
+    border-bottom: 4px solid var(--logieval-blue-med); padding-bottom: 10px; letter-spacing: -0.01em; }
+.logieval-wrap .logieval-admin-logo { display: block; height: 56px; width: auto; margin: 12px 0 4px; }
+.logieval-card { background: #fff; border: 0; border-top: 5px solid var(--logieval-blue-med); border-radius: var(--logieval-radius); padding: 20px; box-shadow: 0 1px 3px rgba(49,58,69,.08); }
+.logieval-wrap .button-primary { background: #067030; border-color: #067030; }
+.logieval-wrap .button-primary:hover, .logieval-wrap .button-primary:focus { background: #0b4d22; border-color: #0b4d22; }
+
+/* ── Stats grid ────────────────────────────────────────────── */
+.logieval-stats-grid { display: flex; gap: 16px; flex-wrap: wrap; margin: 20px 0; }
+.logieval-stat-card { background: #fff; border: 1px solid #dde; border-radius: var(--logieval-radius); padding: 18px 24px; text-align: center; min-width: 120px; box-shadow: 0 2px 6px rgba(0,0,0,.05); }
+.logieval-stat-card.logieval-stat-accent { background: var(--logieval-blue-dark); color: #fff; }
+.logieval-stat-card.logieval-stat-accent .logieval-stat-label { color: rgba(255,255,255,.8); }
+.logieval-stat-num { display: block; font-size: 2rem; font-weight: 700; color: var(--logieval-blue-dark); }
+.logieval-stat-accent .logieval-stat-num { color: #fff; }
+.logieval-stat-label { font-size: .85rem; color: #666; }
+
+/* ── Tables ────────────────────────────────────────────────── */
+.logieval-table th { background: var(--logieval-blue-dark) !important; color: #fff !important; }
+.logieval-table th a { color: #dde !important; }
+.logieval-results-table { font-size: .85rem; }
+.logieval-results-table th { white-space: nowrap; max-width: 120px; overflow: hidden; text-overflow: ellipsis; }
+
+/* ── Badges ────────────────────────────────────────────────── */
+.logieval-badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: .8rem; font-weight: 600; }
+.logieval-badge-green  { background: #d4edda; color: #155724; }
+.logieval-badge-orange { background: #fff3cd; color: #856404; }
+.logieval-badge-blue   { background: #cce5ff; color: #004085; }
+.logieval-badge-grey   { background: #e2e3e5; color: #383d41; }
+
+/* ── Progress bar ──────────────────────────────────────────── */
+.logieval-progress-bar { background: #e0e0e0; border-radius: 4px; height: 8px; width: 120px; margin-bottom: 3px; }
+.logieval-progress-fill { background: var(--logieval-blue-med); height: 8px; border-radius: 4px; transition: width .3s; }
+
+/* ── Note colors ───────────────────────────────────────────── */
+.logieval-note-green { color: var(--logieval-green) !important; }
+.logieval-note-orange { color: var(--logieval-orange) !important; }
+.logieval-note-red { color: var(--logieval-red) !important; }
+.logieval-note-prev { color: var(--logieval-grey); font-style: italic; }
+
+/* ── Urgency ───────────────────────────────────────────────── */
+.logieval-urgent  { color: var(--logieval-red) !important; font-weight: 600; }
+.logieval-warning { color: var(--logieval-orange) !important; }
+
+/* ── Tags ──────────────────────────────────────────────────── */
+.logieval-tag { display: inline-block; background: var(--logieval-blue-pale); color: var(--logieval-blue-dark); border-radius: 4px; padding: 1px 7px; font-size: .8rem; margin: 1px 2px; }
+
+/* ── Modal ─────────────────────────────────────────────────── */
+.logieval-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,.5); z-index: 99999; display: flex; align-items: center; justify-content: center; }
+.logieval-modal-inner { background: #fff; border-radius: var(--logieval-radius); padding: 30px; max-width: 480px; width: 100%; box-shadow: 0 8px 32px rgba(0,0,0,.2); }
+.logieval-hidden { display: none !important; }
+.logieval-empty { color: #888; font-style: italic; }
+
+/* ── Mise en route (tableau de bord) ───────────────────────── */
+.logieval-steps { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.logieval-steps li { display: flex; align-items: center; gap: 14px; padding: 10px 12px; border-radius: 6px; background: #f7f8f5; }
+.logieval-steps li.is-done { background: transparent; opacity: .7; }
+.logieval-step-mark { flex: none; display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 999px; background: #313a45; color: #fff; font-weight: 700; }
+.logieval-steps li.is-done .logieval-step-mark { background: #067030; }
+.logieval-step-text { flex: 1; display: flex; flex-direction: column; }
+.logieval-step-text small { color: #5b6672; }

@@ -1,0 +1,49 @@
+# Publie une version de LogiOne : pousser une étiquette vX.Y.Z (même numéro que « Version: » dans logipilot.php).
+# Le .zip installable (dossier « logipilot ») est joint à la release ; les sites WordPress le proposent alors en mise à jour.
+name: Publier une version
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Vérifier le numéro de version
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          grep -q "^ \* Version: ${TAG}$" logipilot.php || { echo "::error::logipilot.php n'indique pas « Version: ${TAG} »"; exit 1; }
+          grep -q "define('LOGIPILOT_VERSION', '${TAG}');" logipilot.php || { echo "::error::LOGIPILOT_VERSION n'est pas ${TAG}"; exit 1; }
+
+      - name: Vérifier la syntaxe PHP
+        run: find . -name '*.php' -not -path './.git/*' -print0 | xargs -0 -n1 -P4 php -l > /dev/null
+
+      - name: Construire le .zip
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          mkdir -p build
+          git archive --format=zip --prefix=logipilot/ -o "build/logione-${TAG}.zip" HEAD
+          unzip -l "build/logione-${TAG}.zip" | grep -q 'logipilot/logipilot.php'
+
+      - name: Notes de version (section du README)
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          awk -v v="## Nouveautés ${TAG}" 'index($0, v) == 1 {on=1; next} on && /^## Nouveautés / {exit} on' README.md > build/notes.md
+          [ -s build/notes.md ] || echo "LogiOne ${TAG}" > build/notes.md
+
+      - name: Publier la release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          if gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" "build/logione-${TAG}.zip" --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" "build/logione-${TAG}.zip" --title "LogiOne ${TAG}" --notes-file build/notes.md
+          fi

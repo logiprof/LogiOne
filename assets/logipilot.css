@@ -1,0 +1,383 @@
+/* LogiOne : éléments communs (panneaux d'intégration, tableau de bord, matrice des droits). */
+.logipilot-wrap .logipilot-tagline { margin-top: -6px; color: #50575e; }
+.logipilot-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin: 16px 0; }
+.logipilot-card { background: #fff; border: 1px solid #dcdcde; border-radius: 6px; padding: 16px; }
+.logipilot-card h2 { margin-top: 0; }
+.logipilot-panel { background: #fff; border: 1px solid #dcdcde; border-radius: 6px; padding: 12px 16px; margin: 16px 0; overflow-x: auto; }
+.logipilot-panel h3 { margin-top: 4px; }
+.logipilot-muted { color: #50575e; }
+.logipilot-warning { color: #8a4b00; font-weight: 600; }
+.logipilot-progress-table td, .logipilot-progress-table th { vertical-align: top; }
+.logipilot-matrix-wrap { overflow-x: auto; }
+.logipilot-matrix td, .logipilot-matrix th { text-align: center; }
+.logipilot-matrix td:first-child { text-align: left; }
+.logipilot-group th { background: #f0f0f1; text-align: left !important; }
+tr.logipilot-error th, tr.logipilot-error td { color: #b32d2e; font-weight: 600; }
+tr.logipilot-warning td { color: #8a4b00; }
+.gne-grade-locked { font-size: 12px; color: #50575e; }
+
+/* Sélecteur d'espace enseignant (administrateurs) */
+.logipilot-space-bar { margin: 12px 0; padding: 8px 12px; background: #f0f6fc; border-left: 4px solid #2271b1; }
+.logipilot-space-bar.is-other { background: #fcf9e8; border-left-color: #dba617; }
+.logipilot-space-bar form { margin: 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.logipilot-space-bar select { max-width: 100%; }
+
+
+/* Permissions : un onglet par module */
+.lpperm-intro { max-width: 980px; font-size: 14px; }
+.lpperm-roles { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 18px 0 14px; padding: 14px 16px; background: #fff; border: 1px solid #dcdcde; border-radius: 8px; }
+.lpperm-roles legend { float: left; width: 100%; margin: 0 0 6px; padding: 0; font-weight: 600; }
+.lpperm-roles .description { width: 100%; margin: 4px 0 0; }
+.lpperm-chip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border: 1px solid #c3c4c7; border-radius: 999px; background: #f6f7f7; cursor: pointer; }
+.lpperm-chip:has(input:checked) { border-color: #067030; background: #e6f4ea; }
+.lpperm-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; }
+.lpperm-tab { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 130px; padding: 10px 14px; border: 1px solid #dcdcde; border-bottom: 0; border-radius: 8px 8px 0 0; background: #f6f7f7; color: #1d2327; cursor: pointer; text-align: left; }
+.lpperm-tab.is-active { background: #fff; box-shadow: inset 0 3px 0 #067030; }
+.lpperm-tab:focus-visible { outline: 2px solid #2271b1; outline-offset: 1px; }
+.lpperm-tab-count { color: #067030; font-size: 12px; }
+.lpperm-tab-count.is-none { color: #8c8f94; }
+.lpperm-panel { margin: 0 0 18px; padding: 18px 20px; background: #fff; border: 1px solid #dcdcde; border-radius: 0 8px 8px 8px; }
+.lpperm-panel-head h2 { margin: 0 0 4px; font-size: 18px; }
+.lpperm-panel-head p { margin: 0 0 14px; color: #50575e; }
+.lpperm-table-wrap { overflow-x: auto; }
+.lpperm-table { border-collapse: collapse; min-width: 100%; }
+.lpperm-table th, .lpperm-table td { padding: 10px 12px; border-bottom: 1px solid #f0f0f1; text-align: center; vertical-align: middle; }
+.lpperm-table thead th { position: sticky; top: 0; background: #fff; font-weight: 600; border-bottom: 2px solid #dcdcde; min-width: 96px; }
+.lpperm-table th[scope="row"], .lpperm-table .lpperm-perm-col { position: sticky; left: 0; background: #fff; text-align: left; font-weight: 400; min-width: 260px; max-width: 380px; z-index: 1; }
+.lpperm-table tbody tr:hover th, .lpperm-table tbody tr:hover td { background: #f6f7f7; }
+.lpperm-table tr.is-key th[scope="row"] { font-weight: 600; }
+.lpperm-table .lpperm-all th, .lpperm-table .lpperm-all td { background: #f0f6f2; font-weight: 600; }
+.lpperm-table input[type="checkbox"] { width: 20px; height: 20px; }
+.lpperm-key { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 999px; background: #fff4cc; color: #6b5500; font-size: 11px; font-weight: 600; }
+.lpperm-save { position: sticky; bottom: 0; z-index: 2; display: flex; align-items: center; gap: 14px; margin: 0 0 24px; padding: 12px 0; background: #f0f0f1; }
+.lpperm-dirty { color: #b32d2e; font-weight: 600; }
+.lpperm-user-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; margin: 10px 0; }
+.lpperm-user-card { margin: 0; padding: 12px 14px; background: #fff; border: 1px solid #dcdcde; border-radius: 8px; }
+.lpperm-user-card legend { padding: 0 4px; font-weight: 600; font-size: 14px; }
+.lpperm-user-table { width: 100%; border-collapse: collapse; }
+.lpperm-user-table th, .lpperm-user-table td { padding: 6px 4px; border-bottom: 1px solid #f0f0f1; text-align: center; }
+.lpperm-user-table th[scope="row"], .lpperm-user-table thead th:first-child { text-align: left; font-weight: 400; }
+.lpperm-yes { color: #067030; font-weight: 700; } .lpperm-no { color: #8c8f94; }
+.lpperm-migration { margin-top: 20px; }
+/* =====================================================================
+   Portail LogiOne [logione]
+   Couleurs LogiProf : anthracite et vert, jaune « marquage d'entrepôt » en accent.
+   Tout est construit avec le cube isométrique du logo.
+   ===================================================================== */
+@font-face { font-family: "LogiOne Poppins"; src: url("fonts/poppins-regular.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "LogiOne Poppins"; src: url("fonts/poppins-medium.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "LogiOne Poppins"; src: url("fonts/poppins-bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+
+.logipilot-portal {
+  --ink: #313a45; --green: #067030; --green-bright: #2fae5f; --green-deep: #0b4d22;
+  --paper: #eef0eb; --white: #ffffff; --yellow: #f5c400; --muted: #5b6672; --on-ink: #c9d1d9;
+  position: relative; left: 50%; transform: translateX(-50%); width: 100vw; max-width: 100vw;
+  margin: 0 0 32px; background: var(--paper); color: var(--ink); box-sizing: border-box;
+  font-family: "LogiOne Poppins", "Poppins", system-ui, sans-serif; font-size: 16px; line-height: 1.55; text-align: left;
+}
+.logipilot-portal *, .logipilot-portal *::before, .logipilot-portal *::after { box-sizing: border-box; }
+.logipilot-portal a { text-decoration: none; }
+.logipilot-portal :focus-visible { outline: 3px solid var(--yellow); outline-offset: 3px; }
+
+/* Bandeau anthracite */
+.lpp-hero { background: var(--ink); color: var(--white); padding: 0 clamp(16px, 5vw, 64px); }
+.lpp-hero-top, .lpp-hero-main, .lpp-toolbar { max-width: 1320px; margin-left: auto; margin-right: auto; }
+.lpp-hero-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 32px; padding: 22px 0; }
+.lpp-brand { display: block; line-height: 0; }
+.lpp-logo { display: block; height: 60px; width: auto; max-width: 100%; }
+.lpp-user { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 22px; font-size: 15px; color: var(--on-ink); }
+.lpp-user a { color: var(--white) !important; font-weight: 500; border-bottom: 2px solid transparent; }
+.lpp-user a:hover { border-bottom-color: var(--green-bright); }
+
+.lpp-hero-main { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 24px; padding-top: 8px; }
+.lpp-hero-text { padding-bottom: 52px; }
+.lpp-hello { margin: 0 0 14px; padding: 0; font-family: inherit; font-weight: 700; font-size: clamp(38px, 6vw, 76px); line-height: 1.02; letter-spacing: -0.03em; color: var(--white); }
+.lpp-hero-text p { margin: 0; max-width: 46ch; color: var(--on-ink); font-size: 17px; }
+.lpp-hero-text p + p { margin-top: 20px; }
+.lpp-one { width: clamp(160px, 22vw, 300px); margin-bottom: -40px; position: relative; z-index: 1; }
+.lpp-one .lpp-iso { display: block; width: 100%; height: auto; overflow: visible; }
+
+/* Cubes : faces haut / gauche / droite, comme le cube du logo */
+.lpp-iso polygon { stroke: var(--gap, var(--paper)); stroke-width: 2.5; stroke-linejoin: round; }
+.lpp-iso .t { fill: var(--top, var(--green-bright)); }
+.lpp-iso .l { fill: var(--left, var(--ink)); }
+.lpp-iso .r { fill: var(--right, var(--green)); }
+.lpp-iso .mark .t, .lpp-iso .mark .r { fill: var(--yellow); }
+.lpp-iso .mark .l { fill: #d9a900; }
+.lpp-iso .k { fill: none; stroke: var(--check, var(--yellow)); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.lpp-hero .lpp-iso { --gap: var(--ink); --left: var(--green-deep); }
+
+/* La palette se charge au chargement de la page : palette, puis les quatre outils */
+@keyframes lpp-drop { from { opacity: 0; transform: translateY(-40px); } to { opacity: 1; transform: none; } }
+.lpp-one .c { animation: lpp-drop .5s cubic-bezier(.2, .9, .3, 1.2) both; animation-delay: calc(var(--i) * 90ms + 150ms); }
+
+/* Accueil : les quatre outils réunis sur une palette */
+.lpp-one .pal .t { fill: #8d97a2; } .lpp-one .pal .l { fill: #5f6975; } .lpp-one .pal .r { fill: #76808b; }
+.lpp-one .tool-classe .t { fill: #6b7683; } .lpp-one .tool-classe .l { fill: #252c35; } .lpp-one .tool-classe .r { fill: #4a5563; }
+.lpp-one .tool-progress .t { fill: var(--green-bright); } .lpp-one .tool-progress .l { fill: var(--green-deep); } .lpp-one .tool-progress .r { fill: var(--green); }
+.lpp-one .tool-notes .t { fill: #ffffff; } .lpp-one .tool-notes .l { fill: #b8c1ca; } .lpp-one .tool-notes .r { fill: #dde2e6; }
+.lpp-one .tool-exam .t { fill: #ffd83d; } .lpp-one .tool-exam .l { fill: #c79f00; } .lpp-one .tool-exam .r { fill: var(--yellow); }
+
+/* Mosaïque des outils */
+.lpp-grid { display: grid; gap: 18px; max-width: 1320px; margin: 0 auto; padding: 56px clamp(16px, 5vw, 64px) 64px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); box-sizing: content-box; }
+.lpp-grid.lpp-n4 { grid-template-columns: 1.2fr 1fr 1.2fr; }
+.lpp-n4 .lpp-tile:nth-child(1) { grid-column: 1; grid-row: 1 / span 2; }
+.lpp-n4 .lpp-tile:nth-child(2) { grid-column: 2; grid-row: 1; }
+.lpp-n4 .lpp-tile:nth-child(3) { grid-column: 2; grid-row: 2; }
+.lpp-n4 .lpp-tile:nth-child(4) { grid-column: 3; grid-row: 1 / span 2; }
+
+.lpp-tile { --tile-bg: var(--white); --tile-fg: var(--ink); --tile-muted: var(--muted);
+  position: relative; display: flex; flex-direction: column; gap: 20px; min-height: 270px; padding: 30px 30px 28px;
+  background: var(--tile-bg); color: var(--tile-fg) !important; border-radius: 6px; overflow: hidden; }
+.lpp-n4 .lpp-tile:nth-child(1), .lpp-n4 .lpp-tile:nth-child(4) { justify-content: space-between; }
+.lpp-tile-art { display: block; width: 120px; transition: transform .25s ease; }
+.lpp-n4 .lpp-tile:nth-child(1) .lpp-tile-art, .lpp-n4 .lpp-tile:nth-child(4) .lpp-tile-art { width: min(300px, 82%); margin: 24px auto 0; }
+.lpp-tile-art .lpp-iso { display: block; width: 100%; height: auto; }
+.lpp-tile-art .lpp-tile-img { display: block; width: 100%; max-height: 120px; height: auto; object-fit: contain; border-radius: 14px; }
+.lpp-tile:hover .lpp-tile-art, .lpp-tile:focus-visible .lpp-tile-art { transform: translateY(-6px); }
+.lpp-tile-body { display: flex; flex-direction: column; gap: 6px; }
+.lpp-tile strong { font-size: clamp(26px, 2.4vw, 34px); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
+.lpp-tile-text { font-size: 17px; font-weight: 500; }
+.lpp-tile ul { margin: 6px 0 0; padding: 0; list-style: none; color: var(--tile-muted); font-size: 15px; }
+.lpp-tile li { margin: 0; padding: 3px 0 3px 18px; position: relative; }
+.lpp-tile li::before { content: ""; position: absolute; left: 0; top: .8em; width: 7px; height: 7px; background: currentColor; opacity: .6; transform: rotate(45deg); }
+.lpp-tile-cta { align-self: flex-start; margin-top: 14px; font-weight: 700; padding-bottom: 3px; border-bottom: 3px solid var(--cta, var(--green)); }
+
+.lpp-iso .shelf .t { fill: #8d97a2; } .lpp-iso .shelf .l { fill: #5f6975; } .lpp-iso .shelf .r { fill: #76808b; }
+
+/* Tuiles de contenu : créées par l'administration, à la suite des outils */
+.lpp-grid.lpp-more { padding-top: 0; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); }
+.lpp-grid + .lpp-grid.lpp-more { margin-top: -46px; }
+.lpp-ctile { min-height: 230px; }
+.lpp-ctile .lpp-tile-art { width: 110px; }
+.lpp-c-menthe { --tile-bg: #dcefe3; --tile-fg: var(--ink); --tile-muted: #3f5a48; --cta: var(--green); }
+.lpp-c-menthe .lpp-iso { --gap: #dcefe3; }
+.lpp-c-anthracite { --tile-bg: var(--ink); --tile-fg: var(--white); --tile-muted: var(--on-ink); --cta: var(--green-bright); }
+.lpp-c-anthracite .lpp-iso { --gap: var(--ink); }
+.lpp-c-vert { --tile-bg: var(--green); --tile-fg: var(--white); --tile-muted: #d4ecdc; --cta: var(--yellow); }
+.lpp-c-vert .lpp-iso { --gap: var(--green); }
+.lpp-c-jaune { --tile-bg: var(--yellow); --tile-fg: var(--ink); --tile-muted: #4b4320; --cta: var(--ink); }
+.lpp-c-jaune .lpp-iso { --gap: var(--yellow); }
+.lpp-c-blanc .lpp-iso { --gap: var(--white); }
+.lpp-manage { background: transparent; border: 2px dashed #9aa3ad; min-height: 230px; --tile-muted: var(--muted); }
+.lpp-manage:hover { border-color: var(--green); background: rgba(255,255,255,.5); }
+.lpp-manage .lpp-plus { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--yellow); color: var(--ink); font-size: 34px; font-weight: 700; line-height: 1; }
+
+/* Une couleur par outil, dans la gamme LogiProf */
+.lpp-tile-classe { --tile-bg: var(--ink); --tile-fg: var(--white); --tile-muted: var(--on-ink); --cta: var(--green-bright); }
+.lpp-tile-classe .lpp-iso { --gap: var(--ink); --left: #4a5563; }
+.lpp-tile-progress { --tile-bg: var(--green); --tile-fg: var(--white); --tile-muted: #d4ecdc; --cta: var(--yellow); }
+.lpp-tile-progress .lpp-iso { --gap: var(--green); --top: #8fe0ab; --right: var(--green-deep); }
+.lpp-tile-notes .lpp-iso { --gap: var(--white); }
+.lpp-tile-exam { --tile-bg: var(--yellow); --tile-fg: var(--ink); --tile-muted: #4b4320; --cta: var(--ink); }
+.lpp-tile-exam .lpp-iso { --gap: var(--yellow); --check: var(--yellow); }
+
+/* Outil ouvert : barre dans le bandeau */
+.lpp-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding: 4px 0 24px; }
+.lpp-back { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px 10px 12px; border-radius: 999px; background: var(--yellow); color: var(--ink) !important; font-weight: 700; }
+.lpp-back:hover { background: #ffd83d; }
+.lpp-back svg { width: 20px; height: 20px; }
+.lpp-current { display: inline-flex; align-items: center; gap: 12px; font-size: 24px; font-weight: 700; letter-spacing: -0.01em; color: var(--white); }
+.lpp-current-art { display: block; width: 44px; }
+.lpp-current-art .lpp-iso { display: block; width: 100%; height: auto; --gap: var(--ink); --left: #4a5563; }
+.lpp-switch { margin-left: auto; display: flex; flex-wrap: wrap; gap: 4px 22px; }
+.lpp-switch a { color: var(--on-ink) !important; font-weight: 500; border-bottom: 2px solid transparent; }
+.lpp-switch a:hover { color: var(--white) !important; border-bottom-color: var(--green-bright); }
+.lpp-tool { max-width: 1320px; margin: 28px auto 0; padding: clamp(12px, 2vw, 24px); background: var(--white); border-radius: 6px; overflow-x: auto; width: calc(100% - 2 * clamp(16px, 5vw, 64px)); }
+
+.lpp-button { display: inline-block; padding: 12px 22px; border-radius: 999px; background: var(--yellow); color: var(--ink) !important; font-weight: 700; }
+
+/* Dans le portail, les modules n'élargissent plus eux-mêmes leur affichage : le portail s'en charge. */
+.lpp-tool .gca-shortcode-fullwidth, .lpp-tool .gne-app, .lpp-tool .gne-access { position: static; left: auto; margin-left: 0; margin-right: 0; width: 100%; max-width: 100%; padding-left: 0; padding-right: 0; }
+.lpp-tool .logipilot-space-bar { margin-top: 0; }
+
+/* Tableau de bord de l'administration */
+.logipilot-brand-title { margin: 8px 0 4px !important; padding: 0 !important; line-height: 0 !important; }
+.logipilot-admin-logo { height: 64px; width: auto; }
+
+@media (max-width: 960px) {
+  .lpp-grid.lpp-n4 { grid-template-columns: 1fr 1fr; }
+  .lpp-n4 .lpp-tile:nth-child(n) { grid-column: auto; grid-row: auto; }
+}
+@media (max-width: 600px) {
+  .lpp-grid.lpp-n4, .lpp-grid.lpp-more { grid-template-columns: 1fr; }
+  .lpp-grid + .lpp-grid.lpp-more { margin-top: -14px; }
+  .lpp-grid { padding-top: 32px; }
+  .lpp-hero-main { grid-template-columns: 1fr; }
+  .lpp-one { display: none; }
+  .lpp-hero-text { padding-bottom: 32px; }
+  .lpp-logo { height: 42px; }
+  .lpp-switch { margin-left: 0; width: 100%; }
+  .lpp-tile-art, .lpp-n4 .lpp-tile:nth-child(1) .lpp-tile-art, .lpp-n4 .lpp-tile:nth-child(4) .lpp-tile-art, .lpp-ctile .lpp-tile-art { width: 100px; margin: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lpp-one .c { animation: none; }
+  .lpp-tile-art { transition: none; }
+  .lpp-tile:hover .lpp-tile-art { transform: none; }
+}
+.lpp-hero-text .lpp-about { max-width: 58ch; color: var(--white); font-size: clamp(17px, 1.5vw, 20px); line-height: 1.5; }
+.lpp-hero-text .lpp-hint { margin-top: 14px; color: var(--on-ink); font-size: 15px; }
+
+/* Éditeur des tuiles ouvert dans le portail */
+.lpp-tool .lpee-admin-in-page { margin: 0; }
+
+/* Tuile de contenu ouverte */
+.lptile { display: grid; gap: 22px; }
+.lptile-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 14px 18px; background: #fff; border: 1px solid #dfe3dc; border-radius: 12px; }
+.lptile-switch { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; background: #313a45; color: #fff !important; font-weight: 600; text-decoration: none !important; }
+.lptile-switch.is-edit { background: #f5c400; color: #313a45 !important; }
+.lptile-note { color: #5b6672; font-size: .9rem; }
+.lptile .lpee-root { max-width: none !important; width: 100% !important; margin-left: 0 !important; margin-right: 0 !important; }
+.lptile-empty { margin: 0; padding: 22px; background: #f6f7f4; border-radius: 12px; color: #5b6672; }
+.lpp-tool .lpee-admin-head { display: none; }
+
+/* Noki, la mascotte LogiProf, sur sa palette (remplace les cubes) */
+.lpp-one { width: clamp(170px, 19vw, 250px); margin-bottom: -46px; }
+.lpp-one picture, .lpp-one .lpp-noki { display: block; width: 100%; height: auto; }
+.lpp-noki { filter: drop-shadow(0 14px 22px rgba(0, 0, 0, .28)); animation: lpp-noki-in .6s cubic-bezier(.2, .9, .3, 1.15) both .1s; }
+@keyframes lpp-noki-in { from { opacity: 0; transform: translateY(24px) scale(.96); } to { opacity: 1; transform: none; } }
+@media (max-width: 720px) { .lpp-one { width: 140px; margin: -6px 0 -30px auto; } }
+@media (prefers-reduced-motion: reduce) { .lpp-noki { animation: none; } }
+
+/* LogiExam dans le portail : toute la largeur disponible (son cadre pleine page est neutralisé) */
+.lpp-tool.logipilot-portal-tool-exam { max-width: min(1600px, calc(100vw - 32px)); width: calc(100% - 32px); }
+.lpp-tool .logieval-secure.les-teacher.les-app-shell { width: 100%; max-width: 100%; margin-left: 0; transform: none; }
+
+/* Tuile de contenu dépliée sur la page des tuiles */
+.lpp-grid.lpp-more { grid-auto-flow: row dense; }
+.lpp-ctile .lpp-cta-close, .lpp-ctile.is-active .lpp-cta-open { display: none; }
+.lpp-ctile.is-active .lpp-cta-close { display: inline; }
+.lpp-ctile.is-active { box-shadow: 0 0 0 3px var(--yellow); overflow: visible; }
+.lpp-ctile.is-active::after { content: ""; position: absolute; left: 50%; bottom: -19px; margin-left: -12px; border: 12px solid transparent; border-bottom-color: var(--white); border-top: 0; }
+.lpp-panel { grid-column: 1 / -1; padding: clamp(18px, 2.4vw, 30px); background: var(--white); border-radius: 6px; border-top: 6px solid var(--accent, var(--green)); box-shadow: 0 18px 40px rgba(49, 58, 69, .12); animation: lpp-panel-in .22s ease-out; }
+@keyframes lpp-panel-in { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+.lpp-panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+.logipilot-portal .lpp-panel-title { margin: 0; color: var(--ink); font-size: clamp(22px, 2.2vw, 28px); font-weight: 700; line-height: 1.2; }
+.lpp-panel-title:focus { outline: none; }
+.lpp-panel-close { display: grid; place-items: center; flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; background: var(--paper); color: var(--ink) !important; font-size: 26px; line-height: 1; }
+.lpp-panel-close:hover { background: #dcefe3; }
+.lpp-panel .lpee-root { max-width: none !important; width: 100% !important; margin: 0 !important; }
+.lpp-panel .lptile { gap: 14px; }
+@media (prefers-reduced-motion: reduce) { .lpp-panel { animation: none; } }
+.lpp-panel .lpee-head, .lpp-panel .lpee-block-title { display: none; }
+.lpp-panel .lpee-root.lpee-theme-logione { padding-top: 14px; }
+
+/* Éléments masqués du portail (panneaux des tuiles, accordéons) : toujours cachés, quel que soit le thème */
+.logipilot-portal [hidden] { display: none !important; }
+
+/* Outils ouverts dans le portail : toute la largeur disponible de l'écran.
+   Les cadres « pleine page » des outils (100vw, marges négatives) sont neutralisés : l'outil occupe le cadre du portail. */
+.logipilot-portal .lpp-tool { max-width: min(1760px, calc(100vw - 32px)); width: calc(100% - 32px); }
+.logipilot-portal.is-tool .lpp-hero-top, .logipilot-portal.is-tool .lpp-toolbar { max-width: min(1760px, calc(100vw - 32px)); }
+.logipilot-portal .lpp-tool .logieval-app, .logipilot-portal .lpp-tool .lpl-app, .logipilot-portal .lpp-tool .llv-app, .logipilot-portal .lpp-tool .psgpt, .logipilot-portal .lpp-tool .gca-shortcode-fullwidth, .logipilot-portal .lpp-tool .gne-app, .logipilot-portal .lpp-tool .gne-access,
+.logipilot-portal .lpp-tool .logieval-secure.les-teacher.les-app-shell {
+  position: static !important; left: auto !important; transform: none !important;
+  width: 100% !important; max-width: 100% !important; margin-left: 0 !important; margin-right: 0 !important; }
+
+/* Disposition choisie par l'administration : ordre, tailles, colonnes */
+.lpp-grid.lpp-layout { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-flow: row dense; }
+.lpp-grid.lpp-layout.lpp-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.lpp-grid.lpp-layout.lpp-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.lpp-grid.lpp-layout.lpp-width-large { max-width: min(1760px, calc(100vw - 32px)); }
+.lpp-grid.lpp-layout { grid-auto-rows: minmax(118px, auto); }
+/* Même grille que l'aperçu : Petite = 1 rangée, Normale/Large/Pleine = 2, Haute = 4 (chaque tuile garde sa taille, quelle que soit sa voisine) */
+.lpp-layout .lpp-tile { min-height: 0; grid-row: span 2; }
+.lpp-layout .lpp-size-petite { grid-row: span 1; flex-direction: row; align-items: center; gap: 18px; }
+.lpp-layout .lpp-size-petite .lpp-tile-body { gap: 2px; }
+.lpp-layout .lpp-size-petite { min-height: 0; gap: 10px; padding: 22px 24px; }
+.lpp-layout .lpp-size-petite .lpp-tile-art { width: 64px; }
+.lpp-layout .lpp-size-petite strong { font-size: clamp(21px, 1.8vw, 25px); }
+.lpp-layout .lpp-size-petite ul, .lpp-layout .lpp-size-petite .lpp-tile-text { display: none; }
+.lpp-layout .lpp-size-petite .lpp-tile-cta { margin-top: 4px; }
+.lpp-layout .lpp-size-haute { grid-row: span 4; justify-content: center; gap: 22px; }
+.lpp-layout .lpp-size-haute .lpp-tile-art { width: min(280px, 80%); margin: 0 auto; }
+.lpp-layout .lpp-size-large { grid-column: span 2; }
+.lpp-layout .lpp-size-pleine { grid-column: 1 / -1; }
+.lpp-layout .lpp-size-large, .lpp-layout .lpp-size-pleine { flex-direction: row-reverse; align-items: center; justify-content: space-between; gap: 28px; }
+.lpp-layout .lpp-size-large .lpp-tile-art, .lpp-layout .lpp-size-pleine .lpp-tile-art { flex: 0 0 auto; width: clamp(110px, 16vw, 200px); }
+.lpp-layout .lpp-size-large .lpp-tile-body, .lpp-layout .lpp-size-pleine .lpp-tile-body { flex: 1 1 auto; }
+.lpp-layout .lpp-size-pleine ul { columns: 2; column-gap: 28px; }
+@media (max-width: 960px) {
+  .lpp-grid.lpp-layout, .lpp-grid.lpp-layout.lpp-cols-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lpp-layout .lpp-size-large { grid-column: 1 / -1; }
+}
+@media (max-width: 600px) {
+  .lpp-grid.lpp-layout, .lpp-grid.lpp-layout.lpp-cols-2, .lpp-grid.lpp-layout.lpp-cols-4 { grid-template-columns: 1fr; }
+  .lpp-grid.lpp-layout { grid-auto-rows: auto; }
+  .lpp-layout .lpp-tile, .lpp-layout .lpp-size-petite, .lpp-layout .lpp-size-haute { grid-row: auto; grid-column: auto; }
+  .lpp-layout .lpp-panel { grid-column: 1 / -1; }
+  .lpp-layout .lpp-size-large, .lpp-layout .lpp-size-pleine { flex-direction: column; align-items: stretch; }
+  .lpp-layout .lpp-size-haute .lpp-tile-art { width: 100px; margin: 0; }
+  .lpp-layout .lpp-size-pleine ul { columns: 1; }
+}
+.lpp-layout-edit { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; max-width: 1320px; margin: -40px auto 0; padding: 0 clamp(16px, 5vw, 64px) 40px; box-sizing: content-box; font-size: 14px; color: var(--muted); }
+.lpp-layout-edit a { display: inline-flex; align-items: center; gap: 8px; color: var(--ink) !important; font-weight: 700; border-bottom: 2px solid var(--yellow); }
+.lpp-layout-edit svg { width: 18px; height: 18px; }
+
+/* Écran d'administration « Disposition du portail » */
+.lpl-intro { max-width: 900px; font-size: 14px; }
+.lpl-options { display: flex; flex-wrap: wrap; gap: 12px 28px; margin: 18px 0; }
+.lpl-options label { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.lpl-columns { display: grid; grid-template-columns: minmax(340px, 520px) minmax(0, 1fr); gap: 28px; align-items: start; }
+.lpl-columns h2 { margin: 0 0 10px; font-size: 15px; }
+.lpl-list { margin: 0; padding: 0; list-style: none; counter-reset: lpl; }
+.lpl-item { display: flex; align-items: center; gap: 12px; margin: 0 0 8px; padding: 10px 12px; background: #fff; border: 1px solid #dcdcde; border-radius: 6px; cursor: grab; }
+.lpl-item.is-dragging { opacity: .5; border-style: dashed; }
+.lpl-grip { color: #8c8f94; letter-spacing: -2px; font-size: 16px; }
+.lpl-name { display: flex; flex: 1 1 auto; flex-direction: column; min-width: 0; }
+.lpl-name small { color: #646970; }
+.lpl-size select { min-width: 170px; }
+.lpl-move { display: flex; gap: 4px; }
+.lpl-move .button { min-width: 32px; padding: 0 6px; }
+.lpl-preview-wrap { position: sticky; top: 46px; }
+.lpl-preview { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-flow: row dense; grid-auto-rows: 84px; gap: 10px; padding: 16px; background: #eef0eb; border-radius: 6px; }
+.lpl-cell { display: flex; align-items: flex-end; padding: 10px 12px; border-radius: 5px; border: 1px solid rgba(0, 0, 0, .08); font-weight: 700; font-size: 13px; line-height: 1.2; overflow: hidden; }
+.lpl-cell.is-dark { color: #fff; } .lpl-cell.is-light { color: #313a45; }
+.lpl-cell.lpl-size-petite { grid-row: span 1; } .lpl-cell.lpl-size-normale { grid-row: span 2; } .lpl-cell.lpl-size-haute { grid-row: span 4; }
+.lpl-preview.lpl-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .lpl-preview.lpl-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.lpl-cell.lpl-size-large { grid-row: span 2; grid-column: span 2; } .lpl-cell.lpl-size-pleine { grid-row: span 2; grid-column: 1 / -1; }
+.lpl-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 24px; }
+.lpl-reset { color: #b32d2e !important; }
+@media (max-width: 1100px) { .lpl-columns { grid-template-columns: 1fr; } .lpl-preview-wrap { position: static; } }
+
+/* Listes des tuiles : un seul repère (losange), même si le thème du site ajoute ses puces */
+.logipilot-portal .lpp-tile ul, .logipilot-portal .lpp-tile li { list-style: none !important; }
+.logipilot-portal .lpp-tile li::marker { content: none; }
+
+/* LogiLive : tuile menthe, cube avec le tracé « en direct » */
+.lpp-tile-live { --tile-bg: #dcefe3; --tile-fg: var(--ink); --tile-muted: #3f5a48; --cta: var(--green); }
+.lpp-tile-live .lpp-iso { --gap: #dcefe3; --check: var(--yellow); }
+.lpp-iso .p { fill: #e11d48; }
+/* Accueil d'origine avec 5 outils : LogiClass en haut, puis deux colonnes */
+.lpp-grid.lpp-n5 { grid-template-columns: 1.2fr 1fr 1fr; }
+.lpp-n5 .lpp-tile:nth-child(1) { grid-column: 1; grid-row: 1 / span 2; justify-content: space-between; }
+.lpp-n5 .lpp-tile:nth-child(1) .lpp-tile-art { width: min(300px, 82%); margin: 24px auto 0; }
+@media (max-width: 960px) { .lpp-grid.lpp-n5 { grid-template-columns: 1fr 1fr; } .lpp-n5 .lpp-tile:nth-child(n) { grid-column: auto; grid-row: auto; } }
+@media (max-width: 600px) { .lpp-grid.lpp-n5 { grid-template-columns: 1fr; } }
+/* LogiLive dans le portail : pas de second logo (la barre LogiOne indique déjà l'outil) */
+.lpp-tool .llv-app .llv-brand { display: none; }
+.lpp-tool .llv-app .llv-hero-top { justify-content: flex-end; }
+
+/* LogiEval et LogiPlanning */
+.lpp-tile-eval { --tile-bg: #0e7490; --tile-fg: var(--white); --tile-muted: #cfeef5; --cta: var(--yellow); }
+.lpp-tile-eval .lpp-iso { --gap: #0e7490; --check: var(--yellow); }
+.lpp-tile-planning { --tile-bg: var(--white); --tile-fg: var(--ink); --tile-muted: var(--muted); --cta: var(--green); }
+.lpp-tile-planning .lpp-iso { --gap: var(--white); }
+.lpp-iso .s { fill: var(--yellow); stroke: var(--gap, var(--ink)); stroke-width: 1.5; stroke-linejoin: round; }
+.lpp-iso .g { stroke: var(--gap, var(--white)); stroke-width: 2.4; }
+.lpp-iso .ring { stroke: var(--yellow); stroke-width: 5; stroke-linecap: round; }
+/* Accueil d'origine avec 6 ou 7 outils : LogiClass en grand, puis trois colonnes */
+.lpp-grid.lpp-n6, .lpp-grid.lpp-n7 { grid-template-columns: 1.2fr 1fr 1fr; }
+.lpp-n6 .lpp-tile:nth-child(1), .lpp-n7 .lpp-tile:nth-child(1) { grid-column: 1; grid-row: 1 / span 2; justify-content: space-between; }
+.lpp-n6 .lpp-tile:nth-child(1) .lpp-tile-art, .lpp-n7 .lpp-tile:nth-child(1) .lpp-tile-art { width: min(300px, 82%); margin: 24px auto 0; }
+@media (max-width: 960px) { .lpp-grid.lpp-n6, .lpp-grid.lpp-n7 { grid-template-columns: 1fr 1fr; } .lpp-n6 .lpp-tile:nth-child(n), .lpp-n7 .lpp-tile:nth-child(n) { grid-column: auto; grid-row: auto; } }
+@media (max-width: 600px) { .lpp-grid.lpp-n6, .lpp-grid.lpp-n7 { grid-template-columns: 1fr; } }
+/* LogiEval dans le portail : pas de second logo */
+.lpp-tool .logieval-app .lge-brand { display: none; }
+
+/* Portail : contenu ouvert sous une tuile sur toute la largeur de l'écran (LogiOne 1.24.8). */
+.lpp-panel.is-fullbleed { border-radius: 0; padding-left: clamp(16px, 3vw, 48px); padding-right: clamp(16px, 3vw, 48px); max-width: none; box-sizing: border-box; }
+.lpp-panel .logieval-app, .lpp-panel .lpl-app, .lpp-panel .llv-app, .lpp-panel .psgpt, .lpp-panel .gca-shortcode-fullwidth, .lpp-panel .gne-app, .lpp-panel .gne-access,
+.lpp-panel .logieval-secure.les-teacher.les-app-shell {
+  position: static !important; left: auto !important; transform: none !important;
+  width: 100% !important; max-width: 100% !important; margin-left: 0 !important; margin-right: 0 !important; }

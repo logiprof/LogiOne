@@ -1,0 +1,4 @@
+# Fichiers du dépôt qui ne vont pas dans le .zip de l'extension
+.github export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore

@@ -1,0 +1,468 @@
+/* =====================================================================
+   LogiEval — style LogiOne / LogiHub
+   Couleurs LogiProf : anthracite et vert, jaune « marquage d'entrepôt » en accent.
+   L'application occupe toute la largeur de l'écran (bandeau compris).
+   Police Poppins intégrée au plugin : aucune requête vers Google Fonts.
+   ===================================================================== */
+@font-face { font-family: "LogiEval Poppins"; src: url("../fonts/poppins-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "LogiEval Poppins"; src: url("../fonts/poppins-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "LogiEval Poppins"; src: url("../fonts/poppins-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "LogiEval Poppins"; src: url("../fonts/poppins-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+
+.logieval-app {
+    --ink: #313a45; --ink-deep: #252c35; --ink-soft: #4a5563;
+    --green: #067030; --green-bright: #2fae5f; --green-deep: #0b4d22; --mint: #dcefe3;
+    --paper: #eef0eb; --white: #ffffff; --line: #d9ddd6;
+    --yellow: #f5c400; --yellow-soft: #fff4c2; --yellow-ink: #5c4800;
+    --red: #b42318; --red-soft: #fde7e4;
+    --muted: #5b6672; --on-ink: #c9d1d9;
+    --radius: 6px;
+    --gutter: clamp(16px, 4vw, 56px);
+    --lge-font: "LogiEval Poppins", "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+    /* Pleine largeur : l'application sort de la colonne du thème.
+       --lge-vw est la largeur visible sans la barre de défilement (calculée par public.js). */
+    position: relative;
+    left: calc(50% - var(--lge-vw, 100vw) / 2);
+    width: var(--lge-vw, 100vw);
+    max-width: var(--lge-vw, 100vw) !important;
+    margin: 0 0 40px !important;
+    padding: 0;
+    overflow-x: clip;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--lge-font);
+    font-size: 16px;
+    line-height: 1.55;
+    text-align: left;
+}
+.logieval-app *, .logieval-app *::before, .logieval-app *::after { box-sizing: border-box; }
+.logieval-app h2, .logieval-app h3, .logieval-app h4 { font-family: var(--lge-font); letter-spacing: -0.01em; }
+.logieval-app a { text-decoration: none; }
+.logieval-app :focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+.logieval-app code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; }
+.lge-sr { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Dans le portail LogiOne, c'est le portail qui gère la largeur. */
+.lpp-tool .logieval-app { left: auto; width: 100%; max-width: 100% !important; }
+
+.logieval-hidden { display: none !important; }
+.logieval-empty  { color: var(--muted); font-style: italic; margin: 0 0 24px; }
+
+/* ── Bandeau anthracite ─────────────────────────────────────── */
+.lge-hero { background: var(--ink); color: var(--white); padding: 0 var(--gutter); }
+.lge-hero-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 28px; padding: 22px 0 14px; }
+.lge-brand { display: block; line-height: 0; }
+.lge-logo { display: block; height: 60px; width: auto; max-width: 100%; }
+.lge-user { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 22px; font-size: 14px; color: var(--on-ink); }
+.lge-user code { background: rgba(255,255,255,.1); color: var(--white); padding: 2px 8px; border-radius: 4px; font-size: 13px; }
+.lge-user a { color: var(--white) !important; font-weight: 600; border-bottom: 2px solid transparent; }
+.lge-user a:hover { border-bottom-color: var(--green-bright); }
+
+.lge-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; padding: 8px 0 4px; }
+.lge-back { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px 10px 12px; border-radius: 999px;
+    background: var(--yellow); color: var(--ink) !important; font-weight: 700; font-size: 15px; line-height: 1.2; }
+.lge-back:hover { background: #ffd83d; }
+.lge-back svg { width: 20px; height: 20px; flex: none; }
+.lge-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-left: auto; }
+
+.lge-hero-main { display: grid; grid-template-columns: minmax(0, 1fr); align-items: end; gap: 24px; }
+.lge-hero-main.has-art { grid-template-columns: minmax(0, 1fr) auto; }
+.lge-hero-text { padding: 18px 0 40px; }
+.lge-kicker { margin: 0 0 6px; color: var(--green-bright); font-weight: 600; font-size: 15px; letter-spacing: .01em; }
+.lge-hello { margin: 0 0 12px !important; padding: 0; font-weight: 700 !important; font-size: clamp(34px, 5.5vw, 68px) !important;
+    line-height: 1.04 !important; letter-spacing: -0.03em; color: var(--white) !important; border: 0; }
+.lge-lead { margin: 0; max-width: 52ch; color: var(--on-ink); font-size: 17px; }
+.lge-meta { margin: 10px 0 0; color: var(--on-ink); font-size: 15px; }
+.lge-meta strong { color: var(--white); }
+.lge-art { width: clamp(130px, 15vw, 210px); margin-bottom: -26px; position: relative; z-index: 1; }
+
+/* Cubes : faces haut / gauche / droite, comme le cube du logo LogiProf */
+.lge-iso { display: block; width: 100%; height: auto; }
+.lge-iso polygon { stroke: var(--ink); stroke-width: 2.5; stroke-linejoin: round; }
+.lge-iso .t { fill: var(--green-bright); }
+.lge-iso .l { fill: var(--green-deep); }
+.lge-iso .r { fill: var(--green); }
+.lge-iso .mark .t, .lge-iso .mark .r { fill: var(--yellow); }
+.lge-iso .mark .l { fill: #d9a900; }
+.lge-iso .star polygon { stroke: none; }
+@keyframes lge-drop { from { opacity: 0; transform: translateY(-36px); } to { opacity: 1; transform: none; } }
+.lge-iso .c { animation: lge-drop .5s cubic-bezier(.2, .9, .3, 1.2) both; animation-delay: calc(var(--i) * 80ms + 120ms); }
+
+/* ── Corps ──────────────────────────────────────────────────── */
+.lge-body { padding: 40px var(--gutter) 56px; }
+.lge-body > h3, .logieval-portal-wrap h3 {
+    display: flex; align-items: center; gap: 12px; margin: 8px 0 18px; padding: 0; border: 0;
+    font-size: clamp(22px, 2vw, 28px); font-weight: 700; color: var(--ink); }
+.lge-body > h3::before { content: ""; width: 14px; height: 14px; background: var(--green); transform: rotate(45deg); flex: none; }
+
+/* ── Boutons ────────────────────────────────────────────────── */
+.logieval-app .logieval-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 20px;
+    border-radius: 999px; border: 2px solid transparent; font-family: var(--lge-font); font-weight: 600; font-size: 15px;
+    line-height: 1.25; text-decoration: none; cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
+.logieval-app .logieval-btn:disabled { opacity: .55; cursor: not-allowed; }
+.logieval-app .logieval-btn-primary   { background: var(--green); color: var(--white) !important; }
+.logieval-app .logieval-btn-primary:hover { background: var(--green-deep); }
+.logieval-app .logieval-btn-secondary { background: var(--white); color: var(--ink) !important; border-color: var(--line); }
+.logieval-app .logieval-btn-secondary:hover { border-color: var(--ink); }
+.logieval-app .logieval-btn-success   { background: var(--green); color: var(--white) !important; }
+.logieval-app .logieval-btn-success:hover { background: var(--green-deep); }
+.logieval-app .logieval-btn-export,
+.logieval-app .logieval-btn-create    { background: var(--yellow); color: var(--ink) !important; font-weight: 700; }
+.logieval-app .logieval-btn-export:hover,
+.logieval-app .logieval-btn-create:hover { background: #ffd83d; }
+.logieval-app .logieval-btn-large { padding: 13px 30px; font-size: 16px; }
+.logieval-app .logieval-btn-danger { background: var(--red); color: var(--white) !important; flex: 1; }
+.logieval-app .logieval-btn-danger:hover:not(:disabled) { background: #8f1c13; }
+
+/* Boutons dans le bandeau : clairs sur fond anthracite */
+.lge-hero .logieval-btn-secondary { background: transparent; color: var(--white) !important; border-color: rgba(255,255,255,.35); }
+.lge-hero .logieval-btn-secondary:hover { border-color: var(--white); background: rgba(255,255,255,.06); }
+
+/* ── Messages ───────────────────────────────────────────────── */
+.logieval-error, .logieval-error-banner { display: flex; align-items: flex-start; gap: 8px; margin: 0 0 16px; padding: 12px 16px;
+    background: var(--red-soft); color: var(--red); border-left: 5px solid var(--red); border-radius: var(--radius); font-size: 15px; }
+.logieval-error code { background: rgba(180,35,24,.08); padding: 1px 6px; border-radius: 4px; }
+.logieval-notice-success, .logieval-logout-msg { margin: 0 0 16px; padding: 12px 16px; background: var(--mint); color: var(--green-deep);
+    border-left: 5px solid var(--green); border-radius: var(--radius); font-size: 15px; }
+.logieval-error-msg { flex: 1; line-height: 1.5; }
+
+/* ── Badges ─────────────────────────────────────────────────── */
+.logieval-app .logieval-badge { display: inline-block; padding: 3px 11px; border-radius: 999px; font-size: 13px; font-weight: 600; line-height: 1.4; }
+.logieval-app .logieval-badge-green  { background: var(--mint); color: var(--green-deep); }
+.logieval-app .logieval-badge-orange { background: var(--yellow-soft); color: var(--yellow-ink); }
+.logieval-app .logieval-badge-blue   { background: #e4e8ed; color: var(--ink); }
+.logieval-app .logieval-badge-grey   { background: #eceeea; color: var(--muted); }
+
+/* ── Connexion ──────────────────────────────────────────────── */
+.logieval-login-wrap .lge-body { display: flex; justify-content: flex-start; }
+.logieval-login-card { width: 100%; max-width: 480px; background: var(--white); border-radius: var(--radius); padding: 32px 32px 30px;
+    border-top: 6px solid var(--green); }
+.logieval-login-card h3 { margin: 0 0 16px; font-size: 22px; font-weight: 700; color: var(--ink); }
+.logieval-login-form { display: flex; flex-direction: column; gap: 14px; }
+.logieval-input-code { width: 100%; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 20px; letter-spacing: .12em; text-align: center;
+    padding: 14px; border: 2px solid var(--line); border-radius: var(--radius); text-transform: uppercase; color: var(--ink); background: var(--white); }
+.logieval-input-code:focus { border-color: var(--green); outline: none; }
+
+/* ── Portail : tuiles d'évaluation ──────────────────────────── */
+.logieval-eval-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; margin: 0 0 40px; }
+.logieval-eval-card { position: relative; display: flex; flex-direction: column; gap: 4px; min-height: 230px; padding: 26px 24px 22px;
+    background: var(--white); border-radius: var(--radius); border-top: 6px solid var(--green); transition: transform .2s ease; }
+.logieval-clickable-card { cursor: pointer; }
+.logieval-clickable-card:hover { transform: translateY(-3px); }
+.logieval-eval-card h4 { margin: 0 0 2px; font-size: 26px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); }
+.logieval-semestre { margin: 0; color: var(--muted); font-size: 15px; font-weight: 500; }
+.logieval-echeance { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+.logieval-eval-card > p:last-of-type { margin: 10px 0 14px; }
+.logieval-eval-card > .logieval-btn:first-of-type { margin-top: auto; }
+.logieval-eval-card .logieval-btn, .logieval-eval-card form .logieval-btn { width: 100%; }
+.logieval-eval-card .logieval-btn + .logieval-btn, .logieval-eval-card form { margin-top: 8px !important; }
+.logieval-card-warning { border-top-color: var(--yellow); }
+.logieval-card-urgent  { border-top-color: var(--red); }
+.logieval-card-closed  { border-top-color: var(--ink-soft); }
+
+/* Espace maître de classe : grand bloc anthracite */
+.logieval-maitre-section { margin-top: 8px; padding: 30px clamp(18px, 3vw, 36px) 32px; background: var(--ink); color: var(--white); border-radius: var(--radius); }
+.logieval-maitre-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+.logieval-app .logieval-maitre-header h3 { margin: 0; color: var(--white); font-size: clamp(22px, 2vw, 28px); font-weight: 700; }
+.logieval-maitre-section .logieval-empty { color: var(--on-ink); }
+.logieval-maitre-evals { display: flex; flex-direction: column; gap: 10px; }
+.logieval-meval-row { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 18px; padding: 14px 18px;
+    background: var(--white); color: var(--ink); border-radius: var(--radius); border-left: 6px solid var(--green); }
+.logieval-meval-urgent  { border-left-color: var(--red); }
+.logieval-meval-warning { border-left-color: var(--yellow); }
+.logieval-meval-info { flex: 1; display: flex; flex-direction: column; gap: 1px; min-width: 180px; }
+.logieval-meval-classe { font-weight: 700; font-size: 18px; }
+.logieval-meval-sem    { color: var(--muted); font-size: 14px; font-weight: 500; }
+.logieval-meval-date   { color: var(--muted); font-size: 13px; }
+.logieval-meval-status { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.logieval-meval-progress { display: flex; flex-direction: column; gap: 3px; align-items: flex-start; font-size: 13px; color: var(--muted); }
+.logieval-progress-bar { height: 8px; background: #e6e9e3; border-radius: 999px; overflow: hidden; }
+.logieval-progress-fill { height: 100%; background: var(--green); border-radius: 999px; }
+.logieval-meval-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.logieval-btn-meval { display: inline-block; padding: 7px 15px; border-radius: 999px; border: 2px solid transparent; font-family: var(--lge-font);
+    font-size: 14px; font-weight: 600; line-height: 1.2; cursor: pointer; text-decoration: none; transition: background .15s, border-color .15s; }
+.logieval-btn-meval-view   { background: var(--green); color: var(--white) !important; }
+.logieval-btn-meval-view:hover { background: var(--green-deep); }
+.logieval-btn-meval-test   { background: var(--white); color: var(--ink) !important; border-color: var(--line); }
+.logieval-btn-meval-test:hover { border-color: var(--ink); }
+.logieval-btn-meval-reopen { background: var(--yellow-soft); color: var(--yellow-ink) !important; border-color: #f1dc7a; }
+.logieval-btn-meval-reopen:hover { background: var(--yellow); }
+.logieval-btn-meval-del    { background: var(--white); color: var(--red) !important; border-color: #f2b8b1; }
+.logieval-btn-meval-del:hover { background: var(--red-soft); }
+
+/* ── Grille d'évaluation ────────────────────────────────────── */
+.logieval-ens-status-bar { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+.logieval-ens-chip { display: inline-flex; align-items: center; gap: 7px; padding: 5px 13px; border-radius: 999px; font-size: 14px; font-weight: 600; }
+.logieval-ens-chip.done    { background: var(--mint); color: var(--green-deep); }
+.logieval-ens-chip.pending { background: var(--white); color: var(--ink); box-shadow: inset 0 0 0 2px var(--line); }
+.logieval-chip-action { border: 0; border-radius: 999px; background: var(--white); color: inherit; cursor: pointer; font: inherit; font-size: 12px; padding: 2px 8px; }
+.logieval-chip-action:hover { text-decoration: underline; }
+
+.logieval-test-banner { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0 0 18px; padding: 12px 16px;
+    background: var(--yellow-soft); color: var(--yellow-ink); border-left: 5px solid var(--yellow); border-radius: var(--radius); }
+.logieval-test-banner #logieval-save-status { margin-left: auto; color: var(--yellow-ink); font-weight: 700; flex: none; }
+
+.logieval-manage-eval-card { margin: 0 0 18px; padding: 20px 22px; background: var(--white); border-radius: var(--radius); border-top: 6px solid var(--ink); }
+.logieval-manage-eval-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
+.logieval-app .logieval-manage-eval-head h3 { margin: 0; font-size: 20px; font-weight: 700; color: var(--ink); }
+.logieval-manage-eval-head span { background: var(--yellow); color: var(--ink); border-radius: 999px; padding: 3px 12px; font-size: 13px; font-weight: 700; }
+.logieval-manage-eval-grid { display: grid; grid-template-columns: minmax(220px, .4fr) minmax(260px, 1fr); gap: 18px; margin-bottom: 16px; }
+.logieval-manage-eval-grid strong { display: block; margin-bottom: 8px; font-weight: 600; }
+.logieval-manage-eval-grid input[type="date"] { width: 100%; max-width: 240px; padding: 9px 12px; border: 2px solid var(--line); border-radius: var(--radius); font-family: var(--lge-font); }
+.logieval-front-ens-checks { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 6px 14px; }
+.logieval-front-ens-checks label { display: flex; align-items: center; gap: 8px; }
+.logieval-front-ens-checks input { accent-color: var(--green); }
+
+/* Barre d'enregistrement : reste visible en haut pendant la saisie */
+.logieval-autosave-bar { position: sticky; top: var(--wp-admin--admin-bar--height, 0px); z-index: 20; display: flex; align-items: center; flex-wrap: wrap; gap: 10px 12px;
+    margin: 0 0 18px; padding: 10px 14px; background: var(--white); border-radius: var(--radius); box-shadow: 0 6px 18px rgba(49,58,69,.08); }
+#logieval-save-status { flex: 1; font-size: 14px; color: var(--muted); font-weight: 500; }
+#logieval-save-status.saving { color: #8a6d00; }
+#logieval-save-status.error  { color: var(--red); font-weight: 700; }
+
+/* Élèves */
+.logieval-students-list { display: flex; flex-direction: column; gap: 12px; }
+.logieval-student-card { background: var(--white); border-radius: var(--radius); overflow: hidden; border-left: 6px solid var(--line); }
+.logieval-student-card:has(.logieval-student-body:not(.logieval-hidden)) { border-left-color: var(--green); }
+.logieval-student-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 16px 22px; cursor: pointer; }
+.logieval-student-header:hover { background: #f7f8f5; }
+.logieval-student-name { font-weight: 700; font-size: 19px; color: var(--ink); letter-spacing: -0.01em; }
+.logieval-student-score { display: flex; align-items: center; gap: 12px; font-size: 14px; }
+.logieval-ref-note { color: var(--muted); font-style: italic; font-size: 13px; }
+.logieval-my-score { display: inline-flex; align-items: baseline; gap: 6px; }
+.logieval-my-score strong { font-size: 18px; }
+.logieval-my-score small { color: var(--muted); }
+.logieval-chevron { display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 999px; background: var(--paper); color: var(--ink); font-size: 12px; }
+.logieval-print-student { font-size: 13px; font-weight: 600; color: var(--green) !important; border-bottom: 2px solid var(--green); padding-bottom: 1px; }
+
+/* Objectifs : sur grand écran, ils se rangent sur plusieurs colonnes pour profiter de la largeur */
+.logieval-student-body { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 540px), 1fr)); gap: 1px; background: var(--line); border-top: 1px solid var(--line); }
+.logieval-student-body.logieval-hidden { display: none !important; }
+.logieval-objectif { padding: 18px 22px 20px; background: var(--white); }
+.logieval-obj-maitre { background: #fffbea; box-shadow: inset 5px 0 0 var(--yellow); }
+.logieval-obj-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 12px; }
+.logieval-obj-title { flex: 1; font-size: 16px; font-weight: 600; line-height: 1.4; color: var(--ink); }
+.logieval-obj-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.logieval-obj-score { white-space: nowrap; padding: 4px 12px; border-radius: 999px; background: var(--mint); color: var(--green-deep); font-weight: 700; font-size: 14px; }
+.logieval-obj-score span { font-size: 17px; }
+.logieval-maitre-badge { display: inline-block; margin-bottom: 4px; padding: 2px 10px; border-radius: 999px; background: var(--yellow); color: var(--ink); font-size: 12px; font-weight: 700; }
+.logieval-locked-msg { display: flex; align-items: center; gap: 4px; margin: 8px 0 0; color: var(--yellow-ink); font-size: 14px; font-style: italic; }
+
+.logieval-btn-ne { padding: 5px 13px; border-radius: 999px; border: 2px solid var(--line); background: var(--white); color: var(--muted);
+    font-family: var(--lge-font); font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.logieval-btn-ne:hover { border-color: var(--ink); color: var(--ink); }
+.logieval-btn-ne-active { background: var(--ink); border-color: var(--ink); color: var(--white); }
+.logieval-btn-ne-active:hover { background: var(--ink-deep); color: var(--white); }
+.logieval-obj-ne { opacity: .9; }
+.logieval-obj-ne .logieval-obj-title { color: #8a939c; text-decoration: line-through; }
+.logieval-obj-score-ne { background: #eceeea !important; color: #8a939c !important; }
+.logieval-ne-label { font-size: 13px; font-style: italic; color: #8a939c; }
+.logieval-sc-list { display: flex; flex-direction: column; gap: 8px; }
+.logieval-sc-list-ne { opacity: .35; pointer-events: none !important; }
+.logieval-sc-list-ne * { pointer-events: none !important; }
+
+/* Sous-critères */
+.logieval-sc-wrapper { display: flex; flex-direction: column; border: 2px solid #e6e9e3; border-radius: var(--radius); overflow: hidden; }
+.logieval-sc-wrapper:hover { border-color: #cfd5cb; }
+.logieval-sc-tie { border-color: #f1dc7a !important; }
+.logieval-sc-need-arb { border-color: #f08c2b !important; }
+.logieval-sc-row { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; }
+.logieval-sc-lettre { flex-shrink: 0; display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 4px; background: var(--ink); color: var(--white); font-weight: 700; font-size: 13px; }
+.logieval-sc-text { flex: 1; font-size: 15px; color: var(--ink); line-height: 1.45; }
+.logieval-sc-pts  { flex-shrink: 0; white-space: nowrap; padding: 2px 9px; border-radius: 999px; background: var(--mint); color: var(--green-deep); font-weight: 700; font-size: 13px; }
+
+.logieval-vote-row { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding: 8px 14px; background: #f7f8f5; border-top: 1px solid #e6e9e3; }
+.logieval-vote-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+.logieval-vote-btn { padding: 6px 16px; border-radius: 999px; border: 2px solid var(--line); background: var(--white); color: var(--ink);
+    font-family: var(--lge-font); font-size: 14px; font-weight: 600; cursor: pointer; transition: background .12s, border-color .12s, color .12s; }
+.logieval-vote-oui:hover { border-color: var(--green); color: var(--green); }
+.logieval-vote-non:hover { border-color: var(--red); color: var(--red); }
+.logieval-vote-abs:hover { border-color: var(--ink); }
+.logieval-vote-oui.active { background: var(--green); border-color: var(--green); color: var(--white); }
+.logieval-vote-non.active { background: var(--red); border-color: var(--red); color: var(--white); }
+.logieval-vote-abs.active { background: var(--ink); border-color: var(--ink); color: var(--white); }
+.logieval-vote-readonly { font-size: 14px; }
+.logieval-vote-ro-oui { color: var(--green); font-weight: 700; }
+.logieval-vote-ro-non { color: var(--red); font-weight: 700; }
+.logieval-vote-ro-abs { color: var(--muted); }
+.logieval-vote-ro-missing { color: var(--yellow-ink); font-weight: 700; }
+
+.logieval-tally { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-left: auto; font-size: 13px; }
+.logieval-tally-oui, .logieval-tally-non, .logieval-tally-abs, .logieval-tally-tie, .logieval-tie-alert, .logieval-arb-required-badge {
+    padding: 2px 9px; border-radius: 999px; font-weight: 700; font-size: 13px; }
+.logieval-tally-oui { background: var(--mint); color: var(--green-deep); }
+.logieval-tally-non { background: var(--red-soft); color: var(--red); }
+.logieval-tally-abs { background: #e4e8ed; color: var(--ink); }
+.logieval-tally-tie, .logieval-tie-alert, .logieval-arb-required-badge, .logieval-tally-arb-needed { background: var(--yellow-soft); color: var(--yellow-ink); }
+
+.logieval-others { padding: 0 14px 8px; background: #f7f8f5; font-size: 13px; }
+.logieval-others:empty { display: none; }
+.logieval-others-line { display: inline-flex; align-items: center; gap: 4px; margin: 4px 8px 0 0; padding: 3px 9px; border-radius: 4px; }
+.logieval-others-oui { background: var(--mint); color: var(--green-deep); }
+.logieval-others-non { background: var(--red-soft); color: var(--red); }
+.logieval-others-abs { background: #e4e8ed; color: var(--ink); }
+
+.logieval-arb-btns { display: flex; gap: 6px; }
+.logieval-arb-btn { padding: 4px 12px; border-radius: 999px; border: 2px solid; font-family: var(--lge-font); font-size: 13px; font-weight: 700; cursor: pointer; }
+.logieval-arb-oui { background: var(--mint); border-color: var(--green); color: var(--green-deep); }
+.logieval-arb-non { background: var(--red-soft); border-color: var(--red); color: var(--red); }
+
+.logieval-comment-wrap { padding: 8px 14px 10px; border-top: 1px dashed #e0e4dd; }
+.logieval-comment-input { width: 100%; padding: 7px 10px; border: 2px solid #e6e9e3; border-radius: var(--radius); resize: none; overflow: hidden;
+    font-family: var(--lge-font); font-size: 14px; color: var(--ink); background: #fbfbfa; }
+.logieval-comment-input:focus { border-color: var(--green); outline: none; background: var(--white); }
+.logieval-comment-ro { padding: 7px 14px 10px; border-top: 1px dashed #e0e4dd; color: var(--muted); font-size: 14px; font-style: italic; }
+.logieval-comment-ro strong { color: var(--ink); font-style: normal; }
+.logieval-others-comments .logieval-comment-ro { background: #f7f8f5; }
+
+.logieval-note-green  { color: var(--green) !important; }
+.logieval-note-orange { color: #8a6d00 !important; }
+.logieval-note-red    { color: var(--red) !important; }
+.logieval-legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 22px; font-size: 14px; color: var(--muted); }
+
+/* ── Nouvelle évaluation ────────────────────────────────────── */
+.logieval-create-form-card { max-width: 760px; padding: 32px; background: var(--white); border-radius: var(--radius); border-top: 6px solid var(--green); }
+.logieval-form-group, .logieval-ens-select, .logieval-prev-select { margin-bottom: 22px; }
+.logieval-form-label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 15px; color: var(--ink); }
+.logieval-required { color: var(--red); margin-left: 2px; }
+.logieval-form-input, .logieval-form-select { width: 100%; padding: 11px 14px; border: 2px solid var(--line); border-radius: var(--radius);
+    font-family: var(--lge-font); font-size: 15px; color: var(--ink); background: var(--white); }
+.logieval-form-input:focus, .logieval-form-select:focus { border-color: var(--green); outline: none; }
+.logieval-ens-checkboxes { display: flex; flex-direction: column; gap: 6px; max-height: 240px; overflow-y: auto; padding: 14px; background: #f7f8f5; border-radius: var(--radius); }
+.logieval-ens-check-label { display: flex; align-items: center; gap: 10px; padding: 3px 0; font-size: 15px; cursor: pointer; }
+.logieval-ens-check-label input[type="checkbox"], .logieval-app input[type="checkbox"] { accent-color: var(--green); }
+.logieval-form-help { display: block; margin-top: 8px; color: var(--muted); font-size: 13px; }
+.logieval-form-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+
+/* ── Fenêtre de confirmation (suppression) ──────────────────── */
+.logieval-modal { position: fixed; inset: 0; z-index: 99999; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(37,44,53,.6); font-family: var(--lge-font, "LogiEval Poppins", sans-serif); }
+.logieval-del-modal-inner { width: 100%; max-width: 460px; padding: 30px 28px; background: #fff; border-radius: 6px; border-top: 6px solid #b42318; }
+.logieval-del-modal-inner h3 { margin: 0 0 12px; color: #313a45; }
+.logieval-del-warning { margin-bottom: 20px; padding: 10px 14px; background: #fff4c2; color: #5c4800; border-left: 5px solid #f5c400; border-radius: 6px; font-size: 14px; }
+.logieval-del-code-badge { display: inline-block; margin-left: 4px; padding: 3px 12px; border-radius: 6px; background: #313a45; color: #2fae5f; font-family: monospace; letter-spacing: .12em; }
+.logieval-del-code-input { width: 100%; padding: 11px 14px; border: 2px solid #d9ddd6; border-radius: 6px; font-family: monospace; font-size: 18px; text-align: center; text-transform: uppercase; }
+.logieval-del-code-error { margin-bottom: 12px; color: #b42318; font-size: 14px; }
+.logieval-del-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+
+/* ── Téléphone et tablette ──────────────────────────────────── */
+@media (max-width: 782px) {
+    .lge-hero-main.has-art { grid-template-columns: minmax(0, 1fr); }
+    .lge-art { display: none; }
+    .lge-hero-text { padding-bottom: 30px; }
+    .lge-logo { height: 42px; }
+    .lge-actions { margin-left: 0; width: 100%; }
+    .lge-body { padding-top: 28px; }
+    .logieval-manage-eval-grid { grid-template-columns: 1fr; }
+    .logieval-obj-header { flex-direction: column; }
+    .logieval-student-header { flex-direction: column; align-items: flex-start; gap: 8px; padding: 14px 16px; }
+    .logieval-student-score { width: 100%; justify-content: space-between; flex-wrap: wrap; }
+    .logieval-objectif { padding: 16px; }
+    .logieval-meval-row { flex-direction: column; align-items: flex-start; }
+    .logieval-login-card, .logieval-create-form-card { padding: 24px 20px; }
+    .logieval-tally { margin-left: 0; }
+}
+@media (max-width: 480px) {
+    .lge-actions .logieval-btn { flex: 1 1 auto; }
+    .logieval-input-code { font-size: 18px; letter-spacing: .08em; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .lge-iso .c { animation: none; }
+    .logieval-clickable-card:hover { transform: none; }
+}
+
+/* =====================================================================
+   2.2.0 — organisation simplifiée
+   ===================================================================== */
+
+/* Menu « Imprimer / exporter » du maître de classe */
+.lge-menu { position: relative; }
+.lge-menu > summary { list-style: none; cursor: pointer; }
+.lge-menu > summary::-webkit-details-marker { display: none; }
+.lge-menu > summary::after { content: ""; width: 7px; height: 7px; margin-left: 4px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-2px) rotate(45deg); }
+.lge-menu[open] > summary::after { transform: translateY(2px) rotate(-135deg); }
+.lge-menu-list { position: absolute; right: 0; top: calc(100% + 8px); z-index: 30; width: min(320px, 86vw); padding: 6px; background: var(--white); border-radius: var(--radius); box-shadow: 0 14px 34px rgba(37,44,53,.25); }
+.lge-menu-list a, .lge-menu-list button { display: flex; flex-direction: column; gap: 1px; width: 100%; padding: 10px 12px; border: 0; border-radius: 4px; background: none; color: var(--ink) !important; font: inherit; text-align: left; cursor: pointer; }
+.lge-menu-list a:hover, .lge-menu-list button:hover { background: var(--paper); }
+.lge-menu-list strong { font-size: 15px; font-weight: 600; }
+.lge-menu-list small { color: var(--muted); font-size: 13px; }
+
+/* Suivi des enseignants */
+.lge-status-title { flex-basis: 100%; font-weight: 600; font-size: 15px; color: var(--ink); }
+.logieval-ens-chip { flex-direction: row; align-items: baseline; gap: 8px; padding: 6px 14px; }
+.logieval-ens-chip small { font-weight: 500; font-size: 12px; opacity: .8; }
+
+/* Barre de travail */
+.lge-overall-wrap { display: flex; flex-direction: column; gap: 4px; min-width: 180px; }
+.lge-overall { font-weight: 700; font-size: 14px; color: var(--ink); }
+.lge-bar { display: block; width: 100%; height: 8px; background: #e6e9e3; border-radius: 999px; overflow: hidden; }
+.lge-bar-fill { display: block; height: 100%; width: 0; background: var(--green); border-radius: 999px; transition: width .25s ease; }
+.lge-close-help { flex-basis: 100%; order: 10; color: var(--muted); font-size: 13px; }
+.logieval-autosave-bar #btn-force-close-finished { order: 11; }
+.lge-practice { margin: -8px 0 18px; font-size: 14px; }
+.lge-practice a { color: var(--muted) !important; border-bottom: 1px dashed currentColor; }
+.lge-practice a:hover { color: var(--ink) !important; }
+.logieval-test-banner .lge-overall { color: var(--yellow-ink); }
+
+/* Progression d'un élève */
+.lge-progress { padding: 3px 11px; border-radius: 999px; background: var(--yellow-soft); color: var(--yellow-ink); font-weight: 600; font-size: 13px; white-space: nowrap; }
+.lge-progress.is-complete { background: var(--mint); color: var(--green-deep); }
+.logieval-student-card.lge-complete { border-left-color: var(--green-bright); }
+
+/* « Tout Oui » */
+.lge-student-tools, .lge-student-next { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 14px 22px; background: #f7f8f5; }
+.lge-student-tools span { color: var(--muted); font-size: 13px; }
+.lge-fill { padding: 7px 16px; border-radius: 999px; border: 2px solid var(--green); background: var(--white); color: var(--green); font-family: var(--lge-font); font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.lge-fill:hover { background: var(--green); color: var(--white); }
+.lge-fill:disabled { opacity: .6; cursor: wait; }
+.lge-fill-obj { padding: 4px 12px; font-size: 13px; }
+.logieval-obj-ne .lge-fill-obj { display: none; }
+.lge-student-next { justify-content: flex-end; background: var(--white); border-top: 1px solid var(--line); }
+.lge-student-next span { color: var(--muted); font-size: 14px; }
+
+/* Commentaires repliés */
+.lge-add-comment { padding: 0; border: 0; background: none; color: var(--muted); font-family: var(--lge-font); font-size: 13px; font-weight: 600; cursor: pointer; }
+.lge-add-comment:hover { color: var(--green); }
+.logieval-comment-wrap:has(.lge-add-comment) { padding-top: 6px; padding-bottom: 8px; }
+
+/* Critère manquant mis en évidence */
+@keyframes lge-flash { 0%, 100% { box-shadow: 0 0 0 0 rgba(245,196,0,0); } 30% { box-shadow: 0 0 0 5px rgba(245,196,0,.9); } }
+.lge-flash { border-color: var(--yellow) !important; animation: lge-flash .8s ease 2; }
+
+/* Portail : bloc « À faire » et « Mes classes » */
+.lge-section-help { margin: -10px 0 18px; color: var(--muted); font-size: 15px; }
+.lge-due { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; font-weight: 600; font-size: 14px; color: var(--ink); }
+.lge-due.is-soon { color: var(--yellow-ink); }
+.lge-due.is-late { color: var(--red); }
+.lge-history { margin-top: 32px; }
+.lge-history > summary { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; list-style: none; font-size: 18px; font-weight: 700; color: var(--ink); }
+.lge-history > summary::-webkit-details-marker { display: none; }
+.lge-history > summary::before { content: ""; width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(-45deg); transition: transform .15s; }
+.lge-history[open] > summary::before { transform: rotate(45deg); }
+.lge-history .logieval-eval-grid { margin-top: 18px; }
+.lge-history .logieval-eval-card { min-height: 0; }
+.lge-classes { margin-bottom: 36px; }
+.logieval-maitre-section .lge-section-help { color: var(--on-ink); margin: -12px 0 18px; }
+.lge-all-done { padding: 22px 24px; background: var(--white); border-radius: var(--radius); border-left: 6px solid var(--green-bright); font-weight: 600; margin: 0 0 36px; }
+
+@media (max-width: 782px) {
+    .lge-menu-list { right: auto; left: 0; }
+    .lge-student-tools, .lge-student-next { padding: 12px 16px; }
+    .lge-student-next .logieval-btn { width: 100%; }
+    .logieval-autosave-bar { position: static; }
+}
+
+/* LogiOne 1.28 */
+.logieval-note-none { color: #475569; }
+.logieval-notice-info { margin: 0 0 16px; padding: 12px 16px; background: #eef6ff; color: #1e3a5f; border-left: 5px solid #2563eb; border-radius: 8px; font-weight: 600; }
+.logieval-shared { display: flex; gap: 8px; align-items: flex-start; margin: 14px 0 4px; font-size: 14px; font-weight: 500; text-align: left; }
+.logieval-login-help { margin: 8px 0 0; font-size: 13px; opacity: .85; }
+.lge-unsaved { outline: 3px solid #dc2626; outline-offset: 2px; border-radius: 8px; }
+.logieval-error-banner.is-sticky { position: sticky; top: 0; z-index: 30; }
+.lge-mobile-status { display: none; }
+@media (max-width: 782px) {
+    /* Sur téléphone : l'état d'enregistrement reste toujours visible en bas de l'écran. */
+    .lge-mobile-status { display: block; position: fixed; left: 50%; bottom: 12px; transform: translateX(-50%); z-index: 50; max-width: calc(100vw - 32px); padding: 8px 14px; border-radius: 999px; background: #0f172a; color: #fff; font-size: 13px; font-weight: 600; box-shadow: 0 6px 18px rgba(0,0,0,.25); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .lge-mobile-status.error { background: #b91c1c; }
+    .lge-mobile-status:empty { display: none; }
+}

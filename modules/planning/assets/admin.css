@@ -1,0 +1,341 @@
+.lplms-admin { --lpl-ink: #313a45; --lpl-green: #067030; --lpl-green-bright: #2fae5f; --lpl-yellow: #f5c400; }
+@font-face { font-family: "LogiPlanning Poppins"; src: url("fonts/poppins-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+/* Bandeau LogiOne dans l'administration */
+.lplms-admin-hero { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin: 14px 0 18px; padding: 18px 24px; border-radius: 8px; background: var(--lpl-ink); color: #c9d1d9; }
+.lplms-admin-hero .lpl-logo { display: block; height: 46px; width: auto; }
+.lplms-admin-hero p { flex: 1 1 320px; margin: 0; font-size: 14px; }
+.lplms-admin .nav-tab-wrapper { border-bottom: 2px solid #dcdcde; }
+.lplms-admin .nav-tab { border-radius: 8px 8px 0 0; background: #f6f7f7; }
+.lplms-admin .nav-tab-active, .lplms-admin .nav-tab-active:hover { background: #fff; box-shadow: inset 0 3px 0 var(--lpl-green); }
+.lplms-admin .button-primary { background: var(--lpl-green); border-color: var(--lpl-green); }
+.lplms-admin .button-primary:hover, .lplms-admin .button-primary:focus { background: #0b4d22; border-color: #0b4d22; }
+.lplms-admin .lplms-grid {
+	display: grid;
+	grid-template-columns: minmax(0, 1.35fr) minmax(320px, .65fr);
+	gap: 22px;
+	align-items: start;
+	margin-top: 18px;
+}
+
+.lplms-panel {
+	max-width: 760px;
+	padding: 18px;
+	border: 1px solid #dcdcde;
+	background: #fff;
+}
+
+.lplms-message-admin-list {
+	display: grid;
+	gap: 16px;
+	margin: 16px 0 24px;
+}
+
+.lplms-panel label,
+.lplms-filter label {
+	display: block;
+	margin: 0 0 14px;
+	font-weight: 600;
+}
+
+.lplms-editor-field {
+	margin: 0 0 18px;
+}
+
+.lplms-editor-field > strong {
+	display: block;
+	margin: 0 0 8px;
+}
+
+.lplms-clear-select {
+	margin-top: 8px !important;
+}
+
+.lplms-category-picker,
+.lplms-group-picker {
+	display: grid;
+	max-height: 260px;
+	max-width: 520px;
+	gap: 6px;
+	margin-top: 6px;
+	padding: 10px;
+	overflow: auto;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+	background: #fff;
+}
+
+.lplms-category-picker label,
+.lplms-group-picker label {
+	display: flex;
+	gap: 8px;
+	align-items: flex-start;
+	margin: 0;
+	font-weight: 500;
+}
+
+.lplms-category-picker input,
+.lplms-group-picker input {
+	margin-top: 2px;
+}
+
+.lplms-plan-edit {
+	margin-top: 10px;
+	max-width: 520px;
+}
+
+.lplms-plan-edit summary {
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.lplms-plan-edit form {
+	display: grid;
+	gap: 10px;
+	margin-top: 10px;
+	padding: 12px;
+	border: 1px solid #dcdcde;
+	background: #fff;
+}
+
+.lplms-plan-edit label {
+	display: grid;
+	gap: 5px;
+	font-weight: 600;
+}
+
+.lplms-plan-edit input:not([type="checkbox"]) {
+	width: 100%;
+}
+
+.lplms-delete-plan-form {
+	border-top: 0 !important;
+	margin-top: -10px !important;
+}
+
+.lplms-danger-link {
+	color: #b32d2e !important;
+	border-color: #b32d2e !important;
+}
+
+[data-lplms-vacation-field].is-disabled {
+	opacity: .45;
+}
+
+[data-lplms-classroom-field].is-disabled {
+	opacity: .45;
+}
+
+.lplms-panel input[type="text"],
+.lplms-panel input[type="date"],
+.lplms-panel select,
+.lplms-panel textarea,
+.lplms-filter select {
+	display: block;
+	width: 100%;
+	max-width: 520px;
+	margin-top: 5px;
+}
+
+.lplms-filter {
+	display: flex;
+	gap: 12px;
+	align-items: end;
+	margin: 18px 0;
+}
+
+.lplms-table-scroll {
+	overflow-x: auto;
+	margin: 16px 0;
+	background: #fff;
+}
+
+.lplms-quick-edit {
+	padding: 8px 0;
+}
+
+.lplms-quick-edit summary {
+	cursor: pointer;
+	font-weight: 700;
+}
+
+.lplms-quick-form {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(180px, 1fr));
+	gap: 12px;
+	margin-top: 12px;
+	padding: 14px;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+	background: #fff;
+}
+
+.lplms-quick-form label {
+	display: block;
+	margin: 0;
+	font-weight: 600;
+}
+
+.lplms-quick-form input:not([type="checkbox"]),
+.lplms-quick-form select,
+.lplms-quick-form textarea {
+	display: block;
+	width: 100%;
+	margin-top: 5px;
+}
+
+.lplms-checkline {
+	align-self: end;
+}
+
+.lplms-propagate-button {
+	margin-top: 8px !important;
+}
+
+.lplms-quick-wide {
+	grid-column: 1 / -1;
+}
+
+.lplms-quick-actions {
+	grid-column: 1 / -1;
+}
+
+.lplms-inline-duplicate {
+	display: flex;
+	gap: 6px;
+	align-items: center;
+	margin-top: 8px;
+}
+
+.lplms-inline-duplicate input {
+	max-width: 180px;
+}
+
+.lplms-bulk-days th,
+.lplms-bulk-days td {
+	vertical-align: top;
+}
+
+.lplms-bulk-days input:not([type="checkbox"]),
+.lplms-bulk-days select,
+.lplms-bulk-days textarea {
+	width: 100%;
+	min-width: 110px;
+}
+
+.lplms-bulk-days .lplms-category-picker {
+	max-width: 260px;
+	max-height: 170px;
+}
+
+.lplms-bulk-days .lplms-group-specific-fields {
+	min-width: 230px;
+}
+
+.lplms-course-code-preview {
+	min-width: 130px;
+	padding: 8px;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+	background: #fff;
+	font-weight: 700;
+	line-height: 1.45;
+	color: #1d2327;
+}
+
+.lplms-course-code-preview span {
+	font-weight: 500;
+	color: #646970;
+}
+
+.lplms-bulk-days textarea {
+	min-width: 220px;
+}
+
+.lplms-group-specific-fields {
+	display: grid;
+	gap: 8px;
+}
+
+.lplms-group-specific-fields label,
+.lplms-fields-by-group label {
+	display: grid;
+	gap: 4px;
+	margin: 0;
+	font-weight: 600;
+}
+
+.lplms-fields-by-group {
+	padding: 8px;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+	background: #f6f7f7;
+}
+
+.lplms-fields-by-group summary {
+	cursor: pointer;
+	font-weight: 700;
+}
+
+.lplms-fields-by-group label {
+	margin-top: 8px;
+	font-size: 12px;
+}
+
+.lplms-swatch {
+	display: inline-block;
+	width: 22px;
+	height: 22px;
+	margin-right: 8px;
+	border: 1px solid rgba(0, 0, 0, .15);
+	vertical-align: middle;
+}
+
+
+/* LogiOne 1.16 : journées en lignes compactes, formulaire d'ajout replié, actions claires */
+.lplms-days-bar { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px 18px; margin: 16px 0 12px; }
+.lplms-days-bar .lplms-filter { margin: 0; }
+.lplms-days-bar .lplms-filter label { display: grid; gap: 4px; font-weight: 600; }
+.lplms-days-summary { margin: 0 auto 6px 0; color: #50575e; }
+.lplms-add-day { margin: 0 0 16px; }
+.lplms-add-day > summary { list-style: none; display: inline-flex; align-items: center; cursor: pointer; }
+.lplms-add-day > summary::-webkit-details-marker { display: none; }
+.lplms-add-day-body { max-width: 760px; margin-top: 12px; }
+.lplms-days-section { max-width: 1500px; }
+.lplms-days-head, .lplms-day-main { display: grid; grid-template-columns: minmax(150px, 170px) minmax(140px, 1fr) 130px 130px minmax(160px, 1.2fr) minmax(130px, 1fr) auto; gap: 10px; align-items: start; }
+.lplms-days-head { padding: 0 14px 6px 18px; color: #50575e; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .03em; }
+.lplms-days-month { margin: 18px 0 8px; font-size: 14px; text-transform: capitalize; }
+.lplms-day-row { margin: 0 0 8px; padding: 10px 14px 6px 14px; background: #fff; border: 1px solid #dcdcde; border-left: 5px solid var(--branch, #b8c0cc); border-radius: 8px; }
+.lplms-day-row.is-past { opacity: .78; }
+.lplms-day-row.is-today { box-shadow: 0 0 0 2px #f5c400; }
+.lplms-day-row.is-vacation { background: repeating-linear-gradient(135deg, #fff, #fff 10px, #f6f7f7 10px, #f6f7f7 20px); }
+.lplms-day-main input:not([type=checkbox]), .lplms-day-main select { width: 100%; max-width: 100%; }
+.lplms-day-main .lplms-group-specific-fields > label { display: block; font-size: 0; }
+.lplms-day-main .lplms-group-specific-fields > label input { font-size: 14px; }
+.lplms-day-main .lplms-fields-by-group { font-size: 12px; }
+.lplms-day-main .lplms-fields-by-group label { display: grid; gap: 2px; margin-top: 4px; }
+.lplms-day-date { display: grid; gap: 4px; }
+.lplms-day-vac { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: #50575e; }
+.lplms-day-actions { display: flex; gap: 10px; align-items: center; padding-top: 6px; white-space: nowrap; }
+.lplms-delete { color: #b32d2e !important; }
+.lplms-day-more { margin-top: 6px; }
+.lplms-day-more > summary { cursor: pointer; color: #2271b1; font-size: 13px; padding: 2px 0 4px; }
+.lplms-day-more > summary span { color: #646970; }
+.lplms-day-more-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 16px; padding: 8px 0 8px; }
+.lplms-day-more-grid label { display: grid; gap: 4px; }
+.lplms-day-more-grid .lplms-wide { grid-column: 1 / -1; }
+.lplms-day-more-grid textarea, .lplms-day-more-grid input, .lplms-day-more-grid select { width: 100%; }
+.lplms-propagate { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.lplms-days-save { position: sticky; bottom: 0; z-index: 2; display: flex; align-items: center; gap: 14px; padding: 12px 0; background: #f0f0f1; }
+.lplms-dirty { color: #b32d2e; font-weight: 600; }
+.lplms-empty-days { padding: 16px; background: #fff; border: 1px dashed #c3c4c7; border-radius: 8px; }
+.lplms-shortcode { display: flex; gap: 6px; }
+.lplms-shortcode input { flex: 1 1 auto; min-width: 0; }
+@media (max-width: 1100px) {
+  .lplms-days-head { display: none; }
+  .lplms-day-main { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lplms-day-main .lplms-group-specific-fields > label { font-size: 12px; }
+}
+.lplms-admin .lplms-day-main .lplms-group-specific-fields > label { display: block; gap: 0; font-size: 0; line-height: 0; }
+.lplms-admin .lplms-day-main .lplms-group-specific-fields > label input { font-size: 14px; line-height: 2; }
+.lplms-admin .lplms-day-main input:not([type=checkbox]), .lplms-admin .lplms-day-main select { min-height: 30px; margin: 0; }
+@media (max-width: 1100px) { .lplms-admin .lplms-day-main .lplms-group-specific-fields > label { font-size: 12px; line-height: 1.4; display: grid; gap: 2px; } }

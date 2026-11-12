@@ -1,0 +1,209 @@
+/* LogiPlanning · planning des élèves, aux couleurs LogiOne / LogiHub / LogiLive. */
+@font-face { font-family: "LogiPlanning Poppins"; src: url("fonts/poppins-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "LogiPlanning Poppins"; src: url("fonts/poppins-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "LogiPlanning Poppins"; src: url("fonts/poppins-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "LogiPlanning Poppins"; src: url("fonts/poppins-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+
+.lpl-app, .lpl-notice {
+	--ink: #313a45; --ink-soft: #4a5563; --green: #067030; --green-bright: #2fae5f; --green-deep: #0b4d22; --mint: #dcefe3;
+	--paper: #eef0eb; --white: #fff; --line: #d9ddd6; --yellow: #f5c400; --yellow-soft: #fff4c2; --red: #b42318; --red-soft: #fde7e4;
+	--muted: #5b6672; --on-ink: #c9d1d9; --radius: 8px; --gutter: clamp(16px, 4vw, 56px);
+	--font: "LogiPlanning Poppins", "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+/* Pleine largeur : l'application sort de la colonne du thème (--lpl-vw = largeur visible, calculée par le script). */
+.lpl-app {
+	position: relative; left: calc(50% - var(--lpl-vw, 100vw) / 2); width: var(--lpl-vw, 100vw); max-width: var(--lpl-vw, 100vw) !important;
+	margin: 0 0 40px !important; padding: 0; overflow-x: clip; background: var(--paper); color: var(--ink);
+	font-family: var(--font); font-size: 16px; line-height: 1.5; text-align: left; box-sizing: border-box;
+}
+.lpl-app *, .lpl-app *::before, .lpl-app *::after { box-sizing: border-box; }
+.lpl-app [hidden] { display: none !important; }
+.lpl-app a { text-decoration: none; }
+.lpl-app :focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+.lpl-app button { font-family: inherit; }
+.lpl-sr { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.lpl-muted { color: var(--muted); font-size: 14px; margin: 0; }
+.lpl-notice { max-width: 760px; margin: 24px auto; padding: 18px 22px; border-radius: var(--radius); background: var(--paper); color: var(--ink); font-family: var(--font); }
+.lpl-notice a { color: var(--green); font-weight: 600; margin-left: 6px; }
+
+/* Bandeau */
+.lpl-hero { background: var(--ink); color: var(--white); padding: 0 var(--gutter) 34px; }
+.lpl-hero-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; padding: 22px 0 18px; }
+.lpl-logo { display: block; height: 52px; width: auto; max-width: 100%; }
+.lpl-kicker { margin: 6px 0 6px; color: var(--green-bright); font-weight: 600; font-size: 15px; }
+.lpl-app .lpl-title { margin: 0 0 18px; padding: 0; border: 0; color: var(--white); font-family: var(--font); font-weight: 700; font-size: clamp(30px, 4.4vw, 54px); line-height: 1.05; letter-spacing: -0.02em; text-transform: none; }
+.lpl-next-card { display: grid; gap: 10px; max-width: 760px; padding: 18px 22px; border-radius: var(--radius); background: rgba(255, 255, 255, .07); border-left: 6px solid var(--branch, var(--green-bright)); }
+.lpl-next-label { color: var(--yellow); font-weight: 600; font-size: 15px; text-transform: none; }
+.lpl-next-label::first-letter { text-transform: uppercase; }
+.lpl-next-card > strong { font-size: clamp(22px, 2.4vw, 28px); font-weight: 700; line-height: 1.15; }
+.lpl-next-card .lpl-chip { background: rgba(255, 255, 255, .1); color: var(--white); }
+.lpl-next-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin-top: 4px; }
+.lpl-next-none { color: var(--on-ink); margin: 0; }
+
+/* Boutons */
+.lpl-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 10px 20px; border: 2px solid transparent; border-radius: 999px; background: var(--green); color: var(--white) !important; font-weight: 600; font-size: 15px; line-height: 1.2; cursor: pointer; }
+.lpl-btn svg { width: 20px; height: 20px; flex: 0 0 auto; }
+.lpl-btn-yellow { background: var(--yellow); color: var(--ink) !important; }
+.lpl-btn-yellow:hover { background: #ffd83d; }
+.lpl-btn-light { background: var(--white); color: var(--ink) !important; }
+.lpl-btn-ghost { background: transparent; border-color: var(--line); color: var(--ink) !important; }
+.lpl-btn-ghost:hover { border-color: var(--green); }
+.lpl-hero .lpl-btn-ghost { border-color: rgba(255, 255, 255, .35); color: var(--white) !important; }
+.lpl-icon-btn { display: inline-grid; place-items: center; width: 40px; height: 40px; border: 2px solid var(--line); border-radius: 50%; background: var(--white); color: var(--ink); font-size: 22px; line-height: 1; cursor: pointer; }
+.lpl-icon-btn:hover { border-color: var(--green); }
+.lpl-link { display: inline-flex; align-items: center; gap: 6px; color: var(--green) !important; font-weight: 600; font-size: 14px; }
+.lpl-link svg { width: 18px; height: 18px; }
+.lpl-link-light { color: var(--white) !important; }
+.lpl-more { margin-top: 8px; padding: 4px 0; border: 0; background: none; color: var(--green); font-weight: 600; font-size: 14px; cursor: pointer; text-decoration: underline; }
+
+/* Barre d'outils */
+.lpl-body { padding: 26px var(--gutter) 48px; }
+.lpl-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-bottom: 18px; }
+.lpl-switch { display: inline-flex; padding: 4px; border-radius: 999px; background: var(--white); border: 1px solid var(--line); }
+.lpl-switch button { min-height: 38px; padding: 6px 18px; border: 0; border-radius: 999px; background: transparent; color: var(--ink); font-weight: 600; font-size: 15px; cursor: pointer; }
+.lpl-switch button[aria-pressed="true"] { background: var(--ink); color: var(--white); }
+.lpl-monthnav { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.lpl-period { min-width: 13ch; font-size: 18px; text-transform: none; }
+.lpl-period::first-letter { text-transform: uppercase; }
+.lpl-search { margin-left: auto; }
+.lpl-search select { min-height: 44px; min-width: 260px; max-width: 100%; padding: 8px 40px 8px 14px; border: 2px solid var(--line); border-radius: 999px; background: var(--white); color: var(--ink); font: inherit; font-size: 15px; }
+.lpl-module-result { margin: -4px 0 18px; padding: 14px 18px; border-radius: var(--radius); background: var(--white); border-left: 5px solid var(--yellow); }
+.lpl-module-dates { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.lpl-chip-btn { padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--paper); color: var(--ink); font-size: 14px; cursor: pointer; }
+.lpl-chip-btn::first-letter { text-transform: uppercase; }
+.lpl-chip-btn:hover { border-color: var(--green); }
+.lpl-chip-btn.is-past { color: var(--muted); }
+
+/* Mise en page : liste + colonne latérale */
+.lpl-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 380px); gap: 24px; align-items: start; }
+.lpl-side { display: grid; gap: 18px; position: sticky; top: 24px; }
+.lpl-card { padding: 18px 20px; border-radius: var(--radius); background: var(--white); border: 1px solid var(--line); }
+.lpl-app .lpl-card h3 { display: flex; align-items: center; gap: 8px; margin: 0 0 4px; font-family: var(--font); font-size: 18px; font-weight: 700; color: var(--ink); }
+.lpl-resume { border-top: 5px solid var(--red); }
+.lpl-autonomy { border-top: 5px solid var(--green-bright); }
+.lpl-autonomy.is-empty { display: none; }
+.lpl-count { display: inline-grid; place-items: center; min-width: 26px; height: 26px; padding: 0 7px; border-radius: 999px; background: var(--red-soft); color: var(--red); font-size: 13px; }
+.lpl-ok { margin: 10px 0 0; padding: 10px 12px; border-radius: 6px; background: var(--mint); color: var(--green-deep); font-weight: 600; }
+.lpl-side .lpl-courses { margin-top: 12px; }
+
+/* Journées */
+.lpl-app .lpl-month-title { margin: 22px 0 10px; font-family: var(--font); font-size: 15px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.lpl-app .lpl-month-title:first-child { margin-top: 0; }
+.lpl-day { display: grid; grid-template-columns: 78px minmax(0, 1fr); gap: 0; margin-bottom: 12px; border-radius: var(--radius); background: var(--white); border: 1px solid var(--line); border-left: 6px solid var(--branch, var(--green)); overflow: hidden; scroll-margin-top: 24px; transition: box-shadow .3s; }
+.lpl-day.is-today { box-shadow: 0 0 0 3px var(--yellow); }
+.lpl-day.is-flash { box-shadow: 0 0 0 4px var(--yellow); }
+.lpl-day.is-past { background: #f7f8f5; }
+.lpl-day.is-past .lpl-date strong { color: var(--muted); }
+.lpl-day.is-vacation { background: repeating-linear-gradient(-45deg, #fff, #fff 10px, #f4f5f2 10px, #f4f5f2 20px); }
+.lpl-date { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 14px 6px; border-right: 1px solid var(--line); text-align: center; line-height: 1.1; }
+.lpl-date span { color: var(--muted); font-size: 13px; font-weight: 600; text-transform: capitalize; }
+.lpl-date strong { margin: 4px 0; font-size: 30px; font-weight: 700; color: var(--ink); }
+.lpl-day-main { min-width: 0; }
+.lpl-day-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; width: 100%; padding: 14px 18px 4px; border: 0; background: none; color: var(--ink); font: inherit; text-align: left; }
+button.lpl-day-head { cursor: pointer; padding-bottom: 14px; }
+.lpl-day.is-open button.lpl-day-head { padding-bottom: 4px; }
+.lpl-day-title { font-size: 19px; font-weight: 700; line-height: 1.25; }
+.lpl-rel { padding: 2px 10px; border-radius: 999px; background: var(--yellow); color: var(--ink); font-size: 13px; font-weight: 600; }
+.lpl-state { padding: 3px 10px; border-radius: 999px; font-size: 13px; font-weight: 600; }
+.lpl-state.is-done { background: var(--mint); color: var(--green-deep); }
+.lpl-state.is-progress { background: var(--yellow-soft); color: #5c4800; }
+.lpl-state.is-todo { background: var(--red-soft); color: var(--red); }
+.lpl-chev { margin-left: auto; display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--paper); }
+.lpl-chev svg { width: 20px; height: 20px; transition: transform .2s; }
+.lpl-day.is-open .lpl-chev svg { transform: rotate(180deg); }
+.lpl-day-body { display: grid; gap: 12px; padding: 6px 18px 18px; }
+.lpl-chips { display: flex; flex-wrap: wrap; gap: 6px 8px; }
+.lpl-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; background: var(--paper); color: var(--ink); font-size: 14px; font-weight: 500; }
+.lpl-chip svg { width: 16px; height: 16px; flex: 0 0 auto; }
+.lpl-chip.is-distance { background: #e6eefc; color: #1d4ed8; }
+.lpl-groups { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: 14px; color: var(--muted); }
+.lpl-groups strong { color: var(--ink); }
+.lpl-message { padding: 12px 14px; border-radius: 6px; background: var(--yellow-soft); color: #4b4320; font-size: 15px; overflow: hidden; }
+.lpl-message.is-clamped { max-height: 120px; mask-image: linear-gradient(#000 70%, transparent); -webkit-mask-image: linear-gradient(#000 70%, transparent); }
+.lpl-message > :first-child { margin-top: 0; } .lpl-message > :last-child { margin-bottom: 0; }
+.lpl-vacation { margin: 0; color: var(--muted); font-weight: 600; }
+.lpl-empty { padding: 26px; border-radius: var(--radius); background: var(--white); border: 1px dashed var(--line); color: var(--muted); text-align: center; }
+
+/* Cours */
+.lpl-courses { display: grid; gap: 8px; }
+.lpl-course { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 8px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--white); color: var(--ink) !important; }
+.lpl-course:hover { border-color: var(--green); }
+.lpl-thumb { width: 52px; height: 52px; border-radius: 6px; overflow: hidden; background: var(--mint); }
+.lpl-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lpl-thumb-empty { display: block; width: 100%; height: 100%; background: linear-gradient(135deg, var(--mint), #c3e4cf); }
+.lpl-course-text { display: grid; min-width: 0; }
+.lpl-course-text strong { font-size: 15px; line-height: 1.3; }
+.lpl-course-text small { color: var(--muted); font-size: 13px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.lpl-course-progress { display: flex; align-items: center; gap: 8px; }
+.lpl-progress { display: block; width: 90px; height: 8px; border-radius: 999px; background: #e5e8e2; overflow: hidden; }
+.lpl-progress i { display: block; height: 100%; border-radius: 999px; background: var(--green-bright); }
+.lpl-progress.is-done i { background: var(--green); }
+.lpl-pct { min-width: 3.2ch; font-size: 13px; text-align: right; }
+.lpl-side .lpl-course { grid-template-columns: 44px minmax(0, 1fr); }
+.lpl-side .lpl-thumb { width: 44px; height: 44px; }
+.lpl-side .lpl-course-progress { grid-column: 2; }
+.lpl-side .lpl-course-text small { display: none; }
+
+/* Calendrier du mois */
+.lpl-month { padding: 16px; border-radius: var(--radius); background: var(--white); border: 1px solid var(--line); }
+.lpl-weekdays, .lpl-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.lpl-weekdays span { padding: 4px 6px; color: var(--muted); font-size: 13px; font-weight: 600; text-transform: uppercase; }
+.lpl-cell { min-height: 104px; padding: 6px; border-radius: 6px; background: var(--paper); display: flex; flex-direction: column; gap: 4px; }
+.lpl-cell.is-outside { opacity: .45; }
+.lpl-cell.is-today { box-shadow: inset 0 0 0 3px var(--yellow); }
+.lpl-cell-num { font-weight: 700; font-size: 14px; }
+.lpl-event { display: grid; gap: 1px; width: 100%; padding: 5px 7px; border: 0; border-left: 4px solid var(--branch); border-radius: 4px; background: var(--white); color: var(--ink); font-size: 13px; font-weight: 600; line-height: 1.2; text-align: left; cursor: pointer; }
+.lpl-event small { color: var(--muted); font-weight: 500; }
+.lpl-event.is-vacation { background: #eceeea; color: var(--muted); }
+.lpl-event:hover { box-shadow: 0 0 0 2px var(--green); }
+
+/* Vue enseignant (LogiOne) */
+.lpl-teacherbar { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 16px; margin: 0 0 14px; padding: 14px 16px; border-radius: var(--radius); background: rgba(255, 255, 255, .06); }
+.lpl-plan-pick label { display: grid; gap: 4px; color: var(--on-ink); font-size: 13px; font-weight: 600; }
+.lpl-plan-pick select { min-height: 44px; min-width: 280px; max-width: 100%; padding: 8px 40px 8px 14px; border: 0; border-radius: 999px; font: inherit; font-size: 15px; color: var(--ink); }
+.lpl-teacher-hint { flex-basis: 100%; margin: 0; color: var(--on-ink); font-size: 13px; }
+.lpl-teacher-hint code { padding: 1px 6px; border-radius: 4px; background: rgba(255, 255, 255, .12); color: var(--white); }
+
+/* LogiOne : le portail gère la largeur */
+.lpp-tool .lpl-app { left: auto; width: 100%; max-width: 100% !important; border-radius: var(--radius); }
+.lpp-tool .lpl-app .lpl-brand { display: none; }
+.lpp-tool .lpl-app .lpl-hero-top { justify-content: flex-end; }
+
+@media (max-width: 1100px) {
+	.lpl-layout { grid-template-columns: minmax(0, 1fr); }
+	.lpl-side { position: static; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+}
+@media (max-width: 720px) {
+	.lpl-search { margin-left: 0; width: 100%; }
+	.lpl-search select { width: 100%; min-width: 0; }
+	.lpl-day { grid-template-columns: 58px minmax(0, 1fr); }
+	.lpl-date strong { font-size: 24px; }
+	.lpl-course { grid-template-columns: 44px minmax(0, 1fr); }
+	.lpl-course-progress { grid-column: 2; }
+	.lpl-thumb { width: 44px; height: 44px; }
+	.lpl-cell { min-height: 64px; padding: 4px; }
+	.lpl-event small, .lpl-event span { font-size: 0; }
+	.lpl-event { min-height: 10px; padding: 3px; border-left-width: 0; background: var(--branch); }
+	.lpl-hero-top .lpl-btn { width: 100%; }
+	.lpl-monthnav { width: 100%; }
+	.lpl-period { flex: 1 1 auto; min-width: 0; font-size: 16px; text-align: center; }
+	.lpl-monthnav .lpl-btn-ghost { order: 4; width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .lpl-day, .lpl-chev svg { transition: none; } }
+/* Journées passées repliées : une ligne compacte (date en ligne), dépliable au clic */
+.lpl-day.is-past:not(.is-open) .lpl-date { flex-direction: row; flex-wrap: wrap; align-items: baseline; justify-content: center; gap: 2px 4px; padding-top: 12px; padding-bottom: 12px; }
+.lpl-day.is-past:not(.is-open) .lpl-date strong { font-size: 18px; line-height: 1.2; }
+.lpl-day.is-past:not(.is-open) .lpl-date span, .lpl-day.is-past:not(.is-open) .lpl-date small { font-size: 12px; }
+.lpl-day.is-past:not(.is-open) .lpl-day-head { padding-top: 10px; padding-bottom: 10px; }
+.lpl-day.is-past:not(.is-open) .lpl-day-head h3, .lpl-day.is-past:not(.is-open) .lpl-day-title { font-size: 16px; }
+
+/* Placé dans le contenu d'une tuile (LogiHub, tuiles de contenu, portail) : l'application reste dans ce cadre
+   au lieu d'en sortir (LogiOne 1.24.8 ; sinon elle est coupée à gauche et à droite). */
+.lph-panel .lpl-app, .lpp-panel .lpl-app, .lpee-root .lpl-app, .lptile .lpl-app {
+	position: static !important; left: auto !important; width: 100% !important; max-width: 100% !important; }
+
+/* Plan favori de l'enseignant (LogiOne 1.24.9). */
+.lpl-teacherbar .lpl-fav { border: 1px solid rgba(255, 255, 255, .35); background: transparent; color: var(--white) !important; }
+.lpl-teacherbar .lpl-fav:hover { border-color: var(--yellow, #f5c400); }
+.lpl-teacherbar .lpl-fav.is-fav { border-color: var(--yellow, #f5c400); background: var(--yellow, #f5c400); color: var(--ink) !important; }
+.lpl-fav-notice { flex-basis: 100%; margin: 0; color: #9fe0b8; font-size: 14px; font-weight: 600; }
