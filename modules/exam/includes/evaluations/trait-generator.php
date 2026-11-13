@@ -439,18 +439,20 @@ trait LogiEval_Secure_Evaluations_Generator {
 			'long_answer'        => 'long_answer : explication en 2 à 4 phrases ; "expected_answer" donne les idées attendues (pas une phrase modèle unique).',
 			'calculation'        => 'calculation : petit problème chiffré tiré de la théorie ; "calculation" = {"development": étapes du calcul, "result": résultat final avec unité, "precision": "exact", "0", "1" ou "2" décimales}.',
 			'ordering'           => 'ordering : remettre dans l’ordre 4 à 6 étapes d’un processus ; "items" = les étapes DANS LE BON ORDRE.',
-			'matching'           => 'matching : relier 4 à 6 paires (notion ↔ définition, symbole ↔ signification, document ↔ usage…) ; "pairs" = [{"left": …, "right": …}] avec la BONNE paire sur chaque ligne ; textes courts, droite sans indice qui trahit la paire.',
-			'fill_blanks'        => 'fill_blanks : un court texte de 2 à 4 phrases tiré de la théorie, avec 3 à 6 mots-clés à trouver écrits entre crochets dans "blanks_text" (ex. « Le principe [FIFO] signifie premier entré, premier [sorti|sortie]. ») ; variantes acceptées séparées par |.',
+			'matching'           => 'matching : relier 4 à 6 paires (notion ↔ définition, symbole ↔ signification, document ↔ usage…) ; "pairs" = [{"left": …, "right": …}] avec la BONNE paire sur chaque ligne ; textes courts, droite sans indice qui trahit la paire. "distractors" = 1 ou 2 éléments de droite plausibles qui ne vont avec aucun élément de gauche (intrus).',
+			'fill_blanks'        => 'fill_blanks : un court texte de 2 à 4 phrases tiré de la théorie, avec 3 à 6 mots-clés à trouver écrits entre crochets dans "blanks_text" (ex. « Le principe [FIFO] signifie premier entré, premier [sorti|sortie]. ») ; variantes acceptées séparées par |. "bank" = true pour montrer la liste des mots à placer (false seulement si la question doit être plus difficile).',
 		);
 		$lines = array();
 		foreach ( $types as $type ) {
 			$lines[] = '- ' . $descriptions[ $type ];
 		}
-		$schema = '{"questions":[{"type":"…","context":"","prompt":"…","points":2,"expected_answer":"…","options":[],"correct_index":0,"true_false":"","justification":"","choice_points":1,"calculation":{"development":"","result":"","precision":"exact"},"items":[],"pairs":[{"left":"","right":""}],"blanks_text":"","criteria":[{"label":"…","points":1}],"source":"…","objective":""}]}';
+		$schema = '{"questions":[{"type":"…","context":"","prompt":"…","points":2,"expected_answer":"…","calculator":false,"options":[],"correct_index":0,"true_false":"","justification":"","choice_points":1,"calculation":{"development":"","result":"","precision":"exact"},"items":[],"pairs":[{"left":"","right":""}],"distractors":[],"blanks_text":"","bank":true,"criteria":[{"label":"…","points":1}],"source":"…","objective":""}]}';
 		$verb   = 'tu' === $address ? 'tutoiement (« Explique… », « Cite… »)' : 'vouvoiement (« Expliquez… », « Citez… »)';
 		$prompt = "Tu es enseignant·e de logistique en Suisse romande. Public : {$level}.\n"
 			. 'Crée exactement ' . count( $types ) . " questions d'évaluation à partir UNIQUEMENT de la théorie ci-dessous, une question pour chaque type de cette liste, dans cet ordre :\n"
-			. implode( "\n", $lines ) . "\n\n"
+			. implode( "\n", $lines ) . "\n"
+			// 1.38.4 : mêmes options que les questions créées à la main.
+			. "- \"calculator\" : true si l'élève doit faire un calcul pour répondre (toujours pour calculation ; aussi pour une réponse courte ou un QCM qui demande de calculer), sinon false.\n\n"
 			. "Règles :\n"
 			// Règles modifiables dans Réglages › Mes consignes pour l'IA.
 			. self::ai_prompt( 'generation_rules', array( '{forme}' => $verb ) ) . "\n"
@@ -473,6 +475,15 @@ trait LogiEval_Secure_Evaluations_Generator {
 		}
 		$prompt .= "\nRéponds uniquement avec ce JSON, sans texte autour, champs inutiles laissés vides :\n{$schema}\n\nTHÉORIE :\n\"\"\"\n{$theory}\n\"\"\"";
 		return $prompt;
+	}
+
+	/** 1.38.4 : la question demande-t-elle un calcul ? (si l'IA ne l'a pas dit) */
+	private static function generator_needs_calculator( string $text ): bool {
+		$t = mb_strtolower( $text );
+		if ( ! preg_match( '/\d/', $t ) ) {
+			return false;
+		}
+		return (bool) preg_match( '/\b(calcule[rz]?|calculez|combien|quel(le)? (est|sera) (le|la) (total|volume|poids|masse|prix|co[ûu]t|montant|surface|nombre|pourcentage|taux|dur[ée]e)|pourcentage|\d+\s*[x×*\/+]\s*\d+|m3|m³|m2|m²|chf|kg\b|tonnes?)/u', $t );
 	}
 
 	/** Remet une question proposée par l'IA dans un format sûr et complet ; null si inutilisable. */
@@ -504,6 +515,8 @@ trait LogiEval_Secure_Evaluations_Generator {
 		}
 		$points = $points > 0 ? min( 20, $points ) : 1;
 		$out = array(
+			// 1.38.4 : calculatrice comme dans l'éditeur (case « Afficher la calculatrice ») ; d'office pour un calcul.
+			'calculator'      => 'calculation' === $type || ! empty( $q['calculator'] ) || self::generator_needs_calculator( $prompt . ' ' . $text( $q['expected_answer'] ?? '' ) ),
 			'type'            => $type,
 			'context'         => $text( $q['context'] ?? '' ),
 			'prompt'          => $prompt,
@@ -551,22 +564,34 @@ trait LogiEval_Secure_Evaluations_Generator {
 				if ( count( $items ) < 3 ) {
 					return null;
 				}
-				$out['items'] = array_slice( $items, 0, 10 );
+				$out['items']         = array_slice( $items, 0, 10 );
+				$out['order_scoring'] = 'all' === ( $q['order_scoring'] ?? '' ) ? 'all' : 'partial';
 				break;
 			case 'matching':
 				$pairs = array();
+				$decoy = array();
 				foreach ( (array) ( $q['pairs'] ?? array() ) as $p ) {
 					$l = $text( is_array( $p ) ? ( $p['left'] ?? '' ) : '' );
 					$r = $text( is_array( $p ) ? ( $p['right'] ?? '' ) : '' );
 					if ( '' !== $l && '' !== $r ) {
 						$pairs[] = array( 'left' => $l, 'right' => $r );
+					} elseif ( '' === $l && '' !== $r ) {
+						$decoy[] = array( 'left' => '', 'right' => $r, 'decoy' => true ); // intrus (élément de droite seul, comme dans l'éditeur)
+					}
+				}
+				foreach ( (array) ( $q['distractors'] ?? array() ) as $d ) {
+					$r = $text( is_array( $d ) ? ( $d['right'] ?? '' ) : $d );
+					if ( '' !== $r ) {
+						$decoy[] = array( 'left' => '', 'right' => $r, 'decoy' => true );
 					}
 				}
 				if ( count( $pairs ) < 2 ) {
 					return null;
 				}
-				$out['pairs']           = array_slice( $pairs, 0, 10 );
-				$out['expected_answer'] = implode( ' ; ', array_map( static fn( $p ) => $p['left'] . ' → ' . $p['right'], $out['pairs'] ) );
+				// Comme dans l'éditeur : paires justes puis intrus (élément de droite seul).
+				$out['pairs']           = array_merge( array_slice( $pairs, 0, 10 ), array_slice( $decoy, 0, 3 ) );
+				$out['match_scoring']   = 'all' === ( $q['match_scoring'] ?? '' ) ? 'all' : 'partial';
+				$out['expected_answer'] = implode( ' ; ', array_map( static fn( $p ) => $p['left'] . ' → ' . $p['right'], array_slice( $pairs, 0, 10 ) ) );
 				break;
 			case 'fill_blanks':
 				$bt = $text( $q['blanks_text'] ?? '' );
@@ -575,6 +600,9 @@ trait LogiEval_Secure_Evaluations_Generator {
 				}
 				$out['blanks_text']     = $bt;
 				$out['expected_answer'] = $bt;
+				$out['blanks_bank']     = ! array_key_exists( 'bank', $q ) && ! array_key_exists( 'blanks_bank', $q ) ? true : ! empty( $q['blanks_bank'] ?? $q['bank'] );
+				$out['blanks_tolerant'] = ! array_key_exists( 'blanks_tolerant', $q ) || ! empty( $q['blanks_tolerant'] );
+				$out['blanks_scoring']  = 'all' === ( $q['blanks_scoring'] ?? '' ) ? 'all' : 'partial';
 				break;
 		}
 		return $out;
@@ -600,6 +628,7 @@ trait LogiEval_Secure_Evaluations_Generator {
 				continue;
 			}
 			$row = array(
+				'show_calculator'  => ! empty( $q['calculator'] ) ? 1 : 0,
 				'prompt'           => $q['prompt'],
 				'context'          => $q['context'],
 				'type'             => $q['type'],
@@ -623,14 +652,16 @@ trait LogiEval_Secure_Evaluations_Generator {
 				$row['calculation_precision']   = $q['calculation']['precision'];
 			} elseif ( 'ordering' === $q['type'] ) {
 				$row['order_mode']    = 'items';
-				$row['order_scoring'] = 'partial';
+				$row['order_scoring'] = $q['order_scoring'];
 				$row['order_items']   = array_map( static fn( $item ) => array( 'text' => $item ), $q['items'] );
 			} elseif ( 'matching' === $q['type'] ) {
-				$row['match_scoring'] = 'partial';
+				$row['match_scoring'] = $q['match_scoring'];
 				$row['match_pairs']   = $q['pairs'];
 			} elseif ( 'fill_blanks' === $q['type'] ) {
-				$row['blanks_text']    = $q['blanks_text'];
-				$row['blanks_scoring'] = 'partial';
+				$row['blanks_text']     = $q['blanks_text'];
+				$row['blanks_scoring']  = $q['blanks_scoring'];
+				$row['blanks_bank']     = $q['blanks_bank'] ? 1 : 0;
+				$row['blanks_tolerant'] = $q['blanks_tolerant'] ? 1 : 0;
 			}
 			// Même chemin que l'éditeur de questions (les valeurs sont attendues « slashées » comme un formulaire).
 			$data = self::build_question_data( wp_slash( $row ), $course_id );

@@ -1,4 +1,4 @@
-# LogiOne 1.38.3
+# LogiOne 1.38.4
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,15 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.38.4 (LogiExam : questions créées avec l’IA = questions faites à la main)
+
+- **Mêmes réglages que l’éditeur de questions** pour chaque question proposée par l’IA, à la relecture comme à l’enregistrement :
+  - **Calculatrice** : case « 🧮 Afficher la calculatrice à l’élève » sur chaque question ; cochée d’office quand la question demande un calcul (l’IA l’indique, et un contrôle repère « calcule », « combien », des unités, des opérations…). Toujours présente sur une question « Calcul ».
+  - **Relier** : une ligne par paire (gauche ↔ droite), **intrus** (élément de droite qui ne va avec rien — l’IA en propose 1 ou 2), boutons « + Ajouter une paire » / « + Ajouter un intrus », et mode de points (au prorata ou tout juste).
+  - **Texte à trous** : liste des mots à placer et tolérance d’une petite faute (cochées d’office), nombre de trous, mode de points.
+  - **Remettre dans l’ordre** : mode de points.
+- Les questions sont enregistrées exactement dans le même format que celles créées à la main : l’élève les voit de la même façon.
 
 ## Nouveautés 1.38.3 (LogiExam : analyse IA cohérente avec les points)
 

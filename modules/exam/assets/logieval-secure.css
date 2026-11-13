@@ -3581,3 +3581,12 @@ body.les-fabs-off .les-fab-draft { opacity: 0 !important; pointer-events: none; 
 .logieval-secure .les-qpager-dot.is-blank.is-done { background: #fff7ed; border-color: #ea580c; color: #c2410c; }
 .logieval-secure .les-qpager-dot.is-blank.is-done::after { content: none; }
 .logieval-secure .les-qpager-dot.is-blank.is-current { background: #ea580c; border-color: #ea580c; color: #fff; }
+
+/* 1.38.4 : relecture des questions créées par l'IA — mêmes réglages que l'éditeur */
+.logieval-secure .les-gen-pairs { display: grid; gap: 6px; margin-top: 6px; }
+.logieval-secure .les-gen-pair { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.4fr) auto; gap: 8px; align-items: center; }
+.logieval-secure .les-gen-pair input { width: 100%; }
+.logieval-secure .les-gen-arrow { color: var(--les-muted, #64748b); font-weight: 700; }
+.logieval-secure .les-gen-decoy { display: inline-block; padding: 6px 10px; border: 1px dashed #b45309; border-radius: 8px; color: #92400e; background: #fffbeb; font-size: 13px; font-weight: 700; text-align: center; }
+.logieval-secure .les-gen-calc { display: block; margin: 8px 0 2px; }
+@media (max-width: 640px) { .logieval-secure .les-gen-pair { grid-template-columns: 1fr auto; } .logieval-secure .les-gen-arrow { display: none; } }

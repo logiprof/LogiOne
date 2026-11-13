@@ -5093,7 +5093,7 @@
 	'use strict';
 	var root = document.querySelector('[data-les-gen]');
 	if (!root || !window.LogiEvalSecure) { return; }
-	var TYPE_LABELS = { qcm: 'QCM', true_false: 'Vrai / Faux', true_false_justify: 'Vrai / Faux argumenté', short_answer: 'Réponse courte', long_answer: 'Réponse longue', calculation: 'Calcul', ordering: 'Remettre dans l’ordre' };
+	var TYPE_LABELS = { qcm: 'QCM', true_false: 'Vrai / Faux', true_false_justify: 'Vrai / Faux argumenté', short_answer: 'Réponse courte', long_answer: 'Réponse longue', calculation: 'Calcul', ordering: 'Remettre dans l’ordre', matching: 'Relier', fill_blanks: 'Texte à trous' };
 	var CHUNK = 3;
 	var state = { sources: [], questions: [], running: false };
 	var $ = function (sel) { return root.querySelector(sel); };
@@ -5346,6 +5346,9 @@
 		return sum > 0 ? sum : pts(q.points);
 	}
 	function field(label, html, cls) { return '<label class="les-gen-field ' + (cls || '') + '">' + label + html + '</label>'; }
+	function scoringSelect(k, v, partialLabel) {
+		return '<select data-k="' + k + '"><option value="partial"' + (v !== 'all' ? ' selected' : '') + '>' + partialLabel + '</option><option value="all"' + (v === 'all' ? ' selected' : '') + '>Tout juste ou rien</option></select>';
+	}
 	function area(k, v, rows) { return '<textarea rows="' + (rows || 2) + '" data-k="' + k + '">' + esc(v) + '</textarea>'; }
 	function card(q, i) {
 		var body = '';
@@ -5368,10 +5371,26 @@
 				field('Précision', '<select data-k="calc_precision">' + ['exact', '0', '1', '2', '3', '4'].map(function (p) { return '<option value="' + p + '" ' + (c.precision === p ? 'selected' : '') + '>' + (p === 'exact' ? 'Valeur exacte' : p + ' décimale(s)') + '</option>'; }).join('') + '</select>', 'is-small') + '</div>';
 		} else if (q.type === 'ordering') {
 			body += field('Étapes dans le BON ordre (une par ligne ; les élèves les reçoivent mélangées)', '<textarea rows="5" data-k="items">' + esc((q.items || []).join('\n')) + '</textarea>');
+			body += field('Points', scoringSelect('order_scoring', q.order_scoring, 'Au prorata des étapes bien placées'), 'is-small');
 		} else if (q.type === 'matching') {
-			body += field('Paires justes, une par ligne : gauche = droite (la droite est mélangée pour les élèves)', '<textarea rows="5" data-k="pairs">' + esc((q.pairs || []).map(function (p) { return p.left + ' = ' + p.right; }).join('\n')) + '</textarea>');
+			// 1.38.4 : même présentation que l'éditeur de questions (une ligne par paire, intrus, mode de points).
+			body += '<div class="les-gen-field">Paires justes : à gauche, et à droite l’élément qui va avec (la colonne de droite est mélangée pour les élèves)' +
+				'<div class="les-gen-pairs">' + (q.pairs || []).map(function (p, n) {
+					var decoy = !!p.decoy;
+					return '<div class="les-gen-pair' + (decoy ? ' is-decoy' : '') + '">' +
+						(decoy ? '<span class="les-gen-decoy">Intrus</span>' : '<input type="text" data-k="pair_left" data-n="' + n + '" value="' + esc(p.left) + '" aria-label="À gauche">') +
+						'<span class="les-gen-arrow" aria-hidden="true">↔</span><input type="text" data-k="pair_right" data-n="' + n + '" value="' + esc(p.right) + '" aria-label="À droite">' +
+						'<button type="button" class="button-link" data-gen-pair-remove="' + n + '" aria-label="Retirer cette ligne">✕</button></div>';
+				}).join('') + '</div><p><button type="button" class="button-link" data-gen-pair-add>+ Ajouter une paire</button> · <button type="button" class="button-link" data-gen-decoy-add>+ Ajouter un intrus</button></p></div>';
+			body += field('Points', scoringSelect('match_scoring', q.match_scoring, 'Au prorata des liaisons justes'), 'is-small');
 		} else if (q.type === 'fill_blanks') {
-			body += field('Texte à trous (mots à trouver entre crochets, variantes séparées par |)', '<textarea rows="4" data-k="blanks_text">' + esc(q.blanks_text) + '</textarea>');
+			body += field('Texte à compléter (mots à trouver entre crochets, variantes séparées par |)', '<textarea rows="4" data-k="blanks_text">' + esc(q.blanks_text) + '</textarea>');
+			var nb = ((q.blanks_text || '').match(/\[[^\]]+\]/g) || []).length;
+			body += '<p class="les-gen-source" data-gen-blanks-count>' + nb + ' trou(s) à compléter.</p>';
+			body += '<div class="les-gen-row">' +
+				'<label class="les-check"><input type="checkbox" data-k="blanks_bank" ' + (q.blanks_bank !== false ? 'checked' : '') + '> Montrer la liste des mots à placer (mélangés)</label>' +
+				'<label class="les-check"><input type="checkbox" data-k="blanks_tolerant" ' + (q.blanks_tolerant !== false ? 'checked' : '') + '> Accepter une petite faute de frappe</label></div>';
+			body += field('Points', scoringSelect('blanks_scoring', q.blanks_scoring, 'Au prorata des trous justes'), 'is-small');
 		} else {
 			body += field('Réponse attendue', area('expected_answer', q.expected_answer, q.type === 'long_answer' ? 4 : 2));
 		}
@@ -5380,6 +5399,11 @@
 		}).join('') + '<button type="button" class="button-link" data-gen-crit-add>+ Ajouter un critère</button></div>';
 		if (!(q.criteria || []).length) {
 			body += field('Points', '<input type="number" step="0.5" min="0.5" data-k="points" value="' + esc(q.points) + '">', 'is-small');
+		}
+		if (q.type !== 'calculation') {
+			body += '<label class="les-check les-gen-calc"><input type="checkbox" data-k="calculator" ' + (q.calculator ? 'checked' : '') + '> 🧮 Afficher la calculatrice à l’élève pour cette question</label>';
+		} else {
+			body += '<p class="les-gen-source">🧮 Calculatrice affichée à l’élève (question de calcul).</p>';
 		}
 		if (q.objective) { body += '<p class="les-gen-source les-gen-objective">🎯 Objectif : ' + esc(q.objective) + '</p>'; }
 		if (q.source) { body += '<p class="les-gen-source">📖 Source : ' + esc(q.source) + '</p>'; }
@@ -5477,8 +5501,16 @@
 			case 'calc_result': q.calculation.result = el.value; break;
 			case 'calc_precision': q.calculation.precision = el.value; break;
 			case 'items': q.items = el.value.split('\n').map(function (s) { return s.trim(); }).filter(Boolean); break;
-			case 'pairs': q.pairs = el.value.split('\n').map(function (s) { var i = s.indexOf('='); return i > 0 ? { left: s.slice(0, i).trim(), right: s.slice(i + 1).trim() } : null; }).filter(function (p) { return p && p.left && p.right; }); break;
-			case 'blanks_text': q.blanks_text = el.value; break;
+			case 'pair_left': q.pairs[n].left = el.value; break;
+			case 'pair_right': q.pairs[n].right = el.value; break;
+			case 'calculator': q.calculator = el.checked; break;
+			case 'blanks_bank': q.blanks_bank = el.checked; break;
+			case 'blanks_tolerant': q.blanks_tolerant = el.checked; break;
+			case 'blanks_text':
+				q.blanks_text = el.value;
+				var bc = cardEl.querySelector('[data-gen-blanks-count]');
+				if (bc) { bc.textContent = ((el.value || '').match(/\[[^\]]+\]/g) || []).length + ' trou(s) à compléter.'; }
+				break;
 			case 'crit_label': q.criteria[n].label = el.value; break;
 			case 'crit_points': q.criteria[n].points = pts(el.value); break;
 			default: q[k] = el.value;
@@ -5495,6 +5527,9 @@
 		if (event.target.closest('[data-gen-delete]')) { state.questions.splice(i, 1); render(); }
 		else if (event.target.closest('[data-gen-crit-add]')) { q.criteria = q.criteria || []; q.criteria.push({ label: '', points: 1 }); render(); }
 		else if (event.target.closest('[data-gen-crit-remove]')) { q.criteria.splice(+event.target.closest('[data-gen-crit-remove]').getAttribute('data-gen-crit-remove'), 1); render(); }
+		else if (event.target.closest('[data-gen-pair-add]')) { q.pairs = q.pairs || []; var firstDecoy = q.pairs.findIndex(function (p) { return p.decoy; }); q.pairs.splice(firstDecoy < 0 ? q.pairs.length : firstDecoy, 0, { left: '', right: '' }); render(); }
+		else if (event.target.closest('[data-gen-decoy-add]')) { q.pairs = q.pairs || []; q.pairs.push({ left: '', right: '', decoy: true }); render(); }
+		else if (event.target.closest('[data-gen-pair-remove]')) { q.pairs.splice(+event.target.closest('[data-gen-pair-remove]').getAttribute('data-gen-pair-remove'), 1); render(); }
 	});
 	$('[data-les-gen-form]').addEventListener('submit', function (event) {
 		var kept = state.questions.filter(function (q) { return q.keep; }).map(function (q) {
