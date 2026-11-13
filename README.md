@@ -1,4 +1,4 @@
-# LogiOne 1.38.2
+# LogiOne 1.38.3
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,11 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.38.3 (LogiExam : analyse IA cohérente avec les points)
+
+- **La conclusion de l’analyse dit la même chose que les critères.** « L’élève a identifié un élément pertinent… » avec 0 point (ou « il manque… » avec tous les points) est remplacé par une conclusion tirée des verdicts : « Aucun critère rempli : il manque … ». L’IA reçoit aussi la consigne d’une conclusion cohérente.
+- **Plus de « bonne idée » dans un commentaire à 0 point.** Si l’élève n’a aucun point, le commentaire ne le félicite pas pour ce qui ne rapporte rien ; une idée vraie mais hors sujet est signalée ainsi : « c’est vrai, mais ça ne répond pas à la question », puis l’idée attendue. Si l’IA félicite quand même, le commentaire est réécrit (ou construit à partir des critères).
 
 ## Nouveautés 1.38.2 (LogiExam : reprendre une correction partielle)
 

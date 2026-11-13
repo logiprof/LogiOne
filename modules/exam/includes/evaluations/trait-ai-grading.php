@@ -1156,7 +1156,7 @@ trait LogiEval_Secure_Evaluations_Ai_Grading {
 				. "Le commentaire doit être cohérent avec tes verdicts : ne félicite pas pour un critère \"miss\", ne reproche pas un critère \"ok\". Pour chaque critère partial ou miss, le commentaire dit à l'élève CE QUI ÉTAIT ATTENDU (l'idée, en mots simples : « Il fallait dire que… », « Il te manquait… »), pour qu'il comprenne sa faute. Jamais un simple « Réponse incorrecte. ».\n"
 				. "needs_review = true si tu hésites vraiment sur un critère (réponse ambiguë, illisible, ou idée juste mais hors du cours).\n"
 				. "Réponds uniquement avec ce JSON valide :\n"
-				. '{"lecture":"ce que dit l\'élève, reformulé en français correct, sans rien ajouter","criteria":[{"n":1,' . ( $own_ideas ? '"label":"idée attendue","points":1,' : '' ) . '"expected":"élément visé de reponse_attendue","evidence":"citation exacte ou vide","matches_expected":true,"status":"ok|partial|miss",' . ( $own_ideas ? '' : '"points":0,' ) . '"explanation":"…","hint":"idée attendue si partial ou miss"}],' . ( 'calculation' === ( $answer['type'] ?? '' ) ? '"method_coherent":true,' : '' ) . '"summary":"une phrase de conclusion pour l\'enseignant (ici seulement on peut parler de « l\'élève »)","comment":"' . ( 'vous' === self::ai_student_address( get_current_user_id() ) ? 'message adressé DIRECTEMENT à l\'élève en le vouvoyant : « Vous avez… », « Il vous manque… »' : 'message adressé DIRECTEMENT à l\'élève en le tutoyant : « Tu as… », « Il te manque… »' ) . ', jamais « l\'élève », « il », « elle » ni « la réponse est… »","confidence":0.0,"needs_review":false}' . "\n\n"
+				. '{"lecture":"ce que dit l\'élève, reformulé en français correct, sans rien ajouter","criteria":[{"n":1,' . ( $own_ideas ? '"label":"idée attendue","points":1,' : '' ) . '"expected":"élément visé de reponse_attendue","evidence":"citation exacte ou vide","matches_expected":true,"status":"ok|partial|miss",' . ( $own_ideas ? '' : '"points":0,' ) . '"explanation":"…","hint":"idée attendue si partial ou miss"}],' . ( 'calculation' === ( $answer['type'] ?? '' ) ? '"method_coherent":true,' : '' ) . '"summary":"une phrase de conclusion pour l\'enseignant, COHÉRENTE avec tes verdicts : ne présente comme réussi que ce que tu as noté ok ou partial (ici seulement on peut parler de « l\'élève »)","comment":"' . ( 'vous' === self::ai_student_address( get_current_user_id() ) ? 'message adressé DIRECTEMENT à l\'élève en le vouvoyant : « Vous avez… », « Il vous manque… »' : 'message adressé DIRECTEMENT à l\'élève en le tutoyant : « Tu as… », « Il te manque… »' ) . ', jamais « l\'élève », « il », « elle » ni « la réponse est… »","confidence":0.0,"needs_review":false}' . "\n\n"
 				. wp_json_encode( $rubric_payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
 
 			$completion = LogiEval_Secure_AI::complete( $prompt, get_current_user_id(), array( 'provider' => sanitize_key( wp_unslash( $_POST['provider'] ?? '' ) ), 'purpose' => 'grading', 'json' => true, 'max_tokens' => 2000 + 250 * max( 1, count( $criteria ) ) ) );
@@ -1249,9 +1249,14 @@ trait LogiEval_Secure_Evaluations_Ai_Grading {
 					. " Le commentaire confirme que c'est juste et dit ce qui est bien dans SA réponse. Ne dis JAMAIS qu'un élément est faux, manquant, imprécis ou « pas ce qui était attendu », même si sa réponse diffère de reponse_attendue. Pas de « il fallait », pas de « par contre ».\n";
 			}
 			if ( $points <= 0.001 ) {
-				return "L'élève n'a aucun point : explique simplement et sans le décourager ce qui était attendu.\n";
+				return "L'élève n'a aucun point : explique simplement et sans le décourager ce qui était attendu. N'écris PAS « bonne idée », « bien », « bravo » ni « c'est juste » : rien dans sa réponse ne rapporte de point. S'il a écrit quelque chose de vrai mais hors sujet, dis-le ainsi : « c'est vrai, mais ça ne répond pas à la question », puis donne l'idée attendue.\n";
 			}
 			return 'Les points sont partiels (' . self::short_points( $points ) . ' sur ' . self::short_points( $max_points ) . ") : le commentaire doit refléter cette proportion — ce qui est juste d'abord, puis ce qui manque pour avoir tous les points.\n";
+		}
+
+		/** 1.38.3 : le commentaire félicite-t-il l'élève ? (incohérent quand il n'a aucun point) */
+		public static function ai_comment_has_praise( string $comment ): bool {
+			return (bool) preg_match( "/(bonne id[ée]e|bonne piste|bonne r[ée]ponse|bien vu|tr[èe]s bien|bravo|c['’]est (bien|juste|correct|exact)\b(?!.{0,20}mais)|tu as (bien|raison)|vous avez (bien|raison)|bien (compris|identifi|expliqu)|pertinent)/u", mb_strtolower( $comment ) );
 		}
 
 		/** Le commentaire signale-t-il une erreur ou un manque ? (interdit quand l'élève a tous les points) */
@@ -1302,18 +1307,25 @@ trait LogiEval_Secure_Evaluations_Ai_Grading {
 			$address = self::ai_student_address( get_current_user_id() );
 			$comment = '';
 			for ( $try = 0; $try < 2; $try++ ) {
-				$completion = LogiEval_Secure_AI::complete( $prompt . ( $try ? "\n\nATTENTION : ton commentaire précédent signalait une erreur ou un manque alors que l'élève a TOUS les points. Réécris-le : uniquement ce qui est juste dans sa réponse." : '' ), get_current_user_id(), array( 'provider' => sanitize_key( wp_unslash( $_POST['provider'] ?? '' ) ), 'purpose' => 'grading', 'json' => true, 'max_tokens' => 700 ) );
+				$retry      = '';
+				if ( $try ) {
+					$retry = $full
+						? "\n\nATTENTION : ton commentaire précédent signalait une erreur ou un manque alors que l'élève a TOUS les points. Réécris-le : uniquement ce qui est juste dans sa réponse."
+						: "\n\nATTENTION : ton commentaire précédent félicitait l'élève (« bonne idée », « bien »…) alors qu'il n'a AUCUN point. Réécris-le : ce qui était attendu, sans compliment sur ce qui ne rapporte rien.";
+				}
+				$completion = LogiEval_Secure_AI::complete( $prompt . $retry, get_current_user_id(), array( 'provider' => sanitize_key( wp_unslash( $_POST['provider'] ?? '' ) ), 'purpose' => 'grading', 'json' => true, 'max_tokens' => 700 ) );
 				if ( is_wp_error( $completion ) ) {
 					return $try ? self::ai_comment_from_verdicts( $verdicts, $address, $points, $max_points ) : $completion;
 				}
 				$json    = self::decode_ai_grade_json( (string) $completion['text'] );
 				$comment = is_array( $json ) ? trim( (string) ( $json['comment'] ?? '' ) ) : '';
-				if ( ! $full || ! self::ai_comment_has_reproach( $comment ) ) {
+				$zero = $points <= 0.001 && $max_points > 0;
+				if ( ( ! $full || ! self::ai_comment_has_reproach( $comment ) ) && ( ! $zero || ! self::ai_comment_has_praise( $comment ) ) ) {
 					break;
 				}
 				$comment = '';
 			}
-			if ( $full && '' === $comment ) {
+			if ( ( $full || ( $points <= 0.001 && $max_points > 0 ) ) && '' === $comment ) {
 				return self::ai_comment_from_verdicts( $verdicts, $address, $points, $max_points );
 			}
 			return self::ai_direct_comment_raw( $comment, $verdicts, $points, $max_points, $address );
@@ -1616,6 +1628,22 @@ trait LogiEval_Secure_Evaluations_Ai_Grading {
 			}
 			$total   = max( 0, min( $max_points, self::quarter( $total ) ) );
 			$summary = trim( wp_strip_all_tags( (string) ( $json['summary'] ?? '' ) ) );
+			// 1.38.3 : la conclusion doit dire la même chose que les critères. « L'élève a identifié un élément pertinent »
+			// avec 0 point (ou « il manque… » avec tous les points) est remplacé par une conclusion tirée des verdicts.
+			if ( '' !== $summary && $max_points > 0 ) {
+				$missing = array();
+				foreach ( $verdicts as $v ) {
+					if ( is_array( $v ) && 'ok' !== ( $v['status'] ?? '' ) ) {
+						$missing[] = self::shorten( (string) ( ( $v['hint'] ?? '' ) !== '' ? $v['hint'] : ( $v['label'] ?? '' ) ), 90 );
+					}
+				}
+				$missing = array_values( array_filter( $missing ) );
+				if ( $total <= 0.001 && preg_match( '/(a (bien |correctement )?(identifi|compris|relev|mentionn|not)|pertinent|bonne id[ée]e|bonne piste|juste|correct|bien vu|partiellement)/u', mb_strtolower( $summary ) ) ) {
+					$summary = 'Aucun critère rempli' . ( $missing ? ' : il manque ' . implode( ' ; ', array_slice( $missing, 0, 3 ) ) . '.' : '.' );
+				} elseif ( $total >= $max_points - 0.001 && self::ai_comment_has_reproach( $summary ) ) {
+					$summary = 'Tous les critères sont remplis.';
+				}
+			}
 			$lines[] = '→ Total : ' . self::short_points( $total ) . ' / ' . self::short_points( $max_points ) . ' pt' . ( '' !== $summary ? '. ' . self::shorten( $summary, 300 ) : '' );
 			if ( $needs_review ) {
 				$lines[] = '→ À vérifier par l’enseignant (voir les remarques ci-dessus).';
