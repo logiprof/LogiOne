@@ -1,4 +1,4 @@
-# LogiOne 1.38.4
+# LogiOne 1.38.5
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,13 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.38.5 (LogiExam : problèmes à plusieurs sous-questions)
+
+- **Nouveau bouton « 🧮 Ajouter un problème (énoncé + sous-questions) »** dans la création d’une évaluation : un **énoncé commun** (les données), puis des **sous-questions a), b), c)…** — de type « Calcul » par défaut (espace de développement, résultat final, calculatrice), mais tout autre type reste possible. « + Ajouter une sous-question », « Supprimer le problème ».
+- **Côté élève** : l’énoncé est affiché une seule fois en tête du problème et **reste visible en haut de l’écran** pendant qu’il répond aux sous-questions (« Problème 1 · questions 2 à 4 », puis « 2. a) … », « 3. b) … »).
+- **Ordre aléatoire** : les sous-questions d’un problème restent ensemble et dans l’ordre ; seuls les blocs sont mélangés.
+- Chaque sous-question est une question normale (points, critères, correction, IA, résultats, LogiNotes inchangés) ; elles partagent le même énoncé. Rien n’est modifié dans les tables. À la réouverture, les questions qui se suivent avec le même énoncé sont regroupées en problème.
 
 ## Nouveautés 1.38.4 (LogiExam : questions créées avec l’IA = questions faites à la main)
 

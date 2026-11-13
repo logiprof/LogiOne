@@ -384,6 +384,87 @@ trait LogiEval_Secure_Evaluations_Editor {		private static function render_creat
 					if (first) setTimeout(function () { try { first.focus({ preventScroll: true }); } catch (e) { first.focus(); } }, 350);
 				}
 			});
+			/* 1.38.5 : « Problème » = un énoncé commun + des sous-questions (questions normales qui partagent l'énoncé). */
+			(function () {
+				function list() { return document.querySelector('[data-logiexam-inline-questions]'); }
+				function newQuestion(container, type) {
+					var l = list();
+					var template = document.querySelector('[data-logiexam-question-template]');
+					if (!l || !template) return null;
+					var index = parseInt(l.dataset.nextIndex || '0', 10);
+					container.insertAdjacentHTML('beforeend', template.innerHTML.replaceAll('__INDEX__', String(index)).replaceAll('__NUMBER__', String(index + 1)));
+					l.dataset.nextIndex = String(index + 1);
+					var q = container.lastElementChild;
+					var sel = q ? q.querySelector('select[name$="[type]"]') : null;
+					if (sel && type && sel.querySelector('option[value="' + type + '"]')) { sel.value = type; sel.dispatchEvent(new Event('change', { bubbles: true })); }
+					var lastCourse = l.querySelectorAll('select[data-logiexam-question-course]');
+					if (lastCourse.length > 1) { var c = q.querySelector('select[data-logiexam-question-course]'); if (c) c.value = lastCourse[lastCourse.length - 2].value; }
+					if (typeof logiexamRefreshAllQuestionTypes === 'function') logiexamRefreshAllQuestionTypes();
+					return q;
+				}
+				function sync(block) {
+					var ctx = block.querySelector('[data-les-problem-context]');
+					var items = block.querySelectorAll('[data-les-problem-items] > .les-inline-question');
+					items.forEach(function (q, k) {
+						var t = q.querySelector('textarea[name$="[context]"]');
+						if (t && ctx) t.value = ctx.value;
+						var h = q.querySelector('.les-section-title h4');
+						if (h) {
+							if (!h.dataset.base) h.dataset.base = h.textContent;
+							h.textContent = 'Sous-question ' + String.fromCharCode(97 + (k % 26)) + ')';
+						}
+					});
+					var range = block.querySelector('[data-les-problem-range]');
+					if (range) range.textContent = items.length + ' sous-question' + (items.length > 1 ? 's' : '');
+				}
+				function syncAll() { document.querySelectorAll('[data-les-problem]').forEach(sync); }
+				document.addEventListener('click', function (event) {
+					var add = event.target.closest('[data-les-add-problem]');
+					var sub = event.target.closest('[data-les-add-subquestion]');
+					var rm = event.target.closest('[data-les-remove-problem]');
+					if (add) {
+						event.preventDefault();
+						var tpl = document.querySelector('[data-les-problem-template]');
+						if (!tpl || !list()) return;
+						list().insertAdjacentHTML('beforeend', tpl.innerHTML);
+						var block = list().lastElementChild;
+						var items = block.querySelector('[data-les-problem-items]');
+						newQuestion(items, 'calculation');
+						newQuestion(items, 'calculation');
+						sync(block);
+						block.scrollIntoView({ behavior: 'smooth', block: 'start' });
+						var ta = block.querySelector('[data-les-problem-context]');
+						if (ta) setTimeout(function () { try { ta.focus({ preventScroll: true }); } catch (e) { ta.focus(); } }, 350);
+					} else if (sub) {
+						event.preventDefault();
+						var b = sub.closest('[data-les-problem]');
+						var q = newQuestion(b.querySelector('[data-les-problem-items]'), 'calculation');
+						sync(b);
+						if (q) { q.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+					} else if (rm) {
+						event.preventDefault();
+						var bl = rm.closest('[data-les-problem]');
+						if (bl && window.confirm('Supprimer ce problème et toutes ses sous-questions ?')) bl.remove();
+					}
+				});
+				document.addEventListener('input', function (event) {
+					var ctx = event.target.closest('[data-les-problem-context]');
+					if (ctx) sync(ctx.closest('[data-les-problem]'));
+				});
+				document.addEventListener('submit', function (event) {
+					if (event.target.querySelector && event.target.querySelector('[data-les-problem]')) syncAll();
+				}, true);
+				// Une sous-question supprimée : on renumérote ; un problème vidé disparaît.
+				document.addEventListener('click', function (event) {
+					if (!event.target.closest('[data-logiexam-remove-question]')) return;
+					setTimeout(function () {
+						document.querySelectorAll('[data-les-problem]').forEach(function (b) {
+							if (!b.querySelector('[data-les-problem-items] > .les-inline-question')) b.remove(); else sync(b);
+						});
+					}, 0);
+				});
+				if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', syncAll); else syncAll();
+			}());
 			document.addEventListener('click', function(event) {
 				var button = event.target.closest('[data-logiexam-remove-question]');
 				if (!button) return;
@@ -486,12 +567,27 @@ trait LogiEval_Secure_Evaluations_Editor {		private static function render_creat
 			</div>
 			<p class="description"><?php esc_html_e( 'Créez directement les questions de cette évaluation. En mode histoire, le champ section permet de regrouper plusieurs questions sous le même bout d’histoire.', 'logieval-secure' ); ?></p>
 			<button type="button" class="les-fab" data-logiexam-add-question aria-label="<?php esc_attr_e( 'Ajouter une question', 'logieval-secure' ); ?>"><span aria-hidden="true">+</span> <?php esc_html_e( 'Ajouter une question', 'logieval-secure' ); ?></button>
+			<p class="les-problem-actions"><button type="button" class="button les-button-secondary" data-les-add-problem><?php esc_html_e( '🧮 Ajouter un problème (énoncé + sous-questions)', 'logieval-secure' ); ?></button>
+				<span class="description"><?php esc_html_e( 'Un énoncé commun (les données), puis plusieurs sous-questions : chacune a son espace de développement, sa réponse et sa calculatrice.', 'logieval-secure' ); ?></span></p>
 			<div data-logiexam-inline-questions data-next-index="<?php echo esc_attr( count( $questions ) ); ?>">
-				<?php foreach ( $questions as $index => $question ) : ?>
-					<?php self::render_inline_question_fields( (int) $index, $question, $courses, $selected_course ); ?>
-				<?php endforeach; ?>
+				<?php
+				// 1.38.5 : questions qui se suivent avec le même énoncé = un « problème » à sous-questions.
+				$groups = self::group_problem_questions( $questions );
+				foreach ( $groups as $group ) {
+					if ( count( $group['items'] ) > 1 ) {
+						self::render_problem_block_open( $group['context'] );
+					}
+					foreach ( $group['items'] as $index => $question ) {
+						self::render_inline_question_fields( (int) $index, $question, $courses, $selected_course );
+					}
+					if ( count( $group['items'] ) > 1 ) {
+						self::render_problem_block_close();
+					}
+				}
+				?>
 			</div>
 		</div>
+		<template data-les-problem-template><?php self::render_problem_block_open( '' ); self::render_problem_block_close(); ?></template>
 		<template data-logiexam-question-template>
 			<?php self::render_inline_question_fields( '__INDEX__', array( 'id' => 0, 'title' => '', 'sensei_course_id' => $selected_course, 'context' => '', 'prompt' => '', 'type' => 'short_answer', 'points' => 1, 'expected_answer' => '', 'options' => '[]' ), $courses, $selected_course, '__NUMBER__' ); ?>
 		</template>
@@ -676,6 +772,47 @@ trait LogiEval_Secure_Evaluations_Editor {		private static function render_creat
 		return $parts;
 	}
 
+	/**
+	 * 1.38.5 : regroupe les questions qui se suivent et partagent le même énoncé (champ « Détails nécessaires »).
+	 * @return array<int, array{context: string, items: array<int, array>}>
+	 */
+	public static function group_problem_questions( array $questions ): array {
+		$groups = array();
+		foreach ( $questions as $index => $question ) {
+			$ctx  = trim( (string) ( $question['context'] ?? '' ) );
+			$last = count( $groups ) - 1;
+			if ( '' !== $ctx && $last >= 0 && $groups[ $last ]['context'] === $ctx ) {
+				$groups[ $last ]['items'][ $index ] = $question;
+			} else {
+				$groups[] = array( 'context' => $ctx, 'items' => array( $index => $question ) );
+			}
+		}
+		return $groups;
+	}
+
+	private static function render_problem_block_open( string $context ): void {
+		?>
+		<section class="les-problem-block" data-les-problem>
+			<div class="les-section-title">
+				<h4><?php esc_html_e( '🧮 Problème', 'logieval-secure' ); ?> <span class="les-problem-range" data-les-problem-range></span></h4>
+				<button type="button" class="button les-button-danger" data-les-remove-problem><?php esc_html_e( 'Supprimer le problème', 'logieval-secure' ); ?></button>
+			</div>
+			<label class="les-problem-context"><?php esc_html_e( 'Énoncé du problème (données communes à toutes les sous-questions)', 'logieval-secure' ); ?>
+				<textarea class="widefat" rows="5" data-les-problem-context placeholder="<?php esc_attr_e( 'Ex. Une palette mesure 1,20 m × 0,80 m. On y empile des cartons de 40 × 30 × 25 cm sur 1,50 m de hauteur maximum…', 'logieval-secure' ); ?>"><?php echo esc_textarea( $context ); ?></textarea>
+			</label>
+			<p class="description"><?php esc_html_e( 'L’énoncé reste affiché au-dessus des sous-questions pour l’élève. Chaque sous-question de type « Calcul » a son espace de développement, sa réponse et sa calculatrice.', 'logieval-secure' ); ?></p>
+			<div class="les-problem-items" data-les-problem-items>
+		<?php
+	}
+
+	private static function render_problem_block_close(): void {
+		?>
+			</div>
+			<p><button type="button" class="button les-button-secondary" data-les-add-subquestion><?php esc_html_e( '+ Ajouter une sous-question', 'logieval-secure' ); ?></button></p>
+		</section>
+		<?php
+	}
+
 	private static function render_inline_question_fields( $index, array $question, array $courses, int $selected_course, $display_number = null ): void {
 		$name_prefix = 'inline_questions[' . $index . ']';
 		$number      = null === $display_number ? ( (int) $index + 1 ) : $display_number;
@@ -703,7 +840,7 @@ trait LogiEval_Secure_Evaluations_Editor {		private static function render_creat
 					<?php self::render_question_type_select( $name_prefix . '[type]', (string) ( $question['type'] ?? 'short_answer' ) ); ?>
 				</label>
 			</div>
-			<label><?php esc_html_e( 'Détails nécessaires / section d’histoire', 'logieval-secure' ); ?><textarea class="widefat" name="<?php echo esc_attr( $name_prefix ); ?>[context]" rows="3"><?php echo esc_textarea( $question['context'] ?? '' ); ?></textarea></label>
+			<label data-les-context-field><?php esc_html_e( 'Détails nécessaires / section d’histoire', 'logieval-secure' ); ?><textarea class="widefat" name="<?php echo esc_attr( $name_prefix ); ?>[context]" rows="3"><?php echo esc_textarea( $question['context'] ?? '' ); ?></textarea></label>
 			<label><?php esc_html_e( 'Question posée', 'logieval-secure' ); ?><textarea class="widefat" name="<?php echo esc_attr( $name_prefix ); ?>[prompt]" rows="3"><?php echo esc_textarea( $question['prompt'] ?? '' ); ?></textarea></label>
 			<?php self::render_adaptive_answer_fields( $name_prefix, $question, $options ); ?>
 			<?php self::render_question_image_field( $name_prefix, $question ); ?>

@@ -919,6 +919,41 @@ trait LogiEval_Secure_Evaluations_Student_Session {
 		if ( $n < 2 ) {
 			return $questions;
 		}
+		// 1.38.5 : les sous-questions d'un même problème (même énoncé, à la suite) restent ensemble et dans l'ordre :
+		// on mélange des blocs (une question seule = un bloc).
+		$questions = array_values( $questions );
+		$blocks    = array();
+		foreach ( $questions as $i => $q ) {
+			$ctx  = trim( (string) ( $q['context'] ?? '' ) );
+			$last = count( $blocks ) - 1;
+			if ( '' !== $ctx && $last >= 0 && $blocks[ $last ]['ctx'] === $ctx ) {
+				$blocks[ $last ]['items'][] = $q;
+			} else {
+				$blocks[] = array( 'ctx' => $ctx, 'items' => array( $q ) );
+			}
+		}
+		if ( count( $blocks ) < 2 ) {
+			return $questions;
+		}
+		$grouped = count( $blocks ) < count( $questions );
+		if ( $grouped ) {
+			$keys = array();
+			foreach ( $blocks as $i => $b ) {
+				$keys[ $i ] = sprintf( '%u', crc32( 'logiexam-question-order|' . $evaluation_id . '|' . $user_id . '|' . (int) $b['items'][0]['id'] ) );
+			}
+			$order = array_keys( $blocks );
+			usort( $order, static fn( $a, $b ) => strnatcmp( $keys[ $a ], $keys[ $b ] ) ?: $a <=> $b );
+			if ( $order === array_keys( $blocks ) ) {
+				$order = array_merge( array_slice( $order, 1 ), array( $order[0] ) );
+			}
+			$out = array();
+			foreach ( $order as $i ) {
+				foreach ( $blocks[ $i ]['items'] as $q ) {
+					$out[] = $q;
+				}
+			}
+			return $out;
+		}
 		$keys = array();
 		foreach ( $questions as $i => $q ) {
 			$keys[ $i ] = sprintf( '%u', crc32( 'logiexam-question-order|' . $evaluation_id . '|' . $user_id . '|' . (int) $q['id'] ) );

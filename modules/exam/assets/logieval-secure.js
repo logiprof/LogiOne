@@ -195,7 +195,7 @@
 		};
 		form.addEventListener('input', (e) => { if (e.target.matches('input[name$="[points]"], textarea[name$="[prompt]"]')) update(); });
 		// 1.36 : document entier (le bouton flottant « Ajouter une question » peut être placé sous <body>).
-		document.addEventListener('click', (e) => { if (e.target.closest('[data-logiexam-add-question], [data-logiexam-remove-question], [data-logiexam-add-story-question], [data-logiexam-remove-story-section]')) setTimeout(update, 0); });
+		document.addEventListener('click', (e) => { if (e.target.closest('[data-logiexam-add-question], [data-logiexam-remove-question], [data-logiexam-add-story-question], [data-logiexam-remove-story-section], [data-les-add-problem], [data-les-add-subquestion], [data-les-remove-problem]')) setTimeout(update, 50); });
 		update();
 	}
 	initBareme();
@@ -3425,7 +3425,34 @@
 		if (state.evaluation.evaluation_type === 'story') {
 			answerForm.appendChild(renderStorySections());
 		} else {
-			state.questions.forEach((question, index) => answerForm.appendChild(renderQuestion(question, index, state.questions[index - 1], false)));
+			// 1.38.5 : questions qui se suivent avec le même énoncé = un « problème » : l'énoncé est affiché une fois, en
+			// tête, et reste visible pendant qu'on répond aux sous-questions a), b), c)…
+			let problemNo = 0;
+			let k = 0;
+			while (k < state.questions.length) {
+				const ctx = String(state.questions[k].context || '').trim();
+				let end = k + 1;
+				while (ctx && end < state.questions.length && String(state.questions[end].context || '').trim() === ctx) end++;
+				if (end - k > 1) {
+					problemNo++;
+					const box = document.createElement('section');
+					box.className = 'les-problem';
+					box.innerHTML = '<div class="les-problem-statement"><span class="les-kicker">Problème ' + problemNo + ' · questions ' + (k + 1) + ' à ' + end + '</span><div class="les-question-context">' + state.questions[k].context + '</div></div>';
+					const subs = document.createElement('div');
+					subs.className = 'les-problem-subs';
+					for (let j = k; j < end; j++) {
+						const node = renderQuestion(state.questions[j], j, null, true);
+						const title = node.querySelector('.les-question-title');
+						if (title) title.textContent = (j + 1) + '. ' + String.fromCharCode(97 + ((j - k) % 26)) + ') ' + title.textContent.replace(/^\d+\.\s*/, '');
+						subs.appendChild(node);
+					}
+					box.appendChild(subs);
+					answerForm.appendChild(box);
+				} else {
+					answerForm.appendChild(renderQuestion(state.questions[k], k, state.questions[k - 1], false));
+				}
+				k = end;
+			}
 		}
 		exam.hidden = false;
 		if (examIntro) examIntro.hidden = showIntro === false ? true : false;
