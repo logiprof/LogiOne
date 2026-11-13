@@ -746,7 +746,13 @@ trait LogiEval_Secure_Evaluations_Workspace {
 					} elseif ( self::attempt_correction_is_finished( $a, $r ) ) {
 						$state = array( 'done', '✓', self::pdf_optional_number( $r['final_grade'] ?? null ) );
 					} elseif ( $r && 'correction_in_progress' === (string) $r['status'] ) {
-						$state = array( 'progress', '◐', '' );
+						// 1.38.2 : combien de questions déjà corrigées (« 7/11 »).
+						if ( ! isset( $q_total ) ) {
+							global $wpdb;
+							$q_total = (int) $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM ' . LogiEval_Secure_Database::tables()['eval_questions'] . ' WHERE evaluation_id = %d', (int) $evaluation['id'] ) );
+						}
+						$done  = count( self::reviewed_questions( (int) $a['id'] ) );
+						$state = array( 'progress', '◐', $done && $q_total ? min( $done, $q_total ) . '/' . $q_total : '' );
 					} else {
 						$state = array( 'todo', '●', '' );
 					}

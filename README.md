@@ -1,4 +1,4 @@
-# LogiOne 1.38.1
+# LogiOne 1.38.2
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,14 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.38.2 (LogiExam : reprendre une correction partielle)
+
+- **Questions déjà corrigées bien visibles** quand on reprend une copie enregistrée en partie : pastille **verte avec ✓** dans la barre de progression, badge « ✓ Corrigée » sur la question ; les questions pas encore corrigées ont une pastille blanche en pointillés. Compteur « Question 5 / 11 · 7 corrigées ».
+- **Reprise au bon endroit** : la copie s’ouvre sur la première question pas encore corrigée.
+- Une question compte comme corrigée quand vous y changez quelque chose (points, boutons de points, « Points de l’IA », pré-correction, critères, commentaire) ou quand vous passez à la suivante avec « Question suivante ». La pré-correction IA de toute la classe ne les marque pas. Les questions vides le sont d’office.
+- **Liste des élèves** : une copie en cours de correction affiche « ◐ 7/11 ».
+- Enregistré à chaque sauvegarde (même partielle), sans modifier les tables.
 
 ## Nouveautés 1.38.1 (LogiLive allégé, temps ajouté exact dans LogiExam)
 

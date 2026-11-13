@@ -4706,10 +4706,52 @@
 		// 1.36.4 : questions restées vides (0 pt et « Non répondu. » d'office) : pastille orange, sautées par « Suivante ».
 		this.blank = items.map(function (item) { return item.hasAttribute('data-les-blank-answer'); });
 		this.dotButtons.forEach(function (b, k) { if (self.blank[k]) { b.classList.add('is-blank'); b.title = 'Question ' + (k + 1) + ' : non répondue (0 pt)'; } });
-		var first = this.step(-1, 1);
+		// 1.38.2 : questions déjà corrigées (enregistrées lors d'une correction partielle) : pastille verte ✓.
+		// Une question devient « corrigée » quand l'enseignant y change quelque chose (points, boutons, IA, critères,
+		// commentaire) ou passe à la suivante avec « Question suivante ». Les questions vides le sont d'office.
+		this.reviewed = items.map(function (item, k) { return item.hasAttribute('data-les-reviewed') || self.blank[k]; });
+		this.reviewedInput = form.querySelector('input[name="reviewed_questions"]');
+		if (!this.reviewedInput) {
+			this.reviewedInput = make('input');
+			this.reviewedInput.type = 'hidden';
+			this.reviewedInput.name = 'reviewed_questions';
+			form.appendChild(this.reviewedInput);
+		}
+		var touch = function (e) {
+			var k = self.items.indexOf(e.target.closest ? e.target.closest('.les-answer-grade') : null);
+			if (k < 0 || !e.isTrusted) { return; } // seulement les gestes de l'enseignant (pas la pré-correction de toute la classe)
+			if (e.type === 'click' && !(e.target.closest && e.target.closest('[data-les-set-points], [data-les-ai-accept], [data-les-ai-grade], [data-les-criterion], input[type="checkbox"]'))) { return; }
+			self.markReviewed(k);
+		};
+		form.addEventListener('input', touch);
+		form.addEventListener('change', touch);
+		form.addEventListener('click', touch);
+		this.syncReviewed();
+		// En reprenant une correction : on s'ouvre sur la première question pas encore corrigée.
+		var first = null;
+		for (var q = 0; q < items.length; q++) { if (!this.reviewed[q] && !this.blank[q]) { first = q; break; } }
+		if (first === null) { first = this.step(-1, 1); }
 		this.index = first === null ? 0 : first;
 		this.apply(pref(KEY_PAGER));
 	}
+	Pager.prototype.markReviewed = function (k) {
+		if (k < 0 || this.reviewed[k]) { return; }
+		this.reviewed[k] = true;
+		this.syncReviewed();
+		this.refresh();
+	};
+	Pager.prototype.syncReviewed = function () {
+		var self = this;
+		var ids = [];
+		this.items.forEach(function (item, k) {
+			var on = !!self.reviewed[k];
+			var badge = item.querySelector('.les-reviewed-badge');
+			if (badge) { badge.hidden = !on; }
+			item.classList.toggle('is-reviewed', on);
+			if (on && item.getAttribute('data-question-id')) { ids.push(item.getAttribute('data-question-id')); }
+		});
+		this.reviewedInput.value = ids.join(',');
+	};
 	/* Prochaine question répondue dans le sens dir (+1 / -1) à partir de k ; null s'il n'y en a plus. */
 	Pager.prototype.step = function (k, dir) {
 		for (var n = k + dir; n >= 0 && n < this.items.length; n += dir) {
@@ -4736,7 +4778,8 @@
 	};
 	Pager.prototype.refresh = function () {
 		var self = this;
-		this.label.textContent = this.on ? 'Question ' + (this.index + 1) + ' / ' + this.items.length : this.items.length + ' questions';
+		var nbDone = (this.reviewed || []).filter(Boolean).length;
+		this.label.textContent = (this.on ? 'Question ' + (this.index + 1) + ' / ' + this.items.length : this.items.length + ' questions') + ' · ' + nbDone + ' corrigée' + (nbDone > 1 ? 's' : '');
 		var after = this.step(this.index, 1), before = this.step(this.index, -1);
 		this.prev.disabled = !this.on || before === null;
 		this.next.disabled = !this.on || after === null;
@@ -4751,7 +4794,8 @@
 		});
 		this.dotButtons.forEach(function (b, n) {
 			var input = pointsInput(self.items[n]);
-			b.classList.toggle('is-done', !!(input && input.value.trim() !== ''));
+			b.classList.toggle('is-done', !!(self.reviewed && self.reviewed[n]));
+			b.classList.toggle('is-todo-q', !(self.reviewed && self.reviewed[n]));
 			b.classList.toggle('is-current', self.on && n === self.index);
 			var lab = self.ptsLabels && self.ptsLabels[n];
 			if (!lab) { return; }
@@ -4770,10 +4814,14 @@
 				lab.classList.add(state);
 				b.title = 'Question ' + (n + 1) + ' : ' + lab.textContent + ' pt' + (self.blank && self.blank[n] ? ' (non répondue)' : '');
 			}
+			if (self.reviewed) {
+				b.title += self.reviewed[n] ? ' · corrigée ✓' : ' · à corriger';
+			}
 		});
 	};
 	Pager.prototype.advance = function () {
 		if (!this.on) { return false; }
+		this.markReviewed(this.index); // « Question suivante » : la question quittée est considérée comme corrigée
 		var after = this.step(this.index, 1);
 		if (after !== null) { this.show(after, true); return true; }
 		var end = this.form.querySelector('textarea[name="teacher_comment_global"]');

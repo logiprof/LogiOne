@@ -63,9 +63,15 @@ trait LogiEval_Secure_Evaluations_Corrections {		public static function attempt_
 				<label class="les-checkbox-line les-auto-next"><input type="checkbox" data-les-auto-next checked> <?php esc_html_e( 'Après avoir attribué les points, passer directement à la question suivante', 'logieval-secure' ); ?></label>
 				<?php self::render_bonus_malus_card( $evaluation, $result, $answers ); ?>
 				<?php foreach ( array_values( $answers ) as $answer_index => $answer ) : $own_title = self::correction_own_title( $answer ); ?>
-						<?php $is_blank = ! self::answer_is_complete( $answer['answer'] ?? '' ); ?>
-						<div class="les-answer-grade<?php echo $is_blank ? ' is-blank' : ''; ?>" data-les-ai-grade-target data-attempt-id="<?php echo esc_attr( $attempt['id'] ); ?>" data-question-id="<?php echo esc_attr( $answer['question_id'] ); ?>" data-les-max-points="<?php echo esc_attr( (float) $answer['points'] ); ?>"<?php echo $is_blank ? ' data-les-blank-answer="1"' : ''; ?>>
-						<div class="les-correction-qhead"><span class="les-correction-qnum"><?php echo esc_html( sprintf( __( 'Question %d', 'logieval-secure' ), $answer_index + 1 ) ); ?></span><?php if ( '' !== $own_title ) : ?> <strong><?php echo esc_html( $own_title ); ?></strong><?php endif; ?> <span class="les-correction-qpts"><?php echo esc_html( self::format_points( (float) $answer['points'] ) ); ?> pts</span><?php if ( $is_blank ) : ?> <span class="les-blank-badge"><?php esc_html_e( 'Non répondu : 0 pt', 'logieval-secure' ); ?></span><?php endif; ?></div>
+						<?php
+						$is_blank = ! self::answer_is_complete( $answer['answer'] ?? '' );
+						if ( ! isset( $reviewed_ids ) ) {
+							$reviewed_ids = self::reviewed_questions( (int) $attempt['id'] );
+						}
+						$is_reviewed = in_array( (int) $answer['question_id'], $reviewed_ids, true );
+						?>
+						<div class="les-answer-grade<?php echo $is_blank ? ' is-blank' : ''; ?>" data-les-ai-grade-target data-attempt-id="<?php echo esc_attr( $attempt['id'] ); ?>" data-question-id="<?php echo esc_attr( $answer['question_id'] ); ?>" data-les-max-points="<?php echo esc_attr( (float) $answer['points'] ); ?>"<?php echo $is_blank ? ' data-les-blank-answer="1"' : ''; ?><?php echo $is_reviewed ? ' data-les-reviewed="1"' : ''; ?>>
+						<div class="les-correction-qhead"><span class="les-correction-qnum"><?php echo esc_html( sprintf( __( 'Question %d', 'logieval-secure' ), $answer_index + 1 ) ); ?></span><?php if ( '' !== $own_title ) : ?> <strong><?php echo esc_html( $own_title ); ?></strong><?php endif; ?> <span class="les-correction-qpts"><?php echo esc_html( self::format_points( (float) $answer['points'] ) ); ?> pts</span><?php if ( $is_blank ) : ?> <span class="les-blank-badge"><?php esc_html_e( 'Non répondu : 0 pt', 'logieval-secure' ); ?></span><?php endif; ?><span class="les-reviewed-badge"<?php echo $is_reviewed ? '' : ' hidden'; ?>><?php esc_html_e( '✓ Corrigée', 'logieval-secure' ); ?></span></div>
 						<?php if ( ! empty( $answer['context'] ) ) : ?>
 							<div class="les-question-context"><?php echo wp_kses_post( wpautop( $answer['context'] ) ); ?></div>
 						<?php endif; ?>
@@ -633,6 +639,23 @@ trait LogiEval_Secure_Evaluations_Corrections {		public static function attempt_
 		<?php
 	}
 
+	/**
+	 * 1.38.2 : questions déjà corrigées par l'enseignant pour une copie (correction enregistrée en partie).
+	 * Les points proposés (IA, calcul automatique) sont enregistrés pour toutes les questions : ils ne disent pas ce
+	 * que l'enseignant a vraiment regardé. On retient donc les questions qu'il a traitées (option, sans toucher aux tables).
+	 */
+	public static function reviewed_questions( int $attempt_id ): array {
+		$ids = get_option( 'logiexam_reviewed_' . $attempt_id, array() );
+		return is_array( $ids ) ? array_values( array_unique( array_map( 'absint', $ids ) ) ) : array();
+	}
+
+	private static function save_reviewed_questions( int $attempt_id, array $ids ): void {
+		$ids = array_values( array_unique( array_filter( array_map( 'absint', $ids ) ) ) );
+		if ( $ids ) {
+			update_option( 'logiexam_reviewed_' . $attempt_id, $ids, false );
+		}
+	}
+
 	private static function attempt_needs_correction( array $attempt, ?array $result ): bool {
 		if ( self::attempt_is_cheating_cancelled( $attempt ) ) {
 			return false;
@@ -677,6 +700,11 @@ trait LogiEval_Secure_Evaluations_Corrections {		public static function attempt_
 
 		$manual_points = (array) ( $_POST['manual_points'] ?? array() );
 		$comments      = (array) ( $_POST['teacher_comment'] ?? array() );
+		if ( isset( $_POST['reviewed_questions'] ) ) {
+			$posted = array_map( 'absint', explode( ',', sanitize_text_field( wp_unslash( $_POST['reviewed_questions'] ) ) ) );
+			$posted = array_intersect( $posted, array_map( 'absint', array_keys( $manual_points ) ) );
+			self::save_reviewed_questions( $attempt_id, array_merge( self::reviewed_questions( $attempt_id ), $posted ) );
+		}
 		foreach ( $manual_points as $question_id => $points ) {
 			$question_id = absint( $question_id );
 			$max_points  = (float) $wpdb->get_var(
