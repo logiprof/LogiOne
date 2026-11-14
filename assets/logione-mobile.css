@@ -128,3 +128,32 @@
 	.logieval-secure.les-teacher h3 { font-size: 18px !important; }
 	.psgpt input, .psgpt select, .gne-app input, .gca-app input { max-width: 100%; box-sizing: border-box; }
 }
+@media (max-width: 640px) {
+	/* LogiProgress : le champ « Tapez pour filtrer » gardait sa largeur d'ordinateur (366 px) et sortait de la carte */
+	.psgpt .psgpt-step-tools { flex-wrap: wrap; width: 100%; min-width: 0; }
+	.psgpt .psgpt-search { flex: 1 1 100% !important; width: 100% !important; min-width: 0 !important; max-width: 100% !important; }
+	.psgpt .psgpt-search input { width: 100% !important; min-width: 0 !important; }
+	.psgpt .psgpt-step-head > * { min-width: 0; max-width: 100%; }
+}
+
+@media (max-width: 640px) {
+	.psgpt .psgpt-seg { display: flex; width: 100%; }
+	.psgpt .psgpt-seg > button { flex: 1 1 0; min-width: 0; white-space: nowrap; font-size: 13px; padding-left: 8px; padding-right: 8px; justify-content: center; }
+}
+
+/* LogiProgress — tableau de résultats : colonnes Élève / Progression compactes pour laisser voir les leçons */
+@media (max-width: 640px) {
+	.psgpt .psgpt-grid { min-width: 0 !important; width: max-content !important; font-size: 13px; }
+	.psgpt .psgpt-grid .psgpt-student-col { min-width: 0 !important; width: 112px; max-width: 112px; padding-left: 8px !important; padding-right: 6px !important; box-shadow: 2px 0 4px rgba(0,0,0,.06); }
+	.psgpt .psgpt-grid .psgpt-name-link { gap: 6px; }
+	.psgpt .psgpt-grid .psgpt-avatar { width: 24px; height: 24px; font-size: 11px; }
+	.psgpt .psgpt-grid .psgpt-student-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+	.psgpt .psgpt-grid thead th { padding: 8px 6px; }
+	.psgpt .psgpt-grid thead th.psgpt-pct-col { font-size: 0 !important; width: 52px; }
+	.psgpt .psgpt-grid thead th.psgpt-pct-col::after { content: "%"; font-size: 13px; }
+	.psgpt .psgpt-grid .psgpt-progress-cell { min-width: 0 !important; width: 52px; padding-left: 6px !important; padding-right: 6px !important; }
+	.psgpt .psgpt-grid .psgpt-progress-cell strong { min-width: 0; margin: 0; display: block; text-align: left; }
+	.psgpt .psgpt-grid .psgpt-progress-cell .psgpt-progress { display: block; width: 40px; margin-top: 4px; }
+	.psgpt .psgpt-grid thead .psgpt-lesson-link { min-width: 72px; max-width: 96px; font-size: 11px; }
+	.psgpt .psgpt-grid thead th.psgpt-student-col, .psgpt .psgpt-grid thead th.psgpt-last-col { font-size: 13px; }
+}

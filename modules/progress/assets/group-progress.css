@@ -1633,3 +1633,8 @@
 a.psgpt-course-link { color: inherit !important; text-decoration: none !important; border-bottom: 1px dashed currentColor; }
 a.psgpt-course-link:hover, a.psgpt-course-link:focus-visible { color: #047857 !important; border-bottom-style: solid; }
 a.psgpt-course-link .psgpt-ext { font-size: .8em; opacity: .65; }
+
+/* Les libellés lecteurs d'écran (position absolute) restent dans la zone défilante du tableau
+   au lieu d'élargir toute la page (débordement horizontal sur iPhone). */
+.psgpt .psgpt-table-wrap,
+.psgpt .psgpt-grid { position: relative; }

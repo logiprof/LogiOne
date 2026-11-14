@@ -1,4 +1,4 @@
-# LogiOne 1.39.0
+# LogiOne 1.39.1
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,13 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.39.1 (LogiProgress sur iPhone)
+
+- Le champ de recherche « Cours à afficher » ne déborde plus de sa carte.
+- Le tableau de progression ne fait plus défiler toute la page de côté : il défile seul, à l’intérieur de sa carte.
+- Sur iPhone, les colonnes Élève et Progression sont compactes, ce qui laisse voir les leçons à côté des noms.
+- Les boutons « Mes favoris » et « Tous les groupes » tiennent sur une ligne.
 
 ## Nouveautés 1.39.0 (version web adaptée à l’iPhone)
 
