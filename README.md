@@ -1,4 +1,4 @@
-# LogiOne 1.38.5
+# LogiOne 1.39.0
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,15 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.39.0 (version web adaptée à l’iPhone)
+
+- **Bandeau LogiOne sur une seule ligne** sur téléphone : bouton ‹ (retour à l’accueil), nom de l’outil ouvert, et un menu **« ☰ Outils »** qui regroupe les autres outils (avec leurs icônes) au lieu de 8 liens sur 3 lignes. Le bandeau reste en haut de l’écran.
+- **Accueil** : tuiles compactes sur deux colonnes (icône, nom, une ligne de description) ; texte d’accueil et illustration masqués sur téléphone — tous les outils sont visibles d’un coup d’œil.
+- **Menus des outils** (LogiExam, LogiNotes, LogiClass, LogiProgress, LogiEval, étapes d’une évaluation…) sur **une seule ligne qui défile au doigt** ; l’onglet actif est amené à l’écran.
+- **Compteurs sur deux colonnes**, cadres imbriqués allégés, titres répétés masqués (« Espace enseignant », « Interface autonome LogiNotes »…), champs en 16 px (Safari ne zoome plus à chaque saisie), boutons plus faciles à toucher, sélecteur « Données affichées » compact.
+- **Corrections de débordement** : LogiNotes et LogiClass (pages hors portail) dépassaient l’écran à droite avec les thèmes blocs ; LogiProgress était coupé à droite. Aucune page ne déborde plus à 390 px de large.
+- Rien ne change sur ordinateur ni sur tablette (règles limitées aux écrans de 640 px et moins).
 
 ## Nouveautés 1.38.5 (LogiExam : problèmes à plusieurs sous-questions)
 

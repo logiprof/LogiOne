@@ -16,6 +16,14 @@ final class LogiPilot_Admin
         add_action('admin_post_logipilot_save_modules', array(__CLASS__, 'handle_save_modules'));
         add_action('admin_enqueue_scripts', array(__CLASS__, 'enqueue'));
         add_action('wp_enqueue_scripts', array(__CLASS__, 'enqueue'));
+        add_action('wp_enqueue_scripts', array(__CLASS__, 'enqueue_mobile'), 100); // après les feuilles des modules
+    }
+
+    /** 1.39.0 : version web sur téléphone (règles ≤ 640 px seulement). */
+    public static function enqueue_mobile(): void
+    {
+        wp_enqueue_style('logione-mobile', LOGIPILOT_URL . 'assets/logione-mobile.css', array(), LOGIPILOT_VERSION);
+        wp_enqueue_script('logione-mobile', LOGIPILOT_URL . 'assets/logione-mobile.js', array(), LOGIPILOT_VERSION, true);
     }
 
     public static function enqueue(): void

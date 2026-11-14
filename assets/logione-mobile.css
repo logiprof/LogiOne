@@ -1,0 +1,130 @@
+/*
+ * LogiOne 1.39.0 — version web sur téléphone (iPhone, ≤ 640 px).
+ * Chargé après les feuilles des modules. Rien ne change sur ordinateur ou tablette.
+ *  - bandeau LogiOne sur une ligne (‹ retour, nom de l'outil, menu « Outils »)
+ *  - accueil : tuiles compactes sur deux colonnes
+ *  - menus des outils sur une seule ligne qui défile au doigt
+ *  - compteurs sur deux colonnes, cadres imbriqués allégés, champs à 16 px (pas de zoom automatique d'iOS)
+ */
+
+/* ---------- Portail : menu « Outils » (caché sur grand écran) ---------- */
+.lpp-switch-menu { display: none; }
+
+@media (max-width: 640px) {
+	/* Bandeau quand un outil est ouvert : une seule ligne */
+	.logipilot-portal.is-tool .lpp-hero { padding: max(8px, env(safe-area-inset-top)) 12px 8px; position: sticky; top: var(--wp-admin--admin-bar--height, 0px); z-index: 1000; }
+	.logipilot-portal.is-tool .lpp-hero-top { display: none; }
+	.logipilot-portal.is-tool .lpp-toolbar { flex-wrap: nowrap; gap: 8px; padding: 0; min-height: 44px; }
+	.logipilot-portal.is-tool .lpp-back { flex: none; width: 40px; height: 40px; padding: 0 !important; justify-content: center; font-size: 0 !important; border-radius: 12px; }
+	.logipilot-portal.is-tool .lpp-back svg { width: 22px; height: 22px; margin: 0; }
+	.logipilot-portal.is-tool .lpp-current { flex: 1 1 auto; min-width: 0; font-size: 18px !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+	.logipilot-portal.is-tool .lpp-current-art { width: 28px; height: 28px; }
+	.logipilot-portal.is-tool .lpp-current-art svg, .logipilot-portal.is-tool .lpp-current-art img { width: 28px; height: 28px; }
+	.logipilot-portal.is-tool .lpp-switch { display: none !important; }
+	.lpp-switch-menu { display: block; position: relative; flex: none; }
+	.lpp-switch-menu > summary { list-style: none; display: flex; align-items: center; gap: 6px; height: 40px; padding: 0 12px; border-radius: 12px; background: rgba(255, 255, 255, .12); color: #fff; font-weight: 700; font-size: 15px; cursor: pointer; }
+	.lpp-switch-menu > summary::-webkit-details-marker { display: none; }
+	.lpp-menu-icon, .lpp-menu-icon::before, .lpp-menu-icon::after { display: block; width: 16px; height: 2px; border-radius: 2px; background: currentColor; }
+	.lpp-menu-icon { position: relative; }
+	.lpp-menu-icon::before, .lpp-menu-icon::after { content: ""; position: absolute; left: 0; }
+	.lpp-menu-icon::before { top: -5px; } .lpp-menu-icon::after { top: 5px; }
+	.lpp-switch-menu-list { position: absolute; right: 0; top: calc(100% + 8px); z-index: 1001; width: min(78vw, 300px); max-height: 70vh; overflow-y: auto; padding: 6px; border-radius: 14px; background: #fff; box-shadow: 0 18px 40px rgba(15, 23, 42, .28); }
+	.lpp-switch-menu-list a { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 6px 12px; border-radius: 10px; color: #1f2937 !important; font-weight: 600; font-size: 16px; text-decoration: none !important; }
+	.lpp-switch-menu-list a:active, .lpp-switch-menu-list a:hover { background: #f1f5f9; }
+	.lpp-switch-menu-list .lpp-menu-home { border-bottom: 1px solid #e5e7eb; border-radius: 10px 10px 0 0; color: #475569 !important; }
+	.lpp-switch-menu-list .lpp-menu-home svg { width: 18px; height: 18px; }
+	.lpp-menu-art { flex: none; width: 30px; height: 30px; display: grid; place-items: center; }
+	.lpp-menu-art svg, .lpp-menu-art img { width: 30px; height: 30px; object-fit: contain; }
+
+	/* Accueil : bandeau court, tuiles compactes sur deux colonnes */
+	.logipilot-portal:not(.is-tool) .lpp-hero { padding: 14px 16px 18px; }
+	.logipilot-portal:not(.is-tool) .lpp-one, .logipilot-portal .lpp-about { display: none !important; }
+	.logipilot-portal .lpp-hello { font-size: 26px !important; margin: 8px 0 4px !important; }
+	.logipilot-portal .lpp-hint { margin: 0; font-size: 14px; }
+	.logipilot-portal .lpp-grid { grid-template-columns: 1fr 1fr !important; gap: 10px !important; padding: 14px 12px 24px !important; }
+	.logipilot-portal .lpp-grid > .lpp-tile, .logipilot-portal .lpp-grid > .lpp-tile:nth-child(n) { grid-column: auto !important; grid-row: auto !important; min-height: 0 !important; padding: 14px 12px !important; flex-direction: column; align-items: flex-start; gap: 8px; border-radius: 16px; }
+	.logipilot-portal .lpp-tile-art { width: 44px !important; height: 44px !important; margin: 0 !important; }
+	.logipilot-portal .lpp-tile-art svg, .logipilot-portal .lpp-tile-art img { width: 44px !important; height: 44px !important; }
+	.logipilot-portal .lpp-tile strong { font-size: 17px !important; line-height: 1.2; }
+	.logipilot-portal .lpp-tile ul, .logipilot-portal .lpp-tile .lpp-tile-cta { display: none !important; }
+	.logipilot-portal .lpp-tile-text { font-size: 13px !important; line-height: 1.35; margin: 2px 0 0 !important; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+	.logipilot-portal .lpp-grid > .lpp-panel { grid-column: 1 / -1 !important; }
+	.logipilot-portal .lpp-layout-edit { padding: 0 16px 20px; }
+
+	/* Contenu d'un outil : moins de marges, pas de cadres dans des cadres */
+	.logipilot-portal .lpp-tool { padding: 10px 8px 24px !important; }
+	.logipilot-portal .lpp-tool > * { border-radius: 12px !important; }
+	.lpp-tool .gne-app, .lpp-tool .gca-app, .lpp-tool .psgpt, .lpp-tool .llv-app, .lpp-tool .lpl-app, .lpp-tool .logieval-app { padding: 8px !important; }
+	.lpp-tool .gne-kicker, .lpp-tool .gne-header > div > h1 { display: none !important; } /* « Interface autonome · LogiNotes » : déjà dans le bandeau */
+	.lpp-tool .gne-header { padding: 0 !important; margin: 0 0 6px !important; }
+
+	/* ---------- Menus des outils : une ligne qui défile au doigt ---------- */
+	.gne-tabs, .gca-tabs, .psgpt-tabs, .lpee-admin-tabs, .logieval-secure .les-main-nav, .logieval-secure .les-library-tabs, .logieval-secure .les-settings-tabs, .logieval-secure .les-steps {
+		display: flex !important; flex-wrap: nowrap !important; overflow-x: auto !important; overflow-y: hidden; gap: 4px !important;
+		-webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; scrollbar-width: none; overscroll-behavior-x: contain;
+		mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent); -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent);
+		padding-bottom: 2px !important; max-width: 100%;
+	}
+	.gne-tabs::-webkit-scrollbar, .gca-tabs::-webkit-scrollbar, .psgpt-tabs::-webkit-scrollbar, .lpee-admin-tabs::-webkit-scrollbar, .logieval-secure .les-main-nav::-webkit-scrollbar, .logieval-secure .les-library-tabs::-webkit-scrollbar, .logieval-secure .les-settings-tabs::-webkit-scrollbar, .logieval-secure .les-steps::-webkit-scrollbar { display: none; }
+	.gne-tabs > a, .gca-tabs > a, .psgpt-tabs > *, .lpee-admin-tabs > *, .logieval-secure .les-main-nav > a, .logieval-secure .les-library-tabs > *, .logieval-secure .les-settings-tabs > *, .logieval-secure .les-steps > * {
+		flex: none !important; scroll-snap-align: start; white-space: nowrap; min-height: 42px; display: inline-flex !important; align-items: center;
+	}
+	.logieval-secure .les-main-nav a.les-main-nav-create { margin-left: 0 !important; order: -1; }
+	.logieval-secure .les-steps > * { min-width: 0 !important; }
+
+	/* ---------- Compteurs sur deux colonnes ---------- */
+	.gne-stats, .gca-stats { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+	.gne-stat-card, .gca-stat-card { padding: 10px 12px !important; min-height: 0 !important; }
+	.gne-stat-card strong, .gca-stat-card strong, .gne-stat-card .gne-stat-value, .gca-stat-card .gca-stat-value { font-size: 22px !important; }
+	.gne-stat-card span, .gca-stat-card span { font-size: 13px !important; line-height: 1.3; }
+
+	/* ---------- LogiExam (enseignant) : pleine largeur, colonnes de classes les unes sous les autres ---------- */
+	.logieval-secure.les-teacher.les-app-shell { width: calc(100vw - 12px) !important; }
+	.logieval-secure.les-teacher .les-panel, .logieval-secure.les-teacher .les-hero { padding: 14px !important; }
+	.logieval-secure.les-teacher .les-board, .logieval-secure.les-teacher .les-class-board { display: grid !important; grid-template-columns: 1fr !important; overflow: visible !important; }
+	.logieval-secure.les-teacher .les-board > *, .logieval-secure.les-teacher .les-class-board > * { width: auto !important; min-width: 0 !important; max-width: none !important; }
+
+	/* ---------- Tableaux : défilement horizontal dans leur cadre ---------- */
+	.gne-app table, .gca-app table, .psgpt table, .lpee-app table { display: block; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+	/* ---------- Formulaires : 16 px (sinon Safari zoome à chaque champ), boutons faciles à toucher ---------- */
+	.logipilot-portal input:not([type="checkbox"]):not([type="radio"]):not([type="range"]), .logipilot-portal select, .logipilot-portal textarea,
+	.gne-app input:not([type="checkbox"]):not([type="radio"]), .gne-app select, .gne-app textarea,
+	.gca-app input:not([type="checkbox"]):not([type="radio"]), .gca-app select, .gca-app textarea,
+	.logieval-secure input:not([type="checkbox"]):not([type="radio"]), .logieval-secure select, .logieval-secure textarea,
+	.psgpt input:not([type="checkbox"]):not([type="radio"]), .psgpt select { font-size: 16px !important; }
+	.logipilot-portal .button, .gne-app .button, .gca-app .button, .gne-app button, .gca-app button { min-height: 40px; }
+	.lp-scope-switch, .logipilot-scope-switch { font-size: 14px; }
+}
+
+@media (max-width: 640px) {
+	/* Pages LogiNotes / LogiClass hors portail : la largeur d'écran ne doit pas être dépassée (marges intérieures comprises) */
+	.gne-app, .gne-access, .gca-shortcode-fullwidth { box-sizing: border-box !important; padding-left: max(10px, env(safe-area-inset-left)) !important; padding-right: max(10px, env(safe-area-inset-right)) !important; }
+	.gca-shortcode-fullwidth .gca-app { padding-left: 0 !important; padding-right: 0 !important; }
+	/* Sélecteur « Données affichées » (administrateurs) : compact */
+	.logipilot-space-bar { padding: 8px 10px !important; margin-bottom: 8px !important; }
+	.logipilot-space-bar label { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 14px; }
+	.logipilot-space-bar select { flex: 1 1 100%; min-height: 40px; }
+	.logipilot-space-bar noscript, .logipilot-space-bar button { display: none; }
+}
+
+@media (max-width: 640px) {
+	/* LogiProgress : grilles à colonne minimale (400 px) → une colonne à la largeur de l'écran */
+	.psgpt, .psgpt .psgpt-select, .psgpt .psgpt-step { grid-template-columns: minmax(0, 1fr) !important; min-width: 0 !important; max-width: 100% !important; }
+	.psgpt .psgpt-card { min-width: 0 !important; max-width: 100% !important; box-sizing: border-box; padding: 14px !important; }
+	.psgpt .psgpt-step-head { flex-wrap: wrap; }
+	/* En-têtes d'introduction : déjà nommés dans le bandeau LogiOne */
+	.lpp-tool .logieval-secure.les-teacher .les-hero p, .lpp-tool .psgpt-hero p { display: none; }
+	.lpp-tool .logieval-secure.les-teacher .les-hero h1, .lpp-tool .logieval-secure.les-teacher .les-hero h2 { font-size: 22px !important; margin: 0 !important; }
+	.lpp-tool .gca-header h1, .lpp-tool .gca-header h2 { font-size: 24px !important; margin: 2px 0 6px !important; }
+	.lpp-tool .gca-kicker { display: none; }
+}
+@media (max-width: 640px) {
+	.lpp-tool .logieval-secure.les-teacher > .les-hero { display: none !important; }
+	.lpp-tool .psgpt-card[class*="intro"], .lpp-tool .psgpt-intro p { display: none; }
+}
+@media (max-width: 640px) {
+	.logieval-secure.les-teacher h2 { font-size: 22px !important; line-height: 1.25; }
+	.logieval-secure.les-teacher h3 { font-size: 18px !important; }
+	.psgpt input, .psgpt select, .gne-app input, .gca-app input { max-width: 100%; box-sizing: border-box; }
+}

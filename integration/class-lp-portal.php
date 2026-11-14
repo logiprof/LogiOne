@@ -245,12 +245,17 @@ final class LogiPilot_Portal
         $html .= '<span class="lpp-current lpp-tile-' . esc_attr($current) . '"><span class="lpp-current-art">' . self::art($current, $tool) . '</span>' . esc_html($tool['label']) . '</span>';
         if ($fixed === '' && count($tools) > 1) {
             $html .= '<nav class="lpp-switch logipilot-portal-nav" aria-label="Autres outils LogiOne">';
+            $menu = '';
             foreach ($tools as $key => $other) {
                 if ($key !== $current) {
                     $html .= '<a href="' . esc_url(add_query_arg(self::PARAM, $key, $base)) . '">' . esc_html($other['label']) . '</a>';
+                    $menu .= '<a href="' . esc_url(add_query_arg(self::PARAM, $key, $base)) . '"><span class="lpp-menu-art">' . self::art($key, $other) . '</span>' . esc_html($other['label']) . '</a>';
                 }
             }
             $html .= '</nav>';
+            // 1.39.0 : sur téléphone, les autres outils sont rangés dans un menu « Outils » (une seule ligne de bandeau).
+            $html .= '<details class="lpp-switch-menu"><summary aria-label="Autres outils LogiOne"><span class="lpp-menu-icon" aria-hidden="true"></span>Outils</summary>'
+                . '<div class="lpp-switch-menu-list"><a class="lpp-menu-home" href="' . esc_url($home) . '">' . self::icon('back') . 'Accueil LogiOne</a>' . $menu . '</div></details>';
         }
         $html .= '</div></header>';
 
