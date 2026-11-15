@@ -142,6 +142,7 @@ trait LogiEval_Secure_Evaluations_Ai_Exchange {
 		// Copies anonymes.
 		$students = array();
 		$scodes   = array();
+		$pairs    = array();
 		$n        = 0;
 		foreach ( $attempts as $attempt ) {
 			$n++;
@@ -165,6 +166,9 @@ trait LogiEval_Secure_Evaluations_Ai_Exchange {
 				);
 			}
 			$scodes[ $code ] = (int) $attempt['id'];
+			foreach ( $answers as $a ) {
+				$pairs[] = $code . '|' . $a['question'];
+			}
 			if ( $answers ) {
 				$students[] = array( 'eleve' => $code, 'reponses' => $answers );
 			}
@@ -177,6 +181,7 @@ trait LogiEval_Secure_Evaluations_Ai_Exchange {
 				'token'     => $token,
 				'students'  => $scodes,
 				'questions' => $qcodes,
+				'pairs'     => $pairs,
 				'created'   => current_time( 'mysql' ),
 			),
 			false
@@ -272,24 +277,248 @@ trait LogiEval_Secure_Evaluations_Ai_Exchange {
 	 * 2. Import : vérification (aperçu) puis enregistrement
 	 * ------------------------------------------------------------------- */
 
-	/** Extrait le JSON du compte rendu (bloc ```json, texte autour, etc.). */
-	private static function ai_exchange_parse( string $text ): ?array {
-		$text = trim( $text );
-		if ( preg_match( '/```(?:json)?\s*(\{.*\})\s*```/su', $text, $m ) ) {
-			$text = $m[1];
+	/** Décode un morceau de JSON, en réparant les petites fautes courantes des IA. */
+	private static function ai_exchange_decode( string $json ) {
+		$json = trim( preg_replace( '/^\xEF\xBB\xBF/', '', $json ) );
+		$data = json_decode( $json, true );
+		if ( null !== $data ) {
+			return $data;
 		}
-		$data = json_decode( $text, true );
-		if ( ! is_array( $data ) ) {
-			$start = strpos( $text, '{' );
-			$end   = strrpos( $text, '}' );
-			if ( false !== $start && false !== $end && $end > $start ) {
-				$data = json_decode( substr( $text, $start, $end - $start + 1 ), true );
+		$fixed = preg_replace( '/^\s*\/\/[^\n]*$/m', '', $json );                 // Lignes de commentaire.
+		$fixed = preg_replace( '/,\s*([}\]])/', '$1', $fixed );                    // Virgule en trop avant } ou ].
+		$data  = json_decode( $fixed, true );
+		if ( null !== $data ) {
+			return $data;
+		}
+		$fixed = str_replace( array( '“', '”', '„' ), '"', $fixed );               // Guillemets typographiques autour des clés.
+		$fixed = preg_replace( '/\bTrue\b/', 'true', preg_replace( '/\bFalse\b/', 'false', preg_replace( '/\bNone\b/', 'null', $fixed ) ) );
+		return json_decode( $fixed, true );
+	}
+
+	/** Récupère les objets complets d'une liste coupée (réponse de l'IA tronquée). */
+	private static function ai_exchange_salvage( string $text ): array {
+		$out   = array();
+		$pos   = strpos( $text, '[' );
+		if ( false === $pos ) {
+			return $out;
+		}
+		$len   = strlen( $text );
+		$depth = 0;
+		$str   = false;
+		$esc   = false;
+		$from  = -1;
+		for ( $i = $pos + 1; $i < $len; $i++ ) {
+			$c = $text[ $i ];
+			if ( $str ) {
+				if ( $esc ) {
+					$esc = false;
+				} elseif ( '\\' === $c ) {
+					$esc = true;
+				} elseif ( '"' === $c ) {
+					$str = false;
+				}
+				continue;
+			}
+			if ( '"' === $c ) {
+				$str = true;
+			} elseif ( '{' === $c ) {
+				if ( 0 === $depth ) {
+					$from = $i;
+				}
+				$depth++;
+			} elseif ( '}' === $c ) {
+				$depth--;
+				if ( 0 === $depth && $from >= 0 ) {
+					$obj = self::ai_exchange_decode( substr( $text, $from, $i - $from + 1 ) );
+					if ( is_array( $obj ) ) {
+						$out[] = $obj;
+					}
+					$from = -1;
+				}
+			} elseif ( ']' === $c && 0 === $depth ) {
+				break;
 			}
 		}
-		if ( is_array( $data ) && isset( $data[0] ) && is_array( $data[0] ) && isset( $data[0]['eleve'] ) ) {
-			$data = array( 'corrections' => $data ); // L'IA n'a rendu que la liste.
+		return $out;
+	}
+
+	private static function ai_exchange_is_list( array $a ): bool {
+		return array() === $a || array_keys( $a ) === range( 0, count( $a ) - 1 );
+	}
+
+	/** Valeur d'une clé parmi plusieurs écritures possibles (accents, anglais, majuscules). */
+	private static function ai_exchange_pick( array $row, array $keys ) {
+		$norm = array();
+		foreach ( $row as $k => $v ) {
+			$norm[ strtolower( remove_accents( str_replace( array( ' ', '-' ), '_', (string) $k ) ) ) ] = $v;
 		}
-		return is_array( $data ) && is_array( $data['corrections'] ?? null ) ? $data : null;
+		foreach ( $keys as $k ) {
+			if ( array_key_exists( $k, $norm ) ) {
+				return $norm[ $k ];
+			}
+		}
+		return null;
+	}
+
+	/** Met à plat les différentes formes possibles : liste simple, regroupement par élève, objet indexé par code… */
+	private static function ai_exchange_flatten( $data, array &$meta ): array {
+		$rows = array();
+		if ( ! is_array( $data ) ) {
+			return $rows;
+		}
+		foreach ( array( 'logiexam', 'suite', 'modele', 'model' ) as $k ) {
+			if ( isset( $data[ $k ] ) && is_scalar( $data[ $k ] ) && ! isset( $meta[ $k ] ) ) {
+				$meta[ $k ] = (string) $data[ $k ];
+			}
+		}
+		$list = self::ai_exchange_pick( $data, array( 'corrections', 'correction', 'resultats', 'results', 'copies', 'eleves', 'students' ) );
+		if ( null === $list ) {
+			$list = self::ai_exchange_is_list( $data ) ? $data : array();
+			if ( ! $list ) {
+				// { "E01": [ ... ] } ou { "E01": { "Q1": {...} } }
+				foreach ( $data as $k => $v ) {
+					if ( is_array( $v ) && preg_match( '/^\s*E\s*0*\d+\s*$/i', (string) $k ) ) {
+						foreach ( ( self::ai_exchange_is_list( $v ) ? $v : array_map( null, array_keys( $v ), array_values( $v ) ) ) as $item ) {
+							if ( is_array( $item ) && 2 === count( $item ) && isset( $item[0], $item[1] ) && is_string( $item[0] ) && is_array( $item[1] ) ) {
+								$item = array_merge( array( 'question' => $item[0] ), $item[1] );
+							}
+							if ( is_array( $item ) ) {
+								$rows[] = array_merge( array( 'eleve' => $k ), $item );
+							}
+						}
+					}
+				}
+				return $rows;
+			}
+		}
+		if ( is_array( $list ) && ! self::ai_exchange_is_list( $list ) ) {
+			return self::ai_exchange_flatten( $list, $meta );
+		}
+		foreach ( (array) $list as $item ) {
+			if ( ! is_array( $item ) ) {
+				continue;
+			}
+			$inner = self::ai_exchange_pick( $item, array( 'corrections', 'reponses', 'questions', 'answers' ) );
+			$who   = self::ai_exchange_pick( $item, array( 'eleve', 'student', 'code_eleve', 'code' ) );
+			if ( is_array( $inner ) && null !== $who && null === self::ai_exchange_pick( $item, array( 'question', 'q' ) ) ) {
+				foreach ( $inner as $sub ) {
+					if ( is_array( $sub ) ) {
+						$rows[] = array_merge( array( 'eleve' => $who ), $sub );
+					}
+				}
+				continue;
+			}
+			$rows[] = $item;
+		}
+		return $rows;
+	}
+
+	/**
+	 * Lit le compte rendu : un ou plusieurs blocs JSON (plusieurs parties collées d'un coup), texte autour,
+	 * petites fautes de syntaxe, réponse coupée. Renvoie ['rows' => [...], 'meta' => [...], 'notes' => [...]] ou null.
+	 */
+	private static function ai_exchange_parse( string $text ): ?array {
+		$text   = trim( preg_replace( '/^\xEF\xBB\xBF/', '', $text ) );
+		$chunks = array();
+		if ( preg_match_all( '/```[a-zA-Z]*\s*(.*?)```/su', $text, $m ) ) {
+			$chunks = array_values( array_filter( array_map( 'trim', $m[1] ), static fn( $c ) => '' !== $c && in_array( $c[0], array( '{', '[' ), true ) ) );
+			if ( preg_match( '/```[a-zA-Z]*\s*([\[{].*)$/su', preg_replace( '/```[a-zA-Z]*\s*.*?```/su', '', $text ), $open ) ) {
+				$chunks[] = $open[1]; // Dernier bloc jamais refermé (réponse coupée).
+			}
+		}
+		if ( ! $chunks ) {
+			$first  = strcspn( $text, '{[' );
+			$chunks = $first < strlen( $text ) ? array( substr( $text, $first ) ) : array();
+		}
+		$rows  = array();
+		$meta  = array();
+		$notes = array();
+		foreach ( $chunks as $chunk ) {
+			$data = self::ai_exchange_decode( $chunk );
+			if ( null === $data ) {
+				$end = max( strrpos( $chunk, '}' ) ?: 0, strrpos( $chunk, ']' ) ?: 0 );
+				$data = $end ? self::ai_exchange_decode( substr( $chunk, 0, $end + 1 ) ) : null;
+			}
+			if ( null === $data ) {
+				if ( preg_match( '/"logiexam"\s*:\s*"([^"]+)"/', $chunk, $t ) && ! isset( $meta['logiexam'] ) ) {
+					$meta['logiexam'] = $t[1];
+				}
+				$saved = self::ai_exchange_salvage( $chunk );
+				if ( $saved ) {
+					$notes[] = sprintf( _n( 'Le compte rendu était coupé : %d correction complète a été récupérée. Demandez à l’IA de continuer pour la suite.', 'Le compte rendu était coupé : %d corrections complètes ont été récupérées. Demandez à l’IA de continuer pour la suite.', count( $saved ), 'logieval-secure' ), count( $saved ) );
+					$data = array( 'corrections' => $saved );
+				} else {
+					continue;
+				}
+			}
+			unset( $meta['suite'] ); // Seule la dernière partie dit s'il reste des élèves.
+			$rows = array_merge( $rows, self::ai_exchange_flatten( $data, $meta ) );
+		}
+		if ( count( $chunks ) > 1 ) {
+			$notes[] = sprintf( __( '%d parties de compte rendu ont été lues ensemble.', 'logieval-secure' ), count( $chunks ) );
+		}
+		return $rows ? array( 'rows' => $rows, 'meta' => $meta, 'notes' => $notes ) : null;
+	}
+
+	private static function ai_exchange_code( $value, string $letter ): string {
+		$v = strtoupper( remove_accents( trim( (string) $value ) ) );
+		if ( preg_match( '/^(?:' . $letter . '|' . ( 'E' === $letter ? 'ELEVE|STUDENT' : 'QUESTION' ) . ')\s*[-_ ]?\s*0*(\d+)$/', $v, $m ) || preg_match( '/^0*(\d+)$/', $v, $m ) ) {
+			return 'E' === $letter ? sprintf( 'E%02d', (int) $m[1] ) : 'Q' . (int) $m[1];
+		}
+		return $v;
+	}
+
+	private static function ai_exchange_number( $value ): ?float {
+		if ( is_int( $value ) || is_float( $value ) ) {
+			return (float) $value;
+		}
+		$v = str_replace( array( ',', ' ', 'pts', 'pt' ), array( '.', '', '', '' ), strtolower( trim( (string) $value ) ) );
+		return is_numeric( $v ) ? (float) $v : null;
+	}
+
+	private static function ai_exchange_bool( $value ): bool {
+		if ( is_bool( $value ) ) {
+			return $value;
+		}
+		return in_array( strtolower( remove_accents( trim( (string) $value ) ) ), array( '1', 'true', 'oui', 'yes', 'vrai' ), true );
+	}
+
+	/** Un critère, avec les variantes de clés et de valeurs (rempli / partiel / manquant…). */
+	private static function ai_exchange_criterion( array $c, int $k ): array {
+		$status = strtolower( remove_accents( trim( (string) self::ai_exchange_pick( $c, array( 'status', 'statut', 'verdict', 'etat', 'resultat' ) ) ) ) );
+		$map    = array(
+			'ok'      => array( 'ok', 'rempli', 'oui', 'yes', 'true', 'valide', 'correct', 'juste', 'atteint', 'acquis', 'full', 'complet' ),
+			'partial' => array( 'partial', 'partiel', 'partielle', 'partiellement', 'en_partie', 'en partie', 'incomplet', 'part', 'half' ),
+			'miss'    => array( 'miss', 'manquant', 'manque', 'non', 'no', 'false', 'absent', 'faux', 'incorrect', 'non_rempli', 'non rempli', 'none', 'missing', 'non atteint' ),
+		);
+		$norm = 'miss';
+		foreach ( $map as $key => $words ) {
+			if ( in_array( $status, $words, true ) ) {
+				$norm = $key;
+				break;
+			}
+		}
+		$out = array(
+			'n'           => (int) ( self::ai_exchange_number( self::ai_exchange_pick( $c, array( 'n', 'numero', 'num', 'critere_n', 'id' ) ) ) ?? ( $k + 1 ) ),
+			'status'      => $norm,
+			'evidence'    => (string) self::ai_exchange_pick( $c, array( 'evidence', 'citation', 'preuve', 'extrait' ) ),
+			'expected'    => (string) self::ai_exchange_pick( $c, array( 'expected', 'attendu', 'element_attendu' ) ),
+			'explanation' => (string) self::ai_exchange_pick( $c, array( 'explanation', 'explication', 'justification', 'raison' ) ),
+			'hint'        => (string) self::ai_exchange_pick( $c, array( 'hint', 'indice', 'attendu_pour_eleve', 'conseil' ) ),
+		);
+		$label = self::ai_exchange_pick( $c, array( 'label', 'critere', 'idee', 'intitule' ) );
+		if ( null !== $label && is_scalar( $label ) ) {
+			$out['label'] = (string) $label;
+		}
+		$points = self::ai_exchange_number( self::ai_exchange_pick( $c, array( 'points', 'pts', 'point', 'score' ) ) );
+		if ( null !== $points ) {
+			$out['points'] = $points;
+		}
+		$match = self::ai_exchange_pick( $c, array( 'matches_expected', 'correspond', 'conforme' ) );
+		if ( null !== $match ) {
+			$out['matches_expected'] = self::ai_exchange_bool( $match );
+		}
+		return $out;
 	}
 
 	public static function handle_ai_import(): void {
@@ -323,50 +552,69 @@ trait LogiEval_Secure_Evaluations_Ai_Exchange {
 		if ( ! empty( $_FILES['ai_report_file']['tmp_name'] ) && is_uploaded_file( $_FILES['ai_report_file']['tmp_name'] ) && (int) $_FILES['ai_report_file']['size'] < 5 * MB_IN_BYTES ) {
 			$text = (string) file_get_contents( $_FILES['ai_report_file']['tmp_name'] ); // phpcs:ignore WordPress.WP.AlternativeFunctions
 		}
-		$map  = get_option( self::ai_exchange_option( $id ) );
-		$data = self::ai_exchange_parse( $text );
+		$map    = get_option( self::ai_exchange_option( $id ) );
+		$parsed = self::ai_exchange_parse( $text );
 		if ( ! is_array( $map ) ) {
 			$back( array( 'ai_import' => 'noexport' ) );
 		}
-		if ( null === $data ) {
+		if ( null === $parsed ) {
 			$back( array( 'ai_import' => 'invalid' ) );
 		}
-		$token = strtoupper( trim( (string) ( $data['logiexam'] ?? '' ) ) );
+		$token = strtoupper( preg_replace( '/[^A-Z0-9]/i', '', (string) ( $parsed['meta']['logiexam'] ?? '' ) ) );
 		if ( '' !== $token && $token !== $map['token'] ) {
 			$back( array( 'ai_import' => 'token' ) );
 		}
 
 		$rows     = array();
 		$warnings = array();
-		$seen     = array();
-		foreach ( $data['corrections'] as $row ) {
-			if ( ! is_array( $row ) ) {
-				continue;
-			}
-			$scode = strtoupper( trim( (string) ( $row['eleve'] ?? '' ) ) );
-			$qcode = strtoupper( trim( (string) ( $row['question'] ?? '' ) ) );
-			if ( preg_match( '/^E(\d+)$/', $scode, $m ) ) {
-				$scode = sprintf( 'E%02d', (int) $m[1] );
-			}
+		$dupes    = 0;
+		foreach ( $parsed['rows'] as $row ) {
+			$scode = self::ai_exchange_code( self::ai_exchange_pick( $row, array( 'eleve', 'student', 'code_eleve', 'code' ) ), 'E' );
+			$qcode = self::ai_exchange_code( self::ai_exchange_pick( $row, array( 'question', 'q', 'question_code', 'num_question' ) ), 'Q' );
 			if ( ! isset( $map['students'][ $scode ] ) || ! isset( $map['questions'][ $qcode ] ) ) {
 				$warnings[] = sprintf( 'Ligne ignorée : %s / %s n’existe pas dans cet export.', $scode ?: '?', $qcode ?: '?' );
 				continue;
 			}
-			$key          = $scode . '|' . $qcode;
-			$seen[ $key ] = true;
+			$key = $scode . '|' . $qcode;
+			if ( isset( $rows[ $key ] ) ) {
+				$dupes++; // La dernière version l'emporte.
+			}
+			$criteria = self::ai_exchange_pick( $row, array( 'criteria', 'criteres', 'critere', 'verdicts', 'ideas', 'idees' ) );
+			$crit     = array();
+			if ( is_array( $criteria ) ) {
+				foreach ( array_values( array_filter( $criteria, 'is_array' ) ) as $k => $c ) {
+					$crit[] = self::ai_exchange_criterion( $c, $k );
+				}
+			}
+			$review = self::ai_exchange_pick( $row, array( 'needs_review', 'a_verifier', 'averifier', 'review', 'doute' ) );
+			$method = self::ai_exchange_pick( $row, array( 'method_coherent', 'methode_coherente', 'demarche_coherente' ) );
 			$rows[ $key ] = array(
 				'eleve'        => $scode,
 				'question'     => $qcode,
 				'attempt_id'   => (int) $map['students'][ $scode ],
 				'question_id'  => (int) $map['questions'][ $qcode ],
-				'lecture'      => sanitize_textarea_field( (string) ( $row['lecture'] ?? '' ) ),
-				'criteria'     => is_array( $row['criteria'] ?? null ) ? array_values( array_filter( $row['criteria'], 'is_array' ) ) : array(),
-				'points'       => isset( $row['points'] ) && is_numeric( $row['points'] ) ? (float) $row['points'] : null,
-				'comment'      => sanitize_textarea_field( (string) ( $row['comment'] ?? $row['commentaire'] ?? '' ) ),
-				'analysis'     => sanitize_textarea_field( (string) ( $row['analysis'] ?? $row['analyse'] ?? '' ) ),
-				'needs_review' => ! empty( $row['needs_review'] ),
-				'method'       => array_key_exists( 'method_coherent', $row ) ? (bool) $row['method_coherent'] : null,
+				'lecture'      => sanitize_textarea_field( (string) self::ai_exchange_pick( $row, array( 'lecture', 'reformulation', 'comprehension' ) ) ),
+				'criteria'     => $crit,
+				'points'       => self::ai_exchange_number( self::ai_exchange_pick( $row, array( 'points', 'total', 'note_points', 'score' ) ) ),
+				'comment'      => sanitize_textarea_field( (string) self::ai_exchange_pick( $row, array( 'comment', 'commentaire', 'feedback', 'commentaire_eleve' ) ) ),
+				'analysis'     => sanitize_textarea_field( (string) self::ai_exchange_pick( $row, array( 'analysis', 'analyse', 'summary', 'resume' ) ) ),
+				'needs_review' => null !== $review && self::ai_exchange_bool( $review ),
+				'method'       => null === $method ? null : self::ai_exchange_bool( $method ),
 			);
+			if ( ! $crit && null === $rows[ $key ]['points'] ) {
+				unset( $rows[ $key ] );
+				$warnings[] = sprintf( 'Ligne ignorée : %s / %s n’a ni critères ni points.', $scode, $qcode );
+			}
+		}
+		if ( $dupes ) {
+			$warnings[] = sprintf( _n( '%d correction en double : la dernière a été gardée.', '%d corrections en double : la dernière a été gardée.', $dupes, 'logieval-secure' ), $dupes );
+		}
+		// Réponses envoyées à l'IA mais absentes du compte rendu.
+		$missing = array();
+		foreach ( (array) ( $map['pairs'] ?? array() ) as $pair ) {
+			if ( ! isset( $rows[ $pair ] ) ) {
+				$missing[] = str_replace( '|', ' ', $pair );
+			}
 		}
 		if ( ! $rows ) {
 			$back( array( 'ai_import' => 'empty' ) );
@@ -376,8 +624,10 @@ trait LogiEval_Secure_Evaluations_Ai_Exchange {
 			array(
 				'rows'     => $rows,
 				'warnings' => array_slice( $warnings, 0, 20 ),
-				'suite'    => sanitize_text_field( (string) ( $data['suite'] ?? '' ) ),
-				'model'    => sanitize_text_field( (string) ( $data['modele'] ?? $data['model'] ?? '' ) ),
+				'notes'    => $parsed['notes'],
+				'missing'  => $missing,
+				'suite'    => sanitize_text_field( (string) ( $parsed['meta']['suite'] ?? '' ) ),
+				'model'    => sanitize_text_field( (string) ( $parsed['meta']['modele'] ?? $parsed['meta']['model'] ?? '' ) ),
 			),
 			2 * HOUR_IN_SECONDS
 		);
@@ -604,6 +854,12 @@ trait LogiEval_Secure_Evaluations_Ai_Exchange {
 		</table>
 		<?php if ( $empty ) : ?>
 			<p class="description"><?php echo esc_html( sprintf( _n( '%d ligne concerne une réponse vide : elle est ignorée (0 point « Non répondu. »).', '%d lignes concernent des réponses vides : elles sont ignorées (0 point « Non répondu. »).', $empty, 'logieval-secure' ), $empty ) ); ?></p>
+		<?php endif; ?>
+		<?php foreach ( (array) ( $pending['notes'] ?? array() ) as $note ) : ?>
+			<p class="description les-ai-exchange-note">ℹ️ <?php echo esc_html( $note ); ?></p>
+		<?php endforeach; ?>
+		<?php if ( ! empty( $pending['missing'] ) ) : ?>
+			<p class="description les-ai-exchange-note"><?php echo esc_html( sprintf( _n( '%1$d réponse envoyée à l’IA n’est pas dans ce compte rendu : %2$s. Elle reste à corriger (importez la suite ou corrigez-la vous-même).', '%1$d réponses envoyées à l’IA ne sont pas dans ce compte rendu : %2$s. Elles restent à corriger (importez la suite ou corrigez-les vous-même).', count( $pending['missing'] ), 'logieval-secure' ), count( $pending['missing'] ), implode( ', ', array_slice( $pending['missing'], 0, 15 ) ) . ( count( $pending['missing'] ) > 15 ? '…' : '' ) ) ); ?></p>
 		<?php endif; ?>
 		<?php if ( ! empty( $pending['warnings'] ) ) : ?>
 			<ul class="les-ai-exchange-warnings"><?php foreach ( $pending['warnings'] as $w ) : ?><li><?php echo esc_html( $w ); ?></li><?php endforeach; ?></ul>
