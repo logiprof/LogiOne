@@ -3606,3 +3606,4 @@ body.les-fabs-off .les-fab-draft { opacity: 0 !important; pointer-events: none; 
 .logieval-secure .les-problem-statement .les-question-context { margin: 0; }
 .logieval-secure .les-problem-subs { padding: 10px 12px 2px; }
 .logieval-secure .les-problem-subs > .les-question { margin-bottom: 14px; }
+.logieval-secure .les-eval-card-created{margin:6px 0 0;color:#64748b;font-size:13px}

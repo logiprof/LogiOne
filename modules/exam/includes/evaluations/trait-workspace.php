@@ -401,6 +401,9 @@ trait LogiEval_Secure_Evaluations_Workspace {
 					?>
 					<?php if ( $c['blocked'] ) : ?><strong class="les-alert-badge is-critical"><?php echo esc_html( sprintf( _n( '%d élève bloqué', '%d élèves bloqués', $c['blocked'], 'logieval-secure' ), $c['blocked'] ) ); ?></strong><?php endif; ?>
 				</p>
+				<?php if ( ! empty( $evaluation['created_at'] ) && '0000-00-00 00:00:00' !== $evaluation['created_at'] ) : ?>
+					<p class="les-eval-card-created"><?php echo esc_html( sprintf( /* translators: %s: date de création */ __( 'Créée le %s', 'logieval-secure' ), mysql2date( 'j F Y', (string) $evaluation['created_at'] ) ) ); ?></p>
+				<?php endif; ?>
 			</div>
 			<div class="les-eval-card-actions">
 				<a class="button button-primary" href="<?php echo esc_url( self::evaluation_url( $id, $workflow['step'] ) ); ?>"><?php echo esc_html( $workflow['next_label'] ); ?> →</a>
