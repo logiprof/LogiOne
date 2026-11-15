@@ -465,6 +465,69 @@ trait LogiEval_Secure_Evaluations_Editor {		private static function render_creat
 				});
 				if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', syncAll); else syncAll();
 			}());
+			/* 1.39.3 : dupliquer une question (copie juste en dessous, enregistrée comme une nouvelle question). */
+			document.addEventListener('click', function (event) {
+				var btn = event.target.closest('[data-logiexam-duplicate-question]');
+				if (!btn) return;
+				event.preventDefault();
+				var item = btn.closest('.les-inline-question');
+				if (!item) return;
+				var idInput = null;
+				item.querySelectorAll('input[type="hidden"]').forEach(function (i) { if (!idInput && /^(inline_questions\[[^\]]+\]|story_sections\[[^\]]+\]\[questions\]\[[^\]]+\])\[id\]$/.test(i.name)) idInput = i; });
+				if (!idInput) return;
+				var oldPrefix = idInput.name.slice(0, -4), newPrefix;
+				var storyList = item.closest('[data-logiexam-story-questions]');
+				if (storyList) {
+					var qi = parseInt(storyList.dataset.nextQuestion || '0', 10);
+					newPrefix = oldPrefix.replace(/\[questions\]\[[^\]]+\]$/, '[questions][' + qi + ']');
+					storyList.dataset.nextQuestion = String(qi + 1);
+				} else {
+					var l = document.querySelector('[data-logiexam-inline-questions]');
+					var ni = parseInt((l && l.dataset.nextIndex) || '0', 10);
+					newPrefix = 'inline_questions[' + ni + ']';
+					if (l) l.dataset.nextIndex = String(ni + 1);
+				}
+				var clone = item.cloneNode(true);
+				var src = item.querySelectorAll('input, select, textarea');
+				var dst = clone.querySelectorAll('input, select, textarea');
+				dst.forEach(function (d, k) {
+					var s = src[k];
+					if (!s) return;
+					if (d.type === 'file') { d.value = ''; return; }
+					if (d.type === 'checkbox' || d.type === 'radio') { d.checked = s.checked; return; }
+					if (d.tagName === 'SELECT') { for (var o = 0; o < d.options.length; o++) d.options[o].selected = !!(s.options[o] && s.options[o].selected); return; }
+					d.value = s.value;
+				});
+				clone.querySelectorAll('*').forEach(function (el) {
+					Array.prototype.slice.call(el.attributes).forEach(function (a) {
+						if (a.value.indexOf(oldPrefix) !== -1) el.setAttribute(a.name, a.value.split(oldPrefix).join(newPrefix));
+					});
+				});
+				clone.querySelectorAll('input[type="hidden"]').forEach(function (i) { if (i.name === newPrefix + '[id]') i.value = '0'; });
+				item.parentNode.insertBefore(clone, item.nextSibling);
+				// Numérotation « Question n » remise dans l'ordre.
+				var reg = document.querySelector('[data-logiexam-inline-questions]');
+				if (reg) {
+					reg.querySelectorAll('.les-inline-question').forEach(function (q, k) {
+						if (q.closest('[data-les-problem]')) return;
+						var h = q.querySelector('.les-section-title h4');
+						if (h) h.textContent = 'Question ' + (k + 1);
+					});
+				}
+				document.querySelectorAll('[data-logiexam-story-questions]').forEach(function (sl) {
+					sl.querySelectorAll('.les-inline-question').forEach(function (q, k) {
+						var h = q.querySelector('.les-section-title h5');
+						if (h) h.textContent = 'Question ' + (k + 1);
+					});
+				});
+				var ctx = clone.closest('[data-les-problem]') ? clone.closest('[data-les-problem]').querySelector('[data-les-problem-context]') : null;
+				if (ctx) ctx.dispatchEvent(new Event('input', { bubbles: true }));
+				if (typeof logiexamRefreshAllQuestionTypes === 'function') logiexamRefreshAllQuestionTypes();
+				clone.querySelectorAll('input, textarea').forEach(function (f) { if (f.type !== 'file' && f.type !== 'hidden') f.dispatchEvent(new Event('input', { bubbles: true })); });
+				clone.classList.add('les-just-duplicated');
+				setTimeout(function () { clone.classList.remove('les-just-duplicated'); }, 2500);
+				clone.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			});
 			document.addEventListener('click', function(event) {
 				var button = event.target.closest('[data-logiexam-remove-question]');
 				if (!button) return;
@@ -673,7 +736,8 @@ trait LogiEval_Secure_Evaluations_Editor {		private static function render_creat
 		<div class="les-inline-question les-story-question">
 			<div class="les-section-title">
 				<h5><?php echo esc_html( sprintf( __( 'Question %s', 'logieval-secure' ), $number ) ); ?></h5>
-				<button type="button" class="button les-button-danger" data-logiexam-remove-question><?php esc_html_e( 'Supprimer la question', 'logieval-secure' ); ?></button>
+				<span class="les-actions les-question-head-actions"><button type="button" class="button les-button-secondary" data-logiexam-duplicate-question title="<?php esc_attr_e( 'Ajoute une copie juste en dessous, avec les mêmes réglages', 'logieval-secure' ); ?>"><?php esc_html_e( 'Dupliquer', 'logieval-secure' ); ?></button>
+				<button type="button" class="button les-button-danger" data-logiexam-remove-question><?php esc_html_e( 'Supprimer la question', 'logieval-secure' ); ?></button></span>
 			</div>
 			<input type="hidden" name="<?php echo esc_attr( $name_prefix ); ?>[id]" value="<?php echo esc_attr( $question['id'] ?? 0 ); ?>">
 			<div class="les-form-row">
@@ -822,7 +886,8 @@ trait LogiEval_Secure_Evaluations_Editor {		private static function render_creat
 		<div class="les-inline-question">
 			<div class="les-section-title">
 				<h4><?php echo esc_html( sprintf( __( 'Question %s', 'logieval-secure' ), $number ) ); ?></h4>
-				<button type="button" class="button les-button-danger" data-logiexam-remove-question><?php esc_html_e( 'Supprimer la question', 'logieval-secure' ); ?></button>
+				<span class="les-actions les-question-head-actions"><button type="button" class="button les-button-secondary" data-logiexam-duplicate-question title="<?php esc_attr_e( 'Ajoute une copie juste en dessous, avec les mêmes réglages', 'logieval-secure' ); ?>"><?php esc_html_e( 'Dupliquer', 'logieval-secure' ); ?></button>
+				<button type="button" class="button les-button-danger" data-logiexam-remove-question><?php esc_html_e( 'Supprimer la question', 'logieval-secure' ); ?></button></span>
 			</div>
 			<input type="hidden" name="<?php echo esc_attr( $name_prefix ); ?>[id]" value="<?php echo esc_attr( $question['id'] ?? 0 ); ?>">
 			<div class="les-form-row">

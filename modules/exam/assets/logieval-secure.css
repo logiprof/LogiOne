@@ -3607,3 +3607,5 @@ body.les-fabs-off .les-fab-draft { opacity: 0 !important; pointer-events: none; 
 .logieval-secure .les-problem-subs { padding: 10px 12px 2px; }
 .logieval-secure .les-problem-subs > .les-question { margin-bottom: 14px; }
 .logieval-secure .les-eval-card-created{margin:6px 0 0;color:#64748b;font-size:13px}
+.logieval-secure .les-question-head-actions{display:inline-flex;gap:8px;flex-wrap:wrap;margin:0}
+.logieval-secure .les-inline-question.les-just-duplicated{outline:3px solid #16a34a;outline-offset:4px;transition:outline-color .6s}

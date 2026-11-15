@@ -195,7 +195,7 @@
 		};
 		form.addEventListener('input', (e) => { if (e.target.matches('input[name$="[points]"], textarea[name$="[prompt]"]')) update(); });
 		// 1.36 : document entier (le bouton flottant « Ajouter une question » peut être placé sous <body>).
-		document.addEventListener('click', (e) => { if (e.target.closest('[data-logiexam-add-question], [data-logiexam-remove-question], [data-logiexam-add-story-question], [data-logiexam-remove-story-section], [data-les-add-problem], [data-les-add-subquestion], [data-les-remove-problem]')) setTimeout(update, 50); });
+		document.addEventListener('click', (e) => { if (e.target.closest('[data-logiexam-add-question], [data-logiexam-duplicate-question], [data-logiexam-remove-question], [data-logiexam-add-story-question], [data-logiexam-remove-story-section], [data-les-add-problem], [data-les-add-subquestion], [data-les-remove-problem]')) setTimeout(update, 50); });
 		update();
 	}
 	initBareme();
