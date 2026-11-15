@@ -1,4 +1,4 @@
-# LogiOne 1.39.3
+# LogiOne 1.39.4
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,12 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.39.4 (LogiExam)
+
+- Regrouper des questions existantes en problème : cochez « Sélectionner » sur au moins deux questions, puis « Regrouper les questions sélectionnées en problème ». Elles deviennent les sous-questions a), b)… dans leur ordre actuel ; il reste à écrire l’énoncé commun.
+- « Sortir du problème » sur une sous-question la remet comme question indépendante, juste après le problème.
+- LogiExam empêche d’enregistrer un problème sans énoncé (sinon ses sous-questions redeviendraient des questions séparées à la réouverture).
 
 ## Nouveautés 1.39.3 (LogiExam)
 

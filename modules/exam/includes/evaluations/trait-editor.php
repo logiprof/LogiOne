@@ -451,6 +451,91 @@ trait LogiEval_Secure_Evaluations_Editor {		private static function render_creat
 					var ctx = event.target.closest('[data-les-problem-context]');
 					if (ctx) sync(ctx.closest('[data-les-problem]'));
 				});
+				/* 1.39.4 : regrouper des questions existantes en problème, ou sortir une sous-question. */
+				function renumber() {
+					var l = list();
+					if (!l) return;
+					l.querySelectorAll('.les-inline-question').forEach(function (q, k) {
+						if (q.closest('[data-les-problem]')) return;
+						var h = q.querySelector('.les-section-title h4');
+						if (h) { h.textContent = 'Question ' + (k + 1); h.dataset.base = h.textContent; }
+					});
+				}
+				function picks() {
+					var l = list();
+					if (!l) return [];
+					return Array.prototype.filter.call(l.querySelectorAll('[data-les-group-pick]:checked'), function (c) { return !c.closest('[data-les-problem]'); })
+						.map(function (c) { return c.closest('.les-inline-question'); });
+				}
+				function refreshBar() {
+					var btn = document.querySelector('[data-les-group-selected]');
+					if (!btn) return;
+					var n = picks().length;
+					btn.disabled = n < 2;
+					var c = btn.querySelector('[data-les-group-count]');
+					if (c) c.textContent = n ? '(' + n + ')' : '';
+				}
+				document.addEventListener('change', function (event) { if (event.target.matches('[data-les-group-pick]')) refreshBar(); });
+				document.addEventListener('click', function (event) {
+					var grp = event.target.closest('[data-les-group-selected]');
+					var out = event.target.closest('[data-les-unproblem]');
+					if (grp) {
+						event.preventDefault();
+						var items = picks();
+						if (items.length < 2) { window.alert('Sélectionnez au moins deux questions.'); return; }
+						var tpl = document.querySelector('[data-les-problem-template]');
+						if (!tpl) return;
+						var holder = document.createElement('div');
+						holder.innerHTML = tpl.innerHTML;
+						var block = holder.firstElementChild;
+						while (block && !(block.matches && block.matches('[data-les-problem]'))) block = block.nextElementSibling;
+						if (!block) return;
+						items[0].parentNode.insertBefore(block, items[0]);
+						var box = block.querySelector('[data-les-problem-items]');
+						var texts = [];
+						items.forEach(function (q) {
+							var t = q.querySelector('textarea[name$="[context]"]');
+							var v = t ? t.value.trim() : '';
+							if (v && texts.indexOf(v) === -1) texts.push(v);
+							var pick = q.querySelector('[data-les-group-pick]');
+							if (pick) pick.checked = false;
+							box.appendChild(q);
+						});
+						var ctx = block.querySelector('[data-les-problem-context]');
+						if (ctx) ctx.value = texts.join('\n\n');
+						sync(block);
+						renumber();
+						refreshBar();
+						block.scrollIntoView({ behavior: 'smooth', block: 'start' });
+						if (ctx && !ctx.value) setTimeout(function () { try { ctx.focus({ preventScroll: true }); } catch (e) { ctx.focus(); } }, 350);
+					} else if (out) {
+						event.preventDefault();
+						var q = out.closest('.les-inline-question');
+						var b = q ? q.closest('[data-les-problem]') : null;
+						if (!b) return;
+						var t = q.querySelector('textarea[name$="[context]"]');
+						if (t) t.value = '';
+						b.parentNode.insertBefore(q, b.nextSibling);
+						if (!b.querySelector('[data-les-problem-items] > .les-inline-question')) b.remove(); else sync(b);
+						renumber();
+						q.scrollIntoView({ behavior: 'smooth', block: 'center' });
+					}
+				});
+				// Un problème sans énoncé ne serait pas reconnu à la réouverture : on le signale avant d'enregistrer.
+				document.addEventListener('submit', function (event) {
+					var empty = null;
+					document.querySelectorAll('[data-les-problem]').forEach(function (b) {
+						var c = b.querySelector('[data-les-problem-context]');
+						if (!empty && b.querySelector('[data-les-problem-items] > .les-inline-question') && c && !c.value.trim()) empty = c;
+					});
+					if (empty && event.target.contains(empty)) {
+						event.preventDefault();
+						event.stopImmediatePropagation();
+						window.alert('Écrivez l’énoncé du problème avant d’enregistrer : c’est lui qui relie les sous-questions entre elles.');
+						empty.scrollIntoView({ behavior: 'smooth', block: 'center' });
+						try { empty.focus({ preventScroll: true }); } catch (e) { empty.focus(); }
+					}
+				}, true);
 				document.addEventListener('submit', function (event) {
 					if (event.target.querySelector && event.target.querySelector('[data-les-problem]')) syncAll();
 				}, true);
@@ -632,6 +717,8 @@ trait LogiEval_Secure_Evaluations_Editor {		private static function render_creat
 			<button type="button" class="les-fab" data-logiexam-add-question aria-label="<?php esc_attr_e( 'Ajouter une question', 'logieval-secure' ); ?>"><span aria-hidden="true">+</span> <?php esc_html_e( 'Ajouter une question', 'logieval-secure' ); ?></button>
 			<p class="les-problem-actions"><button type="button" class="button les-button-secondary" data-les-add-problem><?php esc_html_e( '🧮 Ajouter un problème (énoncé + sous-questions)', 'logieval-secure' ); ?></button>
 				<span class="description"><?php esc_html_e( 'Un énoncé commun (les données), puis plusieurs sous-questions : chacune a son espace de développement, sa réponse et sa calculatrice.', 'logieval-secure' ); ?></span></p>
+			<p class="les-group-bar" data-les-group-bar><button type="button" class="button les-button-secondary" data-les-group-selected disabled><?php esc_html_e( '🧮 Regrouper les questions sélectionnées en problème', 'logieval-secure' ); ?> <span data-les-group-count></span></button>
+				<span class="description"><?php esc_html_e( 'Cochez « Sélectionner » sur au moins deux questions existantes : elles deviennent les sous-questions d’un problème, dans leur ordre actuel. Vous écrivez ensuite l’énoncé commun.', 'logieval-secure' ); ?></span></p>
 			<div data-logiexam-inline-questions data-next-index="<?php echo esc_attr( count( $questions ) ); ?>">
 				<?php
 				// 1.38.5 : questions qui se suivent avec le même énoncé = un « problème » à sous-questions.
@@ -886,7 +973,8 @@ trait LogiEval_Secure_Evaluations_Editor {		private static function render_creat
 		<div class="les-inline-question">
 			<div class="les-section-title">
 				<h4><?php echo esc_html( sprintf( __( 'Question %s', 'logieval-secure' ), $number ) ); ?></h4>
-				<span class="les-actions les-question-head-actions"><button type="button" class="button les-button-secondary" data-logiexam-duplicate-question title="<?php esc_attr_e( 'Ajoute une copie juste en dessous, avec les mêmes réglages', 'logieval-secure' ); ?>"><?php esc_html_e( 'Dupliquer', 'logieval-secure' ); ?></button>
+				<span class="les-actions les-question-head-actions"><label class="les-group-pick"><input type="checkbox" data-les-group-pick> <?php esc_html_e( 'Sélectionner', 'logieval-secure' ); ?></label>
+				<button type="button" class="button les-button-secondary les-unproblem" data-les-unproblem title="<?php esc_attr_e( 'Remet cette sous-question comme question indépendante, juste après le problème', 'logieval-secure' ); ?>"><?php esc_html_e( 'Sortir du problème', 'logieval-secure' ); ?></button><button type="button" class="button les-button-secondary" data-logiexam-duplicate-question title="<?php esc_attr_e( 'Ajoute une copie juste en dessous, avec les mêmes réglages', 'logieval-secure' ); ?>"><?php esc_html_e( 'Dupliquer', 'logieval-secure' ); ?></button>
 				<button type="button" class="button les-button-danger" data-logiexam-remove-question><?php esc_html_e( 'Supprimer la question', 'logieval-secure' ); ?></button></span>
 			</div>
 			<input type="hidden" name="<?php echo esc_attr( $name_prefix ); ?>[id]" value="<?php echo esc_attr( $question['id'] ?? 0 ); ?>">
