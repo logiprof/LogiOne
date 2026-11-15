@@ -1,4 +1,4 @@
-# LogiOne 1.39.8
+# LogiOne 1.40.0
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,15 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.40.0 (LogiExam : correction avec une IA externe)
+
+- Nouveau panneau « 🔁 Correction avec une IA externe (Claude, ChatGPT…) » dans l’étape Correction, sans clé API :
+  1. Télécharger un fichier avec les consignes de correction, le barème et les réponses. Les élèves y sont anonymes (E01, E02…).
+  2. Le confier à l’IA de son choix, qui répond par un bloc JSON au format demandé.
+  3. Coller ce compte rendu (ou joindre le fichier) : LogiExam le vérifie, montre un aperçu par élève (noms réels, points proposés, réponses à vérifier), puis l’importe.
+- Les propositions arrivent dans la colonne IA, exactement comme une pré-correction intégrée (analyse par critère, « Points de l’IA », commentaire). Les points calculés par LogiExam à partir des critères, avec les mêmes garde-fous. Les points et commentaires de l’enseignant ne sont jamais remplacés ; les copies finalisées ne sont pas touchées.
+- Les grandes classes peuvent être importées en plusieurs parties (l’IA indique où elle s’est arrêtée).
 
 ## Nouveautés 1.39.8 (LogiExam)
 

@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Les méthodes de la classe sont réparties par thème dans includes/evaluations/.
-foreach ( array( 'access', 'data', 'editor', 'monitoring', 'student-session', 'corrections', 'ai-grading', 'pdf-exports', 'evaluation-export', 'evaluation-paper', 'workspace', 'batch', 'teacher-control', 'generator', 'ai-prompts', 'accommodations' ) as $logieval_part ) {
+foreach ( array( 'access', 'data', 'editor', 'monitoring', 'student-session', 'corrections', 'ai-grading', 'pdf-exports', 'evaluation-export', 'evaluation-paper', 'workspace', 'batch', 'teacher-control', 'generator', 'ai-prompts', 'accommodations', 'ai-exchange' ) as $logieval_part ) {
 	require_once __DIR__ . '/evaluations/trait-' . $logieval_part . '.php';
 }
 unset( $logieval_part );
@@ -32,6 +32,7 @@ unset( $logieval_part );
 	use LogiEval_Secure_Evaluations_Generator;
 	use LogiEval_Secure_Evaluations_Ai_Prompts;
 	use LogiEval_Secure_Evaluations_Accommodations;
+	use LogiEval_Secure_Evaluations_Ai_Exchange;
 
 	public static function init(): void {
 		add_action( 'admin_menu', array( __CLASS__, 'register_admin_page' ) );
@@ -65,6 +66,8 @@ unset( $logieval_part );
 		add_action( 'admin_post_logieval_secure_save_settings', array( __CLASS__, 'handle_save_settings' ) );
 		add_action( 'admin_post_logieval_secure_save_accommodations', array( __CLASS__, 'handle_save_accommodations' ) );
 		add_action( 'admin_post_logieval_secure_save_ai_settings', array( __CLASS__, 'handle_save_ai_settings' ) );
+		add_action( 'admin_post_logieval_secure_ai_export', array( __CLASS__, 'handle_ai_export' ) );
+		add_action( 'admin_post_logieval_secure_ai_import', array( __CLASS__, 'handle_ai_import' ) );
 		add_action( 'admin_post_logieval_secure_toggle_share', array( __CLASS__, 'handle_toggle_share' ) );
 		add_action( 'admin_post_logieval_secure_toggle_library', array( __CLASS__, 'handle_toggle_library' ) );
 		add_action( 'wp_ajax_logieval_secure_toggle_favorite_group', array( __CLASS__, 'ajax_toggle_favorite_group' ) );

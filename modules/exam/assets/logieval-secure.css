@@ -3636,3 +3636,12 @@ body.les-fabs-off .les-fab-draft { opacity: 0 !important; pointer-events: none; 
 .logieval-secure .les-problem-items > .les-inline-question [data-les-unproblem]{display:inline-flex}
 .logieval-secure .les-group-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0 12px}
 .logieval-secure .les-group-bar [data-les-group-selected]:disabled{opacity:.55;cursor:not-allowed}
+.logieval-secure .les-ai-exchange{margin-top:10px}
+.logieval-secure .les-ai-exchange-steps{margin:6px 0 0 20px;display:grid;gap:12px}
+.logieval-secure .les-ai-exchange-steps p{margin:4px 0}
+.logieval-secure .les-ai-exchange-msg{display:inline-block;padding:6px 8px;white-space:normal;user-select:all}
+.logieval-secure .les-ai-exchange-form textarea{width:100%;min-height:110px;font-family:ui-monospace,Menlo,monospace;font-size:12px}
+.logieval-secure .les-ai-exchange-file{margin:6px 0}
+.logieval-secure .les-ai-exchange-file input[type=file]{width:auto;border:0;padding:0;min-height:0}
+.logieval-secure .les-ai-exchange-table{margin:8px 0}
+.logieval-secure .les-ai-exchange-warnings{color:#92400e;margin:6px 0 6px 18px;list-style:disc}

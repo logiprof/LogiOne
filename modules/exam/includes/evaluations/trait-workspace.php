@@ -653,6 +653,7 @@ trait LogiEval_Secure_Evaluations_Workspace {
 				<?php elseif ( self::ai_grading_allowed() ) : ?>
 					<p class="description les-ai-hint"><?php esc_html_e( 'Pré-correction IA disponible : ajoutez votre propre clé API dans Réglages › Ma pré-correction IA pour l’activer.', 'logieval-secure' ); ?></p>
 				<?php endif; ?>
+				<?php self::render_ai_exchange_panel( $evaluation ); ?>
 				<?php self::render_finalize_all_button( $evaluation ); ?>
 			</div>
 			<?php self::render_grade_notices( $evaluation ); ?>
