@@ -325,15 +325,10 @@ trait LogiEval_Secure_Evaluations_Workspace {
 			usort(
 				$items,
 				static function ( $a, $b ) {
-					$da = (string) ( $a['opens_at'] ?? '' );
-					$db = (string) ( $b['opens_at'] ?? '' );
-					if ( '' === $da || '' === $db ) {
-						if ( $da !== $db ) {
-							return '' === $da ? -1 : 1; // Sans date : en haut.
-						}
-						return (int) $b['id'] <=> (int) $a['id']; // Les plus récentes d'abord.
-					}
-					return strcmp( $da, $db ) ?: ( (int) $a['id'] <=> (int) $b['id'] );
+					// Les dernières créées tout en haut (date de création, puis numéro).
+					$ca = (string) ( $a['created_at'] ?? '' );
+					$cb = (string) ( $b['created_at'] ?? '' );
+					return strcmp( $cb, $ca ) ?: ( (int) $b['id'] <=> (int) $a['id'] );
 				}
 			);
 			return $items;
@@ -346,7 +341,7 @@ trait LogiEval_Secure_Evaluations_Workspace {
 			$board[] = array( 'key' => (string) $gid, 'label' => $col['label'], 'hint' => '', 'items' => $sort( $col['items'] ) );
 		}
 		?>
-		<p class="description les-board-intro"><?php esc_html_e( 'Une colonne par classe. Dans chaque classe : les évaluations sans date en premier, puis dans l’ordre de leur date de planification.', 'logieval-secure' ); ?></p>
+		<p class="description les-board-intro"><?php esc_html_e( 'Une colonne par classe. Dans chaque classe : les dernières évaluations créées en haut.', 'logieval-secure' ); ?></p>
 		<div class="les-eval-board">
 			<?php foreach ( $board as $col ) : ?>
 				<section class="les-board-col<?php echo 'none' === $col['key'] ? ' is-unassigned' : ''; ?>" aria-label="<?php echo esc_attr( $col['label'] ); ?>">
