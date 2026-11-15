@@ -134,6 +134,19 @@ final class LogiPilot_Updater
         }
         $release = self::latest_release();
         if (!$release) {
+            // Pas encore de version lisible sur GitHub : LogiOne se déclare quand même « à jour »,
+            // pour que WordPress affiche le lien « Activer les mises à jour auto ».
+            $transient->no_update = isset($transient->no_update) && is_array($transient->no_update) ? $transient->no_update : array();
+            $transient->no_update[self::basename()] = (object) array(
+                'id' => 'github.com/' . self::REPO,
+                'slug' => self::SLUG,
+                'plugin' => self::basename(),
+                'new_version' => LOGIPILOT_VERSION,
+                'url' => 'https://github.com/' . self::REPO,
+                'package' => '',
+                'icons' => array(),
+                'banners' => array(),
+            );
             return $transient;
         }
         $item = (object) array(
