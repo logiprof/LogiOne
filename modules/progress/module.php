@@ -439,7 +439,7 @@ final class LogiProgress_Sensei_Group_Progress_Tracker {
 				<small><?php echo esc_html( sprintf( __( 'Mise à jour le %s', 'pickles-sensei-group-progress-tracker' ), self::format_datetime( $detail['updated_at'] ) ) ); ?></small>
 			<?php endif; ?>
 			<?php if ( ! empty( $detail['reopened_at'] ) ) : ?>
-				<small class="psgpt-retry"><?php echo esc_html( sprintf( __( 'Reprise le %s', 'pickles-sensei-group-progress-tracker' ), self::format_datetime( $detail['reopened_at'] ) ) ); ?></small>
+				<small class="psgpt-retry"><?php echo esc_html( sprintf( ! empty( $detail['retaking'] ) ? __( 'Reprise en cours depuis le %s', 'pickles-sensei-group-progress-tracker' ) : __( 'Reprise le %s', 'pickles-sensei-group-progress-tracker' ), self::format_datetime( $detail['reopened_at'] ) ) ); ?></small>
 			<?php endif; ?>
 		</div>
 		<?php
@@ -671,7 +671,7 @@ final class LogiProgress_Sensei_Group_Progress_Tracker {
 		}
 
 		if ( ! empty( $detail['reopened_at'] ) ) {
-			echo '<span class="meta failed">' . esc_html( sprintf( __( 'Reprise le %s', 'pickles-sensei-group-progress-tracker' ), self::format_datetime( $detail['reopened_at'] ) ) ) . '</span>';
+			echo '<span class="meta failed">' . esc_html( sprintf( ! empty( $detail['retaking'] ) ? __( 'Reprise en cours depuis le %s', 'pickles-sensei-group-progress-tracker' ) : __( 'Reprise le %s', 'pickles-sensei-group-progress-tracker' ), self::format_datetime( $detail['reopened_at'] ) ) ) . '</span>';
 		}
 	}
 
@@ -843,6 +843,17 @@ final class LogiProgress_Sensei_Group_Progress_Tracker {
 
 			$details[ $lesson_id ]['status'] = $row->comment_approved;
 			$details[ $lesson_id ]['updated_at'] = $row->comment_date;
+		}
+
+		// Une leçon validée une fois reste acquise : si l'élève la reprend sans la terminer,
+		// elle compte toujours comme terminée (avancement, %, compteurs). Le statut réel reste dans « current_status ».
+		foreach ( $details as $lesson_id => $detail ) {
+			$details[ $lesson_id ]['current_status'] = $detail['status'];
+			$details[ $lesson_id ]['retaking']       = false;
+			if ( ! empty( $detail['first_completed_at'] ) && ! self::is_complete_status( $detail['status'] ) ) {
+				$details[ $lesson_id ]['status']   = 'complete';
+				$details[ $lesson_id ]['retaking'] = true;
+			}
 		}
 
 		return $details;

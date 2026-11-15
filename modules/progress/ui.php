@@ -716,7 +716,7 @@ trait LogiProgress_UI {
 		$title = $lesson->post_title . ' — ' . $label . ( $full ? ' · ' . $full : '' );
 		if ( ! empty( $detail['reopened_at'] ) ) {
 			/* translators: %s: date */
-			$title .= ' · ' . sprintf( __( 'Reprise le %s', 'pickles-sensei-group-progress-tracker' ), self::format_datetime( $detail['reopened_at'] ) );
+			$title .= ' · ' . sprintf( ! empty( $detail['retaking'] ) ? __( 'Reprise en cours depuis le %s', 'pickles-sensei-group-progress-tracker' ) : __( 'Reprise le %s', 'pickles-sensei-group-progress-tracker' ), self::format_datetime( $detail['reopened_at'] ) );
 		}
 		if ( '' !== $quiz ) {
 			/* translators: %s: pourcentage */
@@ -853,7 +853,7 @@ trait LogiProgress_UI {
 														<span class="psgpt-quiz-score"> · <?php echo esc_html( sprintf( __( 'Quiz : %s%%', 'pickles-sensei-group-progress-tracker' ), $quiz ) ); ?></span>
 													<?php endif; ?>
 													<?php if ( ! empty( $detail['reopened_at'] ) ) : ?>
-														<span class="psgpt-retry"> · <?php echo esc_html( sprintf( __( 'Reprise le %s', 'pickles-sensei-group-progress-tracker' ), self::format_datetime( $detail['reopened_at'] ) ) ); ?></span>
+														<span class="psgpt-retry"> · <?php echo esc_html( sprintf( ! empty( $detail['retaking'] ) ? __( 'Reprise en cours depuis le %s', 'pickles-sensei-group-progress-tracker' ) : __( 'Reprise le %s', 'pickles-sensei-group-progress-tracker' ), self::format_datetime( $detail['reopened_at'] ) ) ); ?></span>
 													<?php endif; ?>
 												</span>
 												<?php if ( '' !== $status ) { self::render_reset_button( $student, $r['course'], $lesson, $group_id ); } ?>
