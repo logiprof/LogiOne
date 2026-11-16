@@ -1,4 +1,4 @@
-# LogiOne 1.40.1
+# LogiOne 1.40.2
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,11 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.40.2 (accueil LogiOne)
+
+- Le bandeau d’accueil est aligné sur la mosaïque de tuiles, y compris en largeur « Toute la largeur de l’écran ».
+- Le texte d’accueil s’étale sur moins de lignes et le bandeau est moins haut.
 
 ## Nouveautés 1.40.1 (LogiExam : import du compte rendu IA plus tolérant)
 

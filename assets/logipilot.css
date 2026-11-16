@@ -381,3 +381,14 @@ tr.logipilot-warning td { color: #8a4b00; }
 .lpp-panel .logieval-secure.les-teacher.les-app-shell {
   position: static !important; left: auto !important; transform: none !important;
   width: 100% !important; max-width: 100% !important; margin-left: 0 !important; margin-right: 0 !important; }
+
+/* Accueil : bandeau aligné sur la mosaïque de tuiles, texte sur moins de lignes, bandeau moins haut. */
+.logipilot-portal.lpp-home-width-large .lpp-hero-top,
+.logipilot-portal.lpp-home-width-large .lpp-hero-main { max-width: min(1760px, calc(100vw - 32px)); }
+.logipilot-portal:not(.is-tool) .lpp-hero-top { padding: 18px 0 6px; }
+.logipilot-portal:not(.is-tool) .lpp-hero-main { padding-top: 0; gap: 32px; }
+.logipilot-portal:not(.is-tool) .lpp-hero-text { padding-bottom: 28px; }
+.logipilot-portal:not(.is-tool) .lpp-hello { margin-bottom: 10px; }
+.logipilot-portal:not(.is-tool) .lpp-hero-text .lpp-about { max-width: 110ch; font-size: clamp(16px, 1.25vw, 18px); line-height: 1.45; }
+.logipilot-portal:not(.is-tool) .lpp-hero-text .lpp-hint { max-width: none; margin-top: 8px; font-size: 14px; }
+.logipilot-portal:not(.is-tool) .lpp-one { width: clamp(130px, 14vw, 210px); margin-bottom: -28px; }

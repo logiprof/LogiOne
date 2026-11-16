@@ -185,7 +185,10 @@ final class LogiPilot_Portal
         $user = wp_get_current_user();
         $first = trim((string) $user->first_name) !== '' ? (string) $user->first_name : (string) $user->display_name;
         $home = remove_query_arg(self::PARAM, $base);
-        $html = '<div class="logipilot-portal' . ($current !== '' ? ' is-tool' : '') . '">';
+        // Largeur de la mosaïque d'accueil : le bandeau s'aligne dessus.
+        $home_layout = ($current === '' && class_exists('LogiPilot_Layout')) ? LogiPilot_Layout::get() : null;
+        $width_class = $home_layout !== null ? ' lpp-home-width-' . sanitize_html_class((string) $home_layout['width']) : '';
+        $html = '<div class="logipilot-portal' . ($current !== '' ? ' is-tool' : '') . $width_class . '">';
 
         // Bandeau : logo, compte, administration
         $html .= '<header class="lpp-hero"><div class="lpp-hero-top"><a class="lpp-brand" href="' . esc_url($home) . '">' . self::logo('lpp-logo', true) . '</a>';
