@@ -837,19 +837,51 @@ final class LogiEval_Secure_Question_Types {
 			return false;
 		}
 		$precision = self::calculation_precision( $d );
-		$a         = self::parse_number( $given );
 		$b         = self::parse_number( $target );
-		if ( '' !== $precision && null !== $a && null !== $b ) {
-			if ( 'exact' === $precision ) {
-				return abs( $a - $b ) <= 1e-9 * max( 1, abs( $b ) );
+		$numbers   = self::numbers_in( $given ); // Le résultat peut être écrit dans une phrase, avec une unité.
+		if ( null !== $b && $numbers ) {
+			$target_dec = self::decimals_of( $target );
+			foreach ( $numbers as $n ) {
+				list( $a, $dec ) = $n;
+				if ( abs( $a - $b ) <= 1e-9 * max( 1, abs( $b ) ) ) {
+					return true;
+				}
+				if ( 'exact' === $precision ) {
+					continue;
+				}
+				if ( '' !== $precision ) {
+					if ( abs( $a - $b ) <= 0.5 * pow( 10, -(int) $precision ) + 1e-9 ) {
+						return true;
+					}
+					continue;
+				}
+				// Sans précision imposée : un arrondi correct est accepté (233,33 pour 233,33333), avec au moins
+				// une décimale quand le résultat attendu n'est pas entier (7 pour 6,6667 reste refusé).
+				if ( $dec < $target_dec && $dec >= min( 1, $target_dec ) && abs( $a - $b ) <= 0.5 * pow( 10, -$dec ) + 1e-9 ) {
+					return true;
+				}
 			}
-			return abs( $a - $b ) <= 0.5 * pow( 10, -(int) $precision ) + 1e-9;
 		}
 		$norm = static fn( $v ) => preg_replace( '/\s+/', ' ', remove_accents( strtolower( trim( wp_strip_all_tags( (string) $v ) ) ) ) );
-		if ( $norm( $given ) === $norm( $target ) ) {
-			return true;
+		return $norm( $given ) === $norm( $target );
+	}
+
+	/** Tous les nombres d'un texte, avec leur nombre de décimales : [[valeur, décimales], …]. */
+	public static function numbers_in( $value ): array {
+		$text = str_replace( array( "\u{2019}", "'", "\u{00A0}", "\u{202F}" ), '', (string) $value );
+		$text = preg_replace( '/(?<=\d) (?=\d{3}\b)/u', '', $text ); // 3 500 → 3500
+		$text = str_replace( array( '−', '–' ), '-', $text );
+		preg_match_all( '/-?\d+(?:[.,](\d+))?/u', $text, $m, PREG_SET_ORDER );
+		$out = array();
+		foreach ( $m as $x ) {
+			$out[] = array( (float) str_replace( ',', '.', $x[0] ), isset( $x[1] ) ? strlen( $x[1] ) : 0 );
 		}
-		return null !== $a && null !== $b && abs( $a - $b ) <= 1e-9 * max( 1, abs( $b ) );
+		return $out;
+	}
+
+	private static function decimals_of( $value ): int {
+		$n = self::numbers_in( $value );
+		return $n ? (int) $n[0][1] : 0;
 	}
 
 	/* ---------------------------------------------------------------------

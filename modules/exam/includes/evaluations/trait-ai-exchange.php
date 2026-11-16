@@ -232,7 +232,7 @@ trait LogiEval_Secure_Evaluations_Ai_Exchange {
 			$doc .= '- Niveau d’exigence choisi par l’enseignant (' . wp_strip_all_tags( (string) $level['label'] ) . ') : ' . trim( wp_strip_all_tags( (string) $level['prompt'] ) ) . "\n";
 		}
 		if ( array_filter( $questions, static fn( $q ) => 'calculation' === ( $q['type'] ?? '' ) ) ) {
-			$doc .= '- Questions de calcul : ' . trim( wp_strip_all_tags( self::ai_prompt( 'grading_calc' ) ) ) . " Pour ces questions, ajoute \"method_coherent\": true ou false (démarche cohérente).\n";
+			$doc .= '- Questions de calcul : ' . trim( wp_strip_all_tags( self::ai_prompt( 'grading_calc' ) ) ) . " Pour ces questions, ajoute \"method_coherent\": true ou false (démarche cohérente). Résultat : compare les NOMBRES (virgule ou point, unité, résultat dans une phrase acceptés) ; un arrondi correct est juste (233,33 pour 233,33333 ; au moins une décimale si l'attendu n'est pas entier). Le commentaire ne dit jamais « bon résultat » pour un critère résultat refusé, et ne fait aucune remarque sur un point que le barème ne note pas.\n";
 		}
 		if ( '' !== $vocab ) {
 			$doc .= '- Vocabulaire du métier : ' . $vocab . "\n";

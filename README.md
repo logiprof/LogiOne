@@ -1,4 +1,4 @@
-# LogiOne 1.40.4
+# LogiOne 1.40.5
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,12 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.40.5 (LogiExam : résultats de calcul)
+
+- Le contrôle automatique du résultat final accepte un arrondi correct quand aucune précision n’est imposée : 233,33 pour 233,33333 (au moins une décimale si le résultat attendu n’est pas entier). Avant, il fallait le nombre exact, et la correction (IA intégrée ou externe) refusait un résultat juste.
+- Le résultat peut être écrit dans une phrase ou avec une unité (« 30 cartons », « 233.33 fois plus »), avec virgule ou point, espaces ou apostrophes de milliers.
+- Le fichier pour l’IA externe rappelle ces règles, et que le commentaire ne doit jamais contredire les verdicts.
 
 ## Nouveautés 1.40.4 (LogiExam)
 
