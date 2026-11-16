@@ -1129,7 +1129,7 @@ trait LogiEval_Secure_Evaluations_Ai_Grading {
 				unset( $rubric_payload['criteres_evaluation'] );
 			}
 			$criteria_rule = $own_ideas
-				? "Il n'y a pas de barème détaillé : découpe d'abord reponse_attendue en 1 à 4 idées essentielles (\"label\" court), réparties sur points_max (\"points\" de chaque idée, total = points_max), puis juge chaque idée.\n"
+				? "Il n'y a pas de barème détaillé : découpe d'abord reponse_attendue en 1 à 4 idées essentielles (\"label\" court), réparties sur points_max (\"points\" de chaque idée, total = points_max), puis juge chaque idée ; pour une idée \"partial\", indique les points obtenus dans \"awarded\".\n"
 				: "criteres_evaluation est le barème officiel de l'enseignant : juge CHAQUE critère séparément, dans l'ordre, avec son numéro n. N'en ajoute pas, n'en oublie pas.\n"
 					. ( ! empty( $rubric_payload['consignes_enseignant'] ) ? "consignes_enseignant : précisions de l'enseignant sur la façon d'appliquer les critères (réponses à accepter aussi, tolérances). Elles PRIMENT : une réponse qu'elles acceptent remplit le critère concerné. Ce ne sont pas des critères notés.\n" : '' );
 
@@ -1156,7 +1156,7 @@ trait LogiEval_Secure_Evaluations_Ai_Grading {
 				. "Le commentaire doit être cohérent avec tes verdicts : ne félicite pas pour un critère \"miss\", ne reproche pas un critère \"ok\". Pour chaque critère partial ou miss, le commentaire dit à l'élève CE QUI ÉTAIT ATTENDU (l'idée, en mots simples : « Il fallait dire que… », « Il te manquait… »), pour qu'il comprenne sa faute. Jamais un simple « Réponse incorrecte. ».\n"
 				. "needs_review = true si tu hésites vraiment sur un critère (réponse ambiguë, illisible, ou idée juste mais hors du cours).\n"
 				. "Réponds uniquement avec ce JSON valide :\n"
-				. '{"lecture":"ce que dit l\'élève, reformulé en français correct, sans rien ajouter","criteria":[{"n":1,' . ( $own_ideas ? '"label":"idée attendue","points":1,' : '' ) . '"expected":"élément visé de reponse_attendue","evidence":"citation exacte ou vide","matches_expected":true,"status":"ok|partial|miss",' . ( $own_ideas ? '' : '"points":0,' ) . '"explanation":"…","hint":"idée attendue si partial ou miss"}],' . ( 'calculation' === ( $answer['type'] ?? '' ) ? '"method_coherent":true,' : '' ) . '"summary":"une phrase de conclusion pour l\'enseignant, COHÉRENTE avec tes verdicts : ne présente comme réussi que ce que tu as noté ok ou partial (ici seulement on peut parler de « l\'élève »)","comment":"' . ( 'vous' === self::ai_student_address( get_current_user_id() ) ? 'message adressé DIRECTEMENT à l\'élève en le vouvoyant : « Vous avez… », « Il vous manque… »' : 'message adressé DIRECTEMENT à l\'élève en le tutoyant : « Tu as… », « Il te manque… »' ) . ', jamais « l\'élève », « il », « elle » ni « la réponse est… »","confidence":0.0,"needs_review":false}' . "\n\n"
+				. '{"lecture":"ce que dit l\'élève, reformulé en français correct, sans rien ajouter","criteria":[{"n":1,' . ( $own_ideas ? '"label":"idée attendue","points":1,' : '' ) . '"expected":"élément visé de reponse_attendue","evidence":"citation exacte ou vide","matches_expected":true,"status":"ok|partial|miss",' . ( $own_ideas ? '"awarded":0,' : '"points":0,' ) . '"explanation":"…","hint":"idée attendue si partial ou miss"}],' . ( 'calculation' === ( $answer['type'] ?? '' ) ? '"method_coherent":true,' : '' ) . '"summary":"une phrase de conclusion pour l\'enseignant, COHÉRENTE avec tes verdicts : ne présente comme réussi que ce que tu as noté ok ou partial (ici seulement on peut parler de « l\'élève »)","comment":"' . ( 'vous' === self::ai_student_address( get_current_user_id() ) ? 'message adressé DIRECTEMENT à l\'élève en le vouvoyant : « Vous avez… », « Il vous manque… »' : 'message adressé DIRECTEMENT à l\'élève en le tutoyant : « Tu as… », « Il te manque… »' ) . ', jamais « l\'élève », « il », « elle » ni « la réponse est… »","confidence":0.0,"needs_review":false}' . "\n\n"
 				. wp_json_encode( $rubric_payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
 
 			$completion = LogiEval_Secure_AI::complete( $prompt, get_current_user_id(), array( 'provider' => sanitize_key( wp_unslash( $_POST['provider'] ?? '' ) ), 'purpose' => 'grading', 'json' => true, 'max_tokens' => 2000 + 250 * max( 1, count( $criteria ) ) ) );
@@ -1573,7 +1573,7 @@ trait LogiEval_Secure_Evaluations_Ai_Grading {
 					$label_l = mb_strtolower( (string) $c['label'] );
 					$is_dev  = (bool) preg_match( '/d[ée]velopp|d[ée]marche|calcul|raisonnement|formule|[ée]tape|m[ée]thode|op[ée]ration|justifi/u', $label_l );
 					$is_res  = (bool) preg_match( '/r[ée]sultat|r[ée]ponse finale|solution|unit[ée]/u', $label_l ) && ! $is_dev;
-					if ( false === $calc['method_coherent'] && ( $is_dev || $own_ideas ) && 'miss' !== $status ) {
+					if ( false === $calc['method_coherent'] && ( $is_dev || ( $own_ideas && ! $is_res ) ) && 'miss' !== $status ) {
 						$status = 'miss';
 						$why    = 'Le calcul ne correspond pas à ce qui est demandé : pas de points pour la démarche.';
 					}
@@ -1585,9 +1585,11 @@ trait LogiEval_Secure_Evaluations_Ai_Grading {
 				if ( 'ok' === $status ) {
 					$got = $cmax;
 				} elseif ( 'partial' === $status ) {
-					if ( isset( $row['points'] ) && is_numeric( $row['points'] ) ) {
+					// Sans barème détaillé, « points » est la valeur de l'idée : les points obtenus sont dans « awarded ».
+					$given = isset( $row['awarded'] ) && is_numeric( $row['awarded'] ) ? $row['awarded'] : ( $own_ideas ? null : ( $row['points'] ?? null ) );
+					if ( null !== $given && is_numeric( $given ) ) {
 						// Points partiels donnés par l'IA : respectés (0 reste 0, plus de « moitié » d'office).
-						$got = self::quarter( max( 0, min( $cmax, (float) $row['points'] ) ) );
+						$got = self::quarter( max( 0, min( $cmax, (float) $given ) ) );
 						if ( $got >= $cmax ) {
 							$got = self::quarter( max( 0, $cmax - 0.25 ) );
 						}

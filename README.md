@@ -72,6 +72,12 @@ Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées
 - Le bandeau d’accueil est aligné sur la mosaïque de tuiles, y compris en largeur « Toute la largeur de l’écran ».
 - Le texte d’accueil s’étale sur moins de lignes et le bandeau est moins haut.
 
+## Nouveautés 1.40.2 (LogiExam : points partiels et calculs plus justes)
+
+- Questions sans barème détaillé : les points obtenus pour une idée « partielle » sont donnés dans un champ à part (« awarded »). Avant, une idée partielle valait presque toutes ses points. Concerne la pré-correction intégrée et l’import d’une IA externe.
+- Questions de calcul sans barème : quand la démarche est jugée sans rapport avec la question, le résultat juste garde ses points (seules les idées de démarche passent à 0).
+- Le fichier pour l’IA externe explique ce champ « awarded ».
+
 ## Nouveautés 1.40.1 (LogiExam : import du compte rendu IA plus tolérant)
 
 - L’import accepte les écarts courants des IA :

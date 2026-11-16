@@ -219,7 +219,7 @@ trait LogiEval_Secure_Evaluations_Ai_Exchange {
 		$doc .= "   - \"evidence\" : le passage de la réponse qui remplit le critère, recopié MOT POUR MOT (25 mots maximum). Aucun passage → \"\".\n";
 		$doc .= "   - \"matches_expected\" : true seulement si la citation exprime bien CET élément attendu (une information vraie mais différente → false).\n";
 		$doc .= "   - \"status\" : \"ok\" (l'idée est exprimée, même avec d'autres mots, un exemple concret correct ou une formulation maladroite), \"partial\" (idée amorcée mais incomplète ou imprécise), \"miss\" (absente, fausse, contradictoire ou hors sujet). evidence vide → obligatoirement \"miss\".\n";
-		$doc .= "   - \"points\" : seulement pour \"partial\" (entre 0 et les points du critère). Pour ok et miss, LogiExam fixe les points.\n";
+		$doc .= "   - \"points\" : seulement pour \"partial\" (entre 0 et les points du critère). Pour ok et miss, LogiExam fixe les points. Question SANS barème détaillé : \"points\" est la valeur de l'idée, et les points obtenus d'un \"partial\" vont dans \"awarded\".\n";
 		$doc .= "   - \"explanation\" : une phrase qui dit pourquoi. \"hint\" (partial et miss) : l'idée qui était attendue, en mots simples.\n";
 		$doc .= "3. COMMENTAIRE pour l'élève (\"comment\") : court, adressé directement à l'élève " . ( $tu ? 'en le TUTOYANT (« Tu as… », « Il te manque… »)' : 'en le VOUVOYANT (« Vous avez… », « Il vous manque… »)' ) . ", jamais « l'élève », « il » ou « elle ». Cohérent avec tes verdicts : ne félicite pas un critère miss, ne reproche pas un critère ok. Pour chaque critère partial ou miss, dis ce qui était attendu (« Il fallait dire que… »).\n";
 		$doc .= "4. \"needs_review\": true si tu hésites vraiment (réponse ambiguë, illisible, ou idée juste mais hors du cours).\n\n";
@@ -260,7 +260,7 @@ trait LogiEval_Secure_Evaluations_Ai_Exchange {
 			$json
 		) . "\n```\n\n";
 		$doc .= "- Une entrée par élève ET par question présente dans ses réponses (les réponses vides ne sont pas listées : ne les corrige pas).\n";
-		$doc .= "- Pour une question sans barème détaillé, chaque critère porte aussi \"label\" et \"points\".\n";
+		$doc .= "- Pour une question sans barème détaillé, chaque critère porte aussi \"label\" et \"points\" (valeur de l'idée, mêmes idées et mêmes points pour tous les élèves, total = points_max) ; un critère \"partial\" y porte en plus \"awarded\" (points obtenus).\n";
 		$doc .= "- Ne calcule PAS de total : LogiExam additionne les critères.\n";
 		$doc .= "- Si ta réponse devient trop longue, arrête-toi après un élève COMPLET, termine le JSON proprement et ajoute \"suite\": \"E07\" (le prochain élève). L'enseignant te demandera de continuer et importera chaque partie.\n\n";
 
@@ -513,6 +513,10 @@ trait LogiEval_Secure_Evaluations_Ai_Exchange {
 		$points = self::ai_exchange_number( self::ai_exchange_pick( $c, array( 'points', 'pts', 'point', 'score' ) ) );
 		if ( null !== $points ) {
 			$out['points'] = $points;
+		}
+		$awarded = self::ai_exchange_number( self::ai_exchange_pick( $c, array( 'awarded', 'points_obtenus', 'obtenu', 'attribue', 'points_attribues' ) ) );
+		if ( null !== $awarded ) {
+			$out['awarded'] = $awarded;
 		}
 		$match = self::ai_exchange_pick( $c, array( 'matches_expected', 'correspond', 'conforme' ) );
 		if ( null !== $match ) {
