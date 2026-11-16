@@ -3655,3 +3655,7 @@ body.les-fabs-off .les-fab-draft { opacity: 0 !important; pointer-events: none; 
 .logieval-secure .les-qcard-name { font-size: 16px; margin-right: auto; }
 .logieval-secure .les-qcard .les-points-tools { margin-top: 10px; }
 .logieval-secure .les-qcard .les-comment-box { margin-top: 10px; }
+.logieval-secure .les-qcard-question { margin: 10px 0 0; padding: 10px 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; }
+.logieval-secure .les-qcard-question .les-correction-qpts { float: right; }
+.logieval-secure .les-qcard-prompt { margin-top: 6px; font-weight: 600; color: #0f172a; }
+.logieval-secure .les-qcard-prompt p { margin: 0 0 4px; }

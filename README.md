@@ -1,4 +1,4 @@
-# LogiOne 1.40.3
+# LogiOne 1.40.4
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,10 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.40.4 (LogiExam)
+
+- Correction par question : chaque carte d’élève rappelle la question (numéro, titre, points et énoncé), pour l’avoir sous les yeux en faisant défiler les élèves.
 
 ## Nouveautés 1.40.3 (LogiExam : codes après changement de classe)
 

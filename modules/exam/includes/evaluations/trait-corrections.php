@@ -481,6 +481,10 @@ trait LogiEval_Secure_Evaluations_Corrections {		public static function attempt_
 										<?php if ( $is_blank ) : ?><span class="les-blank-badge"><?php esc_html_e( 'Non répondu : 0 pt', 'logieval-secure' ); ?></span><?php endif; ?>
 										<?php echo is_numeric( $answer['manual_points'] ?? null ) ? '<span class="les-save-state les-alert-badge is-ok">' . esc_html__( 'Sauvegardé', 'logieval-secure' ) . '</span>' : '<span class="les-save-state les-alert-badge is-warning">' . esc_html__( 'À enregistrer', 'logieval-secure' ) . '</span>'; ?>
 									</header>
+									<div class="les-qcard-question">
+										<span class="les-correction-qnum"><?php echo esc_html( sprintf( __( 'Question %d', 'logieval-secure' ), $index + 1 ) ); ?></span><?php $qtitle = self::correction_own_title( $question ); if ( '' !== $qtitle ) : ?> <strong><?php echo esc_html( $qtitle ); ?></strong><?php endif; ?> <span class="les-correction-qpts"><?php echo esc_html( self::format_points( (float) $question['points'] ) ); ?> pts</span>
+										<div class="les-qcard-prompt"><?php echo wp_kses_post( wpautop( $question['prompt'] ) ); ?></div>
+									</div>
 									<div class="les-answer-compare">
 										<div class="les-student-answer">
 											<strong class="les-student-answer-label"><span aria-hidden="true">✎</span> <?php echo esc_html( sprintf( __( 'Réponse de l’élève · %s', 'logieval-secure' ), $student_name ) ); ?></strong>
