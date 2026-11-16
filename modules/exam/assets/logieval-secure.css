@@ -3698,3 +3698,15 @@ body.les-fabs-off .les-fab-draft { opacity: 0 !important; pointer-events: none; 
 .logieval-secure .les-question-correction-section:nth-of-type(even) .les-qcard { border-left-color: #0d9488; }
 .logieval-secure .les-question-correction-section:nth-of-type(even) .les-qcard.is-saved { border-left-color: #16a34a; }
 .logieval-secure .les-question-correction-section.les-bonus-malus-section > h4 { background: linear-gradient(90deg, #475569, #64748b); }
+
+/* 1.40.11 — Correction commencée mais pas terminée : orange, bien visible aussi. */
+.logieval-secure .les-eval-card.has-grading:not(.is-to_grade) { background: #fff5f5; border: 2px solid #fb7185; border-left: 6px solid #e11d48; box-shadow: 0 6px 18px rgba(225, 29, 72, .18); }
+.logieval-secure .les-eval-card.is-grading-started, .logieval-secure .les-eval-card.is-grading-started.is-to_grade { background: #fff7ed; border: 2px solid #fb923c; border-left: 6px solid #ea580c; box-shadow: 0 6px 18px rgba(234, 88, 12, .2); }
+.logieval-secure .les-eval-card-alert.is-started { background: #ea580c; animation-name: lesGradePulseOrange; }
+.logieval-secure .button.les-btn-grade.is-started, .logieval-secure .button.button-primary.les-btn-grade.is-started { background: #ea580c; border-color: #c2410c; color: #fff; }
+.logieval-secure .button.les-btn-grade.is-started:hover, .logieval-secure .button.les-btn-grade.is-started:focus { background: #c2410c; border-color: #9a3412; color: #fff; }
+.logieval-secure .les-to-grade-chip.is-started { border-color: #fed7aa; color: #9a3412; background: #fff7ed; }
+.logieval-secure .les-to-grade-chip.is-started span { background: #ea580c; }
+.logieval-secure .les-eval-card-actions .les-btn-grade + .les-more-actions, .logieval-secure .les-eval-card-actions .button + .les-btn-grade { margin-top: 0; }
+@keyframes lesGradePulseOrange { 0%, 100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, .45); } 50% { box-shadow: 0 0 0 6px rgba(234, 88, 12, 0); } }
+.logieval-secure .les-to-grade-started { font-style: normal; color: #c2410c; }

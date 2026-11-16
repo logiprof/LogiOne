@@ -1,4 +1,4 @@
-# LogiOne 1.40.10
+# LogiOne 1.40.11
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,14 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.40.11 (LogiExam : corrections non terminées mises en évidence)
+
+- « Mes évaluations » : une correction commencée mais pas terminée apparaît en orange. Elle est considérée commencée dès qu’une copie est finalisée, qu’une copie a des points saisis ou que des questions ont déjà été revues. La carte porte :
+  - le bandeau « ✏️ Correction commencée · X / Y corrigées · N à terminer » ;
+  - le bouton « Reprendre la correction (N copies) ».
+- Les évaluations encore en passation mais avec des copies déjà rendues à corriger sont aussi mises en avant, avec un bouton « Corriger » à côté de « Suivre la passation ».
+- Le bandeau du haut liste toutes ces évaluations (« dont N commencées », pastilles « à terminer » en orange).
 
 ## Nouveautés 1.40.10 (LogiExam)
 

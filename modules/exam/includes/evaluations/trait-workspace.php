@@ -192,8 +192,10 @@ trait LogiEval_Secure_Evaluations_Workspace {
 			'to_grade'    => 0,
 			'graded'      => 0,
 			'cancelled'   => 0,
+			'started'     => 0, // Copies à corriger dont la correction est commencée (points ou questions déjà revues).
 			'questions'   => count( self::get_questions_for_evaluation( (int) $evaluation['id'] ) ),
 		);
+		$to_grade_ids = array();
 		foreach ( self::get_attempts( (int) $evaluation['id'] ) as $attempt ) {
 			$result = self::get_result_by_attempt( (int) $attempt['id'] );
 			$status = (string) $attempt['status'];
@@ -214,6 +216,17 @@ trait LogiEval_Secure_Evaluations_Workspace {
 					$counts['graded']++;
 				} elseif ( self::attempt_needs_correction( $attempt, $result ) ) {
 					$counts['to_grade']++;
+					$to_grade_ids[] = (int) $attempt['id'];
+				}
+			}
+		}
+		if ( $to_grade_ids ) {
+			global $wpdb;
+			$t        = LogiEval_Secure_Database::tables();
+			$with_pts = $wpdb->get_col( 'SELECT DISTINCT attempt_id FROM ' . $t['answers'] . ' WHERE manual_points IS NOT NULL AND attempt_id IN (' . implode( ',', array_map( 'intval', $to_grade_ids ) ) . ')' ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- identifiants entiers.
+			foreach ( $to_grade_ids as $aid ) {
+				if ( in_array( (string) $aid, array_map( 'strval', (array) $with_pts ), true ) || get_option( 'logiexam_reviewed_' . $aid ) ) {
+					$counts['started']++;
 				}
 			}
 		}
@@ -344,17 +357,17 @@ trait LogiEval_Secure_Evaluations_Workspace {
 		$to_grade = array();
 		foreach ( $evaluations as $evaluation ) {
 			$wf = self::evaluation_workflow( $evaluation );
-			if ( 'to_grade' === $wf['key'] ) {
-				$to_grade[ (int) $evaluation['id'] ] = array( 'evaluation' => $evaluation, 'copies' => (int) $wf['counts']['to_grade'] );
+			if ( $wf['counts']['to_grade'] > 0 && 'draft' !== $wf['key'] ) {
+				$to_grade[ (int) $evaluation['id'] ] = array( 'evaluation' => $evaluation, 'copies' => (int) $wf['counts']['to_grade'], 'started' => self::grading_started( $wf['counts'] ) );
 			}
 		}
 		?>
 		<?php if ( $to_grade ) : ?>
 			<div class="les-to-grade-bar" role="region" aria-label="<?php esc_attr_e( 'Évaluations à corriger', 'logieval-secure' ); ?>">
-				<strong class="les-to-grade-title">📝 <?php echo esc_html( sprintf( _n( '%1$d évaluation à corriger · %2$d copies', '%1$d évaluations à corriger · %2$d copies', count( $to_grade ), 'logieval-secure' ), count( $to_grade ), array_sum( wp_list_pluck( $to_grade, 'copies' ) ) ) ); ?></strong>
+				<strong class="les-to-grade-title">📝 <?php echo esc_html( sprintf( _n( '%1$d évaluation à corriger · %2$d copies', '%1$d évaluations à corriger · %2$d copies', count( $to_grade ), 'logieval-secure' ), count( $to_grade ), array_sum( wp_list_pluck( $to_grade, 'copies' ) ) ) ); ?><?php $nstarted = count( array_filter( wp_list_pluck( $to_grade, 'started' ) ) ); if ( $nstarted ) : ?> <em class="les-to-grade-started">(<?php echo esc_html( sprintf( _n( 'dont %d commencée', 'dont %d commencées', $nstarted, 'logieval-secure' ), $nstarted ) ); ?>)</em><?php endif; ?></strong>
 				<div class="les-to-grade-links">
 					<?php foreach ( $to_grade as $eid => $tg ) : ?>
-						<a class="les-to-grade-chip" href="<?php echo esc_url( self::evaluation_url( $eid, 'grade' ) ); ?>"><?php echo esc_html( self::shorten( wp_strip_all_tags( (string) $tg['evaluation']['title'] ), 60 ) ); ?> <span><?php echo esc_html( sprintf( _n( '%d copie', '%d copies', $tg['copies'], 'logieval-secure' ), $tg['copies'] ) ); ?></span></a>
+						<a class="les-to-grade-chip<?php echo $tg['started'] ? ' is-started' : ''; ?>" href="<?php echo esc_url( self::evaluation_url( $eid, 'grade' ) ); ?>"><?php echo $tg['started'] ? '✏️ ' : ''; ?><?php echo esc_html( self::shorten( wp_strip_all_tags( (string) $tg['evaluation']['title'] ), 60 ) ); ?> <span><?php echo esc_html( $tg['started'] ? sprintf( _n( 'à terminer · %d copie', 'à terminer · %d copies', $tg['copies'], 'logieval-secure' ), $tg['copies'] ) : sprintf( _n( '%d copie', '%d copies', $tg['copies'], 'logieval-secure' ), $tg['copies'] ) ); ?></span></a>
 					<?php endforeach; ?>
 				</div>
 			</div>
@@ -379,6 +392,11 @@ trait LogiEval_Secure_Evaluations_Workspace {
 		<?php
 	}
 
+	/** Correction commencée : des copies déjà finalisées, ou des points / questions déjà revues sur une copie à corriger. */
+	private static function grading_started( array $counts ): bool {
+		return (int) ( $counts['to_grade'] ?? 0 ) > 0 && ( (int) ( $counts['graded'] ?? 0 ) > 0 || (int) ( $counts['started'] ?? 0 ) > 0 );
+	}
+
 	private static function render_evaluation_card( array $evaluation, bool $in_board = false ): void {
 		$id       = (int) $evaluation['id'];
 		$workflow = self::evaluation_workflow( $evaluation );
@@ -386,8 +404,11 @@ trait LogiEval_Secure_Evaluations_Workspace {
 		$classes  = self::evaluation_group_names( $evaluation );
 		$options  = self::exam_options( $id );
 		?>
-		<article class="les-eval-card is-<?php echo esc_attr( $workflow['key'] ); ?><?php echo $in_board ? ' is-in-board' : ''; ?>">
-			<?php if ( 'to_grade' === $workflow['key'] ) : ?>
+		<?php $needs = $c['to_grade'] > 0 && 'draft' !== $workflow['key']; $started = $needs && self::grading_started( $c ); ?>
+		<article class="les-eval-card is-<?php echo esc_attr( $workflow['key'] ); ?><?php echo $needs ? ' has-grading' : ''; ?><?php echo $started ? ' is-grading-started' : ''; ?><?php echo $in_board ? ' is-in-board' : ''; ?>">
+			<?php if ( $started ) : ?>
+				<div class="les-eval-card-alert is-started">✏️ <?php echo esc_html( sprintf( __( 'Correction commencée · %1$d / %2$d corrigées · %3$d à terminer', 'logieval-secure' ), $c['graded'], $c['graded'] + $c['to_grade'], $c['to_grade'] ) ); ?></div>
+			<?php elseif ( $needs ) : ?>
 				<div class="les-eval-card-alert">📝 <?php echo esc_html( sprintf( _n( '%d copie à corriger', '%d copies à corriger', $c['to_grade'], 'logieval-secure' ), $c['to_grade'] ) ); ?></div>
 			<?php endif; ?>
 			<div class="les-eval-card-main">
@@ -424,7 +445,14 @@ trait LogiEval_Secure_Evaluations_Workspace {
 				<?php endif; ?>
 			</div>
 			<div class="les-eval-card-actions">
-				<a class="button button-primary<?php echo 'to_grade' === $workflow['key'] ? ' les-btn-grade' : ''; ?>" href="<?php echo esc_url( self::evaluation_url( $id, $workflow['step'] ) ); ?>"><?php echo esc_html( $workflow['next_label'] ); ?> →</a>
+				<?php if ( 'to_grade' === $workflow['key'] ) : ?>
+					<a class="button button-primary les-btn-grade<?php echo $started ? ' is-started' : ''; ?>" href="<?php echo esc_url( self::evaluation_url( $id, 'grade' ) ); ?>"><?php echo esc_html( $started ? sprintf( _n( 'Reprendre la correction (%d copie)', 'Reprendre la correction (%d copies)', $c['to_grade'], 'logieval-secure' ), $c['to_grade'] ) : $workflow['next_label'] ); ?> →</a>
+				<?php else : ?>
+					<a class="button button-primary" href="<?php echo esc_url( self::evaluation_url( $id, $workflow['step'] ) ); ?>"><?php echo esc_html( $workflow['next_label'] ); ?> →</a>
+					<?php if ( $needs ) : ?>
+						<a class="button button-primary les-btn-grade<?php echo $started ? ' is-started' : ''; ?>" href="<?php echo esc_url( self::evaluation_url( $id, 'grade' ) ); ?>"><?php echo esc_html( $started ? sprintf( _n( 'Reprendre la correction (%d copie)', 'Reprendre la correction (%d copies)', $c['to_grade'], 'logieval-secure' ), $c['to_grade'] ) : sprintf( _n( 'Corriger (%d copie)', 'Corriger (%d copies)', $c['to_grade'], 'logieval-secure' ), $c['to_grade'] ) ); ?> →</a>
+					<?php endif; ?>
+				<?php endif; ?>
 				<details class="les-more-actions">
 					<summary><?php esc_html_e( 'Autres actions', 'logieval-secure' ); ?></summary>
 					<div class="les-more-actions-menu">
