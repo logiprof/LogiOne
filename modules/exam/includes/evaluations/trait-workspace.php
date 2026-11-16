@@ -340,13 +340,33 @@ trait LogiEval_Secure_Evaluations_Workspace {
 		foreach ( $columns as $gid => $col ) {
 			$board[] = array( 'key' => (string) $gid, 'label' => $col['label'], 'hint' => '', 'items' => $sort( $col['items'] ) );
 		}
+		// Évaluations à corriger : bien visibles (bandeau en haut, compteur par classe, cartes mises en avant).
+		$to_grade = array();
+		foreach ( $evaluations as $evaluation ) {
+			$wf = self::evaluation_workflow( $evaluation );
+			if ( 'to_grade' === $wf['key'] ) {
+				$to_grade[ (int) $evaluation['id'] ] = array( 'evaluation' => $evaluation, 'copies' => (int) $wf['counts']['to_grade'] );
+			}
+		}
 		?>
+		<?php if ( $to_grade ) : ?>
+			<div class="les-to-grade-bar" role="region" aria-label="<?php esc_attr_e( 'Évaluations à corriger', 'logieval-secure' ); ?>">
+				<strong class="les-to-grade-title">📝 <?php echo esc_html( sprintf( _n( '%1$d évaluation à corriger · %2$d copies', '%1$d évaluations à corriger · %2$d copies', count( $to_grade ), 'logieval-secure' ), count( $to_grade ), array_sum( wp_list_pluck( $to_grade, 'copies' ) ) ) ); ?></strong>
+				<div class="les-to-grade-links">
+					<?php foreach ( $to_grade as $eid => $tg ) : ?>
+						<a class="les-to-grade-chip" href="<?php echo esc_url( self::evaluation_url( $eid, 'grade' ) ); ?>"><?php echo esc_html( self::shorten( wp_strip_all_tags( (string) $tg['evaluation']['title'] ), 60 ) ); ?> <span><?php echo esc_html( sprintf( _n( '%d copie', '%d copies', $tg['copies'], 'logieval-secure' ), $tg['copies'] ) ); ?></span></a>
+					<?php endforeach; ?>
+				</div>
+			</div>
+		<?php endif; ?>
 		<p class="description les-board-intro"><?php esc_html_e( 'Une colonne par classe. Dans chaque classe : les dernières évaluations créées en haut.', 'logieval-secure' ); ?></p>
 		<div class="les-eval-board">
 			<?php foreach ( $board as $col ) : ?>
 				<section class="les-board-col<?php echo 'none' === $col['key'] ? ' is-unassigned' : ''; ?>" aria-label="<?php echo esc_attr( $col['label'] ); ?>">
 					<header class="les-board-col-head">
 						<h3><?php echo esc_html( $col['label'] ); ?></h3>
+						<?php $col_grade = count( array_filter( $col['items'], static fn( $e ) => isset( $to_grade[ (int) $e['id'] ] ) ) ); ?>
+						<?php if ( $col_grade ) : ?><span class="les-board-grade-count" title="<?php esc_attr_e( 'Évaluations à corriger', 'logieval-secure' ); ?>">📝 <?php echo (int) $col_grade; ?></span><?php endif; ?>
 						<span class="les-board-count"><?php echo (int) count( $col['items'] ); ?></span>
 					</header>
 					<?php if ( $col['hint'] ) : ?><p class="les-board-hint"><?php echo esc_html( $col['hint'] ); ?></p><?php endif; ?>
@@ -367,6 +387,9 @@ trait LogiEval_Secure_Evaluations_Workspace {
 		$options  = self::exam_options( $id );
 		?>
 		<article class="les-eval-card is-<?php echo esc_attr( $workflow['key'] ); ?><?php echo $in_board ? ' is-in-board' : ''; ?>">
+			<?php if ( 'to_grade' === $workflow['key'] ) : ?>
+				<div class="les-eval-card-alert">📝 <?php echo esc_html( sprintf( _n( '%d copie à corriger', '%d copies à corriger', $c['to_grade'], 'logieval-secure' ), $c['to_grade'] ) ); ?></div>
+			<?php endif; ?>
 			<div class="les-eval-card-main">
 				<?php if ( $in_board ) : ?>
 					<span class="les-eval-card-when<?php echo empty( $evaluation['opens_at'] ) ? ' is-none' : ''; ?>"><?php echo esc_html( ! empty( $evaluation['opens_at'] ) ? date_i18n( 'l j F Y · H:i', strtotime( (string) $evaluation['opens_at'] ) ) : __( 'Date non planifiée', 'logieval-secure' ) ); ?></span>
@@ -401,7 +424,7 @@ trait LogiEval_Secure_Evaluations_Workspace {
 				<?php endif; ?>
 			</div>
 			<div class="les-eval-card-actions">
-				<a class="button button-primary" href="<?php echo esc_url( self::evaluation_url( $id, $workflow['step'] ) ); ?>"><?php echo esc_html( $workflow['next_label'] ); ?> →</a>
+				<a class="button button-primary<?php echo 'to_grade' === $workflow['key'] ? ' les-btn-grade' : ''; ?>" href="<?php echo esc_url( self::evaluation_url( $id, $workflow['step'] ) ); ?>"><?php echo esc_html( $workflow['next_label'] ); ?> →</a>
 				<details class="les-more-actions">
 					<summary><?php esc_html_e( 'Autres actions', 'logieval-secure' ); ?></summary>
 					<div class="les-more-actions-menu">
