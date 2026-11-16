@@ -3682,3 +3682,6 @@ body.les-fabs-off .les-fab-draft { opacity: 0 !important; pointer-events: none; 
 @keyframes lesGradePulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, .45); } 50% { box-shadow: 0 0 0 6px rgba(225, 29, 72, 0); } }
 @media (prefers-reduced-motion: reduce) { .logieval-secure .les-eval-card-alert { animation: none; } }
 .logieval-secure .les-eval-card-alert { flex: 1 0 100%; }
+.logieval-secure .les-qcard-context { margin-top: 8px; }
+.logieval-secure .les-qcard-context > summary { cursor: pointer; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: #1d4ed8; }
+.logieval-secure .les-qcard-context .les-question-context { margin: 6px 0 0; }

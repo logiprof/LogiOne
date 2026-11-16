@@ -516,7 +516,14 @@ trait LogiEval_Secure_Evaluations_Corrections {		public static function attempt_
 									</header>
 									<div class="les-qcard-question">
 										<span class="les-correction-qnum"><?php echo esc_html( sprintf( __( 'Question %d', 'logieval-secure' ), $index + 1 ) ); ?></span><?php $qtitle = self::correction_own_title( $question ); if ( '' !== $qtitle ) : ?> <strong><?php echo esc_html( $qtitle ); ?></strong><?php endif; ?> <span class="les-correction-qpts"><?php echo esc_html( self::format_points( (float) $question['points'] ) ); ?> pts</span>
+										<?php if ( '' !== trim( wp_strip_all_tags( (string) ( $question['context'] ?? '' ) ) ) ) : ?>
+											<details class="les-qcard-context" open>
+												<summary><?php esc_html_e( 'Contexte', 'logieval-secure' ); ?></summary>
+												<div class="les-question-context"><?php echo wp_kses_post( wpautop( $question['context'] ) ); ?></div>
+											</details>
+										<?php endif; ?>
 										<div class="les-qcard-prompt"><?php echo wp_kses_post( wpautop( $question['prompt'] ) ); ?></div>
+										<?php self::render_question_image( absint( $question['media_id'] ?? 0 ), 'is-small' ); ?>
 									</div>
 									<div class="les-answer-compare">
 										<div class="les-student-answer">
