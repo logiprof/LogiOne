@@ -1,4 +1,4 @@
-# LogiOne 1.40.8
+# LogiOne 1.40.9
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,12 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.40.9 (LogiExam : correction des calculs, le résultat d’abord)
+
+- Quand LogiExam vérifie que le résultat final est juste (arrondi correct compris), le critère « résultat » est accordé, même si l’IA l’avait refusé.
+- Résultat juste mais démarche refusée par l’IA : la réponse est marquée « à vérifier » (« vérifiez si la démarche est équivalente »).
+- Pré-correction intégrée et fichier pour l’IA externe : lire d’abord le résultat final ; s’il est juste, accepter une démarche équivalente écrite autrement (autre ordre, étapes regroupées, conversion faite autrement, signes = enchaînés) ; s’il est faux, chercher l’étape fausse.
 
 ## Nouveautés 1.40.8 (LogiExam)
 

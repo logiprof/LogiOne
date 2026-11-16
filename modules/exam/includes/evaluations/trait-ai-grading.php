@@ -1581,6 +1581,16 @@ trait LogiEval_Secure_Evaluations_Ai_Grading {
 						$status = 'miss';
 						$why    = 'Le résultat final est faux.';
 					}
+					// Résultat juste (vérifié par le programme, arrondi correct compris) : le critère « résultat » est acquis.
+					if ( true === $calc['result_ok'] && $is_res && 'ok' !== $status ) {
+						$status = 'ok';
+						$why    = 'Résultat final juste (vérifié automatiquement par LogiExam).';
+					}
+					// Résultat juste mais démarche refusée : souvent une démarche équivalente, écrite autrement → à vérifier.
+					if ( true === $calc['result_ok'] && ( $is_dev || ( $own_ideas && ! $is_res ) ) && 'ok' !== $status ) {
+						$needs_review = true;
+						$flag         = ' (résultat juste : vérifiez si la démarche est équivalente)';
+					}
 				}
 				if ( 'ok' === $status ) {
 					$got = $cmax;
