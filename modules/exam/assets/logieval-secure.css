@@ -3659,3 +3659,10 @@ body.les-fabs-off .les-fab-draft { opacity: 0 !important; pointer-events: none; 
 .logieval-secure .les-qcard-question .les-correction-qpts { float: right; }
 .logieval-secure .les-qcard-prompt { margin-top: 6px; font-weight: 600; color: #0f172a; }
 .logieval-secure .les-qcard-prompt p { margin: 0 0 4px; }
+.logieval-secure .les-resume-banner { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 10px 0 14px; padding: 10px 14px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; }
+.logieval-secure .les-resume-banner.is-done { background: #ecfdf5; border-color: #a7f3d0; color: #065f46; }
+.logieval-secure .les-resume-count { font-weight: 700; color: #1e3a8a; }
+.logieval-secure .les-qprogress { font-style: normal; font-size: 12px; font-weight: 700; color: #92400e; background: #fef3c7; border-radius: 999px; padding: 2px 8px; margin-left: 8px; }
+.logieval-secure .les-qprogress.is-complete { color: #065f46; background: #d1fae5; }
+.logieval-secure .les-qcard.is-saved { border-left-color: #16a34a; }
+.logieval-secure .les-qcard { scroll-margin-top: 90px; }

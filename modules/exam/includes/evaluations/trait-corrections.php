@@ -457,10 +457,42 @@ trait LogiEval_Secure_Evaluations_Corrections {		public static function attempt_
 							<button type="submit" class="button button-primary"><?php esc_html_e( 'Enregistrer toute la progression', 'logieval-secure' ); ?></button>
 						</p>
 					<label class="les-checkbox-line les-auto-next"><input type="checkbox" data-les-auto-next checked> <?php esc_html_e( 'Après avoir attribué les points, passer directement à l’élève suivant', 'logieval-secure' ); ?></label>
+					<input type="hidden" name="les_resume_card" value="" data-les-resume-field>
+					<?php
+					// Où en est la correction ? Une carte est « faite » quand des points ont été enregistrés (ou réponse vide).
+					$done_map  = array();
+					$first_todo = null;
+					$done_count = 0;
+					$all_count  = 0;
+					foreach ( $questions as $qi => $q ) {
+						foreach ( $attempts as $att ) {
+							$row = self::answer_row_by_question( self::get_answers_for_attempt( (int) $att['id'] ), (int) $q['question_id'] );
+							if ( ! $row ) {
+								continue;
+							}
+							$is_done = is_numeric( $row['manual_points'] ?? null ) || ! self::answer_is_complete( $row['answer'] ?? '' );
+							$done_map[ (int) $q['question_id'] ][ (int) $att['id'] ] = $is_done;
+							$all_count++;
+							$done_count += $is_done ? 1 : 0;
+							if ( ! $is_done && null === $first_todo ) {
+								$u          = get_userdata( (int) $att['user_id'] );
+								$first_todo = array( 'id' => 'les-qcard-' . (int) $q['question_id'] . '-' . (int) $att['id'], 'label' => sprintf( __( 'Question %1$d · %2$s', 'logieval-secure' ), $qi + 1, $u ? $u->display_name : '#' . $att['user_id'] ) );
+							}
+						}
+					}
+					?>
+					<div class="les-resume-banner<?php echo $first_todo ? '' : ' is-done'; ?>" data-les-resume-banner<?php echo $first_todo ? ' data-target="' . esc_attr( $first_todo['id'] ) . '"' : ''; ?>>
+						<span class="les-resume-count"><?php echo esc_html( sprintf( __( '%1$d / %2$d réponses corrigées', 'logieval-secure' ), $done_count, $all_count ) ); ?></span>
+						<?php if ( $first_todo && $done_count > 0 ) : ?>
+							<a class="button button-primary" href="#<?php echo esc_attr( $first_todo['id'] ); ?>" data-les-resume-go>▶ <?php echo esc_html( sprintf( __( 'Reprendre : %s', 'logieval-secure' ), $first_todo['label'] ) ); ?></a>
+						<?php elseif ( ! $first_todo ) : ?>
+							<strong><?php esc_html_e( '✓ Toutes les réponses ont des points enregistrés.', 'logieval-secure' ); ?></strong>
+						<?php endif; ?>
+					</div>
 					<?php foreach ( $questions as $index => $question ) : ?>
 						<section class="les-question-correction-section">
 							<input type="hidden" name="question_ids[]" value="<?php echo esc_attr( $question['question_id'] ); ?>">
-							<h4><?php echo esc_html( sprintf( __( 'Question %d', 'logieval-secure' ), $index + 1 ) ); ?><?php $own_title = self::correction_own_title( $question ); if ( '' !== $own_title ) { echo ' - ' . esc_html( $own_title ); } ?> <span><?php echo esc_html( self::format_points( (float) $question['points'] ) ); ?> pts</span></h4>
+							<h4><?php echo esc_html( sprintf( __( 'Question %d', 'logieval-secure' ), $index + 1 ) ); ?><?php $own_title = self::correction_own_title( $question ); if ( '' !== $own_title ) { echo ' - ' . esc_html( $own_title ); } ?> <span><?php echo esc_html( self::format_points( (float) $question['points'] ) ); ?> pts</span><?php $qd = $done_map[ (int) $question['question_id'] ] ?? array(); $qdone = count( array_filter( $qd ) ); ?> <em class="les-qprogress<?php echo $qd && $qdone === count( $qd ) ? ' is-complete' : ''; ?>"><?php echo esc_html( sprintf( __( '%1$d / %2$d corrigées', 'logieval-secure' ), $qdone, count( $qd ) ) ); ?></em></h4>
 							<?php if ( self::ai_grading_is_enabled() ) : ?>
 								<div class="les-ai-bulk-toolbar is-question">
 									<button type="button" class="button les-button-secondary" data-les-ai-grade-bulk data-evaluation-id="<?php echo esc_attr( $evaluation['id'] ); ?>" data-question-id="<?php echo esc_attr( $question['question_id'] ); ?>"><?php esc_html_e( 'Pré-corriger cette question pour tous les élèves', 'logieval-secure' ); ?></button>
@@ -474,7 +506,8 @@ trait LogiEval_Secure_Evaluations_Corrections {		public static function attempt_
 					<?php self::render_criteria_summary( $question ); ?>
 						<div class="les-qcards">
 							<?php foreach ( $attempts as $attempt ) : $user = get_userdata( (int) $attempt['user_id'] ); $answers = self::get_answers_for_attempt( (int) $attempt['id'] ); $answer = self::answer_row_by_question( $answers, (int) $question['question_id'] ); if ( ! $answer ) { continue; } $max_points = max( 0, (float) $answer['points'] ); $is_blank = ! self::answer_is_complete( $answer['answer'] ?? '' ); $student_name = $user ? $user->display_name : '#' . $attempt['user_id']; $qname = 'question_manual_points[' . (int) $question['question_id'] . '][' . (int) $attempt['id'] . ']'; ?>
-								<article class="les-qcard les-question-grade-form<?php echo $is_blank ? ' is-blank' : ''; ?>" data-les-ai-grade-target data-attempt-id="<?php echo esc_attr( $attempt['id'] ); ?>" data-question-id="<?php echo esc_attr( $answer['question_id'] ); ?>" data-les-max-points="<?php echo esc_attr( $max_points ); ?>">
+								<?php $card_done = ! empty( $done_map[ (int) $question['question_id'] ][ (int) $attempt['id'] ] ); ?>
+								<article id="les-qcard-<?php echo esc_attr( (int) $question['question_id'] . '-' . (int) $attempt['id'] ); ?>" class="les-qcard les-question-grade-form<?php echo $is_blank ? ' is-blank' : ''; ?><?php echo $card_done ? ' is-saved' : ''; ?>"<?php echo $card_done ? ' data-les-saved="1"' : ''; ?> data-les-ai-grade-target data-attempt-id="<?php echo esc_attr( $attempt['id'] ); ?>" data-question-id="<?php echo esc_attr( $answer['question_id'] ); ?>" data-les-max-points="<?php echo esc_attr( $max_points ); ?>">
 									<input type="hidden" name="attempt_ids[<?php echo esc_attr( $question['question_id'] ); ?>][]" value="<?php echo esc_attr( $attempt['id'] ); ?>">
 									<header class="les-qcard-head">
 										<strong class="les-qcard-name"><?php echo esc_html( $student_name ); ?></strong>
@@ -954,7 +987,9 @@ trait LogiEval_Secure_Evaluations_Corrections {		public static function attempt_
 			}
 
 			$wpdb->query( 'COMMIT' );
-			wp_safe_redirect( self::post_redirect_url( admin_url( 'admin.php?page=logiexam-corrections&evaluation_id=' . $evaluation_id . '&question_saved=1' ), array( 'logiexam_view' => 'corrections', 'evaluation_id' => $evaluation_id, 'question_saved' => 1 ) ) );
+			$resume = sanitize_html_class( (string) wp_unslash( $_POST['les_resume_card'] ?? '' ) );
+			$args   = array( 'logiexam_view' => 'evaluation', 'evaluation_id' => $evaluation_id, 'step' => 'grade', 'correction_mode' => 'question', 'question_saved' => 1, 'les_resume' => 1 );
+			wp_safe_redirect( self::post_redirect_url( self::evaluation_url( $evaluation_id, 'grade', $args ), $args ) . ( 0 === strpos( $resume, 'les-qcard-' ) ? '#' . $resume : '' ) );
 			exit;
 		}
 

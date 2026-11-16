@@ -5742,3 +5742,50 @@ document.addEventListener('submit', function (e) {
 		setTimeout(function () { b.disabled = true; b.setAttribute('aria-busy', 'true'); b.textContent = b.textContent + ' …'; }, 0);
 	});
 }, false);
+
+/* LogiOne 1.40.6 — Correction par question : reprendre là où l'on s'était arrêté. */
+(function () {
+	function cardOf(el) { return el && el.closest ? el.closest('.les-qcard[id]') : null; }
+	function show(card) {
+		if (!card) { return; }
+		var sec = card.closest('details');
+		if (sec && !sec.open) { sec.open = true; }
+		card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		card.classList.add('les-next-focus');
+		window.setTimeout(function () { card.classList.remove('les-next-focus'); }, 2200);
+		var input = card.querySelector('input[name^="question_manual_points"]');
+		if (input) { try { input.focus({ preventScroll: true }); } catch (e) {} }
+	}
+	// Carte en cours : la dernière touchée (clic, saisie), envoyée avec l'enregistrement.
+	['focusin', 'click', 'input'].forEach(function (type) {
+		document.addEventListener(type, function (e) {
+			var card = cardOf(e.target);
+			if (!card) { return; }
+			var form = card.closest('form');
+			var field = form && form.querySelector('[data-les-resume-field]');
+			if (field) { field.value = card.id; }
+		}, true);
+	});
+	document.addEventListener('click', function (e) {
+		var go = e.target.closest ? e.target.closest('[data-les-resume-go]') : null;
+		if (!go) { return; }
+		e.preventDefault();
+		show(document.getElementById((go.getAttribute('href') || '').slice(1)));
+	});
+	function onLoad() {
+		if (!document.querySelector('.les-qcard[id]')) { return; }
+		var hash = window.location.hash ? document.getElementById(window.location.hash.slice(1)) : null;
+		var resume = /[?&]les_resume=1/.test(window.location.search);
+		var target = hash && hash.classList.contains('les-qcard') ? hash : null;
+		if (!target && resume) {
+			// La carte enregistrée est faite : on va à la suivante qui reste à corriger.
+			target = document.querySelector('.les-qcard[id]:not([data-les-saved])');
+		} else if (target && resume && target.hasAttribute('data-les-saved')) {
+			var all = Array.prototype.slice.call(document.querySelectorAll('.les-qcard[id]'));
+			var next = all.slice(all.indexOf(target) + 1).filter(function (c) { return !c.hasAttribute('data-les-saved'); })[0];
+			target = next || target;
+		}
+		if (target) { window.setTimeout(function () { show(target); }, 250); }
+	}
+	if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', onLoad); } else { onLoad(); }
+})();
