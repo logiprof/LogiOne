@@ -1875,6 +1875,12 @@ trait LogiEval_Secure_Evaluations_Editor {		private static function render_creat
 			);
 		}
 
+		// Classes ou élèves changés : les élèves qui ne sont plus visés perdent leur code tout de suite.
+		$saved_evaluation = self::get_evaluation( (int) $id );
+		if ( $saved_evaluation ) {
+			self::sync_codes_with_target( $saved_evaluation );
+		}
+
 		$new_codes = 0;
 		if ( ! $save_as_draft ) {
 			// Codes uniques générés automatiquement pour les élèves qui n'en ont pas encore.

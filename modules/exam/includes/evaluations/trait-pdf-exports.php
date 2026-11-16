@@ -11,7 +11,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 trait LogiEval_Secure_Evaluations_Pdf_Exports {	private static function codes_count_for_evaluation( int $evaluation_id ): int {
 		global $wpdb;
 		$t = LogiEval_Secure_Database::tables();
-		return (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$t['codes']} WHERE evaluation_id=%d", $evaluation_id ) );
+		$evaluation = self::get_evaluation( $evaluation_id );
+		$targeted   = $evaluation ? array_map( 'intval', self::resolve_student_ids( $evaluation ) ) : array();
+		$users      = array_map( 'intval', (array) $wpdb->get_col( $wpdb->prepare( "SELECT user_id FROM {$t['codes']} WHERE evaluation_id=%d AND status<>'revoked'", $evaluation_id ) ) );
+		return count( array_intersect( $users, $targeted ) ); // Seulement la classe choisie.
+	}
+
+	/**
+	 * Aligne les codes sur la cible actuelle de l'évaluation (classes et élèves choisis).
+	 * Un élève qui n'est plus visé perd son code (statut « revoked » : il ne peut plus entrer),
+	 * sauf s'il a déjà commencé l'évaluation : sa copie et son accès sont conservés.
+	 */
+	private static function sync_codes_with_target( array $evaluation ): int {
+		global $wpdb;
+		$t        = LogiEval_Secure_Database::tables();
+		$id       = (int) $evaluation['id'];
+		$targeted = array_map( 'intval', self::resolve_student_ids( $evaluation ) );
+		$started  = array_map( 'intval', (array) $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT user_id FROM {$t['attempts']} WHERE evaluation_id=%d", $id ) ) );
+		$revoked  = 0;
+		foreach ( (array) $wpdb->get_results( $wpdb->prepare( "SELECT id, user_id, status FROM {$t['codes']} WHERE evaluation_id=%d", $id ), ARRAY_A ) as $row ) {
+			$uid = (int) $row['user_id'];
+			if ( 'revoked' === (string) $row['status'] || in_array( $uid, $targeted, true ) || in_array( $uid, $started, true ) ) {
+				continue;
+			}
+			$wpdb->update( $t['codes'], array( 'status' => 'revoked', 'session_token' => null ), array( 'id' => (int) $row['id'] ) );
+			$revoked++;
+		}
+		return $revoked;
 	}
 
 	private static function latest_codes_pdf_export( int $evaluation_id ): ?array {
@@ -159,10 +185,22 @@ trait LogiEval_Secure_Evaluations_Pdf_Exports {	private static function codes_co
 		if ( ! $evaluation || 'published' !== (string) ( $evaluation['status'] ?? '' ) ) {
 			return 0;
 		}
-		$existing = array_map( 'absint', (array) $wpdb->get_col( $wpdb->prepare( "SELECT user_id FROM {$t['codes']} WHERE evaluation_id=%d", $evaluation_id ) ) );
+		self::sync_codes_with_target( $evaluation );
+		$existing = array();
+		foreach ( (array) $wpdb->get_results( $wpdb->prepare( "SELECT id, user_id, status FROM {$t['codes']} WHERE evaluation_id=%d", $evaluation_id ), ARRAY_A ) as $row ) {
+			$existing[ (int) $row['user_id'] ] = $row;
+		}
 		$created  = 0;
 		foreach ( self::resolve_student_ids( $evaluation ) as $user_id ) {
-			if ( in_array( (int) $user_id, $existing, true ) ) {
+			$row = $existing[ (int) $user_id ] ?? null;
+			if ( $row && 'revoked' === (string) $row['status'] ) {
+				// Élève de nouveau visé (classe remise) : nouveau code actif.
+				$plain = strtoupper( wp_generate_password( 10, false, false ) );
+				$wpdb->update( $t['codes'], array( 'code_hash' => wp_hash_password( $plain ), 'code_preview' => substr( $plain, -4 ), 'code_encrypted' => LogiEval_Secure_AI::encrypt( $plain ), 'status' => 'active', 'session_token' => null ), array( 'id' => (int) $row['id'] ) );
+				$created++;
+				continue;
+			}
+			if ( $row ) {
 				continue;
 			}
 			$plain = strtoupper( wp_generate_password( 10, false, false ) );
@@ -188,7 +226,12 @@ trait LogiEval_Secure_Evaluations_Pdf_Exports {	private static function codes_co
 		global $wpdb;
 		$t     = LogiEval_Secure_Database::tables();
 		$codes = array();
-		foreach ( (array) $wpdb->get_results( $wpdb->prepare( "SELECT user_id, code_encrypted FROM {$t['codes']} WHERE evaluation_id=%d AND code_encrypted IS NOT NULL AND code_encrypted<>''", $evaluation_id ), ARRAY_A ) as $row ) {
+		$evaluation = self::get_evaluation( $evaluation_id );
+		$targeted   = $evaluation ? array_map( 'intval', self::resolve_student_ids( $evaluation ) ) : array();
+		foreach ( (array) $wpdb->get_results( $wpdb->prepare( "SELECT user_id, code_encrypted FROM {$t['codes']} WHERE evaluation_id=%d AND status<>'revoked' AND code_encrypted IS NOT NULL AND code_encrypted<>''", $evaluation_id ), ARRAY_A ) as $row ) {
+			if ( ! in_array( (int) $row['user_id'], $targeted, true ) ) {
+				continue; // Plus dans la classe choisie : pas sur les fiches.
+			}
 			$plain = LogiEval_Secure_AI::decrypt( (string) $row['code_encrypted'] );
 			if ( '' !== $plain ) {
 				$codes[ (int) $row['user_id'] ] = $plain;
@@ -205,6 +248,7 @@ trait LogiEval_Secure_Evaluations_Pdf_Exports {	private static function codes_co
 			return array();
 		}
 
+		self::sync_codes_with_target( $evaluation );
 		$user_ids = self::resolve_student_ids( $evaluation );
 		$codes    = array();
 		foreach ( $user_ids as $user_id ) {
