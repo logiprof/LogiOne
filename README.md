@@ -67,6 +67,15 @@ Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées
 - Exception : un élève qui a déjà commencé l’évaluation garde son accès, pour ne pas perdre sa copie.
 - Si un élève est remis dans la cible, il reçoit un nouveau code actif.
 
+## Nouveautés 1.40.3 (LogiExam : correction par question)
+
+- La correction « Par question » affiche une carte par élève, comme la correction élève par élève :
+  - réponse de l’élève à côté de la réponse attendue ;
+  - critères et analyse IA ;
+  - ligne de points (« Tous les points », « Moitié », « Aucun point », « Points de l’IA », « Points manuels ») ;
+  - commentaire pleine largeur.
+- Fini le tableau à 5 colonnes étroites. Enregistrement, passage automatique à l’élève suivant et « Attribuer les points proposés par l’IA » fonctionnent comme avant.
+
 ## Nouveautés 1.40.2 (accueil LogiOne)
 
 - Le bandeau d’accueil est aligné sur la mosaïque de tuiles, y compris en largeur « Toute la largeur de l’écran ».

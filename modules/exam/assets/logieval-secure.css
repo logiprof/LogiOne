@@ -3645,3 +3645,13 @@ body.les-fabs-off .les-fab-draft { opacity: 0 !important; pointer-events: none; 
 .logieval-secure .les-ai-exchange-file input[type=file]{width:auto;border:0;padding:0;min-height:0}
 .logieval-secure .les-ai-exchange-table{margin:8px 0}
 .logieval-secure .les-ai-exchange-warnings{color:#92400e;margin:6px 0 6px 18px;list-style:disc}
+
+/* 1.40.3 — Correction par question : une carte par élève, comme la correction élève par élève. */
+.logieval-secure .les-qcards { display: grid; gap: 16px; margin-top: 14px; }
+.logieval-secure .les-qcard { background: #fff; border: 1px solid #dbe3ea; border-left: 4px solid #2563eb; border-radius: 12px; padding: 14px 16px; box-shadow: 0 1px 2px rgba(15, 23, 42, .04); }
+.logieval-secure .les-qcard.is-blank { border-left-color: #f59e0b; }
+.logieval-secure .les-qcard.les-next-focus { box-shadow: 0 0 0 3px rgba(37, 99, 235, .35); }
+.logieval-secure .les-qcard-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; padding-bottom: 8px; border-bottom: 1px solid #eef2f6; }
+.logieval-secure .les-qcard-name { font-size: 16px; margin-right: auto; }
+.logieval-secure .les-qcard .les-points-tools { margin-top: 10px; }
+.logieval-secure .les-qcard .les-comment-box { margin-top: 10px; }

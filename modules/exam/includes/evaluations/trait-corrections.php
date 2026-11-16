@@ -471,44 +471,56 @@ trait LogiEval_Secure_Evaluations_Corrections {		public static function attempt_
 						<?php if ( ! empty( $question['context'] ) ) : ?><div class="les-question-context"><?php echo wp_kses_post( wpautop( $question['context'] ) ); ?></div><?php endif; ?>
 						<div class="les-prompt les-correction-prompt"><?php echo wp_kses_post( wpautop( $question['prompt'] ) ); ?></div>
 						<?php self::render_question_image( absint( $question['media_id'] ?? 0 ), 'is-small' ); ?>
-						<?php self::render_expected_answer_box( (int) $question['question_id'], (string) ( $question['expected_answer'] ?? '' ), (string) ( $question['type'] ?? '' ) ); ?>
 					<?php self::render_criteria_summary( $question ); ?>
-						<div class="les-table-scroll les-question-correction-scroll">
-								<table class="widefat striped les-question-correction-table">
-								<thead><tr><th><?php esc_html_e( 'Élève', 'logieval-secure' ); ?></th><th><?php esc_html_e( 'Réponse élève', 'logieval-secure' ); ?></th><th><?php esc_html_e( 'Points', 'logieval-secure' ); ?></th><th><?php esc_html_e( 'Commentaire', 'logieval-secure' ); ?></th><th><?php esc_html_e( 'État', 'logieval-secure' ); ?></th></tr></thead>
-								<tbody>
-									<?php foreach ( $attempts as $attempt ) : $user = get_userdata( (int) $attempt['user_id'] ); $answers = self::get_answers_for_attempt( (int) $attempt['id'] ); $answer = self::answer_row_by_question( $answers, (int) $question['question_id'] ); if ( ! $answer ) { continue; } $max_points = max( 0, (float) $answer['points'] ); ?>
-										<tr>
-											<td><?php echo esc_html( $user ? $user->display_name : '#' . $attempt['user_id'] ); ?></td>
-												<td><?php if ( ! LogiEval_Secure_Question_Types::render_order_answer( $answer, (string) ( $answer['answer'] ?? '' ) ) ) : ?><pre><?php echo esc_html( self::readable_answer( $answer['answer'] ?? '' ) ); ?></pre><?php endif; ?><?php self::render_ai_analysis_box( $answer ); ?></td>
-												<td>
-														<div class="les-question-grade-form" data-les-ai-grade-target data-attempt-id="<?php echo esc_attr( $attempt['id'] ); ?>" data-question-id="<?php echo esc_attr( $answer['question_id'] ); ?>">
-														<input type="hidden" name="attempt_ids[<?php echo esc_attr( $question['question_id'] ); ?>][]" value="<?php echo esc_attr( $attempt['id'] ); ?>">
-														<div class="les-points-tools">
-														<div class="les-points-buttons">
-															<button type="button" class="button les-button-secondary" onclick="var i=this.closest('.les-question-grade-form').querySelector('input[name^=question_manual_points]');if(i){i.value=this.dataset.lesSetPoints;}" data-les-set-points="<?php echo esc_attr( self::format_points( $max_points ) ); ?>"><?php esc_html_e( 'Tous', 'logieval-secure' ); ?></button>
-															<button type="button" class="button les-button-secondary" onclick="var i=this.closest('.les-question-grade-form').querySelector('input[name^=question_manual_points]');if(i){i.value=this.dataset.lesSetPoints;}" data-les-set-points="<?php echo esc_attr( self::format_points( $max_points / 2 ) ); ?>"><?php esc_html_e( 'Moitié', 'logieval-secure' ); ?></button>
-															<button type="button" class="button les-button-secondary" onclick="var i=this.closest('.les-question-grade-form').querySelector('input[name^=question_manual_points]');if(i){i.value=this.dataset.lesSetPoints;}" data-les-set-points="0"><?php esc_html_e( 'Aucun', 'logieval-secure' ); ?></button>
-															<?php self::render_ai_accept_button( $answer, true ); ?>
-														</div>
-															<?php if ( self::ai_grading_is_enabled() ) : ?>
-																<div class="les-ai-grade-tools">
-																	<button type="button" class="button les-button-secondary" data-les-ai-grade data-attempt-id="<?php echo esc_attr( $attempt['id'] ); ?>" data-question-id="<?php echo esc_attr( $answer['question_id'] ); ?>"><?php esc_html_e( 'IA', 'logieval-secure' ); ?></button>
-																	<span class="les-ai-grade-status" aria-live="polite"></span>
-																</div>
-															<?php endif; ?>
-															<input type="text" inputmode="decimal" name="question_manual_points[<?php echo esc_attr( $question['question_id'] ); ?>][<?php echo esc_attr( $attempt['id'] ); ?>]" value="<?php echo esc_attr( self::correction_points_value( $answer, $max_points ) ); ?>">
-															<?php self::render_criteria_checklist( $answer, true ); ?>
-															</div>
-														</div>
-													</td>
-													<td><?php list( $comment_text, $comment_auto ) = self::correction_comment_value( $answer ); ?><details class="les-comment-box is-compact<?php echo '' !== $comment_text ? ' is-filled' : ''; ?>"<?php echo '' !== $comment_text ? ' open' : ''; ?>><summary><span class="les-comment-add"><?php esc_html_e( '+ Commentaire', 'logieval-secure' ); ?></span><span class="les-comment-has">💬 <span class="les-comment-preview"><?php echo esc_html( $comment_text ); ?></span></span><span class="les-comment-title"><?php esc_html_e( 'Commentaire', 'logieval-secure' ); ?> <span class="les-comment-close"><?php esc_html_e( '(replier)', 'logieval-secure' ); ?></span></span></summary><textarea name="question_teacher_comment[<?php echo esc_attr( $question['question_id'] ); ?>][<?php echo esc_attr( $attempt['id'] ); ?>]" aria-label="<?php esc_attr_e( 'Commentaire', 'logieval-secure' ); ?>"<?php echo $comment_auto ? ' data-auto-comment="' . esc_attr( $comment_text ) . '"' : ''; ?>><?php echo esc_textarea( $comment_text ); ?></textarea><?php self::render_regen_comment_button( (int) $attempt['id'], (int) $question['question_id'], true ); ?></details></td>
-													<td><?php echo is_numeric( $answer['manual_points'] ?? null ) ? '<span class="les-save-state les-alert-badge is-ok">' . esc_html__( 'Sauvegardé', 'logieval-secure' ) . '</span>' : '<span class="les-save-state les-alert-badge is-warning">' . esc_html__( 'À enregistrer', 'logieval-secure' ) . '</span>'; ?></td>
-											</tr>
-									<?php endforeach; ?>
-								</tbody>
-							</table>
-							</div>
+						<div class="les-qcards">
+							<?php foreach ( $attempts as $attempt ) : $user = get_userdata( (int) $attempt['user_id'] ); $answers = self::get_answers_for_attempt( (int) $attempt['id'] ); $answer = self::answer_row_by_question( $answers, (int) $question['question_id'] ); if ( ! $answer ) { continue; } $max_points = max( 0, (float) $answer['points'] ); $is_blank = ! self::answer_is_complete( $answer['answer'] ?? '' ); $student_name = $user ? $user->display_name : '#' . $attempt['user_id']; $qname = 'question_manual_points[' . (int) $question['question_id'] . '][' . (int) $attempt['id'] . ']'; ?>
+								<article class="les-qcard les-question-grade-form<?php echo $is_blank ? ' is-blank' : ''; ?>" data-les-ai-grade-target data-attempt-id="<?php echo esc_attr( $attempt['id'] ); ?>" data-question-id="<?php echo esc_attr( $answer['question_id'] ); ?>" data-les-max-points="<?php echo esc_attr( $max_points ); ?>">
+									<input type="hidden" name="attempt_ids[<?php echo esc_attr( $question['question_id'] ); ?>][]" value="<?php echo esc_attr( $attempt['id'] ); ?>">
+									<header class="les-qcard-head">
+										<strong class="les-qcard-name"><?php echo esc_html( $student_name ); ?></strong>
+										<?php if ( $is_blank ) : ?><span class="les-blank-badge"><?php esc_html_e( 'Non répondu : 0 pt', 'logieval-secure' ); ?></span><?php endif; ?>
+										<?php echo is_numeric( $answer['manual_points'] ?? null ) ? '<span class="les-save-state les-alert-badge is-ok">' . esc_html__( 'Sauvegardé', 'logieval-secure' ) . '</span>' : '<span class="les-save-state les-alert-badge is-warning">' . esc_html__( 'À enregistrer', 'logieval-secure' ) . '</span>'; ?>
+									</header>
+									<div class="les-answer-compare">
+										<div class="les-student-answer">
+											<strong class="les-student-answer-label"><span aria-hidden="true">✎</span> <?php echo esc_html( sprintf( __( 'Réponse de l’élève · %s', 'logieval-secure' ), $student_name ) ); ?></strong>
+											<?php if ( ! LogiEval_Secure_Question_Types::render_order_answer( $answer, (string) ( $answer['answer'] ?? '' ) ) ) : ?>
+												<?php $student_text = self::readable_answer( $answer['answer'] ?? '' ); ?>
+												<div class="les-student-answer-text"><?php echo '' !== trim( (string) $student_text ) ? nl2br( esc_html( $student_text ) ) : '<em>' . esc_html__( 'Aucune réponse', 'logieval-secure' ) . '</em>'; ?></div>
+											<?php endif; ?>
+										</div>
+										<?php self::render_expected_answer_box( (int) $question['question_id'], (string) ( $question['expected_answer'] ?? '' ), (string) ( $question['type'] ?? '' ) ); ?>
+									</div>
+									<div class="les-crit-ai">
+										<?php self::render_criteria_checklist( $answer ); ?>
+										<?php self::render_ai_analysis_box( $answer ); ?>
+									</div>
+									<div class="les-points-tools">
+										<strong><?php echo esc_html( sprintf( __( 'Points attribués / %s pts possibles', 'logieval-secure' ), self::format_points( $max_points ) ) ); ?></strong>
+										<div class="les-points-buttons">
+											<?php foreach ( array( array( __( 'Tous les points', 'logieval-secure' ), $max_points ), array( __( 'Moitié', 'logieval-secure' ), $max_points / 2 ), array( __( 'Aucun point', 'logieval-secure' ), 0 ) ) as $pbtn ) : ?>
+												<button type="button" class="button les-button-secondary" onclick="var i=this.closest('.les-question-grade-form').querySelector('input[name^=question_manual_points]');if(i){i.value=this.dataset.lesSetPoints;i.dispatchEvent(new Event('input',{bubbles:true}));}" data-les-set-points="<?php echo esc_attr( self::format_points( (float) $pbtn[1] ) ); ?>"><?php echo esc_html( $pbtn[0] ); ?></button>
+											<?php endforeach; ?>
+											<?php self::render_ai_accept_button( $answer ); ?>
+											<label class="les-manual-points" data-les-manual-points><span><?php esc_html_e( 'Points manuels', 'logieval-secure' ); ?></span><input type="text" inputmode="decimal" name="<?php echo esc_attr( $qname ); ?>" value="<?php echo esc_attr( self::correction_points_value( $answer, $max_points ) ); ?>" data-auto-points="<?php echo esc_attr( is_numeric( $answer['auto_points'] ?? null ) ? (float) $answer['auto_points'] : '' ); ?>" data-saved-manual="<?php echo esc_attr( is_numeric( $answer['manual_points'] ?? null ) ? (float) $answer['manual_points'] : '' ); ?>"><em class="les-manual-tag" aria-hidden="true"><?php esc_html_e( '✎ saisi à la main', 'logieval-secure' ); ?></em></label>
+										</div>
+										<?php if ( self::ai_grading_is_enabled() ) : ?>
+											<div class="les-ai-grade-tools">
+												<button type="button" class="button les-button-secondary" data-les-ai-grade data-attempt-id="<?php echo esc_attr( $attempt['id'] ); ?>" data-question-id="<?php echo esc_attr( $answer['question_id'] ); ?>"><?php esc_html_e( 'Pré-corriger avec l’IA', 'logieval-secure' ); ?></button>
+												<span class="les-ai-grade-status" aria-live="polite"></span>
+											</div>
+										<?php endif; ?>
+									</div>
+									<?php list( $comment_text, $comment_auto ) = self::correction_comment_value( $answer ); ?>
+									<details class="les-comment-box<?php echo '' !== $comment_text ? ' is-filled' : ''; ?>"<?php echo '' !== $comment_text ? ' open' : ''; ?>>
+										<summary><span class="les-comment-add"><?php esc_html_e( '+ Ajouter un commentaire', 'logieval-secure' ); ?></span><span class="les-comment-has">💬 <?php esc_html_e( 'Commentaire :', 'logieval-secure' ); ?> <span class="les-comment-preview"><?php echo esc_html( $comment_text ); ?></span> <span class="les-comment-edit"><?php esc_html_e( 'modifier', 'logieval-secure' ); ?></span></span><span class="les-comment-title"><?php esc_html_e( 'Commentaire pour l’élève', 'logieval-secure' ); ?> <span class="les-comment-close"><?php esc_html_e( '(replier)', 'logieval-secure' ); ?></span></span></summary>
+										<?php if ( $comment_auto ) : ?><p class="les-comment-auto-note"><?php esc_html_e( 'Commentaire proposé par l’IA : relisez-le et adaptez-le si besoin ; il est enregistré avec la correction.', 'logieval-secure' ); ?></p><?php endif; ?>
+										<textarea name="question_teacher_comment[<?php echo esc_attr( $question['question_id'] ); ?>][<?php echo esc_attr( $attempt['id'] ); ?>]" aria-label="<?php esc_attr_e( 'Commentaire', 'logieval-secure' ); ?>"<?php echo $comment_auto ? ' data-auto-comment="' . esc_attr( $comment_text ) . '"' : ''; ?>><?php echo esc_textarea( $comment_text ); ?></textarea>
+										<?php self::render_regen_comment_button( (int) $attempt['id'], (int) $question['question_id'] ); ?>
+									</details>
+								</article>
+							<?php endforeach; ?>
+						</div>
 							</section>
 						<?php endforeach; ?>
 						<section class="les-question-correction-section les-bonus-malus-section">

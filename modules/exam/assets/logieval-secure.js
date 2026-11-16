@@ -968,7 +968,7 @@
 	document.addEventListener('click', function (event) {
 		const open = event.target.closest('[data-les-ai-compare-open]');
 		if (open) {
-			const scope = open.closest('.les-answer-grade') || open.closest('tr') || document;
+			const scope = open.closest('.les-answer-grade') || open.closest('tr, .les-qcard') || document;
 			const panel = scope.querySelector('[data-les-ai-compare]');
 			if (!panel) return;
 			const opts = providerOptions(open.parentElement);
@@ -1009,7 +1009,7 @@
 			keep.disabled = true;
 			postSafe('logieval_secure_ai_grade_keep', { attempt_id: panel.dataset.attemptId, question_id: panel.dataset.questionId, choice: keep.dataset.lesCmpKeep, provider: '' }).then(function (json) {
 				if (!json || !json.success) throw new Error((json && json.data && json.data.message) || LogiEvalSecure.i18n.error);
-				const container = panel.closest('.les-answer-grade') || panel.closest('tr');
+				const container = panel.closest('.les-answer-grade') || panel.closest('tr, .les-qcard');
 				applyAiGradeResult(container, json.data, true);
 				panel.hidden = true;
 				const st = container ? container.querySelector('.les-ai-grade-status') : null;
@@ -1031,7 +1031,7 @@
 			const regen = event.target.closest('[data-les-regen-comment]');
 			if (!regen) return;
 			event.preventDefault();
-			const scope = regen.closest('.les-answer-grade') || regen.closest('tr') || regen.closest('.les-question-grade-form');
+			const scope = regen.closest('.les-answer-grade') || regen.closest('tr, .les-qcard') || regen.closest('.les-question-grade-form');
 			const box = regen.closest('details') || scope;
 			const textarea = box ? box.querySelector('textarea') : null;
 			const status = regen.parentElement ? regen.parentElement.querySelector('.les-regen-status') : null;
@@ -1077,7 +1077,7 @@
 
 			const button = event.target.closest('[data-les-ai-grade]');
 			if (!button) return;
-			const container = button.closest('.les-answer-grade') || button.closest('.les-question-grade-form') || button.closest('tr');
+			const container = button.closest('.les-answer-grade') || button.closest('.les-question-grade-form') || button.closest('tr, .les-qcard');
 			const status = button.parentElement ? button.parentElement.querySelector('.les-ai-grade-status') : null;
 			const attemptId = button.dataset.attemptId || '';
 			const questionId = button.dataset.questionId || '';
@@ -1195,7 +1195,7 @@
 	   pour l'élève est TOUJOURS réécrit d'après la nouvelle correction ; l'ancien reste récupérable (« Remettre l'ancien »). */
 	function applyAiGradeResult(container, data, force) {
 		if (!container || !data) return;
-		const scope = container.closest('tr') || container;
+		const scope = container.closest('tr, .les-qcard') || container;
 		const pointsInput = container.querySelector('input[name^="manual_points"], input[name^="question_manual_points"]') || scope.querySelector('input[name^="manual_points"], input[name^="question_manual_points"]');
 		const commentInput = scope.querySelector('textarea[name^="teacher_comment"], textarea[name^="question_teacher_comment"]');
 		if (pointsInput) {
@@ -4472,7 +4472,7 @@
 (function () {
 	'use strict';
 	function targets(button) {
-		var scope = button.closest('tr') || button.closest('.les-answer-grade') || button.closest('.les-points-tools');
+		var scope = button.closest('tr, .les-qcard') || button.closest('.les-answer-grade') || button.closest('.les-points-tools');
 		var tools = button.closest('.les-question-grade-form') || button.closest('.les-points-tools') || scope;
 		return {
 			scope: scope,
@@ -4588,7 +4588,7 @@
 	'use strict';
 	function num(v) { var x = parseFloat(String(v === undefined || v === null ? '' : v).replace(',', '.')); return isNaN(x) ? null : x; }
 	function mark(input) {
-		var scope = input.closest('.les-answer-grade') || input.closest('tr');
+		var scope = input.closest('.les-answer-grade') || input.closest('tr, .les-qcard');
 		var label = input.closest('[data-les-manual-points]') || input.parentElement;
 		var v = num(input.value);
 		var accept = scope ? scope.querySelector('[data-les-ai-accept]') : null;
@@ -4929,7 +4929,7 @@
 	}
 	/* Après un raccourci de points : commentaire ouvert + invitation à le revoir (pas de passage automatique). */
 	function inviteComment(from) {
-		var scope = from.closest('.les-answer-grade') || from.closest('tr');
+		var scope = from.closest('.les-answer-grade') || from.closest('tr, .les-qcard');
 		if (!scope) { return; }
 		var review = commentReviewNeeded(scope);
 		if (review) { showCommentReview(review, from); return; }
@@ -4967,7 +4967,7 @@
 		var t = event.target;
 		if (t && t.matches && t.matches('textarea[name^="teacher_comment"], textarea[name^="question_teacher_comment"]') && event.isTrusted) {
 			t.dataset.userEdited = '1';
-			var note = (t.closest('.les-answer-grade') || t.closest('tr') || document).querySelector('.les-comment-review');
+			var note = (t.closest('.les-answer-grade') || t.closest('tr, .les-qcard') || document).querySelector('.les-comment-review');
 			if (note) { note.remove(); }
 		}
 	}, true);
@@ -4975,14 +4975,14 @@
 		// Nouveaux points saisis : le commentaire devra peut-être de nouveau être revu.
 		var t = event.target;
 		if (t && t.matches && t.matches('input[name^="manual_points"], input[name^="question_manual_points"]')) {
-			var scope = t.closest('.les-answer-grade') || t.closest('tr');
+			var scope = t.closest('.les-answer-grade') || t.closest('tr, .les-qcard');
 			var area = scope ? scope.querySelector('textarea[name^="teacher_comment"], textarea[name^="question_teacher_comment"]') : null;
 			if (area && area.dataset.regenFor && area.dataset.regenFor !== String(num(t.value))) { delete area.dataset.regenFor; }
 		}
 	}, true);
 
 	function goNext(from) {
-		var review = commentReviewNeeded(from.closest('.les-answer-grade') || from.closest('tr'));
+		var review = commentReviewNeeded(from.closest('.les-answer-grade') || from.closest('tr, .les-qcard'));
 		if (review) { showCommentReview(review, from); return; }
 		var form = from.closest('form');
 		var pager = form ? form.__lesPager : null;
@@ -4997,8 +4997,8 @@
 			next = nextOf(item, '.les-answer-grade');
 			if (!next) { next = form ? form.querySelector('textarea[name="teacher_comment_global"]') : null; }
 		} else {
-			var row = from.closest('tr');
-			if (row) { next = nextOf(row, 'tr'); }
+			var row = from.closest('tr, .les-qcard');
+			if (row) { next = nextOf(row, row.matches('tr') ? 'tr' : '.les-qcard'); }
 			if (!next && row) { var section = row.closest('.les-question-correction-section'); next = section ? nextOf(section, '.les-question-correction-section') : null; }
 		}
 		if (!next) { return; }
