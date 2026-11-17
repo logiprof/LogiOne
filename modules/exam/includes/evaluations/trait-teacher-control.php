@@ -72,7 +72,7 @@ trait LogiEval_Secure_Evaluations_Teacher_Control {
 			'restore'     => 'security_terminated' === $status && $finished_not_graded,
 			'reopen'      => in_array( $status, array( 'submitted', 'submitted_locked' ), true ) && $finished_not_graded,
 			// 1.41.1 : copie jamais envoyée (élève parti sans cliquer « Envoyer », évaluation sans limite de temps…).
-			'finish'      => empty( $attempt['submitted_at'] ) && in_array( $status, array( 'in_progress', 'security_paused', 'locked_exit_attempt' ), true ),
+			'finish'      => ( empty( $attempt['submitted_at'] ) || 0 === strpos( (string) $attempt['submitted_at'], '0000' ) ) && in_array( $status, array( 'in_progress', 'security_paused', 'locked_exit_attempt' ), true ),
 			'graded_lock' => in_array( $status, array( 'submitted', 'submitted_locked', 'security_terminated' ), true ) && ! $finished_not_graded,
 			'exits'       => self::security_exit_count_from_logs( $logs ),
 			'blocks'      => self::security_block_count_from_logs( $logs ),
