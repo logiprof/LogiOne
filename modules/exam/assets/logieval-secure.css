@@ -3755,7 +3755,9 @@ body.les-fabs-off .les-fab-draft { opacity: 0 !important; pointer-events: none; 
 .logieval-secure .les-ss-points { color: var(--les-muted); font-size: 14px; }
 .logieval-secure .les-ss-grade { min-width: 54px; padding: 4px 10px; border-radius: 8px; background: #313a45; color: #fff; font-size: 20px; text-align: center; }
 .logieval-secure .is-pending .les-ss-grade, .logieval-secure .is-running .les-ss-grade, .logieval-secure .is-to_grade .les-ss-grade { background: #e5e7eb; color: #64748b; }
-.logieval-secure .les-ss-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.logieval-secure .les-ss-actions { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 8px; margin-top: 10px; }
+.logieval-secure .les-ss-actions .les-ctl { margin: 0; }
+.logieval-secure .les-ss-running-note { margin: 10px 0 0; padding: 8px 12px; border-radius: 8px; background: #fff8e1; color: #6b4e00; font-size: 13px; }
 .logieval-secure .les-ss-detail { margin-top: 10px; max-width: 100%; overflow-x: auto; }
 .logieval-secure .les-ss-detail summary { cursor: pointer; font-weight: 600; color: var(--les-accent); }
 .logieval-secure .les-ss-detail-table { width: 100%; margin-top: 8px; border-collapse: collapse; font-size: 14px; }

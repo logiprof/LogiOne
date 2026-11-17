@@ -112,6 +112,7 @@ trait LogiEval_Secure_Evaluations_Student_Search {
 		if ( $selected && ! isset( $pool[ $selected ] ) ) {
 			$selected = 0;
 		}
+		self::render_attempt_control_notice();
 		$groups = array();
 		foreach ( $pool as $row ) {
 			foreach ( $row['groups'] as $g ) {
@@ -267,7 +268,15 @@ trait LogiEval_Secure_Evaluations_Student_Search {
 									<a class="button les-button-secondary" href="<?php echo esc_url( self::evaluation_url( $eid, 'run' ) ); ?>"><?php esc_html_e( 'Suivre la passation', 'logieval-secure' ); ?></a>
 								<?php endif; ?>
 								<a class="button les-button-secondary" href="<?php echo esc_url( self::evaluation_url( $eid ) ); ?>"><?php esc_html_e( 'Ouvrir l’évaluation', 'logieval-secure' ); ?></a>
+								<?php if ( 'running' === $row['state'] && $attempt ) : ?>
+									<?php self::render_attempt_control_menu( $attempt ); ?>
+								<?php endif; ?>
 							</div>
+							<?php if ( 'running' === $row['state'] && $attempt ) : $saved = self::completed_answer_count( self::get_answers_for_attempt( (int) $attempt['id'] ) ); $nbq = count( self::get_questions_for_evaluation( $eid ) ); ?>
+								<p class="les-ss-running-note">
+									<?php echo esc_html( sprintf( __( 'Copie jamais envoyée : %1$d réponse(s) enregistrée(s) sur %2$d question(s). Elle n’apparaît pas dans les copies à corriger tant qu’elle n’est pas terminée. Si l’élève a fini en classe, ouvrez « ⚙ Gérer » › « Terminer la copie et l’envoyer en correction ».', 'logieval-secure' ), $saved, $nbq ) ); ?>
+								</p>
+							<?php endif; ?>
 							<?php if ( $row['submitted'] && 'cancelled' !== $row['state'] ) : ?>
 								<?php self::render_student_search_detail( (int) $attempt['id'], (string) $row['state'] ); ?>
 							<?php endif; ?>

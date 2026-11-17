@@ -1,4 +1,4 @@
-# LogiOne 1.41.0
+# LogiOne 1.41.1
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,12 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.41.1 (LogiExam : copies restées « en cours »)
+
+- Une copie que l'élève n'a jamais envoyée (parti sans cliquer sur « Envoyer », évaluation sans limite de temps) restait « En cours » et n'apparaissait pas dans les copies à corriger.
+- Nouvelle action « ⚙ Gérer » › « Terminer la copie et l'envoyer en correction » : la copie part en correction avec les réponses déjà enregistrées (action notée dans le journal, copie réouvrable ensuite).
+- Disponible dans « Suivre la passation » et dans l'onglet « Par élève », qui indique aussi combien de réponses sont enregistrées.
 
 ## Nouveautés 1.41.0 (LogiExam : recherche par élève)
 

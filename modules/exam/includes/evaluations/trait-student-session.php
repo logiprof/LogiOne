@@ -675,7 +675,7 @@ trait LogiEval_Secure_Evaluations_Student_Session {
 			return array( (float) ( $result['bonus_points'] ?? 0 ), (float) ( $result['malus_points'] ?? 0 ) );
 		}
 
-		public static function expire_attempt( array $attempt ): void {
+		public static function expire_attempt( array $attempt, string $reason = 'time' ): void {
 			global $wpdb;
 			$t = LogiEval_Secure_Database::tables();
 			$wpdb->update(
@@ -714,7 +714,11 @@ trait LogiEval_Secure_Evaluations_Student_Session {
 				$data['created_at']    = current_time( 'mysql' );
 				$wpdb->insert( $t['results'], $data );
 			}
-			LogiEval_Secure_Security::log_event( (int) $attempt['evaluation_id'], (int) $attempt['user_id'], 'time_expired_auto_submit', __( "Temps écoulé : l'évaluation a été clôturée automatiquement.", 'logieval-secure' ), (int) $attempt['id'], 'info' );
+			if ( 'teacher' === $reason ) {
+				LogiEval_Secure_Security::log_event( (int) $attempt['evaluation_id'], (int) $attempt['user_id'], 'teacher_finish', __( 'L’enseignant a terminé la copie restée en cours et l’a envoyée en correction.', 'logieval-secure' ), (int) $attempt['id'], 'info' );
+			} else {
+				LogiEval_Secure_Security::log_event( (int) $attempt['evaluation_id'], (int) $attempt['user_id'], 'time_expired_auto_submit', __( "Temps écoulé : l'évaluation a été clôturée automatiquement.", 'logieval-secure' ), (int) $attempt['id'], 'info' );
+			}
 		}
 
 		public static function current_attempt_from_request( array $allowed_statuses = array( 'in_progress' ), bool $allow_expired = false ): ?array {

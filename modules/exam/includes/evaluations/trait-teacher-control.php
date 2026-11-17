@@ -71,6 +71,8 @@ trait LogiEval_Secure_Evaluations_Teacher_Control {
 			'add_time'    => $running && ! empty( $attempt['expires_at'] ),
 			'restore'     => 'security_terminated' === $status && $finished_not_graded,
 			'reopen'      => in_array( $status, array( 'submitted', 'submitted_locked' ), true ) && $finished_not_graded,
+			// 1.41.1 : copie jamais envoyée (élève parti sans cliquer « Envoyer », évaluation sans limite de temps…).
+			'finish'      => empty( $attempt['submitted_at'] ) && in_array( $status, array( 'in_progress', 'security_paused', 'locked_exit_attempt' ), true ),
 			'graded_lock' => in_array( $status, array( 'submitted', 'submitted_locked', 'security_terminated' ), true ) && ! $finished_not_graded,
 			'exits'       => self::security_exit_count_from_logs( $logs ),
 			'blocks'      => self::security_block_count_from_logs( $logs ),
@@ -100,7 +102,7 @@ trait LogiEval_Secure_Evaluations_Teacher_Control {
 	/** Menu « ⚙ Gérer » : toutes les actions possibles sur la copie d'un élève. */
 	private static function render_attempt_control_menu( array $attempt, ?array $logs = null ): void {
 		$o = self::attempt_control_options( $attempt, $logs );
-		if ( ! $o['unlock'] && ! $o['reset_exits'] && ! $o['add_time'] && ! $o['restore'] && ! $o['reopen'] && ! $o['graded_lock'] ) {
+		if ( ! $o['unlock'] && ! $o['reset_exits'] && ! $o['add_time'] && ! $o['restore'] && ! $o['reopen'] && ! $o['finish'] && ! $o['graded_lock'] ) {
 			return;
 		}
 		$max    = self::max_exits();
@@ -188,6 +190,12 @@ trait LogiEval_Secure_Evaluations_Teacher_Control {
 						<small><?php esc_html_e( 'Ses réponses sont conservées. Il retrouve le temps qu’il lui restait (au moins 5 min).', 'logieval-secure' ); ?></small>
 					</div>
 				<?php endif; ?>
+				<?php if ( $o['finish'] ) : ?>
+					<div class="les-ctl-row">
+						<?php $form( 'finish', __( 'Terminer la copie et l’envoyer en correction', 'logieval-secure' ), 'button', sprintf( __( 'Terminer la copie de %s ? Elle est envoyée en correction avec les réponses déjà enregistrées. L’élève ne pourra plus la modifier (vous pourrez la rouvrir ensuite si besoin).', 'logieval-secure' ), $name ) ); ?>
+						<small><?php esc_html_e( 'Pour une copie restée « en cours » : l’élève est parti sans cliquer sur « Envoyer ». Ses réponses enregistrées sont conservées.', 'logieval-secure' ); ?></small>
+					</div>
+				<?php endif; ?>
 				<?php if ( $o['graded_lock'] ) : ?>
 					<p class="les-ctl-note"><?php esc_html_e( 'La correction de cette copie a commencé ou est terminée : rouvrez d’abord la correction pour pouvoir rouvrir la copie.', 'logieval-secure' ); ?></p>
 				<?php endif; ?>
@@ -205,6 +213,7 @@ trait LogiEval_Secure_Evaluations_Teacher_Control {
 			'add_time'    => __( 'Temps ajouté. Le chrono de l’élève se met à jour tout seul.', 'logieval-secure' ),
 			'restore'     => __( 'Sanction annulée : l’élève peut reprendre son évaluation en entrant à nouveau son code.', 'logieval-secure' ),
 			'reopen'      => __( 'Copie rouverte : l’élève peut reprendre son évaluation en entrant à nouveau son code.', 'logieval-secure' ),
+			'finish'      => __( 'Copie terminée : elle est maintenant dans la liste des copies à corriger.', 'logieval-secure' ),
 		);
 		$errors = array(
 			'state'   => __( 'Action impossible : l’état de la copie a changé entre-temps. Rechargez la page.', 'logieval-secure' ),
@@ -253,7 +262,7 @@ trait LogiEval_Secure_Evaluations_Teacher_Control {
 	/** Applique l'action ; renvoie '' si tout s'est bien passé, sinon un code d'erreur. */
 	public static function apply_attempt_control( array $attempt, string $op, int $minutes = 0 ): string {
 		$o = self::attempt_control_options( $attempt );
-		if ( ! isset( $o[ $op ] ) || ! in_array( $op, array( 'unlock', 'reset_exits', 'add_time', 'restore', 'reopen' ), true ) ) {
+		if ( ! isset( $o[ $op ] ) || ! in_array( $op, array( 'unlock', 'reset_exits', 'add_time', 'restore', 'reopen', 'finish' ), true ) ) {
 			return 'state';
 		}
 		if ( ! $o[ $op ] ) {
@@ -281,6 +290,9 @@ trait LogiEval_Secure_Evaluations_Teacher_Control {
 			case 'restore':
 			case 'reopen':
 				self::control_reopen_attempt( $attempt, $op, $minutes );
+				break;
+			case 'finish':
+				self::expire_attempt( $attempt, 'teacher' );
 				break;
 		}
 		return '';
