@@ -5789,3 +5789,44 @@ document.addEventListener('submit', function (e) {
 	}
 	if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', onLoad); } else { onLoad(); }
 })();
+
+/* 1.41.0 : onglet « Par élève » — filtre instantané par nom (sans accents) et par classe. */
+(function () {
+	function norm(s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+	function init() {
+		var root = document.querySelector('[data-les-student-search]');
+		if (!root) { return; }
+		var input = root.querySelector('[data-les-ss-input]');
+		var group = root.querySelector('[data-les-ss-group]');
+		var items = Array.prototype.slice.call(root.querySelectorAll('[data-les-ss-list] li'));
+		var empty = root.querySelector('[data-les-ss-empty]');
+		function apply() {
+			var words = norm(input ? input.value : '').split(/\s+/).filter(Boolean);
+			var g = group ? group.value : '';
+			var shown = 0;
+			items.forEach(function (li) {
+				var name = li.getAttribute('data-name') || '';
+				var groups = [];
+				try { groups = JSON.parse(li.getAttribute('data-groups') || '[]'); } catch (e) { groups = []; }
+				var ok = words.every(function (w) { return name.indexOf(w) !== -1; }) && (!g || groups.indexOf(g) !== -1);
+				li.hidden = !ok;
+				if (ok) { shown++; }
+			});
+			if (empty) { empty.hidden = shown !== 0; }
+		}
+		if (input) {
+			input.addEventListener('input', apply);
+			input.addEventListener('keydown', function (e) {
+				if (e.key !== 'Enter') { return; }
+				var first = items.filter(function (li) { return !li.hidden; })[0];
+				if (first) { e.preventDefault(); first.querySelector('a').click(); }
+			});
+		}
+		if (group) { group.addEventListener('change', apply); }
+		var active = root.querySelector('[data-les-ss-list] a.is-active');
+		// Élève choisi visible dans la liste (défilement de la liste seulement, pas de la page).
+		var list = root.querySelector('[data-les-ss-list]');
+		if (active && list) { list.scrollTop = Math.max(0, active.parentNode.offsetTop - list.offsetTop - 8); }
+	}
+	if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
+})();

@@ -3710,3 +3710,66 @@ body.les-fabs-off .les-fab-draft { opacity: 0 !important; pointer-events: none; 
 .logieval-secure .les-eval-card-actions .les-btn-grade + .les-more-actions, .logieval-secure .les-eval-card-actions .button + .les-btn-grade { margin-top: 0; }
 @keyframes lesGradePulseOrange { 0%, 100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, .45); } 50% { box-shadow: 0 0 0 6px rgba(234, 88, 12, 0); } }
 .logieval-secure .les-to-grade-started { font-style: normal; color: #c2410c; }
+
+/* 1.41.0 : onglet « Par élève » — recherche d'un élève et toutes ses évaluations. */
+.logieval-secure .les-ss-picker { margin: 12px 0 18px; padding: 16px; background: var(--les-panel-soft); border: 1px solid var(--les-border); border-radius: 12px; }
+.logieval-secure .les-ss-filters { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.logieval-secure .les-ss-search { position: relative; flex: 1 1 320px; display: flex; align-items: center; }
+.logieval-secure .les-ss-search > span[aria-hidden] { position: absolute; left: 14px; pointer-events: none; }
+.logieval-secure .les-ss-search input[type="search"] { width: 100%; min-height: 48px; padding: 8px 14px 8px 42px; font-size: 17px; border: 2px solid var(--les-border-strong); border-radius: 999px; background: #fff; }
+.logieval-secure .les-ss-search input[type="search"]:focus { border-color: var(--les-accent); outline: none; box-shadow: 0 0 0 3px rgba(15, 138, 97, .15); }
+.logieval-secure .les-ss-group select { min-height: 48px; border-radius: 999px; padding: 0 36px 0 16px; }
+.logieval-secure .les-ss-list { list-style: none; margin: 12px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; max-height: 330px; overflow-y: auto; }
+.logieval-secure .les-ss-picker.has-selection .les-ss-list { max-height: 168px; }
+.logieval-secure .les-ss-list li { margin: 0; }
+.logieval-secure .les-ss-list a { display: flex; flex-direction: column; gap: 2px; padding: 9px 12px; background: #fff; border: 1px solid var(--les-border); border-radius: 10px; color: var(--les-ink); text-decoration: none; line-height: 1.3; }
+.logieval-secure .les-ss-list a:hover, .logieval-secure .les-ss-list a:focus { border-color: var(--les-accent); box-shadow: 0 2px 8px rgba(15, 23, 42, .08); }
+.logieval-secure .les-ss-list a.is-active { background: #313a45; border-color: #313a45; color: #fff; }
+.logieval-secure .les-ss-list a span { font-size: 12.5px; color: var(--les-muted); }
+.logieval-secure .les-ss-list a.is-active span { color: #c9d1d9; }
+.logieval-secure .les-ss-empty { margin: 10px 0 0; }
+.logieval-secure .les-ss-result { scroll-margin-top: 80px; }
+.logieval-secure .les-ss-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px 24px; padding: 16px 20px; background: #313a45; color: #fff; border-radius: 12px 12px 0 0; }
+.logieval-secure .les-ss-head h3 { margin: 0; color: #fff; font-size: 24px; }
+.logieval-secure .les-ss-classes { margin: 4px 0 0; color: #c9d1d9; }
+.logieval-secure .les-ss-stats { display: flex; flex-wrap: wrap; gap: 8px; }
+.logieval-secure .les-ss-stats span { padding: 6px 12px; border-radius: 999px; background: rgba(255, 255, 255, .1); font-size: 14px; }
+.logieval-secure .les-ss-stats span.is-alert { background: #e11d48; }
+.logieval-secure .les-ss-stats span.is-average { background: #f5c400; color: #313a45; }
+.logieval-secure .les-ss-cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; padding: 14px; background: var(--les-panel-soft); border: 1px solid var(--les-border); border-top: 0; border-radius: 0 0 12px 12px; }
+.logieval-secure .les-ss-card { min-width: 0; padding: 14px 16px; background: #fff; border: 1px solid var(--les-border); border-left: 6px solid #94a3b8; border-radius: 10px; }
+.logieval-secure .les-ss-card.is-done { border-left-color: #067030; }
+.logieval-secure .les-ss-card.is-to_grade { border-left-color: #e11d48; }
+.logieval-secure .les-ss-card.is-running { border-left-color: #f5c400; }
+.logieval-secure .les-ss-card.is-cancelled { border-left-color: #7f1d1d; background: #fff7f7; }
+.logieval-secure .les-ss-card.is-pending { border-style: dashed; border-left-style: solid; background: #fbfbfa; }
+.logieval-secure .les-ss-card-main { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px 18px; align-items: center; }
+.logieval-secure .les-ss-card-title h4 { margin: 0; font-size: 17px; }
+.logieval-secure .les-ss-card-title p { margin: 3px 0 0; color: var(--les-muted); font-size: 13.5px; }
+.logieval-secure .les-ss-state { padding: 4px 10px; border-radius: 999px; background: #eef2f6; font-size: 13px; font-weight: 700; white-space: nowrap; }
+.logieval-secure .is-done .les-ss-state { background: #dcefe3; color: #0b4d22; }
+.logieval-secure .is-to_grade .les-ss-state { background: #ffe4e6; color: #9f1239; }
+.logieval-secure .is-running .les-ss-state { background: #fff4c2; color: #5c4800; }
+.logieval-secure .is-cancelled .les-ss-state { background: #7f1d1d; color: #fff; }
+.logieval-secure .les-ss-score { display: flex; align-items: baseline; gap: 12px; justify-content: flex-end; white-space: nowrap; }
+.logieval-secure .les-ss-points { color: var(--les-muted); font-size: 14px; }
+.logieval-secure .les-ss-grade { min-width: 54px; padding: 4px 10px; border-radius: 8px; background: #313a45; color: #fff; font-size: 20px; text-align: center; }
+.logieval-secure .is-pending .les-ss-grade, .logieval-secure .is-running .les-ss-grade, .logieval-secure .is-to_grade .les-ss-grade { background: #e5e7eb; color: #64748b; }
+.logieval-secure .les-ss-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.logieval-secure .les-ss-detail { margin-top: 10px; max-width: 100%; overflow-x: auto; }
+.logieval-secure .les-ss-detail summary { cursor: pointer; font-weight: 600; color: var(--les-accent); }
+.logieval-secure .les-ss-detail-table { width: 100%; margin-top: 8px; border-collapse: collapse; font-size: 14px; }
+.logieval-secure .les-ss-detail-table th, .logieval-secure .les-ss-detail-table td { padding: 6px 8px; border-bottom: 1px solid var(--les-border); text-align: left; vertical-align: top; }
+.logieval-secure .les-ss-detail-table td.les-ss-pts { white-space: nowrap; font-weight: 700; }
+.logieval-secure .les-ss-detail-table tr.is-full td.les-ss-pts { color: #067030; }
+.logieval-secure .les-ss-detail-table tr.is-part td.les-ss-pts { color: #b45309; }
+.logieval-secure .les-ss-detail-table tr.is-zero td.les-ss-pts { color: #b42318; }
+.logieval-secure .les-ss-detail-table tr.is-open td.les-ss-pts { color: var(--les-muted); }
+@media (max-width: 700px) {
+	.logieval-secure .les-ss-card-main { grid-template-columns: 1fr auto; }
+	.logieval-secure .les-ss-card-title { grid-column: 1 / -1; }
+	.logieval-secure .les-ss-state { justify-self: start; }
+	.logieval-secure .les-ss-card { padding: 12px; }
+	.logieval-secure .les-ss-cards { padding: 10px; }
+	.logieval-secure .les-ss-detail-table th:nth-child(4), .logieval-secure .les-ss-detail-table td:nth-child(4) { display: none; }
+}

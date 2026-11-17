@@ -73,7 +73,7 @@ trait LogiEval_Secure_Evaluations_Workspace {
 			}
 			return array( 'screen' => 'evaluation', 'evaluation' => $evaluation, 'step' => $step, 'raw' => $raw );
 		}
-		if ( ! in_array( $view, array( 'home', 'create', 'library', 'questions', 'settings', 'preview', 'generator', 'accommodations' ), true ) ) {
+		if ( ! in_array( $view, array( 'home', 'create', 'library', 'questions', 'settings', 'preview', 'generator', 'accommodations', 'students' ), true ) ) {
 			$view = 'home';
 		}
 		return array( 'screen' => $view, 'evaluation' => $evaluation, 'step' => '', 'raw' => $raw );
@@ -91,6 +91,7 @@ trait LogiEval_Secure_Evaluations_Workspace {
 				'settings'   => 'logiexam-settings',
 				'generator'  => 'logiexam-generator',
 				'accommodations' => 'logiexam-accommodations',
+				'students'   => 'logiexam-students',
 				'preview'    => self::ADMIN_PAGE,
 			);
 			$query = array( 'page' => $pages[ $screen ] ?? self::ADMIN_PAGE );
@@ -105,7 +106,7 @@ trait LogiEval_Secure_Evaluations_Workspace {
 
 	/** Adresse de la page qui contient le shortcode enseignant, sans paramètres LogiExam. */
 	private static function teacher_base_url(): string {
-		$keys = array( 'logiexam_view', 'evaluation_id', 'step', 'attempt', 'mode', 'question_id', 'saved', 'question_saved', 'imported', 'graded', 'duplicated', 'deleted', 'restored', 'codes', 'correction_incomplete', 'incomplete_attempt', 'reopened', 'open_attempt', 'new_codes', 'share_updated', 'copied', 'settings_saved', 'unlocked', 'finalized', 'correction_status', 'correction_group', 'library_q', 'logiexam_scope', 'question_deleted', 'questions_blocked', 'sensei_course_id', 'question_module', 'question_category', 'les_trash', 'gen_saved', 'gen_created', 'gen_error', 'acc_group', 'acc_saved', 'lp_published', 'lp_snapshot_warnings' );
+		$keys = array( 'logiexam_view', 'evaluation_id', 'step', 'attempt', 'mode', 'question_id', 'saved', 'question_saved', 'imported', 'graded', 'duplicated', 'deleted', 'restored', 'codes', 'correction_incomplete', 'incomplete_attempt', 'reopened', 'open_attempt', 'new_codes', 'share_updated', 'copied', 'settings_saved', 'unlocked', 'finalized', 'correction_status', 'correction_group', 'library_q', 'logiexam_scope', 'question_deleted', 'questions_blocked', 'sensei_course_id', 'question_module', 'question_category', 'les_trash', 'gen_saved', 'gen_created', 'gen_error', 'acc_group', 'acc_saved', 'les_student', 'lp_published', 'lp_snapshot_warnings' );
 		if ( wp_doing_ajax() && ! empty( $_SERVER['HTTP_REFERER'] ) ) {
 			return remove_query_arg( $keys, esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) );
 		}
@@ -146,6 +147,9 @@ trait LogiEval_Secure_Evaluations_Workspace {
 			case 'accommodations':
 				self::render_accommodations_workspace();
 				break;
+			case 'students':
+				self::render_student_search_workspace();
+				break;
 			default:
 				self::render_home_workspace();
 				break;
@@ -155,6 +159,7 @@ trait LogiEval_Secure_Evaluations_Workspace {
 	private static function render_main_nav( string $current ): void {
 		$items = array(
 			'home'      => __( 'Mes évaluations', 'logieval-secure' ),
+			'students'  => __( 'Par élève', 'logieval-secure' ),
 			'library'   => __( 'Bibliothèque', 'logieval-secure' ),
 			'questions' => __( 'Banque de questions', 'logieval-secure' ),
 			'generator' => __( '✨ Créer avec l’IA', 'logieval-secure' ),

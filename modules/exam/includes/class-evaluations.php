@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Les méthodes de la classe sont réparties par thème dans includes/evaluations/.
-foreach ( array( 'access', 'data', 'editor', 'monitoring', 'student-session', 'corrections', 'ai-grading', 'pdf-exports', 'evaluation-export', 'evaluation-paper', 'workspace', 'batch', 'teacher-control', 'generator', 'ai-prompts', 'accommodations', 'ai-exchange' ) as $logieval_part ) {
+foreach ( array( 'access', 'data', 'editor', 'monitoring', 'student-session', 'corrections', 'ai-grading', 'pdf-exports', 'evaluation-export', 'evaluation-paper', 'workspace', 'batch', 'teacher-control', 'generator', 'ai-prompts', 'accommodations', 'ai-exchange', 'student-search' ) as $logieval_part ) {
 	require_once __DIR__ . '/evaluations/trait-' . $logieval_part . '.php';
 }
 unset( $logieval_part );
@@ -33,6 +33,7 @@ unset( $logieval_part );
 	use LogiEval_Secure_Evaluations_Ai_Prompts;
 	use LogiEval_Secure_Evaluations_Accommodations;
 	use LogiEval_Secure_Evaluations_Ai_Exchange;
+	use LogiEval_Secure_Evaluations_Student_Search;
 
 	public static function init(): void {
 		add_action( 'admin_menu', array( __CLASS__, 'register_admin_page' ) );
@@ -107,6 +108,7 @@ unset( $logieval_part );
 		// Menu visible : 4 entrées seulement.
 		$visible = array(
 			self::ADMIN_PAGE    => __( 'Mes évaluations', 'logieval-secure' ),
+			'logiexam-students'  => __( 'Par élève', 'logieval-secure' ),
 			'logiexam-library'   => __( 'Bibliothèque', 'logieval-secure' ),
 			'logiexam-questions' => __( 'Banque de questions', 'logieval-secure' ),
 			'logiexam-generator' => __( 'Créer avec l’IA', 'logieval-secure' ),

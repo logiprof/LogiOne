@@ -1,4 +1,4 @@
-# LogiOne 1.40.11
+# LogiOne 1.41.0
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,16 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.41.0 (LogiExam : recherche par élève)
+
+- Nouvel onglet « Par élève » dans LogiExam (aussi dans le menu WordPress LogiExam › Par élève) :
+  - une recherche instantanée sur tous les élèves des groupes classes, sans tenir compte des accents, avec un filtre par classe ; Entrée ouvre le premier élève trouvé ;
+  - pour l’élève choisi : nombre de copies corrigées, à corriger, d’évaluations pas encore passées, et moyenne des notes finalisées ;
+  - une carte par évaluation (les plus récentes en haut, celles pas encore passées à la fin) : classe, date de passage, statut, points, note ;
+  - boutons « Voir la copie corrigée » (ou « Corriger la copie »), « PDF élève » et « Ouvrir l’évaluation » ;
+  - « Détail par question » : points obtenus sur chaque question, réponses vides signalées, commentaire de l’enseignant.
+- Chaque enseignant voit les évaluations qu’il gère (l’administrateur : selon « Mes évaluations / Tous les enseignants »). Lecture seule : aucune donnée n’est modifiée.
 
 ## Nouveautés 1.40.11 (LogiExam : corrections non terminées mises en évidence)
 
