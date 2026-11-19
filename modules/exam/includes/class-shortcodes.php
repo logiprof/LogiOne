@@ -140,6 +140,7 @@ final class LogiEval_Secure_Shortcodes {
 						<p data-les-instructions></p>
 					</div>
 					<div class="les-exam-meta">
+						<div class="les-clock" data-les-clock title="<?php esc_attr_e( 'Heure actuelle', 'logieval-secure' ); ?>"><span class="les-clock-label"><?php esc_html_e( 'Heure', 'logieval-secure' ); ?></span> <strong data-les-clock-time>--:--</strong></div>
 						<div class="les-timer" data-les-timer>--:--</div>
 						<button type="button" class="les-timer-toggle" data-les-timer-toggle aria-pressed="false" hidden><?php esc_html_e( 'Masquer le minuteur', 'logieval-secure' ); ?></button>
 						<span data-les-question-count></span>

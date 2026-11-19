@@ -4401,6 +4401,8 @@
 			var box = document.createElement('span');
 			box.className = 'les-progress-timer';
 			var toggleBtn = root.querySelector('[data-les-timer-toggle]');
+			var clockBox = root.querySelector('[data-les-clock]');
+			if (clockBox) { box.appendChild(clockBox); } /* 1.42.0 : l'heure, juste avant le compte à rebours */
 			box.appendChild(mainTimer);
 			if (toggleBtn) { box.appendChild(toggleBtn); }
 			meta.appendChild(box);
@@ -5829,4 +5831,20 @@ document.addEventListener('submit', function (e) {
 		if (active && list) { list.scrollTop = Math.max(0, active.parentNode.offsetTop - list.offsetTop - 8); }
 	}
 	if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
+})();
+
+/* 1.42.0 : heure actuelle affichée à côté du compte à rebours (mise à jour toutes les secondes). */
+(function () {
+	'use strict';
+	function pad(n) { return (n < 10 ? '0' : '') + n; }
+	function tick() {
+		var now = new Date();
+		var text = pad(now.getHours()) + ':' + pad(now.getMinutes());
+		var nodes = document.querySelectorAll('[data-les-clock-time]');
+		for (var i = 0; i < nodes.length; i++) {
+			if (nodes[i].textContent !== text) { nodes[i].textContent = text; }
+		}
+	}
+	function start() { tick(); setInterval(tick, 1000); }
+	if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', start); } else { start(); }
 })();

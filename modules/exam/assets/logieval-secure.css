@@ -3775,3 +3775,9 @@ body.les-fabs-off .les-fab-draft { opacity: 0 !important; pointer-events: none; 
 	.logieval-secure .les-ss-cards { padding: 10px; }
 	.logieval-secure .les-ss-detail-table th:nth-child(4), .logieval-secure .les-ss-detail-table td:nth-child(4) { display: none; }
 }
+
+/* 1.42.0 : heure actuelle à côté du compte à rebours */
+.logieval-secure .les-clock { display: inline-flex; align-items: baseline; gap: 6px; padding: 5px 10px; border: 1px solid #cbd5e1; border-radius: 8px; background: #fff; color: #17233c; white-space: nowrap; }
+.logieval-secure .les-clock-label { font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: .03em; }
+.logieval-secure .les-clock strong { font-size: 18px; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.logieval-secure .les-progress-timer { flex-wrap: wrap; }
