@@ -106,7 +106,7 @@ trait LogiEval_Secure_Evaluations_Workspace {
 
 	/** Adresse de la page qui contient le shortcode enseignant, sans paramètres LogiExam. */
 	private static function teacher_base_url(): string {
-		$keys = array( 'logiexam_view', 'evaluation_id', 'step', 'attempt', 'mode', 'question_id', 'saved', 'question_saved', 'imported', 'graded', 'duplicated', 'deleted', 'restored', 'codes', 'correction_incomplete', 'incomplete_attempt', 'reopened', 'open_attempt', 'new_codes', 'share_updated', 'copied', 'settings_saved', 'unlocked', 'finalized', 'correction_status', 'correction_group', 'library_q', 'logiexam_scope', 'question_deleted', 'questions_blocked', 'sensei_course_id', 'question_module', 'question_category', 'les_trash', 'gen_saved', 'gen_created', 'gen_error', 'acc_group', 'acc_saved', 'les_student', 'lp_published', 'lp_snapshot_warnings', 'lp_progress_switch' );
+		$keys = array( 'logiexam_view', 'evaluation_id', 'step', 'attempt', 'mode', 'question_id', 'saved', 'question_saved', 'imported', 'graded', 'duplicated', 'deleted', 'restored', 'codes', 'correction_incomplete', 'incomplete_attempt', 'reopened', 'open_attempt', 'new_codes', 'share_updated', 'copied', 'settings_saved', 'unlocked', 'finalized', 'correction_status', 'correction_group', 'library_q', 'logiexam_scope', 'question_deleted', 'questions_blocked', 'sensei_course_id', 'question_module', 'question_category', 'les_trash', 'gen_saved', 'gen_created', 'gen_error', 'acc_group', 'acc_saved', 'les_student', 'lp_published', 'lp_snapshot_warnings', 'lp_progress_switch', 'correction_mode', 'les_resume' );
 		if ( wp_doing_ajax() && ! empty( $_SERVER['HTTP_REFERER'] ) ) {
 			return remove_query_arg( $keys, esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) );
 		}
@@ -665,7 +665,7 @@ trait LogiEval_Secure_Evaluations_Workspace {
 
 	private static function render_step_grade( array $evaluation ): void {
 		$id       = (int) $evaluation['id'];
-		$mode     = 'question' === sanitize_key( wp_unslash( $_GET['correction_mode'] ?? '' ) ) ? 'question' : 'student';
+		$mode     = self::grade_mode_for( $id );
 		$attempts = array_values( array_filter( self::get_attempts( $id ), static fn( $a ) => self::attempt_is_cheating_cancelled( $a ) || ! empty( $a['submitted_at'] ) || in_array( (string) $a['status'], array( 'submitted', 'submitted_locked', 'graded' ), true ) ) );
 		usort(
 			$attempts,
@@ -676,7 +676,7 @@ trait LogiEval_Secure_Evaluations_Workspace {
 			}
 		);
 		$in_progress = count( array_filter( self::get_attempts( $id ), static fn( $a ) => ! self::attempt_is_cheating_cancelled( $a ) && empty( $a['submitted_at'] ) && ! in_array( (string) $a['status'], array( 'submitted', 'submitted_locked', 'graded' ), true ) ) );
-		$mode_url    = static fn( string $m ) => self::evaluation_url( $id, 'grade', array( 'correction_mode' => 'question' === $m ? 'question' : null ) );
+		$mode_url    = static fn( string $m ) => self::evaluation_url( $id, 'grade', array( 'correction_mode' => 'question' === $m ? 'question' : 'student' ) );
 		?>
 		<section class="les-panel les-grade-step">
 			<div class="les-grade-toolbar">
@@ -736,6 +736,36 @@ trait LogiEval_Secure_Evaluations_Workspace {
 			<?php endif; ?>
 		</section>
 		<?php
+	}
+
+	/**
+	 * 1.44.0 : mode de correction (« Par question » / « Par élève »).
+	 * Choix explicite dans l'adresse → retenu pour cette évaluation (et comme mode préféré) ;
+	 * sinon le dernier mode utilisé pour cette évaluation ; sinon le mode préféré ; sinon « Par question ».
+	 * Une copie précise demandée (lien « Corriger la copie ») s'ouvre toujours « Par élève ».
+	 */
+	private static function grade_mode_for( int $evaluation_id ): string {
+		$user  = get_current_user_id();
+		$modes = $user ? get_user_meta( $user, 'logiexam_grade_modes', true ) : array();
+		$modes = is_array( $modes ) ? $modes : array();
+		$asked = sanitize_key( wp_unslash( $_GET['correction_mode'] ?? '' ) );
+		if ( in_array( $asked, array( 'question', 'student' ), true ) ) {
+			if ( $user && ( ( $modes[ $evaluation_id ] ?? '' ) !== $asked || ( $modes['_last'] ?? '' ) !== $asked ) ) {
+				$modes[ $evaluation_id ] = $asked;
+				$modes['_last']          = $asked;
+				if ( count( $modes ) > 300 ) {
+					$modes = array_slice( $modes, -300, null, true );
+				}
+				update_user_meta( $user, 'logiexam_grade_modes', $modes );
+			}
+			return $asked;
+		}
+		if ( absint( $_GET['attempt'] ?? 0 ) || absint( $_GET['open_attempt'] ?? 0 ) || absint( $_GET['incomplete_attempt'] ?? 0 ) || isset( $_GET['graded'] ) || isset( $_GET['reopened'] ) ) {
+			return 'student';
+		}
+		$mode = (string) ( $modes[ $evaluation_id ] ?? ( $modes['_last'] ?? 'question' ) );
+
+		return 'student' === $mode ? 'student' : 'question';
 	}
 
 	private static function render_grade_notices( array $evaluation ): void {

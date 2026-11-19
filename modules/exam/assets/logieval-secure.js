@@ -4986,6 +4986,7 @@
 	function goNext(from) {
 		var review = commentReviewNeeded(from.closest('.les-answer-grade') || from.closest('tr, .les-qcard'));
 		if (review) { showCommentReview(review, from); return; }
+		if (window.LogiExamFlip && window.LogiExamFlip.handles(from)) { window.LogiExamFlip.next(); return; } /* 1.44.0 */
 		var form = from.closest('form');
 		var pager = form ? form.__lesPager : null;
 		var item = from.closest('.les-answer-grade');
@@ -5772,7 +5773,9 @@ document.addEventListener('submit', function (e) {
 		var go = e.target.closest ? e.target.closest('[data-les-resume-go]') : null;
 		if (!go) { return; }
 		e.preventDefault();
-		show(document.getElementById((go.getAttribute('href') || '').slice(1)));
+		var goCard = document.getElementById((go.getAttribute('href') || '').slice(1));
+		if (window.LogiExamFlip && window.LogiExamFlip.on() && goCard) { window.LogiExamFlip.goTo(goCard); return; }
+		show(goCard);
 	});
 	function onLoad() {
 		if (!document.querySelector('.les-qcard[id]')) { return; }
@@ -5787,7 +5790,8 @@ document.addEventListener('submit', function (e) {
 			var next = all.slice(all.indexOf(target) + 1).filter(function (c) { return !c.hasAttribute('data-les-saved'); })[0];
 			target = next || target;
 		}
-		if (target) { window.setTimeout(function () { show(target); }, 250); }
+		if (window.LogiExamFlip && window.LogiExamFlip.on()) { return; } /* 1.44.0 : une copie à la fois, la reprise est gérée par LogiExamFlip */
+		if (target) { window.setTimeout(function () { if (window.LogiExamFlip && window.LogiExamFlip.on()) { return; } show(target); }, 250); }
 	}
 	if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', onLoad); } else { onLoad(); }
 })();
@@ -5847,4 +5851,250 @@ document.addEventListener('submit', function (e) {
 	}
 	function start() { tick(); setInterval(tick, 1000); }
 	if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', start); } else { start(); }
+})();
+
+/* 1.44.0 — Correction « Par question » : une copie à la fois (page qui se tourne) et sauvegarde automatique.
+   - « Suivante → » : la réponse de l'élève suivant (puis la question suivante), avec une animation de page.
+   - Chaque changement fait par l'enseignant est enregistré tout seul : en passant à la suivante, avant une
+     pré-correction IA, toutes les 20 secondes et en quittant la page. Seules les copies modifiées sont envoyées. */
+(function () {
+	'use strict';
+	var PREF = 'logiexam_flip_mode';
+	function pref() { try { return window.localStorage.getItem(PREF) !== '0'; } catch (e) { return true; } }
+	function setPref(on) { try { window.localStorage.setItem(PREF, on ? '1' : '0'); } catch (e) {} }
+	function el(tag, cls, text) { var n = document.createElement(tag); if (cls) { n.className = cls; } if (text) { n.textContent = text; } return n; }
+
+	function init() {
+		var form = document.querySelector('.les-question-correction-mode form');
+		if (!form) { return; }
+		var cards = Array.prototype.slice.call(form.querySelectorAll('.les-qcard[id]'));
+		if (!cards.length) { return; }
+		var endPage = form.querySelector('.les-bonus-malus-section');
+		var dirty = {};
+		var saving = null;
+		var index = 0;
+		var on = pref();
+
+		/* ---------- Sauvegarde automatique ---------- */
+		var status = el('span', 'les-autosave-status');
+		status.setAttribute('aria-live', 'polite');
+		function setStatus(text, cls) { status.textContent = text; status.className = 'les-autosave-status' + (cls ? ' ' + cls : ''); }
+		function cardOf(t) { return t && t.closest ? t.closest('.les-qcard[id]') : null; }
+		function markDirty(card) {
+			if (!card || !form.contains(card)) { return; }
+			dirty[card.id] = card;
+			card.classList.add('is-dirty');
+			var st = card.querySelector('.les-save-state');
+			if (st) { st.textContent = 'Modifié'; st.className = 'les-save-state les-alert-badge is-warning'; }
+			setStatus('Modifications pas encore enregistrées…', 'is-pending');
+		}
+		form.addEventListener('input', function (e) { if (e.isTrusted) { markDirty(cardOf(e.target)); } }, true);
+		form.addEventListener('change', function (e) { if (e.isTrusted) { markDirty(cardOf(e.target)); } }, true);
+		form.addEventListener('click', function (e) {
+			if (!e.isTrusted || !e.target.closest) { return; }
+			if (e.target.closest('[data-les-set-points], [data-les-ai-accept], [data-les-criterion], [data-les-regen-comment], [data-les-comment-undo]')) {
+				var c = cardOf(e.target);
+				window.setTimeout(function () { markDirty(c); }, 50); // après la mise à jour des champs
+			}
+			if (e.target.closest('[data-les-ai-accept-all]')) {
+				var sec = e.target.closest('.les-question-correction-section');
+				window.setTimeout(function () { Array.prototype.forEach.call((sec || form).querySelectorAll('.les-qcard[id]'), markDirty); }, 80);
+			}
+		}, true);
+		var bmTable = form.querySelector('.les-bonus-malus-table');
+		var bmDirty = false;
+		if (bmTable) { bmTable.addEventListener('input', function () { bmDirty = true; setStatus('Modifications pas encore enregistrées…', 'is-pending'); }); }
+
+		function payload(list) {
+			var fd = new FormData();
+			['action', 'evaluation_id', '_wpnonce', '_wp_http_referer'].forEach(function (name) {
+				var f = form.querySelector('input[name="' + name + '"]');
+				if (f) { fd.append(name, f.value); }
+			});
+			fd.append('les_ajax', '1');
+			var qs = {};
+			list.forEach(function (card) {
+				var q = card.getAttribute('data-question-id'), a = card.getAttribute('data-attempt-id');
+				if (!q || !a) { return; }
+				if (!qs[q]) { qs[q] = 1; fd.append('question_ids[]', q); }
+				fd.append('attempt_ids[' + q + '][]', a);
+				var pts = card.querySelector('input[name^="question_manual_points"]');
+				var com = card.querySelector('textarea[name^="question_teacher_comment"]');
+				if (pts) { fd.append(pts.name, pts.value); }
+				if (com) { fd.append(com.name, com.value); }
+			});
+			if (bmTable) {
+				Array.prototype.forEach.call(bmTable.querySelectorAll('input[name^="bonus_malus"]'), function (i) { fd.append(i.name, i.value); });
+			}
+			return fd;
+		}
+		function save() {
+			if (saving) { return saving.then(save); }
+			var list = Object.keys(dirty).map(function (k) { return dirty[k]; });
+			if (!list.length && !bmDirty) { return Promise.resolve(true); }
+			if (!list.length && bmDirty) { list = cards.slice(); } // bonus / malus : on renvoie toutes les copies
+			dirty = {};
+			var wasBm = bmDirty;
+			bmDirty = false;
+			setStatus('Enregistrement…', 'is-pending');
+			saving = window.fetch(form.getAttribute('action'), { method: 'POST', body: payload(list), credentials: 'same-origin' })
+				.then(function (r) { return r.json(); })
+				.then(function (json) {
+					if (!json || !json.success) { throw new Error((json && json.data && json.data.message) || 'Erreur'); }
+					list.forEach(function (card) {
+						if (dirty[card.id]) { return; } // remodifiée pendant l'envoi
+						card.classList.remove('is-dirty');
+						card.classList.add('is-saved');
+						card.setAttribute('data-les-saved', '1');
+						var st = card.querySelector('.les-save-state');
+						if (st) { st.textContent = 'Sauvegardé'; st.className = 'les-save-state les-alert-badge is-ok'; }
+					});
+					setStatus('✓ Progression enregistrée automatiquement à ' + (json.data.time || ''), 'is-ok');
+					refresh();
+					return true;
+				})
+				.catch(function (err) {
+					list.forEach(function (card) { if (!dirty[card.id]) { dirty[card.id] = card; } });
+					bmDirty = bmDirty || wasBm;
+					setStatus('⚠ Sauvegarde automatique impossible (' + (err && err.message ? err.message : 'connexion') + ') : cliquez sur « Enregistrer toute la progression ».', 'is-error');
+					return false;
+				})
+				.then(function (ok) { saving = null; return ok; });
+			return saving;
+		}
+		window.setInterval(function () { if (Object.keys(dirty).length || bmDirty) { save(); } }, 20000);
+		function beacon() {
+			var list = Object.keys(dirty).map(function (k) { return dirty[k]; });
+			if ((!list.length && !bmDirty) || !navigator.sendBeacon) { return; }
+			try { navigator.sendBeacon(form.getAttribute('action'), payload(list.length ? list : cards)); dirty = {}; bmDirty = false; } catch (e) {}
+		}
+		document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') { beacon(); } });
+		window.addEventListener('pagehide', beacon);
+		form.addEventListener('submit', function () { dirty = {}; bmDirty = false; }); // enregistrement complet classique
+
+		/* Avant toute pré-correction IA : on enregistre d'abord ce qui a été corrigé. */
+		document.addEventListener('click', function (e) {
+			var b = e.target.closest ? e.target.closest('[data-les-ai-grade-bulk], [data-les-ai-grade]') : null;
+			if (!b || !form.contains(b) && !b.closest('.les-grade-step')) { return; }
+			if (b.__lesAfterSave) { b.__lesAfterSave = false; return; }
+			if (!Object.keys(dirty).length && !bmDirty) { return; }
+			e.preventDefault();
+			e.stopImmediatePropagation();
+			save().then(function (ok) {
+				if (!ok && !window.confirm('La sauvegarde de vos corrections a échoué. Lancer quand même la pré-correction IA ?')) { return; }
+				b.__lesAfterSave = true;
+				b.click();
+			});
+		}, true);
+
+		/* ---------- Une copie à la fois ---------- */
+		var bar = el('div', 'les-flip-bar');
+		var prev = el('button', 'button les-button-secondary les-flip-prev', '← Précédente');
+		var label = el('span', 'les-flip-label');
+		var next = el('button', 'button button-primary les-flip-next', 'Suivante →');
+		var toggle = el('button', 'button-link les-flip-toggle');
+		prev.type = next.type = toggle.type = 'button';
+		var navWrap = el('div', 'les-flip-nav');
+		navWrap.appendChild(prev); navWrap.appendChild(label); navWrap.appendChild(next);
+		bar.appendChild(navWrap);
+		var meta = el('div', 'les-flip-meta');
+		meta.appendChild(status); meta.appendChild(toggle);
+		bar.appendChild(meta);
+		var firstSection = form.querySelector('.les-question-correction-section');
+		form.insertBefore(bar, firstSection || form.firstChild);
+
+		var pages = cards.slice();
+		if (endPage) { pages.push(endPage); }
+		function isBlank(k) { return pages[k] && pages[k].classList.contains('is-blank'); }
+		function step(k, dir) {
+			for (var n = k + dir; n >= 0 && n < pages.length; n += dir) { if (!isBlank(n)) { return n; } }
+			return null;
+		}
+		function sectionOf(page) { return page.closest('.les-question-correction-section'); }
+		function describe(k) {
+			var page = pages[k];
+			if (page === endPage) { return 'Fin · Bonus / malus et enregistrement'; }
+			var sec = sectionOf(page);
+			var secCards = Array.prototype.slice.call(sec.querySelectorAll('.les-qcard[id]'));
+			var qn = Array.prototype.indexOf.call(form.querySelectorAll('.les-question-correction-section:not(.les-bonus-malus-section)'), sec) + 1;
+			var nameEl = page.querySelector('.les-qcard-name');
+			return 'Question ' + qn + ' · élève ' + (secCards.indexOf(page) + 1) + ' / ' + secCards.length + (nameEl ? ' · ' + nameEl.textContent : '');
+		}
+		function refresh() {
+			if (!on) { return; }
+			var done = cards.filter(function (c) { return c.hasAttribute('data-les-saved') || c.classList.contains('is-blank'); }).length;
+			label.innerHTML = '';
+			label.appendChild(el('strong', '', describe(index)));
+			label.appendChild(el('small', '', done + ' / ' + cards.length + ' réponses corrigées'));
+			var curSec = pages[index] === endPage ? null : sectionOf(pages[index]);
+			var qp = curSec ? curSec.querySelector('.les-qprogress') : null;
+			if (qp) {
+				var sc = Array.prototype.slice.call(curSec.querySelectorAll('.les-qcard[id]'));
+				var sd = sc.filter(function (c) { return c.hasAttribute('data-les-saved') || c.classList.contains('is-blank'); }).length;
+				qp.textContent = sd + ' / ' + sc.length + ' corrigées';
+				qp.classList.toggle('is-complete', sd === sc.length);
+			}
+			prev.disabled = step(index, -1) === null;
+			var after = step(index, 1);
+			next.disabled = after === null;
+			next.textContent = after === null ? 'Terminé' : (pages[after] === endPage ? 'Terminer : bonus / malus →' : (sectionOf(pages[after]) !== sectionOf(pages[index]) ? 'Question suivante →' : 'Élève suivant →'));
+		}
+		function show(k, dir) {
+			index = Math.max(0, Math.min(pages.length - 1, k));
+			var page = pages[index];
+			var sec = page === endPage ? endPage : sectionOf(page);
+			Array.prototype.forEach.call(form.querySelectorAll('.les-question-correction-section'), function (s) { s.classList.toggle('les-flip-hidden', s !== sec); });
+			cards.forEach(function (c) { c.classList.toggle('les-flip-hidden', c !== page); c.classList.remove('les-flip-in-next', 'les-flip-in-prev'); });
+			if (dir && page !== endPage) { void page.offsetWidth; page.classList.add(dir > 0 ? 'les-flip-in-next' : 'les-flip-in-prev'); }
+			refresh();
+			if (dir) {
+				// Nouvelle page : on revient en haut de la question (juste sous la barre de navigation).
+				var top = sec.getBoundingClientRect().top + window.pageYOffset - bar.offsetHeight - 48;
+				window.scrollTo(0, Math.max(0, top));
+			}
+			var input = page.querySelector('input[name^="question_manual_points"]');
+			if (dir && input) { try { input.focus({ preventScroll: true }); } catch (e) {} }
+			var resume = form.querySelector('[data-les-resume-field]');
+			if (resume && page.id) { resume.value = page.id; }
+		}
+		function go(dir) {
+			var k = step(index, dir);
+			if (k === null) { return; }
+			save(); // la copie quittée est enregistrée tout de suite (sans attendre)
+			show(k, dir);
+		}
+		function apply(state) {
+			on = state;
+			form.classList.toggle('les-flip-on', on);
+			navWrap.hidden = !on;
+			toggle.textContent = on ? 'Afficher toutes les copies (défilement)' : 'Afficher une copie à la fois';
+			if (on) { show(index, 0); } else {
+				Array.prototype.forEach.call(form.querySelectorAll('.les-flip-hidden'), function (n) { n.classList.remove('les-flip-hidden'); });
+			}
+		}
+		prev.addEventListener('click', function () { go(-1); });
+		next.addEventListener('click', function () { go(1); });
+		toggle.addEventListener('click', function () { setPref(!on); apply(!on); });
+		document.addEventListener('keydown', function (e) {
+			if (!on || e.altKey || e.ctrlKey || e.metaKey) { return; }
+			var t = e.target;
+			if (t && (t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || (t.tagName === 'INPUT' && t.type !== 'checkbox'))) { return; }
+			if (e.key === 'ArrowRight') { e.preventDefault(); go(1); } else if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+		});
+
+		// Départ : la carte demandée (#…), sinon la première pas encore corrigée.
+		var start = window.location.hash ? document.getElementById(window.location.hash.slice(1)) : null;
+		if (!start || cards.indexOf(start) < 0) { start = cards.filter(function (c) { return !c.hasAttribute('data-les-saved') && !c.classList.contains('is-blank'); })[0] || null; }
+		index = start ? cards.indexOf(start) : (step(-1, 1) || 0);
+		apply(on);
+
+		window.LogiExamFlip = {
+			on: function () { return on; },
+			handles: function (from) { return on && !!cardOf(from) && form.contains(from); },
+			next: function () { go(1); },
+			goTo: function (card) { var k = pages.indexOf(card); if (k >= 0) { save(); show(k, 1); } },
+			save: save
+		};
+	}
+	if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
 })();

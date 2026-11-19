@@ -877,13 +877,18 @@ trait LogiEval_Secure_Evaluations_Corrections {		public static function attempt_
 					break;
 				}
 			}
+			$is_ajax = ! empty( $_POST['les_ajax'] ); // 1.44.0 : sauvegarde automatique (sans quitter la page)
 			if ( ! $has_attempts ) {
+				if ( $is_ajax ) {
+					wp_send_json_success( array( 'saved' => 0, 'time' => current_time( 'H:i:s' ) ) );
+				}
 				wp_safe_redirect( self::post_redirect_url( admin_url( 'admin.php?page=logiexam-corrections&evaluation_id=' . $evaluation_id . '&question_saved=1' ), array( 'logiexam_view' => 'corrections', 'evaluation_id' => $evaluation_id, 'question_saved' => 1 ) ) );
 				exit;
 			}
 
 			$now    = current_time( 'mysql' );
 			$failed = false;
+			$saved  = 0;
 			$wpdb->query( 'START TRANSACTION' );
 
 			foreach ( $question_ids as $question_id ) {
@@ -935,6 +940,7 @@ trait LogiEval_Secure_Evaluations_Corrections {		public static function attempt_
 						$failed = true;
 						break 2;
 					}
+					$saved++;
 					self::record_ai_feedback( $attempt_id, $question_id, $parsed_points, (float) $max_points, (string) $answer_data['teacher_comment'] );
 					if ( 0 === $updated && ! $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$t['answers']} WHERE attempt_id=%d AND question_id=%d", $attempt_id, $question_id ) ) ) {
 						$answer_data['evaluation_id'] = $evaluation_id;
@@ -990,10 +996,16 @@ trait LogiEval_Secure_Evaluations_Corrections {		public static function attempt_
 
 			if ( $failed ) {
 				$wpdb->query( 'ROLLBACK' );
+				if ( $is_ajax ) {
+					wp_send_json_error( array( 'message' => __( 'Sauvegarde automatique impossible : cliquez sur « Enregistrer toute la progression ».', 'logieval-secure' ) ) );
+				}
 				wp_die( esc_html__( 'Impossible d’enregistrer le bloc de corrections. Aucune correction partielle n’a été appliquée.', 'logieval-secure' ) );
 			}
 
 			$wpdb->query( 'COMMIT' );
+			if ( $is_ajax ) {
+				wp_send_json_success( array( 'saved' => $saved, 'time' => current_time( 'H:i:s' ) ) );
+			}
 			$resume = sanitize_html_class( (string) wp_unslash( $_POST['les_resume_card'] ?? '' ) );
 			$args   = array( 'logiexam_view' => 'evaluation', 'evaluation_id' => $evaluation_id, 'step' => 'grade', 'correction_mode' => 'question', 'question_saved' => 1, 'les_resume' => 1 );
 			wp_safe_redirect( self::post_redirect_url( self::evaluation_url( $evaluation_id, 'grade', $args ), $args ) . ( 0 === strpos( $resume, 'les-qcard-' ) ? '#' . $resume : '' ) );

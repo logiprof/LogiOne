@@ -1,4 +1,4 @@
-# LogiOne 1.43.0
+# LogiOne 1.44.0
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,12 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.44.0 (LogiExam : correction par question)
+
+- « Par question » devient le mode de correction par défaut. Le dernier mode utilisé (« Par question » ou « Par élève ») est retenu pour chaque évaluation : en revenant dans sa correction, on reprend dans le même mode, là où l'on s'était arrêté. Un lien « Corriger la copie » d'un élève précis s'ouvre toujours « Par élève ».
+- Correction par question, une copie à la fois : une seule réponse à l'écran, « Élève suivant → » / « Question suivante → » tourne la page (animation), « ← Précédente » revient. Flèches ← → du clavier. Lien « Afficher toutes les copies (défilement) » pour revenir à l'ancien affichage (choix retenu).
+- Sauvegarde automatique : chaque copie modifiée est enregistrée en passant à la suivante, toutes les 20 secondes, en quittant la page, et AVANT toute pré-correction IA (bouton d'une copie ou d'une question). En cas de plantage, au pire la dernière réponse en cours est perdue. Seules les copies modifiées par l'enseignant sont envoyées (les propositions IA non touchées ne sont pas enregistrées comme corrigées).
 
 ## Nouveautés 1.43.0 (bonus / malus corrigeables après publication)
 

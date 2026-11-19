@@ -3781,3 +3781,30 @@ body.les-fabs-off .les-fab-draft { opacity: 0 !important; pointer-events: none; 
 .logieval-secure .les-clock-label { font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: .03em; }
 .logieval-secure .les-clock strong { font-size: 18px; line-height: 1.2; font-variant-numeric: tabular-nums; }
 .logieval-secure .les-progress-timer { flex-wrap: wrap; }
+
+/* 1.44.0 : correction par question — une copie à la fois + sauvegarde automatique */
+.les-flip-hidden { display: none !important; }
+.les-flip-bar { position: sticky; top: var(--les-sticky-top, 32px); z-index: 20; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; margin: 10px 0 14px; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 12px; background: #fff; box-shadow: 0 4px 14px rgba(15, 23, 42, .08); }
+.les-flip-nav { display: flex; align-items: center; gap: 12px; flex: 1 1 420px; min-width: 0; }
+.les-flip-nav[hidden] { display: none; }
+.les-flip-label { display: flex; flex-direction: column; flex: 1 1 auto; min-width: 0; text-align: center; }
+.les-flip-label strong { font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.les-flip-label small { color: #64748b; }
+.les-flip-next, .les-flip-prev { white-space: nowrap; }
+.les-flip-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size: 12px; }
+.les-autosave-status { color: #64748b; }
+.les-autosave-status.is-ok { color: #157347; }
+.les-autosave-status.is-pending { color: #8a6100; }
+.les-autosave-status.is-error { color: #b42318; font-weight: 600; }
+.les-flip-on .les-question-correction-section > .les-question-context,
+.les-flip-on .les-question-correction-section > .les-correction-prompt,
+.les-flip-on .les-question-correction-section > .les-criteria-summary,
+.les-flip-on .les-question-correction-section > .les-question-image { display: none; }
+.les-flip-on .les-qcards { perspective: 1600px; }
+.les-qcard.is-dirty { box-shadow: inset 4px 0 0 #f5c400; }
+@keyframes les-flip-next { from { opacity: 0; transform: rotateY(-14deg) translateX(40px); transform-origin: left center; } to { opacity: 1; transform: none; } }
+@keyframes les-flip-prev { from { opacity: 0; transform: rotateY(14deg) translateX(-40px); transform-origin: right center; } to { opacity: 1; transform: none; } }
+.les-qcard.les-flip-in-next { animation: les-flip-next .32s ease-out; }
+.les-qcard.les-flip-in-prev { animation: les-flip-prev .32s ease-out; }
+@media (prefers-reduced-motion: reduce) { .les-qcard.les-flip-in-next, .les-qcard.les-flip-in-prev { animation: none; } }
+@media (max-width: 600px) { .les-flip-bar { position: static; padding: 8px; } .les-flip-nav { flex: 1 1 100%; flex-wrap: wrap; gap: 6px; } .les-flip-label { order: -1; flex: 1 1 100%; } .les-flip-label strong { white-space: normal; font-size: 14px; } .les-flip-prev, .les-flip-next { flex: 1 1 0; min-width: 0; } .les-flip-meta { flex: 1 1 100%; } }
