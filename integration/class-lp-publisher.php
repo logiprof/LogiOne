@@ -25,6 +25,7 @@ final class LogiPilot_Publisher
         add_action('admin_post_logipilot_match_students', array(__CLASS__, 'handle_match_students'));
         add_action('admin_post_logipilot_retry', array(__CLASS__, 'handle_retry'));
         add_action('admin_post_logipilot_resolve', array(__CLASS__, 'handle_resolve'));
+        add_action('admin_post_logipilot_progress_switch', array(__CLASS__, 'handle_progress_switch'));
         add_action('logipilot_sync_retry', array(__CLASS__, 'retry_pending'));
         add_action('logipilot_exam_correction_reopened', array(__CLASS__, 'on_reopened'), 10, 2);
         add_filter('logipilot_notes_locked_students', array(__CLASS__, 'locked_students'), 10, 2);
@@ -321,12 +322,12 @@ final class LogiPilot_Publisher
 
     /** Publie toutes les copies prêtes (publication partielle autorisée). */
     /** Exécuté dans l'espace de l'auteur de l'évaluation LogiExam. */
-    public static function publish(int $exam_evaluation_id): array
+    public static function publish(int $exam_evaluation_id, bool $only_already_published = false): array
     {
-        return LogiPilot_Spaces::run_for_exam($exam_evaluation_id, static fn() => self::publish_here($exam_evaluation_id));
+        return LogiPilot_Spaces::run_for_exam($exam_evaluation_id, static fn() => self::publish_here($exam_evaluation_id, $only_already_published));
     }
 
-    private static function publish_here(int $exam_evaluation_id): array
+    private static function publish_here(int $exam_evaluation_id, bool $only_already_published = false): array
     {
         global $wpdb;
 
@@ -349,6 +350,9 @@ final class LogiPilot_Publisher
             if ($row['status'] === 'published') {
                 $report['unchanged']++;
                 continue;
+            }
+            if ($only_already_published && !$row['last']) {
+                continue; // 1.43.0 : mise à jour des seules notes déjà envoyées à LogiNotes.
             }
             if ($row['status'] !== 'ready') {
                 if ($row['status'] === 'unmatched') {
@@ -622,6 +626,8 @@ final class LogiPilot_Publisher
             $counts[$row['status']] = ($counts[$row['status']] ?? 0) + 1;
         }
         echo '<section class="logipilot-panel" id="logipilot-publish"><h3>Publier les résultats dans LogiNotes</h3>';
+        echo '<div id="logipilot-progress-switch"></div>';
+        self::render_progress_switch($exam_id, $return_url);
         if (!empty($_GET['lp_published'])) {
             $report = get_transient('logipilot_publish_report_' . get_current_user_id());
             if (is_array($report)) {
@@ -698,6 +704,109 @@ final class LogiPilot_Publisher
         echo '</section>';
     }
 
+    /* -------------------------------------------------------------------
+     * 1.43.0 : « Aucun bonus ni malus de progression pour cette évaluation »,
+     * réglable à tout moment, même après la finalisation et la publication.
+     * ----------------------------------------------------------------- */
+
+    public static function render_progress_switch(int $exam_id, string $return_url): void
+    {
+        $evaluation = class_exists('LogiEval_Secure_Evaluations') ? LogiEval_Secure_Evaluations::get_evaluation($exam_id) : null;
+        if (!$evaluation) {
+            return;
+        }
+        $off = LogiPilot_Snapshots::progress_off($exam_id);
+        $can = current_user_can('lp_exam_publish') && LogiEval_Secure_Evaluations::can_manage_evaluation($evaluation);
+        if (!empty($_GET['lp_progress_switch'])) {
+            $msg = get_transient('logipilot_progress_switch_' . get_current_user_id());
+            if (is_string($msg) && $msg !== '') {
+                echo '<div class="notice notice-success inline"><p>' . esc_html($msg) . '</p></div>';
+            }
+        }
+        echo '<div class="logipilot-progress-switch" style="margin:8px 0 12px;padding:10px 14px;border:1px solid ' . ($off ? '#f5c400' : '#cbd5e1') . ';border-radius:8px;background:' . ($off ? '#fff8e1' : '#f8fafc') . '">';
+        echo '<p style="margin:0 0 6px"><strong>Bonus / malus de progression pour cette évaluation : ' . ($off ? 'NON appliqués' : 'appliqués') . '</strong></p>';
+        if ($can) {
+            echo '<form method="post" action="' . esc_url(admin_url('admin-post.php')) . '" onsubmit="return window.confirm(' . esc_attr(wp_json_encode($off
+                ? 'Appliquer de nouveau les bonus / malus de progression validés à toutes les copies de cette évaluation ? Les notes déjà envoyées à LogiNotes sont mises à jour.'
+                : 'Retirer les bonus / malus de progression de toutes les copies de cette évaluation, même celles déjà finalisées ? Les notes déjà envoyées à LogiNotes sont mises à jour. Les bonus / malus saisis à la main dans une copie sont conservés.')) . ');">';
+            wp_nonce_field('logipilot_progress_switch_' . $exam_id);
+            printf('<input type="hidden" name="action" value="logipilot_progress_switch"><input type="hidden" name="exam_evaluation_id" value="%d"><input type="hidden" name="return" value="%s"><input type="hidden" name="off" value="%d">', $exam_id, esc_attr($return_url), $off ? 0 : 1);
+            echo '<button class="button' . ($off ? '' : ' button-primary') . '">' . esc_html($off ? 'Appliquer de nouveau les bonus / malus' : 'Ne pas appliquer de bonus / malus à cette évaluation') . '</button> ';
+            echo '<small class="logipilot-muted">' . esc_html('Modifiable à tout moment, même après la publication : les copies sont recalculées et les notes déjà dans LogiNotes sont corrigées.') . '</small>';
+            echo '</form>';
+        }
+        echo '</div>';
+    }
+
+    public static function handle_progress_switch(): void
+    {
+        global $wpdb;
+
+        $exam_id = absint($_POST['exam_evaluation_id'] ?? 0);
+        check_admin_referer('logipilot_progress_switch_' . $exam_id);
+        LogiPilot_Spaces::push(LogiPilot_Spaces::exam_space($exam_id));
+        $evaluation = class_exists('LogiEval_Secure_Evaluations') ? LogiEval_Secure_Evaluations::get_evaluation($exam_id) : null;
+        if (!$evaluation || !current_user_can('lp_exam_publish') || !LogiEval_Secure_Evaluations::can_manage_evaluation($evaluation)) {
+            wp_die('Accès refusé.', 'Accès refusé', array('response' => 403));
+        }
+        $return = wp_validate_redirect(esc_url_raw(wp_unslash($_POST['return'] ?? '')), admin_url());
+        $turn_off = !empty($_POST['off']);
+
+        if ($turn_off === LogiPilot_Snapshots::progress_off($exam_id)) {
+            wp_safe_redirect($return); // déjà dans cet état (double clic)
+            exit;
+        }
+        // Décisions validées lues AVANT de couper (pour retirer) ou APRÈS avoir rallumé (pour rajouter).
+        if (!$turn_off) {
+            LogiPilot_Snapshots::set_progress_off($exam_id, false);
+        }
+        $t = LogiEval_Secure_Database::tables();
+        $changed = 0;
+        foreach (LogiEval_Secure_Evaluations::get_attempts($exam_id) as $attempt) {
+            if ((string) $attempt['status'] === 'security_terminated') {
+                continue;
+            }
+            $result = LogiEval_Secure_Evaluations::get_result_by_attempt((int) $attempt['id']);
+            if (!$result) {
+                continue;
+            }
+            $decision = LogiPilot_Snapshots::validated_decision('exam', $exam_id, (int) $attempt['user_id']);
+            if (!$decision || $decision->adjustment === null || abs((float) $decision->adjustment) < 0.00001) {
+                continue;
+            }
+            $d = (float) $decision->adjustment;
+            $current = round((float) $result['bonus_points'] - (float) $result['malus_points'], 2);
+            // En retirant : seulement si la copie contient bien cet ajustement (pas déjà retiré à la main).
+            if ($turn_off && !(($d > 0 && $current >= $d - 0.00001) || ($d < 0 && $current <= $d + 0.00001))) {
+                continue;
+            }
+            $net = round($current + ($turn_off ? -$d : $d), 2);
+            [$bonus, $malus] = LogiPilot_Snapshots::bonus_malus($net);
+            $total = LogiEval_Secure_Grading::final_total((float) $result['points_obtained'], $bonus, $malus);
+            $wpdb->update($t['results'], array(
+                'bonus_points' => $bonus,
+                'malus_points' => $malus,
+                'final_total' => $total,
+                'final_grade' => LogiEval_Secure_Grading::grade($total, $evaluation['total_points'] ?? 0),
+                'updated_at' => current_time('mysql'),
+            ), array('attempt_id' => (int) $attempt['id']));
+            $changed++;
+        }
+        if ($turn_off) {
+            LogiPilot_Snapshots::set_progress_off($exam_id, true);
+        }
+        LogiPilot_Log::add($turn_off ? 'progress_disabled' : 'progress_enabled', 'exam_evaluation', $exam_id, array('copies' => $changed));
+
+        $report = self::publish($exam_id, true);
+        $msg = ($turn_off ? 'Bonus / malus de progression retirés' : 'Bonus / malus de progression appliqués de nouveau') . sprintf(' : %d copie(s) recalculée(s), %d note(s) mise(s) à jour dans LogiNotes.', $changed, (int) $report['done']);
+        if (!empty($report['errors'])) {
+            $msg .= ' Attention : ' . implode(' ', array_map('strval', (array) $report['errors']));
+        }
+        set_transient('logipilot_progress_switch_' . get_current_user_id(), $msg, 10 * MINUTE_IN_SECONDS);
+        wp_safe_redirect(add_query_arg('lp_progress_switch', 1, $return) . '#logipilot-progress-switch');
+        exit;
+    }
+
     /** Dans LogiNotes : origine des résultats publiés, révision et état de révision. */
     public static function render_notes_origin_panel($evaluation): void
     {
@@ -741,6 +850,13 @@ final class LogiPilot_Publisher
             }
             echo '</tbody></table>';
         }
-        echo '<p class="gne-muted">Les notes publiées depuis LogiExam sont en lecture seule ici : toute correction se fait dans LogiExam puis est republiée.</p></section>';
+        echo '<p class="gne-muted">Les notes publiées depuis LogiExam sont en lecture seule ici : toute correction se fait dans LogiExam puis est republiée.</p>';
+        foreach ($links as $link) {
+            if (class_exists('LogiEval_Secure_Evaluations')) {
+                $url = LogiEval_Secure_Evaluations::evaluation_url((int) $link->exam_evaluation_id, 'results');
+                echo '<p><a class="button" href="' . esc_url($url) . '#logipilot-publish">Corriger dans LogiExam (bonus / malus, points)</a> <span class="gne-muted">' . esc_html((LogiPilot_Snapshots::progress_off((int) $link->exam_evaluation_id) ? 'Bonus / malus de progression : non appliqués.' : 'Bonus / malus de progression : appliqués.')) . '</span></p>';
+            }
+        }
+        echo '</section>';
     }
 }

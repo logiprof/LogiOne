@@ -1,4 +1,4 @@
-# LogiOne 1.42.0
+# LogiOne 1.43.0
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,12 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.43.0 (bonus / malus corrigeables après publication)
+
+- Nouveau réglage par évaluation LogiExam : « Ne pas appliquer de bonus / malus à cette évaluation » (étape Résultats, et panneau Progression). Utilisable à tout moment, même après la finalisation et l'envoi dans LogiNotes : les copies sont recalculées (seul l'ajustement de progression est retiré, les bonus / malus saisis à la main restent) et les notes déjà envoyées à LogiNotes sont corrigées automatiquement. Le bouton « Appliquer de nouveau les bonus / malus » fait l'inverse.
+- Dans LogiNotes, le panneau « Résultats numériques (LogiExam) » a un bouton « Corriger dans LogiExam » qui mène directement à cet endroit.
+- Le réglage est enregistré dans une option WordPress : aucune table modifiée.
 
 ## Nouveautés 1.42.0 (LogiExam : heure affichée)
 

@@ -25,6 +25,32 @@ final class LogiPilot_Snapshots
     }
 
     /* -------------------------------------------------------------------
+     * 1.43.0 : bonus / malus de progression désactivés pour une évaluation LogiExam
+     * (réglage enregistré dans une option WordPress : aucune table modifiée).
+     * ----------------------------------------------------------------- */
+
+    public const OPTION_PROGRESS_OFF = 'logipilot_exam_progress_off';
+
+    public static function progress_off(int $exam_evaluation_id): bool
+    {
+        $off = get_option(self::OPTION_PROGRESS_OFF, array());
+
+        return is_array($off) && isset($off[$exam_evaluation_id]);
+    }
+
+    public static function set_progress_off(int $exam_evaluation_id, bool $off): void
+    {
+        $all = get_option(self::OPTION_PROGRESS_OFF, array());
+        $all = is_array($all) ? $all : array();
+        if ($off) {
+            $all[$exam_evaluation_id] = array('by' => get_current_user_id(), 'at' => current_time('mysql'));
+        } else {
+            unset($all[$exam_evaluation_id]);
+        }
+        update_option(self::OPTION_PROGRESS_OFF, $all, false);
+    }
+
+    /* -------------------------------------------------------------------
      * Lecture
      * ----------------------------------------------------------------- */
 
@@ -65,6 +91,9 @@ final class LogiPilot_Snapshots
     /** Exécuté dans l'espace de l'auteur de l'évaluation LogiExam. */
     public static function validated_decision(string $context, int $context_id, int $wp_user_id = 0, int $notes_student_id = 0): ?object
     {
+        if ($context === 'exam' && self::progress_off($context_id)) {
+            return null; // 1.43.0 : l'enseignant a choisi « aucun bonus ni malus » pour cette évaluation.
+        }
         if ($context === 'exam') {
             return LogiPilot_Spaces::run_for_exam($context_id, static fn() => self::validated_decision_here($context, $context_id, $wp_user_id, $notes_student_id));
         }
@@ -388,6 +417,10 @@ final class LogiPilot_Snapshots
     {
         global $wpdb;
 
+        if (self::progress_off($evaluation_id)) {
+            return ''; // 1.43.0 : bonus / malus désactivés pour cette évaluation.
+        }
+
         $t = LogiEval_Secure_Database::tables();
         $attempt = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$t['attempts']} WHERE evaluation_id = %d AND user_id = %d", $evaluation_id, $user_id), ARRAY_A);
         if (!$attempt) {
@@ -451,6 +484,9 @@ final class LogiPilot_Snapshots
         $history = self::history($context, $context_id);
         echo '<section class="logipilot-panel" id="logipilot-progress">';
         echo '<h3>Progression LogiProgress (bonus +1 / malus −2)</h3>';
+        if ($context === 'exam' && class_exists('LogiPilot_Publisher')) {
+            LogiPilot_Publisher::render_progress_switch($context_id, $return_url);
+        }
 
         if ($context === 'notes' && $info['origin'] === 'exam') {
             echo '<p>Évaluation numérique : le relevé de progression est validé dans LogiExam et transmis avec les résultats publiés.</p></section>';
