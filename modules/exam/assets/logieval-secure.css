@@ -3814,3 +3814,8 @@ body.les-fabs-off .les-fab-draft { opacity: 0 !important; pointer-events: none; 
 .logieval-secure .les-qcard.is-blank { display: none !important; }
 .logieval-secure .les-qpager-dot.is-blank { pointer-events: none; opacity: .55; }
 .logieval-secure .les-blank-summary { margin: 8px 0 12px; padding: 8px 12px; border-left: 4px solid #f59e0b; border-radius: 6px; background: #fff7ed; color: #9a3412; font-size: 13px; }
+
+/* 1.46.0 : bouton « Question suivante » sous un commentaire régénéré */
+.logieval-secure .les-regen-comment { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.logieval-secure .les-regen-next { margin-left: auto; min-height: 40px; padding: 0 22px; font-size: 15px; font-weight: 700; }
+.logieval-secure .les-regen-next[hidden] { display: none; }

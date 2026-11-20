@@ -1055,7 +1055,29 @@
 				if (!isNaN(pts)) textarea.dataset.regenFor = String(pts);
 				textarea.dispatchEvent(new Event('input', { bubbles: true }));
 				textarea.dispatchEvent(new Event('change', { bubbles: true }));
-				if (status) { status.textContent = 'Nouveau commentaire (vos points n’ont pas changé). Pensez à enregistrer.'; status.className = 'les-regen-status is-ok'; }
+				if (status) { status.textContent = 'Nouveau commentaire (vos points n’ont pas changé).'; status.className = 'les-regen-status is-ok'; }
+				textarea.dispatchEvent(new CustomEvent('les-dirty', { bubbles: true })); /* 1.46.0 : sauvegarde automatique du nouveau commentaire */
+				/* 1.46.0 : bouton « suivante » juste sous le commentaire régénéré (Entrée l'active). */
+				let nextBtn = regen.parentElement ? regen.parentElement.querySelector('[data-les-regen-next]') : null;
+				if (!nextBtn && regen.parentElement) {
+					nextBtn = document.createElement('button');
+					nextBtn.type = 'button';
+					nextBtn.className = 'button button-primary les-regen-next';
+					nextBtn.setAttribute('data-les-regen-next', '');
+					nextBtn.addEventListener('click', function () {
+						nextBtn.hidden = true;
+						if (typeof window.LogiExamGoNext === 'function') { window.LogiExamGoNext(regen); }
+					});
+					regen.parentElement.appendChild(nextBtn);
+				}
+				if (nextBtn) {
+					const flipOn = window.LogiExamFlip && window.LogiExamFlip.handles(regen);
+					nextBtn.textContent = flipOn ? 'Suivante →' : 'Question suivante →';
+					nextBtn.hidden = false;
+					try { nextBtn.focus({ preventScroll: true }); } catch (e) {}
+					const r = nextBtn.getBoundingClientRect();
+					if (r.bottom > window.innerHeight - 20 || r.top < 0) { nextBtn.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+				}
 			}).catch(function (error) {
 				if (status) { status.textContent = error && error.message ? error.message : LogiEvalSecure.i18n.error; status.className = 'les-regen-status is-error'; }
 			}).finally(function () { regen.disabled = false; });
@@ -4983,6 +5005,7 @@
 		}
 	}, true);
 
+	window.LogiExamGoNext = function (from) { goNext(from); }; /* 1.46.0 */
 	function goNext(from) {
 		var review = commentReviewNeeded(from.closest('.les-answer-grade') || from.closest('tr, .les-qcard'));
 		if (review) { showCommentReview(review, from); return; }
@@ -5890,6 +5913,7 @@ document.addEventListener('submit', function (e) {
 		}
 		form.addEventListener('input', function (e) { if (e.isTrusted) { markDirty(cardOf(e.target)); } }, true);
 		form.addEventListener('change', function (e) { if (e.isTrusted) { markDirty(cardOf(e.target)); } }, true);
+		form.addEventListener('les-dirty', function (e) { markDirty(cardOf(e.target)); }); /* 1.46.0 : commentaire régénéré par l'IA */
 		form.addEventListener('click', function (e) {
 			if (!e.isTrusted || !e.target.closest) { return; }
 			if (e.target.closest('[data-les-set-points], [data-les-ai-accept], [data-les-criterion], [data-les-regen-comment], [data-les-comment-undo]')) {
