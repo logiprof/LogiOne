@@ -62,6 +62,18 @@ trait LogiEval_Secure_Evaluations_Corrections {		public static function attempt_
 				<?php self::render_ai_accept_all_button( $answers, __( 'Attribuer les points proposés par l’IA à toutes les questions', 'logieval-secure' ) ); ?>
 				<label class="les-checkbox-line les-auto-next"><input type="checkbox" data-les-auto-next checked> <?php esc_html_e( 'Après avoir attribué les points, passer directement à la question suivante', 'logieval-secure' ); ?></label>
 				<?php self::render_bonus_malus_card( $evaluation, $result, $answers ); ?>
+				<?php
+				// 1.45.0 : les questions laissées vides ne sont pas affichées (0 pt d'office, enregistré avec la copie).
+				$blank_numbers = array();
+				foreach ( array_values( $answers ) as $blank_index => $blank_answer ) {
+					if ( ! self::answer_is_complete( $blank_answer['answer'] ?? '' ) ) {
+						$blank_numbers[] = $blank_index + 1;
+					}
+				}
+				if ( $blank_numbers ) :
+					?>
+					<p class="les-blank-summary"><?php echo esc_html( sprintf( _n( 'Question %s laissée vide : 0 pt d’office, elle n’est pas affichée.', 'Questions %s laissées vides : 0 pt d’office, elles ne sont pas affichées.', count( $blank_numbers ), 'logieval-secure' ), implode( ', ', $blank_numbers ) ) ); ?></p>
+				<?php endif; ?>
 				<?php foreach ( array_values( $answers ) as $answer_index => $answer ) : $own_title = self::correction_own_title( $answer ); ?>
 						<?php
 						$is_blank = ! self::answer_is_complete( $answer['answer'] ?? '' );
@@ -504,6 +516,20 @@ trait LogiEval_Secure_Evaluations_Corrections {		public static function attempt_
 						<div class="les-prompt les-correction-prompt"><?php echo wp_kses_post( wpautop( $question['prompt'] ) ); ?></div>
 						<?php self::render_question_image( absint( $question['media_id'] ?? 0 ), 'is-small' ); ?>
 					<?php self::render_criteria_summary( $question ); ?>
+						<?php
+						// 1.45.0 : réponses vides masquées (0 pt d'office).
+						$blank_names = array();
+						foreach ( $attempts as $blank_attempt ) {
+							$blank_row = self::answer_row_by_question( self::get_answers_for_attempt( (int) $blank_attempt['id'] ), (int) $question['question_id'] );
+							if ( $blank_row && ! self::answer_is_complete( $blank_row['answer'] ?? '' ) ) {
+								$blank_user    = get_userdata( (int) $blank_attempt['user_id'] );
+								$blank_names[] = $blank_user ? $blank_user->display_name : '#' . $blank_attempt['user_id'];
+							}
+						}
+						if ( $blank_names ) :
+							?>
+							<p class="les-blank-summary"><?php echo esc_html( sprintf( _n( 'Réponse vide de %s : 0 pt d’office, elle n’est pas affichée.', 'Réponses vides (%s) : 0 pt d’office, elles ne sont pas affichées.', count( $blank_names ), 'logieval-secure' ), implode( ', ', $blank_names ) ) ); ?></p>
+						<?php endif; ?>
 						<div class="les-qcards">
 							<?php foreach ( $attempts as $attempt ) : $user = get_userdata( (int) $attempt['user_id'] ); $answers = self::get_answers_for_attempt( (int) $attempt['id'] ); $answer = self::answer_row_by_question( $answers, (int) $question['question_id'] ); if ( ! $answer ) { continue; } $max_points = max( 0, (float) $answer['points'] ); $is_blank = ! self::answer_is_complete( $answer['answer'] ?? '' ); $student_name = $user ? $user->display_name : '#' . $attempt['user_id']; $qname = 'question_manual_points[' . (int) $question['question_id'] . '][' . (int) $attempt['id'] . ']'; ?>
 								<?php $card_done = ! empty( $done_map[ (int) $question['question_id'] ][ (int) $attempt['id'] ] ); ?>

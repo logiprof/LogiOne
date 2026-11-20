@@ -3808,3 +3808,9 @@ body.les-fabs-off .les-fab-draft { opacity: 0 !important; pointer-events: none; 
 .les-qcard.les-flip-in-prev { animation: les-flip-prev .32s ease-out; }
 @media (prefers-reduced-motion: reduce) { .les-qcard.les-flip-in-next, .les-qcard.les-flip-in-prev { animation: none; } }
 @media (max-width: 600px) { .les-flip-bar { position: static; padding: 8px; } .les-flip-nav { flex: 1 1 100%; flex-wrap: wrap; gap: 6px; } .les-flip-label { order: -1; flex: 1 1 100%; } .les-flip-label strong { white-space: normal; font-size: 14px; } .les-flip-prev, .les-flip-next { flex: 1 1 0; min-width: 0; } .les-flip-meta { flex: 1 1 100%; } }
+
+/* 1.45.0 : questions laissées vides masquées dans la correction (0 pt d'office) */
+.logieval-secure .les-answer-grade.is-blank,
+.logieval-secure .les-qcard.is-blank { display: none !important; }
+.logieval-secure .les-qpager-dot.is-blank { pointer-events: none; opacity: .55; }
+.logieval-secure .les-blank-summary { margin: 8px 0 12px; padding: 8px 12px; border-left: 4px solid #f59e0b; border-radius: 6px; background: #fff7ed; color: #9a3412; font-size: 13px; }

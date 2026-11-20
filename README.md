@@ -1,4 +1,4 @@
-# LogiOne 1.44.0
+# LogiOne 1.45.0
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,10 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.45.0 (LogiExam : réponses vides masquées)
+
+- Dans la correction (« Par question » comme « Par élève »), les questions laissées vides ne sont plus affichées : elles valent 0 pt d'office (avec le commentaire « Non répondu. ») à l'enregistrement. Une ligne orange indique lesquelles ont été masquées (numéros de questions, ou noms des élèves en mode « Par question »).
 
 ## Nouveautés 1.44.0 (LogiExam : correction par question)
 
