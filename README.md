@@ -1,4 +1,4 @@
-# LogiOne 1.46.0
+# LogiOne 1.47.0
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,11 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.47.0 (LogiExam : commentaire régénéré automatiquement)
+
+- Quand l'enseignant met d'autres points que ceux proposés par l'IA (boutons « Tous les points / Moitié / Aucun point », points tapés à la main ou critères cochés), le commentaire pour l'élève est régénéré tout seul par l'IA d'après ces points, sans clic. Pour des points tapés, la régénération part 1 seconde après la dernière touche. Le bouton « Question suivante → » apparaît ensuite et reçoit le focus.
+- Pas de régénération si les points redeviennent ceux de l'IA, ni si l'enseignant a déjà écrit son propre commentaire.
 
 ## Nouveautés 1.46.0 (LogiExam : suivante après un commentaire régénéré)
 

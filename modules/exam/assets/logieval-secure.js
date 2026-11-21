@@ -4921,6 +4921,16 @@
 	function fmt(n) { return String(Math.round(n * 100) / 100).replace('.', ','); }
 	function showCommentReview(info, from) {
 		var scope = info.scope;
+		/* 1.47.0 : points différents de l'IA → le commentaire est régénéré tout de suite, sans clic. */
+		var autoRegen = scope.querySelector('[data-les-regen-comment]');
+		if (autoRegen) {
+			var oldNote = scope.querySelector('.les-comment-review');
+			if (oldNote) { oldNote.remove(); }
+			var box0 = info.area.closest('details');
+			if (box0) { box0.open = true; }
+			if (!autoRegen.disabled) { autoRegen.click(); }
+			return;
+		}
 		var box = info.area.closest('details');
 		if (box) { box.open = true; }
 		var note = scope.querySelector('.les-comment-review');
@@ -4987,6 +4997,25 @@
 		note.scrollIntoView({ behavior: 'smooth', block: 'center' });
 	}
 
+	/* 1.47.0 : points tapés à la main ou critères cochés : 1 s après le dernier changement, si les points
+	   ne sont plus ceux de l'IA et que le commentaire est encore celui de l'IA, il est régénéré automatiquement. */
+	function scheduleAutoRegen(t) {
+		var scope = t.closest('.les-answer-grade') || t.closest('tr, .les-qcard');
+		if (!scope || !scope.querySelector('[data-les-regen-comment]')) { return; }
+		window.clearTimeout(scope.__lesRegenTimer);
+		scope.__lesRegenTimer = window.setTimeout(function () {
+			var info = commentReviewNeeded(scope);
+			if (info) { showCommentReview(info, t); }
+		}, 1000);
+	}
+	document.addEventListener('input', function (event) {
+		var t = event.target;
+		if (event.isTrusted && t && t.matches && t.matches('input[name^="manual_points"], input[name^="question_manual_points"]')) { scheduleAutoRegen(t); }
+	}, true);
+	document.addEventListener('change', function (event) {
+		var t = event.target;
+		if (event.isTrusted && t && t.matches && t.matches('[data-les-criterion]')) { scheduleAutoRegen(t); }
+	}, true);
 	document.addEventListener('input', function (event) {
 		var t = event.target;
 		if (t && t.matches && t.matches('textarea[name^="teacher_comment"], textarea[name^="question_teacher_comment"]') && event.isTrusted) {
