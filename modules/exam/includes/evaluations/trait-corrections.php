@@ -617,6 +617,7 @@ trait LogiEval_Secure_Evaluations_Corrections {		public static function attempt_
 								<span class="les-ai-grade-status" aria-live="polite"></span>
 							<?php endif; ?>
 							<button type="submit" class="button button-primary"><?php esc_html_e( 'Enregistrer toute la progression', 'logieval-secure' ); ?></button>
+							<button type="submit" name="finalize_all" value="1" class="button button-primary les-finalize-all-btn" onclick="return confirm('<?php echo esc_js( __( 'Enregistrer et finaliser toutes les copies ? Chaque copie dont toutes les réponses ont des points (les vôtres ou, à défaut, ceux proposés par l’IA) est finalisée. Les copies encore incomplètes restent à corriger. Vous pourrez rouvrir une correction ensuite.', 'logieval-secure' ) ); ?>');"><?php esc_html_e( '✓ Enregistrer et finaliser toutes les corrections', 'logieval-secure' ); ?></button>
 						</p>
 					</form>
 			</details>
@@ -1031,6 +1032,13 @@ trait LogiEval_Secure_Evaluations_Corrections {		public static function attempt_
 			$wpdb->query( 'COMMIT' );
 			if ( $is_ajax ) {
 				wp_send_json_success( array( 'saved' => $saved, 'time' => current_time( 'H:i:s' ) ) );
+			}
+			if ( ! empty( $_POST['finalize_all'] ) ) {
+				// 1.48.0 : « Enregistrer et finaliser toutes les corrections » depuis la correction par question.
+				$counts = self::finalize_ready_attempts( self::require_managed_evaluation( $evaluation_id ) );
+				$args   = array( 'logiexam_view' => 'evaluation', 'evaluation_id' => $evaluation_id, 'step' => 'grade', 'correction_mode' => 'question', 'finalized' => $counts['done'], 'not_finalized' => $counts['left'] ?: null );
+				wp_safe_redirect( self::post_redirect_url( self::evaluation_url( $evaluation_id, 'grade', $args ), $args ) );
+				exit;
 			}
 			$resume = sanitize_html_class( (string) wp_unslash( $_POST['les_resume_card'] ?? '' ) );
 			$args   = array( 'logiexam_view' => 'evaluation', 'evaluation_id' => $evaluation_id, 'step' => 'grade', 'correction_mode' => 'question', 'question_saved' => 1, 'les_resume' => 1 );

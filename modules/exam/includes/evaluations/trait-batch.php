@@ -42,10 +42,26 @@ trait LogiEval_Secure_Evaluations_Batch {
 
 	public static function handle_finalize_all(): void {
 		self::require_teacher_post();
-		global $wpdb;
-		$t             = LogiEval_Secure_Database::tables();
 		$evaluation_id = absint( $_POST['evaluation_id'] ?? 0 );
 		$evaluation    = self::require_managed_evaluation( $evaluation_id );
+		$counts        = self::finalize_ready_attempts( $evaluation );
+		$done          = $counts['done'];
+		$left          = $counts['left'];
+		$args = array( 'logiexam_view' => 'corrections', 'evaluation_id' => $evaluation_id, 'finalized' => $done, 'not_finalized' => $left ?: null );
+		wp_safe_redirect( self::post_redirect_url( admin_url( 'admin.php?page=logiexam-evaluation&step=grade&evaluation_id=' . $evaluation_id . '&finalized=' . $done . ( $left ? '&not_finalized=' . $left : '' ) ), $args ) );
+		exit;
+	}
+
+	/**
+	 * 1.48.0 : finalise toutes les copies prêtes (utilisé aussi par « Enregistrer et finaliser toutes les corrections »
+	 * de la correction par question).
+	 *
+	 * @return array{done:int,left:int}
+	 */
+	public static function finalize_ready_attempts( array $evaluation ): array {
+		global $wpdb;
+		$t             = LogiEval_Secure_Database::tables();
+		$evaluation_id = (int) $evaluation['id'];
 		$sets          = self::finalizable_attempts( $evaluation );
 		$now           = current_time( 'mysql' );
 		$done          = 0;
@@ -105,10 +121,7 @@ trait LogiEval_Secure_Evaluations_Batch {
 			$done++;
 		}
 
-		$left = count( $sets['missing'] ) + ( count( $sets['ready'] ) - $done );
-		$args = array( 'logiexam_view' => 'corrections', 'evaluation_id' => $evaluation_id, 'finalized' => $done, 'not_finalized' => $left ?: null );
-		wp_safe_redirect( self::post_redirect_url( admin_url( 'admin.php?page=logiexam-evaluation&step=grade&evaluation_id=' . $evaluation_id . '&finalized=' . $done . ( $left ? '&not_finalized=' . $left : '' ) ), $args ) );
-		exit;
+		return array( 'done' => $done, 'left' => count( $sets['missing'] ) + ( count( $sets['ready'] ) - $done ) );
 	}
 
 	private static function render_finalize_all_button( array $evaluation ): void {
