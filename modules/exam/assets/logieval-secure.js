@@ -4702,6 +4702,16 @@
 		this.nav.appendChild(this.next);
 		this.nav.appendChild(this.all);
 		items[0].parentNode.insertBefore(this.nav, items[0]);
+		/* 1.49.1 : copie finalisée (champs verrouillés) : la navigation par numéro de question reste utilisable
+		   pour relire la réponse et la correction. Seul le contenu du premier <legend> d'un fieldset désactivé reste actif. */
+		var lockedSet = items[0].closest('fieldset');
+		this.locked = !!(lockedSet && lockedSet.disabled);
+		if (this.locked) {
+			var legend = make('legend', 'les-qpager-legend');
+			legend.appendChild(this.nav);
+			lockedSet.insertBefore(legend, lockedSet.firstChild);
+			form.classList.add('les-qpager-locked');
+		}
 		items.forEach(function (item, k) {
 			var bar = make('div', 'les-qnext-bar');
 			var last = k === items.length - 1;

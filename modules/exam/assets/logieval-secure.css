@@ -3822,3 +3822,8 @@ body.les-fabs-off .les-fab-draft { opacity: 0 !important; pointer-events: none; 
 
 /* 1.49.0 : copie finalisée visible et modifiable en correction par question */
 .logieval-secure .les-final-badge { display: inline-block; margin-left: 6px; padding: 2px 8px; border-radius: 999px; background: #e7f6ec; color: #157347; font-size: 12px; font-weight: 700; }
+
+/* 1.49.1 : copie finalisée : navigation par question active (dans le <legend>), boutons « suivante » internes masqués */
+.logieval-secure .les-qpager-legend { display: block; float: none; width: 100%; margin: 0 0 12px; padding: 0; }
+.logieval-secure .les-qpager-locked .les-qnext-bar,
+.logieval-secure .les-qpager-locked .les-qfloat { display: none !important; }

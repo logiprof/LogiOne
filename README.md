@@ -1,4 +1,4 @@
-# LogiOne 1.49.0
+# LogiOne 1.49.1
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,10 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.49.1
+
+- Copie finalisée en mode « Par élève » : les numéros de questions, « ← Précédente » et « Suivante → » restent cliquables (ils étaient grisés avec le reste de la copie verrouillée). On peut relire chaque réponse de l'élève et sa correction sans rouvrir la copie.
 
 ## Nouveautés 1.49.0 (LogiExam : copies finalisées visibles par question)
 
