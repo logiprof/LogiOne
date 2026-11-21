@@ -537,6 +537,7 @@ trait LogiEval_Secure_Evaluations_Corrections {		public static function attempt_
 									<input type="hidden" name="attempt_ids[<?php echo esc_attr( $question['question_id'] ); ?>][]" value="<?php echo esc_attr( $attempt['id'] ); ?>">
 									<header class="les-qcard-head">
 										<strong class="les-qcard-name"><?php echo esc_html( $student_name ); ?></strong>
+										<?php if ( self::attempt_correction_is_finished( $attempt, self::get_result_by_attempt( (int) $attempt['id'] ) ) ) : ?><span class="les-final-badge"><?php esc_html_e( 'Finalisée', 'logieval-secure' ); ?></span><?php endif; ?>
 										<?php if ( $is_blank ) : ?><span class="les-blank-badge"><?php esc_html_e( 'Non répondu : 0 pt', 'logieval-secure' ); ?></span><?php endif; ?>
 										<?php echo is_numeric( $answer['manual_points'] ?? null ) ? '<span class="les-save-state les-alert-badge is-ok">' . esc_html__( 'Sauvegardé', 'logieval-secure' ) . '</span>' : '<span class="les-save-state les-alert-badge is-warning">' . esc_html__( 'À enregistrer', 'logieval-secure' ) . '</span>'; ?>
 									</header>
@@ -940,8 +941,8 @@ trait LogiEval_Secure_Evaluations_Corrections {		public static function attempt_
 						$failed = true;
 						break 2;
 					}
-					if ( self::attempt_is_cheating_cancelled( $attempt ) || self::attempt_correction_is_finished( $attempt, self::get_result_by_attempt( $attempt_id ) ) ) {
-						continue; // Copie annulée ou correction terminée : non modifiée ici.
+					if ( self::attempt_is_cheating_cancelled( $attempt ) ) {
+						continue; // Copie annulée : non modifiée ici. (1.49.0 : une copie finalisée reste modifiable, sa note est recalculée.)
 					}
 
 						$points_raw    = is_scalar( $question_points[ $attempt_id ] ?? null ) ? trim( (string) wp_unslash( $question_points[ $attempt_id ] ) ) : '';

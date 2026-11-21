@@ -720,14 +720,19 @@ trait LogiEval_Secure_Evaluations_Workspace {
 				<p class="les-message"><?php esc_html_e( 'Aucune copie rendue pour le moment.', 'logieval-secure' ); ?></p>
 			<?php elseif ( 'question' === $mode ) : ?>
 				<?php
-				$open_attempts = array_values( array_filter( $attempts, static fn( $a ) => ! self::attempt_is_cheating_cancelled( $a ) && ! self::attempt_correction_is_finished( $a, self::get_result_by_attempt( (int) $a['id'] ) ) ) );
-				$done          = count( $attempts ) - count( $open_attempts );
-				if ( $done ) :
+				// 1.49.0 : les copies finalisées restent visibles et modifiables par question (seules les copies annulées sont exclues).
+				$open_attempts = array_values( array_filter( $attempts, static fn( $a ) => ! self::attempt_is_cheating_cancelled( $a ) ) );
+				$final_count   = count( array_filter( $open_attempts, static fn( $a ) => self::attempt_correction_is_finished( $a, self::get_result_by_attempt( (int) $a['id'] ) ) ) );
+				$cancelled     = count( $attempts ) - count( $open_attempts );
+				if ( $final_count ) :
 					?>
-					<p class="description les-finished-note"><?php echo esc_html( sprintf( _n( '%d copie terminée ou annulée n’apparaît pas ici. Pour la modifier, passez en mode « Par élève » et cliquez sur « Rouvrir la correction ».', '%d copies terminées ou annulées n’apparaissent pas ici. Pour les modifier, passez en mode « Par élève » et cliquez sur « Rouvrir la correction ».', $done, 'logieval-secure' ), $done ) ); ?></p>
+					<p class="description les-finished-note"><?php echo esc_html( sprintf( _n( '%d copie déjà finalisée est affichée (badge « Finalisée ») : vous pouvez la revoir et la modifier ici, sa note est recalculée en enregistrant. Pensez ensuite à republier dans LogiNotes.', '%d copies déjà finalisées sont affichées (badge « Finalisée ») : vous pouvez les revoir et les modifier ici, leur note est recalculée en enregistrant. Pensez ensuite à republier dans LogiNotes.', $final_count, 'logieval-secure' ), $final_count ) ); ?></p>
+				<?php endif; ?>
+				<?php if ( $cancelled ) : ?>
+					<p class="description"><?php echo esc_html( sprintf( _n( '%d copie annulée pour tricherie n’apparaît pas ici.', '%d copies annulées pour tricherie n’apparaissent pas ici.', $cancelled, 'logieval-secure' ), $cancelled ) ); ?></p>
 				<?php endif; ?>
 				<?php if ( empty( $open_attempts ) ) : ?>
-					<p class="les-message"><?php esc_html_e( 'Toutes les copies sont corrigées.', 'logieval-secure' ); ?></p>
+					<p class="les-message"><?php esc_html_e( 'Aucune copie à afficher.', 'logieval-secure' ); ?></p>
 				<?php else : ?>
 					<?php self::render_question_by_question_correction( $evaluation, $open_attempts ); ?>
 				<?php endif; ?>

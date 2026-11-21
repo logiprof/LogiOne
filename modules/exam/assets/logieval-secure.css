@@ -3819,3 +3819,6 @@ body.les-fabs-off .les-fab-draft { opacity: 0 !important; pointer-events: none; 
 .logieval-secure .les-regen-comment { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
 .logieval-secure .les-regen-next { margin-left: auto; min-height: 40px; padding: 0 22px; font-size: 15px; font-weight: 700; }
 .logieval-secure .les-regen-next[hidden] { display: none; }
+
+/* 1.49.0 : copie finalisée visible et modifiable en correction par question */
+.logieval-secure .les-final-badge { display: inline-block; margin-left: 6px; padding: 2px 8px; border-radius: 999px; background: #e7f6ec; color: #157347; font-size: 12px; font-weight: 700; }
