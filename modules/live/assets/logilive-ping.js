@@ -4,6 +4,8 @@
  *   « page fermée » envoyé à la fermeture.
  * - LogiOne 1.38.1 : charge serveur réduite — défilement / clics regroupés (au plus un envoi toutes les 15 s, joint au
  *   signal de présence), et si le serveur répond mal (erreur 5xx, 429, réseau), les envois s'espacent (jusqu'à 5 min).
+ * - LogiOne 1.50.0 : jamais deux envois ordinaires en même temps (verrou, délai max 25 s) et décalage aléatoire
+ *   de 0 à 5 s par page. Le signal de fermeture (sendBeacon) part toujours tout de suite.
  * - Actions (si l'école les active) : seul le TYPE est envoyé (défilement en %, clic, vidéo, copie, onglet quitté,
  *   inactivité). Jamais le texte copié, jamais ce qui est tapé : les touches servent seulement à savoir que l'élève
  *   n'est pas inactif.
@@ -35,6 +37,11 @@
 	var pending = null;
 	var timer = null;
 	var lastScroll = -1;
+	// LogiOne 1.50.0 : un seul envoi ordinaire à la fois (pas d'empilement quand le serveur est lent),
+	// et un décalage aléatoire par page pour que toute une classe n'envoie pas au même instant.
+	var inFlight = false;
+	var inFlightSince = 0;
+	var JITTER = Math.floor(Math.random() * 5000);
 
 	function body(event, value) {
 		var b = new URLSearchParams();
@@ -59,6 +66,11 @@
 			pending = null;
 			if (timer) { window.clearTimeout(timer); timer = null; }
 		}
+		if (!beacon && inFlight && Date.now() - inFlightSince < 60000) {
+			// Un envoi est déjà en cours : on garde l'action pour la suite (le signal de présence simple est inutile).
+			if (event && event !== 'heartbeat') { pending = { event: event, value: value }; }
+			return;
+		}
 		var data = body(event, value);
 		lastSent = Date.now();
 		if (beacon && navigator.sendBeacon) {
@@ -68,15 +80,27 @@
 				}
 			} catch (e) { /* on passe par fetch */ }
 		}
+		var ctrl = (!beacon && window.AbortController) ? new AbortController() : null;
+		var abortTimer = ctrl ? window.setTimeout(function () { ctrl.abort(); }, 25000) : null;
+		if (!beacon) { inFlight = true; inFlightSince = Date.now(); }
 		fetch(cfg.ajaxUrl, {
 			method: 'POST',
 			credentials: 'same-origin',
 			keepalive: !!beacon,
+			signal: ctrl ? ctrl.signal : undefined,
 			headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
 			body: data
 		}).then(function (r) {
 			if (r.status === 429 || r.status >= 500) { slowDown(); } else { backoff = 0; }
-		}).catch(slowDown);
+		}).catch(slowDown).then(function () {
+			if (abortTimer) { window.clearTimeout(abortTimer); }
+			if (beacon) { return; }
+			inFlight = false;
+			// Une action arrivée pendant l'envoi part ensuite, en respectant l'espacement.
+			if (pending && !timer) {
+				timer = window.setTimeout(flush, Math.max(0, URGENT_GAP + backoff - (Date.now() - lastSent)));
+			}
+		});
 	}
 
 	function slowDown() {
@@ -86,8 +110,9 @@
 	function flush() {
 		timer = null;
 		if (pending) {
-			send(pending.event, pending.value);
+			var p = pending;
 			pending = null;
+			send(p.event, p.value); // si un envoi est encore en cours, send() la remet en attente
 		}
 	}
 
@@ -127,8 +152,8 @@
 		}
 	}
 
-	/* Présence */
-	send('heartbeat');
+	/* Présence (premier signal légèrement décalé : toute une classe ouvre souvent la page au même moment) */
+	window.setTimeout(function () { send('heartbeat'); }, Math.floor(JITTER / 2));
 	window.setInterval(function () {
 		if (track && !idle && !document.hidden && Date.now() - lastInput >= IDLE_AFTER) {
 			idle = true;
@@ -138,7 +163,7 @@
 		if (document.hidden && hiddenSince && Date.now() - hiddenSince > HIDDEN_STOP) {
 			return; // onglet oublié en arrière-plan : on ne charge plus le serveur
 		}
-		if (Date.now() - lastSent >= (document.hidden ? HIDDEN_HEART : HEART) + backoff - 500) {
+		if (Date.now() - lastSent >= (document.hidden ? HIDDEN_HEART : HEART) + backoff + JITTER - 500) {
 			send('heartbeat');
 		}
 	}, 5000);

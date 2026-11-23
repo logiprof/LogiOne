@@ -305,7 +305,7 @@ final class LogiOne_LogiLive {
 		}
 		wp_register_style( self::HANDLE, plugins_url( 'assets/logilive.css', __FILE__ ), array(), self::VERSION );
 		wp_register_script( self::HANDLE, plugins_url( 'assets/logilive.js', __FILE__ ), array(), self::VERSION, true );
-		wp_register_script( self::PING_HANDLE, plugins_url( 'assets/logilive-ping.js', __FILE__ ), array(), self::VERSION, true );
+		wp_register_script( self::PING_HANDLE, plugins_url( 'assets/logilive-ping.js', __FILE__ ), array(), self::VERSION . '.' . (int) @filemtime( __DIR__ . '/assets/logilive-ping.js' ), true );
 	}
 
 	/** Chargés uniquement là où le tableau est affiché. */

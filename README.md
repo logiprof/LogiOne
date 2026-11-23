@@ -1,4 +1,4 @@
-# LogiOne 1.49.3
+# LogiOne 1.50.0
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,15 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.50.0 (stabilité pendant les examens)
+
+Suite aux erreurs 503 des 12 et 23 novembre 2026 (rapport de transmission du 23 novembre).
+
+- **Codes d'examen** : le correctif appliqué en production le 23 novembre est intégré (un code faux n'est plus comparé aux codes de tous les autres élèves : 401 vérifications coûteuses → seulement celles de l'élève). En plus, seuls les codes de l'élève dont l'évaluation est **ouverte maintenant** sont vérifiés (un élève avec 30 codes d'anciennes évaluations : 30 vérifications → 1). Les contrôles d'accès (ouverture, autorisation, Safe Exam Browser) sont inchangés.
+- **Essais simultanés** : une seule vérification de code à la fois par élève (double clic, plusieurs onglets) et l'essai est compté avant la vérification, donc des essais en parallèle ne contournent plus la limite de 8 essais / 10 min. Un refus Safe Exam Browser ne compte pas comme mauvais code.
+- **Présence (LogiLive)** : retour du verrou « un seul envoi à la fois » (perdu depuis le 12 novembre) : quand le serveur ralentit, les signaux ne s'empilent plus (test : 4 envois simultanés → 1). Délai maximal de 25 s par envoi, décalage aléatoire de 0 à 5 s par page pour qu'une classe entière n'envoie pas au même instant. Le signal de fermeture part toujours immédiatement. L'adresse du script change à chaque modification (cache navigateur renouvelé).
+- Test isolé des codes : `tests/exam-code-entry-test.php` (hors du .zip).
 
 ## Nouveautés 1.49.3
 

@@ -18,16 +18,23 @@ trait LogiEval_Secure_Evaluations_Student_Session {
 		if ( self::code_entry_is_rate_limited() ) {
 			wp_send_json_error( array( 'message' => __( 'Trop de tentatives. Veuillez patienter quelques minutes avant de réessayer.', 'logieval-secure' ) ), 429 );
 		}
+		// LogiOne 1.50.0 : une seule vérification de code à la fois par élève (double clic, plusieurs onglets…).
+		if ( ! self::code_entry_lock() ) {
+			wp_send_json_error( array( 'message' => __( 'Vérification du code en cours… Patientez quelques secondes puis réessayez.', 'logieval-secure' ) ), 429 );
+		}
+		// L'essai est compté AVANT la vérification : des essais simultanés ne contournent plus la limite.
+		self::register_failed_code_entry();
 
 		$code = sanitize_text_field( wp_unslash( $_POST['code'] ?? '' ) );
 		$out  = self::start_attempt( get_current_user_id(), $code );
+		self::code_entry_unlock();
 		if ( $out['success'] ) {
 			self::clear_code_entry_rate_limit();
 			wp_send_json_success( $out );
 		}
 
-			if ( empty( $out['seb_required'] ) ) {
-			self::register_failed_code_entry();
+			if ( ! empty( $out['seb_required'] ) ) {
+			self::forgive_failed_code_entry(); // refus SEB : ce n'est pas un mauvais code
 		}
 			wp_send_json_error( $out, 403 );
 		}
@@ -474,7 +481,20 @@ trait LogiEval_Secure_Evaluations_Student_Session {
 		$t = LogiEval_Secure_Database::tables();
 		$plain_code = strtoupper( preg_replace( '/\s+/', '', sanitize_text_field( $plain_code ) ) );
 
-		$rows = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$t['codes']} WHERE user_id=%d AND status='active'", $user_id ), ARRAY_A );
+		$rows = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$t['codes']} WHERE user_id=%d AND status='active' ORDER BY id DESC", $user_id ), ARRAY_A );
+		// LogiOne 1.50.0 : la vérification d'un code (wp_check_password) est coûteuse. On ne compare le code saisi
+		// qu'aux codes de l'élève dont l'évaluation est ouverte maintenant (contrôles simples, sans calcul) :
+		// un élève avec 30 codes d'anciennes évaluations ne déclenche plus 30 calculs à chaque essai.
+		// Les contrôles complets (ouverture, autorisation, SEB) restent faits après la correspondance, comme avant.
+		$open_cache = array();
+		$rows       = array_values( array_filter( $rows, static function ( $code ) use ( &$open_cache ) {
+			$eid = (int) $code['evaluation_id'];
+			if ( ! isset( $open_cache[ $eid ] ) ) {
+				$evaluation         = self::get_evaluation( $eid );
+				$open_cache[ $eid ] = $evaluation && 'deleted' !== (string) ( $evaluation['status'] ?? '' ) && self::evaluation_is_open( $evaluation );
+			}
+			return $open_cache[ $eid ];
+		} ) );
 		foreach ( $rows as $code ) {
 			if ( ! wp_check_password( $plain_code, $code['code_hash'] ) ) {
 				continue;
@@ -540,14 +560,8 @@ trait LogiEval_Secure_Evaluations_Student_Session {
 			);
 		}
 
-		$other_rows = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$t['codes']} WHERE user_id<>%d AND status='active'", $user_id ), ARRAY_A );
-		foreach ( $other_rows as $code ) {
-			if ( wp_check_password( $plain_code, $code['code_hash'] ) ) {
-				return array( 'success' => false, 'message' => __( 'Ce code est valide, mais il appartient à un autre compte élève. Connectez-vous avec le bon compte utilisateur.', 'logieval-secure' ) );
-			}
-		}
-
-		return array( 'success' => false, 'message' => __( 'Code invalide.', 'logieval-secure' ) );
+		// Only the connected student's codes can grant access. Avoid a global password-hash scan.
+		return array( 'success' => false, 'message' => __( 'Code invalide ou non attribué à votre compte, ou évaluation pas ouverte en ce moment. Vérifiez le code et le compte connecté.', 'logieval-secure' ) );
 	}
 
 	public static function save_answer( array $attempt, int $question_id, $answer ): void {
@@ -1022,6 +1036,37 @@ trait LogiEval_Secure_Evaluations_Student_Session {
 		$key      = self::code_entry_rate_limit_key();
 		$attempts = (int) get_transient( $key );
 		set_transient( $key, $attempts + 1, 10 * MINUTE_IN_SECONDS );
+	}
+
+	private static function forgive_failed_code_entry(): void {
+		$key      = self::code_entry_rate_limit_key();
+		$attempts = (int) get_transient( $key );
+		if ( $attempts > 0 ) {
+			set_transient( $key, $attempts - 1, 10 * MINUTE_IN_SECONDS );
+		}
+	}
+
+	/** Verrou par élève (insertion atomique d'une option, valable 30 s au plus). */
+	private static function code_entry_lock_name(): string {
+		return 'logieval_code_lock_' . get_current_user_id();
+	}
+
+	private static function code_entry_lock(): bool {
+		$name = self::code_entry_lock_name();
+		if ( add_option( $name, time(), '', false ) ) {
+			return true;
+		}
+		$since = (int) get_option( $name, 0 );
+		if ( $since && time() - $since < 30 ) {
+			return false;
+		}
+		update_option( $name, time(), false ); // verrou oublié (erreur fatale, délai dépassé) : on le reprend
+
+		return true;
+	}
+
+	private static function code_entry_unlock(): void {
+		delete_option( self::code_entry_lock_name() );
 	}
 
 	private static function clear_code_entry_rate_limit(): void {
