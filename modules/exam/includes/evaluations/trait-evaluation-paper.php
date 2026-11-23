@@ -163,10 +163,11 @@ trait LogiEval_Secure_Evaluations_Evaluation_Paper {
 	private static function pdf_paper_card_blocks( int $number, array $q ): array {
 		$ink    = array( 49, 58, 69 );
 		$blocks = array();
-		$blocks[] = array( 'lines', self::pdf_wrap_lines( $q['prompt'], 64 ), 11, 'F2', array( 17, 24, 39 ), 14 );
-		// 1.49.2 : points de la question bien visibles, avec une case pour noter les points obtenus à la main.
-		$meta     = 'Points : ______ / ' . self::format_points( $q['points'] ) . ' pts' . ( '' !== $q['precision'] ? '   ·   ' . $q['precision'] : '' );
-		$blocks[] = array( 'lines', array( $meta ), 10, 'F2', array( 6, 112, 48 ), 14 );
+		// 1.49.3 : énoncé un peu plus étroit, les points sont à droite sur la même ligne que la question.
+		$blocks[] = array( 'lines', self::pdf_wrap_lines( $q['prompt'], 54 ), 11, 'F2', array( 17, 24, 39 ), 14 );
+		if ( '' !== $q['precision'] ) {
+			$blocks[] = array( 'lines', array( $q['precision'] ), 9, 'F2', array( 6, 112, 48 ), 12 );
+		}
 		if ( $q['media_id'] ) {
 			$img = self::pdf_register_image( $q['media_id'] );
 			if ( '' !== $img ) {
@@ -234,7 +235,7 @@ trait LogiEval_Secure_Evaluations_Evaluation_Paper {
 			default:
 				$blocks[] = array( 'write', self::paper_write_lines( $q ) );
 		}
-		return array( 'number' => $number, 'points' => $q['points'], 'blocks' => $blocks, 'height' => self::pdf_card_height( $blocks ) );
+		return array( 'number' => $number, 'points' => $q['points'], 'right' => '_____ / ' . self::format_points( $q['points'] ) . ' pts', 'blocks' => $blocks, 'height' => self::pdf_card_height( $blocks ) );
 	}
 
 	/** Hauteur d'une carte (corrigé ou version papier). */
@@ -362,8 +363,14 @@ trait LogiEval_Secure_Evaluations_Evaluation_Paper {
 				$body .= self::docx_p( $q['context'], array( 'size' => 10, 'shade' => 'DCF7D2', 'after' => 160, 'keep' => true ) );
 				$current_context = $q['context'];
 			}
-			$body .= self::docx_p( ( $i + 1 ) . '. ' . $q['prompt'], array( 'bold' => true, 'size' => 11, 'after' => 40, 'keep' => true, 'before' => 160 ) );
-			$body .= self::docx_p( 'Points : ______ / ' . self::format_points( $q['points'] ) . ' pts' . ( '' !== $q['precision'] ? '   ·   ' . $q['precision'] : '' ), array( 'bold' => true, 'size' => 10, 'color' => '067030', 'after' => 60, 'keep' => true, 'indent' => 280 ) );
+			// 1.49.3 : points à droite, sur la ligne de la question (tableau sans bordure à deux colonnes).
+			$body .= '<w:tbl><w:tblPr><w:tblW w:w="5000" w:type="pct"/><w:tblLayout w:type="fixed"/><w:tblCellMar><w:left w:w="0" w:type="dxa"/><w:right w:w="0" w:type="dxa"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w="7400"/><w:gridCol w:w="1700"/></w:tblGrid><w:tr><w:trPr><w:cantSplit/></w:trPr>'
+				. '<w:tc><w:tcPr><w:tcW w:w="7400" w:type="dxa"/></w:tcPr>' . self::docx_p( ( $i + 1 ) . '. ' . $q['prompt'], array( 'bold' => true, 'size' => 11, 'after' => 40, 'keep' => true, 'before' => 160 ) ) . '</w:tc>'
+				. '<w:tc><w:tcPr><w:tcW w:w="1700" w:type="dxa"/></w:tcPr>' . str_replace( '<w:pPr>', '<w:pPr><w:jc w:val="right"/>', self::docx_p( '_____ / ' . self::format_points( $q['points'] ) . ' pts', array( 'bold' => true, 'size' => 10, 'color' => '067030', 'after' => 40, 'keep' => true, 'before' => 160 ) ) ) . '</w:tc>'
+				. '</w:tr></w:tbl>';
+			if ( '' !== $q['precision'] ) {
+				$body .= self::docx_p( $q['precision'], array( 'bold' => true, 'size' => 9, 'color' => '067030', 'after' => 60, 'keep' => true, 'indent' => 280 ) );
+			}
 			if ( $q['media_id'] ) {
 				$run = self::docx_image_run( $media, $q['media_id'], '', 3200000, 1900000 );
 				if ( '' !== $run ) {

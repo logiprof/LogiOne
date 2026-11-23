@@ -293,6 +293,9 @@ trait LogiEval_Secure_Evaluations_Evaluation_Export {
 		$doc['content'] .= self::pdf_rect( 42, $top - $card['height'], 511, $card['height'] );
 		$doc['content'] .= self::pdf_fill_rect( 42, $top - $card['height'], 4, $card['height'], 245, 196, 0 );
 		$doc['content'] .= self::pdf_text_styled( 58, $top - 20, 12, $card['number'] . '.', 'F2', array( 17, 24, 39 ) );
+		if ( ! empty( $card['right'] ) ) { // 1.49.3 : points à droite, sur la ligne de la question
+			$doc['content'] .= self::pdf_text_styled( 539 - strlen( $card['right'] ) * 10 * 0.56, $top - 20, 10, $card['right'], 'F2', array( 6, 112, 48 ) );
+		}
 		$y = $top - 20;
 		foreach ( $card['blocks'] as $b ) {
 			if ( 'lines' === $b[0] ) {
