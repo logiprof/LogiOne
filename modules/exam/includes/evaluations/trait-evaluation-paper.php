@@ -15,7 +15,7 @@ trait LogiEval_Secure_Evaluations_Evaluation_Paper {
 		$questions = self::get_questions_for_evaluation( (int) $evaluation['id'] );
 		$total     = 0.0;
 		foreach ( $questions as $q ) {
-			$total += (float) ( $q['evaluation_points'] ?: $q['points'] );
+			$total += (float) ( (float) $q['evaluation_points'] > 0 ? $q['evaluation_points'] : $q['points'] );
 		}
 		$info = array_values(
 			array_filter(
@@ -86,7 +86,7 @@ trait LogiEval_Secure_Evaluations_Evaluation_Paper {
 				'context'   => self::pdf_plain_text( (string) ( $q['context'] ?? '' ) ),
 				'prompt'    => self::pdf_plain_text( (string) $q['prompt'] ),
 				'type'      => $type,
-				'points'    => (float) ( $q['evaluation_points'] ?: $q['points'] ),
+				'points'    => (float) ( (float) $q['evaluation_points'] > 0 ? $q['evaluation_points'] : $q['points'] ),
 				'precision' => 'calculation' === $type ? LogiEval_Secure_Question_Types::precision_label( LogiEval_Secure_Question_Types::calculation_precision( $q['expected_answer'] ?? '' ) ) : '',
 				'choices'   => $choices,
 				'order'     => $order,
@@ -164,8 +164,9 @@ trait LogiEval_Secure_Evaluations_Evaluation_Paper {
 		$ink    = array( 49, 58, 69 );
 		$blocks = array();
 		$blocks[] = array( 'lines', self::pdf_wrap_lines( $q['prompt'], 64 ), 11, 'F2', array( 17, 24, 39 ), 14 );
-		$meta     = self::format_points( $q['points'] ) . ' pts' . ( '' !== $q['precision'] ? ' · ' . $q['precision'] : '' );
-		$blocks[] = array( 'lines', array( $meta ), 9, 'F2', array( 6, 112, 48 ), 12 );
+		// 1.49.2 : points de la question bien visibles, avec une case pour noter les points obtenus à la main.
+		$meta     = 'Points : ______ / ' . self::format_points( $q['points'] ) . ' pts' . ( '' !== $q['precision'] ? '   ·   ' . $q['precision'] : '' );
+		$blocks[] = array( 'lines', array( $meta ), 10, 'F2', array( 6, 112, 48 ), 14 );
 		if ( $q['media_id'] ) {
 			$img = self::pdf_register_image( $q['media_id'] );
 			if ( '' !== $img ) {
@@ -362,7 +363,7 @@ trait LogiEval_Secure_Evaluations_Evaluation_Paper {
 				$current_context = $q['context'];
 			}
 			$body .= self::docx_p( ( $i + 1 ) . '. ' . $q['prompt'], array( 'bold' => true, 'size' => 11, 'after' => 40, 'keep' => true, 'before' => 160 ) );
-			$body .= self::docx_p( self::format_points( $q['points'] ) . ' pts' . ( '' !== $q['precision'] ? ' · ' . $q['precision'] : '' ), array( 'bold' => true, 'size' => 9, 'color' => '067030', 'after' => 60, 'keep' => true, 'indent' => 280 ) );
+			$body .= self::docx_p( 'Points : ______ / ' . self::format_points( $q['points'] ) . ' pts' . ( '' !== $q['precision'] ? '   ·   ' . $q['precision'] : '' ), array( 'bold' => true, 'size' => 10, 'color' => '067030', 'after' => 60, 'keep' => true, 'indent' => 280 ) );
 			if ( $q['media_id'] ) {
 				$run = self::docx_image_run( $media, $q['media_id'], '', 3200000, 1900000 );
 				if ( '' !== $run ) {
