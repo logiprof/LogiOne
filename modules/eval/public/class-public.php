@@ -280,7 +280,10 @@ class LOGIEVAL_Public {
      */
     private static function counted_votes_sql( string $alias = 'r' ): string {
         $t = LOGIEVAL_Database::tables();
-        return " AND {$alias}.enseignant_id IN (SELECT ee_c.enseignant_id FROM {$t['eval_enseignant']} ee_c WHERE ee_c.evaluation_id={$alias}.evaluation_id)"
+        // 1.53.7 : une évaluation clôturée ne compte que les enseignants qui ont terminé (comme le calcul des notes) :
+        // les votes d'un enseignant resté « en cours » ne s'affichent plus dans les décomptes.
+        return " AND {$alias}.enseignant_id IN (SELECT ee_c.enseignant_id FROM {$t['eval_enseignant']} ee_c WHERE ee_c.evaluation_id={$alias}.evaluation_id"
+             . " AND (ee_c.statut='termine' OR NOT EXISTS (SELECT 1 FROM {$t['evaluations']} ev_c WHERE ev_c.id=ee_c.evaluation_id AND ev_c.statut='cloturee')))"
              . " AND NOT EXISTS (SELECT 1 FROM {$t['non_evaluables']} ne_c INNER JOIN {$t['sous_criteres']} sc_c ON sc_c.objectif_id=ne_c.objectif_id"
              . " WHERE ne_c.evaluation_id={$alias}.evaluation_id AND ne_c.enseignant_id={$alias}.enseignant_id AND ne_c.eleve_id={$alias}.eleve_id AND sc_c.id={$alias}.sous_critere_id)";
     }
@@ -840,7 +843,7 @@ class LOGIEVAL_Public {
                  FROM {$t['reponses']} r
                  INNER JOIN {$t['enseignants']} e ON e.id = r.enseignant_id
                  WHERE r.evaluation_id = %d AND r.enseignant_id != %d
-                   AND r.commentaire IS NOT NULL AND r.commentaire <> ''
+                   AND r.commentaire IS NOT NULL AND r.commentaire <> ''" . self::counted_votes_sql('r') . "
                  ORDER BY e.nom, e.prenom",
                 $eval_id, $is_site_admin ? 0 : $ens_id
             ), ARRAY_A) ?: [];
