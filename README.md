@@ -1,4 +1,4 @@
-# LogiOne 1.50.0
+# LogiOne 1.51.0
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,14 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.51.0 (LogiProjet intégré)
+
+- **LogiProjet 1.10.2 devient un module de LogiOne** (`modules/projet`). Mêmes tables (`wp_logiprojet_travaux`, `wp_logiprojet_depots`), mêmes réglages (`logiprojet_settings`), même dossier des PowerPoint déposés : tous les travaux, dépôts, corrections et notes existants sont repris tels quels.
+- Le menu **LogiProjet** reste dans le menu latéral de WordPress (avec ses réglages), le code court **[logiprojet]** (et `pleine_largeur="non"`) et l'API REST restent identiques : les pages des élèves continuent de fonctionner.
+- Tant que l'extension autonome LogiProjet est active, le module n'est pas chargé (pas de doublon) et un avis le signale. Il suffit de désactiver l'ancienne extension.
+- **Protection des données** : supprimer un ancien plugin autonome (LogiProjet, LogiNotes, LogiExam…) depuis la page Extensions lançait son `uninstall.php`, qui efface ses tables et ses fichiers. Tant que LogiOne est actif, ce nettoyage est neutralisé : seul le dossier de l'ancien plugin est supprimé, les données restent.
+- Module activable / désactivable dans LogiOne › Modules, comme les autres. Les mises à jour de LogiProjet passent désormais par celles de LogiOne (GitHub).
 
 ## Nouveautés 1.50.0 (stabilité pendant les examens)
 

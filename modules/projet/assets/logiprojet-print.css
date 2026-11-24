@@ -1,0 +1,59 @@
+/* Grilles imprimables LogiProjet — A4, charte LogiOne */
+@font-face{font-family:"LPJ Poppins";font-weight:400;src:url(fonts/poppins-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"LPJ Poppins";font-weight:600;src:url(fonts/poppins-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"LPJ Poppins";font-weight:700;src:url(fonts/poppins-latin-700-normal.woff2) format("woff2")}
+@page{size:A4;margin:0}
+:root{--ink:#313a45;--ink-deep:#252c35;--ink-soft:#4a5563;--green:#067030;--mint:#dcefe3;--paper:#eef0eb;--line:#d9ddd6;--yellow:#f5c400;--yellow-soft:#fff4c2;--muted:#5b6672}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#e5e7e3}
+body{font-family:"LPJ Poppins","Poppins",Arial,sans-serif;color:var(--ink);font-size:9pt;line-height:1.38;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.noprint{position:sticky;top:0;text-align:center;padding:10px;background:var(--ink);z-index:2}
+.noprint button{font:600 14px "LPJ Poppins",Arial,sans-serif;background:var(--yellow);border:0;border-radius:6px;padding:9px 18px;cursor:pointer}
+.page{width:210mm;min-height:297mm;margin:10mm auto;background:#fff;position:relative;page-break-after:always;box-shadow:0 2px 12px rgba(0,0,0,.15);display:flex;flex-direction:column}
+.page:last-child{page-break-after:auto}
+@media print{html,body{background:#fff}.noprint{display:none}.page{margin:0;box-shadow:none}}
+.band{background:var(--ink);color:#fff;padding:4.5mm 13mm 5.5mm;display:flex;align-items:center;gap:7mm;position:relative}
+.band::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.2mm;background:repeating-linear-gradient(-45deg,var(--yellow) 0 4mm,var(--ink-deep) 4mm 8mm)}
+.band .title{flex:1}
+.kicker{font-size:7.8pt;text-transform:uppercase;letter-spacing:.14em;color:var(--yellow);font-weight:600}
+.band h1{margin:.3mm 0 0;font-size:15pt;line-height:1.15}
+.sub{color:#c9d1d9;font-size:9pt;margin-top:.5mm}
+.stamp{background:var(--yellow);color:var(--ink-deep);border-radius:6px;padding:2.5mm 4mm;text-align:center;transform:rotate(-3deg)}
+.stamp b{display:block;font-size:13pt;line-height:1.1}.stamp span{font-size:7.5pt;font-weight:600}
+.inner{padding:4.5mm 13mm 3mm;flex:1}
+.ids{display:grid;grid-template-columns:1fr 1fr .6fr;border:1px solid var(--line);border-radius:6px;overflow:hidden;font-weight:600;font-size:10pt}
+.ids div{padding:1.4mm 3mm;border-right:1px solid var(--line);min-height:9mm}.ids div:last-child{border-right:0}
+.ids label{display:block;font-size:6.8pt;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600}
+.levels{display:flex;gap:3mm;font-size:7.8pt;margin:1.5mm 0 0;color:var(--muted)}.levels b{color:var(--ink)}
+table.grid{width:100%;border-collapse:separate;border-spacing:0;font-size:8.1pt;line-height:1.28;margin-top:1.5mm;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+table.grid th{background:var(--ink);color:#fff;font-weight:600;font-size:7.6pt;text-transform:uppercase;letter-spacing:.06em;padding:1.8mm 2mm;text-align:left}
+table.grid th.c{text-align:center;width:10mm}
+table.grid td{padding:.75mm 2mm;border-top:1px solid var(--line);vertical-align:middle}
+table.grid td.c{text-align:center}
+table.grid .cm{font-size:6.9pt;line-height:1.25;color:var(--muted);margin-top:.2mm}
+table.grid tr.blk td{background:var(--mint);font-weight:700;color:var(--green);font-size:7.9pt;padding:.9mm 2mm}
+table.grid tr.blk .pts{float:right;color:var(--ink);font-weight:600}
+table.grid tr.total td{background:var(--ink);color:#fff;font-weight:700;font-size:10pt;padding:1.8mm 2mm;white-space:nowrap}
+.box{display:inline-block;width:3.8mm;height:3.8mm;border:1.3px solid var(--ink-soft);border-radius:1.2mm;vertical-align:middle;position:relative}
+.box.sm{width:3.6mm;height:3.6mm}
+.box.on{background:var(--ink);border-color:var(--ink)}
+.box.on::after{content:"";position:absolute;left:1.1mm;top:.3mm;width:1.2mm;height:2.3mm;border:solid var(--yellow);border-width:0 .5mm .5mm 0;transform:rotate(45deg)}
+.bottom{display:grid;grid-template-columns:1.1fr 1fr;gap:4mm;margin-top:3mm}
+.h{font-weight:600;font-size:8.8pt;margin-bottom:1mm}
+table.conv{width:100%;border-collapse:collapse;font-size:7.4pt;text-align:center}
+table.conv td,table.conv th{border:1px solid var(--line);padding:.8mm .3mm}
+table.conv th{background:var(--paper);font-weight:600;color:var(--muted);font-size:6.8pt}
+table.conv td.g4{background:var(--mint)}
+.small{font-size:7.3pt;color:var(--muted);margin-top:1mm}
+.tile{border:1px solid var(--line);border-top:1.2mm solid var(--yellow);border-radius:6px;padding:2.5mm 3.5mm}
+.orow{display:flex;justify-content:space-between;font-size:8pt;margin:.6mm 0}
+.result{display:flex;gap:3mm;margin-top:2.5mm}
+.result>div{flex:1;border:1.5px solid var(--ink);border-radius:6px;padding:1.2mm 3mm;text-align:center}
+.result>div.final{background:var(--yellow-soft);border-color:var(--yellow)}
+.result label{display:block;font-size:6.8pt;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.result .val{font-size:13pt;font-weight:700;min-height:7mm;line-height:7mm}
+.comment{border:1px solid var(--line);border-radius:6px;padding:2mm 3mm;min-height:14mm;margin-top:2.5mm;font-size:8pt;line-height:1.3}
+.comment label{font-size:6.8pt;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.comment p{margin:1mm 0 0}
+.foot{margin:0 13mm 6mm;display:flex;justify-content:space-between;font-size:7pt;color:var(--muted);border-top:1px solid var(--line);padding-top:1.6mm}
+.result>div.late{border-color:#b42318;color:#b42318}

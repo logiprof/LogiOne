@@ -59,6 +59,12 @@ final class LogiPilot_Plugin
             'legacy' => 'logiplanning-lms.php',
             'class' => 'LogiOne_Planning',
         ),
+        'projet' => array(
+            'label' => 'LogiProjet',
+            'file' => 'modules/projet/module.php',
+            'legacy' => 'logiprojet.php',
+            'class' => 'LogiProjet_App',
+        ),
         'tiles' => array(
             'label' => 'Tuiles de contenu',
             'file' => 'modules/tiles/module.php',
@@ -127,6 +133,7 @@ final class LogiPilot_Plugin
         }
 
         add_action('plugins_loaded', array('LogiPilot_Install', 'maybe_upgrade'), 5);
+        add_action('pre_uninstall_plugin', array(__CLASS__, 'protect_legacy_data_on_uninstall'), 1, 1);
 
         if (self::$conflicts) {
             add_action('admin_notices', array(__CLASS__, 'render_conflict_notice'));
@@ -189,6 +196,45 @@ final class LogiPilot_Plugin
         }
 
         return $found;
+    }
+
+    /**
+     * LogiOne 1.51.0 : supprimer un ancien plugin autonome (LogiProjet, LogiNotes…) depuis la page Extensions
+     * lancerait son uninstall.php, qui efface ses tables et ses fichiers — c'est-à-dire les données que LogiOne
+     * utilise maintenant. Tant que LogiOne est actif, ce nettoyage est neutralisé : seul le dossier de l'ancien
+     * plugin est supprimé, les données restent.
+     */
+    public static function protect_legacy_data_on_uninstall($plugin): void
+    {
+        $plugin = (string) $plugin;
+        if (strpos($plugin, 'logipilot/') === 0) {
+            return;
+        }
+        $is_legacy = false;
+        foreach (self::MODULES as $module) {
+            if ($module['legacy'] !== '' && basename($plugin) === $module['legacy']) {
+                $is_legacy = true;
+                break;
+            }
+        }
+        if (!$is_legacy) {
+            return;
+        }
+        // 1. uninstall.php de l'ancien plugin : renommé juste avant que WordPress ne l'exécute.
+        $file = WP_PLUGIN_DIR . '/' . dirname($plugin) . '/uninstall.php';
+        if (dirname($plugin) !== '.' && file_exists($file)) {
+            @rename($file, $file . '.desactive-par-logione'); // phpcs:ignore WordPress.PHP.NoSilencedErrors
+            if (file_exists($file)) {
+                wp_die(esc_html('LogiOne : suppression interrompue pour protéger les données de ' . $plugin . '. Désactivez simplement l’ancien plugin (ne le supprimez pas), ou supprimez son dossier par FTP.'));
+            }
+        }
+        // 2. Crochet de désinstallation éventuellement enregistré (register_uninstall_hook) : retiré.
+        $hooks = get_option('uninstall_plugins', array());
+        if (is_array($hooks) && isset($hooks[$plugin])) {
+            unset($hooks[$plugin]);
+            update_option('uninstall_plugins', $hooks);
+        }
+        LogiPilot_Log::add('legacy_uninstall_protected', 'suite', 0, array('plugin' => $plugin));
     }
 
     public static function activate(): void

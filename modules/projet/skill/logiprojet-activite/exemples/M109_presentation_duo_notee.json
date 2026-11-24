@@ -1,0 +1,182 @@
+{
+  "format": "logiprojet-travail",
+  "version": 1,
+  "source": "https://logiprof.fontes-oliveira.ch",
+  "title": "Présenter le contenu du module M109",
+  "module": "M109",
+  "course": {
+    "id": 30606,
+    "slug": "m109-acces-et-protection-des-donnees",
+    "title": "M109 – Accès et protection des données"
+  },
+  "lessons": [
+    {
+      "id": 30612,
+      "slug": "lecon-3-6",
+      "title": "9.1 Autorisation d’accès"
+    },
+    {
+      "id": 30621,
+      "slug": "m109-9-2-secret-de-lecriture",
+      "title": "9.2 Secret de l’écriture"
+    },
+    {
+      "id": 30623,
+      "slug": "m109-9-3-secret-postal",
+      "title": "9.3 Secret postal"
+    },
+    {
+      "id": 30625,
+      "slug": "m109-9-4-secret-des-affaires",
+      "title": "9.4 Secret des affaires"
+    },
+    {
+      "id": 30627,
+      "slug": "m109-9-5-securite-des-donnees",
+      "title": "9.5 Sécurité des données"
+    }
+  ],
+  "grille": [
+    {
+      "id": "c1",
+      "bloc": "A · Contenu des 5 leçons du M109",
+      "label": "9.1 Autorisation d’accès : contenu juste et bien expliqué",
+      "lesson_id": 30612
+    },
+    {
+      "id": "c2",
+      "bloc": "A · Contenu des 5 leçons du M109",
+      "label": "9.2 Secret de l’écriture : contenu juste et bien expliqué",
+      "lesson_id": 30621
+    },
+    {
+      "id": "c3",
+      "bloc": "A · Contenu des 5 leçons du M109",
+      "label": "9.3 Secret postal : contenu juste et bien expliqué",
+      "lesson_id": 30623
+    },
+    {
+      "id": "c4",
+      "bloc": "A · Contenu des 5 leçons du M109",
+      "label": "9.4 Secret des affaires : contenu juste et bien expliqué",
+      "lesson_id": 30625
+    },
+    {
+      "id": "c5",
+      "bloc": "A · Contenu des 5 leçons du M109",
+      "label": "9.5 Sécurité des données : contenu juste et bien expliqué",
+      "lesson_id": 30627
+    },
+    {
+      "id": "c6",
+      "bloc": "B · Explications et exemples",
+      "label": "Explications claires, avec vos propres mots (pas de copier-coller)"
+    },
+    {
+      "id": "c7",
+      "bloc": "B · Explications et exemples",
+      "label": "Exemples concrets tirés du monde de la logistique"
+    },
+    {
+      "id": "c8",
+      "bloc": "C · Structure",
+      "label": "Introduction avec le plan de la présentation"
+    },
+    {
+      "id": "c9",
+      "bloc": "C · Structure",
+      "label": "Conclusion ou résumé des points essentiels"
+    },
+    {
+      "id": "c10",
+      "bloc": "D · Lisibilité",
+      "label": "Peu de texte par slide, lisible de loin, 8 à 12 slides"
+    },
+    {
+      "id": "c11",
+      "bloc": "D · Lisibilité",
+      "label": "Images, schémas ou tableaux utiles pour comprendre"
+    },
+    {
+      "id": "c12",
+      "bloc": "E · Forme",
+      "label": "Orthographe soignée et slide « Sources » complète"
+    }
+  ],
+  "due_at": null,
+  "consigne": {
+    "note": "**Ce travail est évalué et compte pour votre moyenne.** Votre présentation PowerPoint est notée sur {total} points avec la grille de la page 3. Les deux membres du duo reçoivent la même note. Lisez la grille **avant** de commencer : elle vous dit exactement ce qui rapporte des points.",
+    "mission": [
+      "En duo, vous créez une **présentation PowerPoint qui explique le contenu du module {module}** à la classe. Mettez-vous à la place de l’enseignant : grâce à votre présentation, un·e camarade qui n’a pas suivi le cours doit comprendre l’essentiel du module.",
+      "Votre présentation doit pouvoir être présentée en **10 minutes**. Le jour J, 1 ou 2 duos seront tirés au sort pour la présenter devant la classe."
+    ],
+    "actions": [
+      "① Expliquer | Dites ce que c’est et à quoi ça sert, avec vos propres mots.",
+      "② Donner un exemple | Montrez un cas concret dans une entreprise logistique (entrepôt, poste, transport).",
+      "③ Illustrer | Ajoutez une image, un schéma ou un tableau qui aide à comprendre."
+    ],
+    "plan": [
+      "Slide 1 | **Titre** : numéro et titre du module, vos deux noms, votre classe.",
+      "Slide 2 | **Plan** : la liste des {n} leçons que vous allez présenter.",
+      "Slides 3 à 9 | **Les {n} leçons** : 1 à 2 slides par leçon (expliquer, exemple, illustration).",
+      "Avant-dernière | **À retenir** : un résumé du module en 4 à 6 points courts.",
+      "Dernière | **Sources** : d’où viennent vos informations et vos images (logiprof, sites, livres…)."
+    ],
+    "faire": [
+      "Écrire avec **vos propres mots**",
+      "Maximum **6 lignes courtes** par slide",
+      "Texte assez grand pour être lu du fond de la classe",
+      "Des images et schémas **utiles**, avec leur source",
+      "Écrire ce que vous direz à l’oral dans les **notes du présentateur**",
+      "Se répartir le travail : **les deux** préparent et connaissent toute la présentation"
+    ],
+    "eviter": [
+      "Copier-coller le cours, Internet ou une IA",
+      "Des slides remplies de texte à lire",
+      "Des images décoratives sans lien avec le sujet",
+      "Plus de 12 slides",
+      "Des fautes d’orthographe non relues",
+      "Oublier la slide « Sources »"
+    ],
+    "etapes": [
+      "**Lire le module {module}** sur logiprof : les leçons {lecons} et leurs vidéos. Se répartir les leçons entre vous deux.",
+      "**Préparer le contenu** : pour chaque leçon, rédiger l’explication, trouver un exemple concret et choisir une illustration.",
+      "**Construire les slides** en suivant le plan de la page 1. Écrire les notes du présentateur.",
+      "**Vous auto-évaluer** avec la grille de la page 3 et la check-list. Corriger ce qui manque. **Rendre le fichier** et vous entraîner à présenter en 10 minutes."
+    ],
+    "rendu": [
+      "Un fichier **PowerPoint (.pptx)** par duo",
+      "Nom du fichier : **{module}_Nom1_Nom2.pptx**",
+      "Rendu au plus tard le {date_fin}",
+      "En retard : **−0.5** de 1 à 7 jours, **−1** de 8 à 14 jours, **note 1** au-delà (chaque jour commencé compte)",
+      "Déposé sur **LogiProjet** (page « Mes travaux » de logiprof)"
+    ],
+    "jourj": [
+      "1 ou 2 duos sont **tirés au sort**",
+      "**10 minutes** de présentation + **5 minutes** de questions",
+      "Les deux membres du duo prennent la parole",
+      "Bonus possible : **+0.5** sur la note (voir page 3)"
+    ],
+    "checklist": [
+      "Les {n} leçons ({lecons}) sont présentes",
+      "Chaque leçon a une explication, un exemple et une illustration",
+      "Il y a une slide Titre, Plan, À retenir et Sources",
+      "Entre 8 et 12 slides",
+      "Aucune slide n’a plus de 6 lignes",
+      "Les notes du présentateur sont remplies",
+      "L’orthographe a été relue par les deux",
+      "Le fichier est bien nommé {module}_Nom1_Nom2.pptx"
+    ]
+  },
+  "date_debut": null,
+  "group_size": 2,
+  "formats": [
+    "pptx"
+  ],
+  "oral_bonus": true,
+  "allow_solo": false,
+  "groups": [],
+  "graded": true,
+  "auteur": "Fontes Carlos",
+  "formation": "CFC Logisticien·ne"
+}

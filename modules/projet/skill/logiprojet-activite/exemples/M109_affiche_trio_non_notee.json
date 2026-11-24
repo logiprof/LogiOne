@@ -1,0 +1,128 @@
+{
+  "format": "logiprojet-travail",
+  "version": 1,
+  "title": "Affiche : protéger les informations au travail",
+  "module": "M109",
+  "course": {
+    "id": 30606,
+    "slug": "m109-acces-et-protection-des-donnees",
+    "title": "M109 – Accès et protection des données"
+  },
+  "lessons": [
+    {
+      "id": 30612,
+      "slug": "lecon-3-6",
+      "title": "9.1 Autorisation d’accès"
+    },
+    {
+      "id": 30621,
+      "slug": "m109-9-2-secret-de-lecriture",
+      "title": "9.2 Secret de l’écriture"
+    },
+    {
+      "id": 30623,
+      "slug": "m109-9-3-secret-postal",
+      "title": "9.3 Secret postal"
+    },
+    {
+      "id": 30625,
+      "slug": "m109-9-4-secret-des-affaires",
+      "title": "9.4 Secret des affaires"
+    },
+    {
+      "id": 30627,
+      "slug": "m109-9-5-securite-des-donnees",
+      "title": "9.5 Sécurité des données"
+    }
+  ],
+  "graded": false,
+  "group_size": 3,
+  "allow_solo": true,
+  "formats": [
+    "pdf",
+    "img"
+  ],
+  "date_debut": null,
+  "due_at": null,
+  "oral_bonus": false,
+  "groups": [],
+  "auteur": "Fontes Carlos",
+  "formation": "CFC Logisticien·ne",
+  "grille": [
+    {
+      "id": "c1",
+      "bloc": "A · Contenu",
+      "label": "Les 5 leçons du M109 sont représentées sur l’affiche"
+    },
+    {
+      "id": "c2",
+      "bloc": "A · Contenu",
+      "label": "Chaque règle est juste et dite avec vos propres mots"
+    },
+    {
+      "id": "c3",
+      "bloc": "B · Message",
+      "label": "Un exemple concret tiré d’une entreprise logistique pour chaque leçon"
+    },
+    {
+      "id": "c4",
+      "bloc": "C · Affiche",
+      "label": "Lisible à 2 mètres : titre clair, peu de texte, images utiles"
+    }
+  ],
+  "consigne": {
+    "note": "**Cette activité n’est pas notée.** Elle vous entraîne avant la présentation notée du M109 : faites-la avec le même sérieux. Votre enseignant vous donnera un retour avec les critères de réussite ci-dessous.",
+    "mission": [
+      "En trio, vous créez une **affiche A3** qui rappelle à vos collègues de l’entrepôt les règles du module {module} : qui peut accéder à quoi, quels secrets garder et comment protéger les données.",
+      "Votre affiche sera accrochée dans la classe. Elle doit se comprendre en **30 secondes**, sans explication."
+    ],
+    "actions": [
+      "① Choisir une règle | Pour chaque leçon, retenez la règle la plus importante pour un logisticien.",
+      "② Donner un exemple | Montrez la règle dans une situation concrète : quai, bureau, tournée de livraison.",
+      "③ Illustrer | Un pictogramme, une photo ou un dessin qui aide à retenir."
+    ],
+    "plan": [
+      "En haut | **Un titre accrocheur** et le numéro du module.",
+      "Au centre | **Les 5 règles**, une par leçon, avec leur exemple et leur image.",
+      "En bas | **À retenir** : la phrase la plus importante, et vos trois noms."
+    ],
+    "faire": [
+      "Écrire avec **vos propres mots**",
+      "Une règle = une phrase courte",
+      "Des images **utiles**, avec leur source"
+    ],
+    "eviter": [
+      "Copier-coller le cours",
+      "Des blocs de texte",
+      "Des images sans lien avec la règle"
+    ],
+    "etapes": [
+      "**Relire les leçons {lecons}** et choisir une règle par leçon. Se répartir le travail entre vous trois.",
+      "**Créer l’affiche** (Canva, PowerPoint ou à la main), vérifier avec la check-list, puis **l’enregistrer en PDF ou la photographier** et la déposer."
+    ],
+    "rendu": [
+      "Un fichier **PDF** ou une **photo (.jpg, .png)** de l’affiche par trio",
+      "Nom du fichier : **{module}_Affiche_Nom1_Nom2_Nom3**",
+      "Rendu au plus tard le {date_fin}",
+      "Déposé sur **LogiProjet** (page « Mes travaux » de logiprof)"
+    ],
+    "jourj": [
+      "Les affiches sont accrochées dans la classe",
+      "Chaque trio fait le tour et laisse un commentaire positif sur deux autres affiches"
+    ],
+    "checklist": [
+      "Les 5 leçons ({lecons}) sont sur l’affiche",
+      "Chaque règle a un exemple et une image",
+      "Le titre se lit de loin",
+      "Vos trois noms sont en bas de l’affiche"
+    ],
+    "titres": {
+      "contenu": "Ce que votre affiche doit montrer",
+      "plan": "La mise en page de votre affiche",
+      "page2": "Comment réaliser votre affiche",
+      "jourj": "La galerie d’affiches"
+    },
+    "intro_lecons": "Votre affiche couvre **les {n} leçons du module {module}** :",
+    "intro_actions": "Pour **chaque leçon**, votre affiche doit faire ces {k} choses :"
+  }
+}

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="250" height="64" viewBox="0 0 250 64" role="img" aria-label="LogiProjet by LogiProf">
+  <g stroke="#313a45" stroke-width="1.4">
+    <rect x="17" y="4" width="16" height="16" rx="2" fill="#f5c400"/>
+    <rect x="8" y="21" width="16" height="16" rx="2" fill="#2fae5f"/>
+    <rect x="26" y="21" width="16" height="16" rx="2" fill="#067030"/>
+    <rect x="0" y="38" width="16" height="16" rx="2" fill="#dcefe3"/>
+    <rect x="17" y="38" width="16" height="16" rx="2" fill="#2fae5f"/>
+    <rect x="34" y="38" width="16" height="16" rx="2" fill="#067030"/>
+  </g>
+  <text x="62" y="36" font-family="Poppins, Arial, sans-serif" font-size="27" font-weight="700" fill="#313a45">LogiProjet</text>
+  <text x="63" y="54" font-family="Poppins, Arial, sans-serif" font-size="12" fill="#5b6672">by LogiProf</text>
+</svg>
