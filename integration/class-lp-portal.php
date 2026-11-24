@@ -78,6 +78,12 @@ final class LogiPilot_Portal
                 'text' => 'Votre classe en direct.',
                 'points' => array('Élèves connectés en ce moment', 'Leçon ou page ouverte', 'Dernière activité de chacun'),
             ),
+            // LogiOne 1.51.1 : LogiProjet (droit d'enseignant propre à LogiProjet : rôles choisis dans ses réglages).
+            'projet' => array(
+                'label' => $labels['projet'], 'tag' => 'logiprojet pleine_largeur="non"', 'cap' => 'logiprojet_enseigner', 'can' => array('LogiProjet_Access', 'is_teacher'), 'module' => 'projet', 'color' => '#c2410c',
+                'text' => 'Les travaux notés en groupe de vos apprentis.',
+                'points' => array('Dépôt des présentations par les apprentis', 'Correction assistée par l’IA', 'Notes et retours publiés aux apprentis'),
+            ),
         );
 
         // Tuiles de contenu créées par l'administration, à la suite des outils.
@@ -153,7 +159,8 @@ final class LogiPilot_Portal
                 continue;
             }
             // Un outil auquel l'utilisateur n'a pas droit n'apparaît jamais.
-            if (!current_user_can($tool['cap'])) {
+            $allowed = isset($tool['can']) && is_callable($tool['can']) ? (bool) call_user_func($tool['can']) : current_user_can($tool['cap']);
+            if (!$allowed) {
                 continue;
             }
             $out[$key] = $tool;

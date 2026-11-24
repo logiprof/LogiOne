@@ -1,4 +1,4 @@
-# LogiOne 1.51.0
+# LogiOne 1.51.1
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,10 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.51.1
+
+- LogiProjet a sa tuile dans le portail LogiOne (orange clair, cube avec une diapositive) et apparaît dans LogiOne › Disposition du portail comme les autres outils : ordre, taille, place. La tuile n'est montrée qu'aux enseignants de LogiProjet (rôles choisis dans ses réglages) ; elle ouvre LogiProjet dans le portail.
 
 ## Nouveautés 1.51.0 (LogiProjet intégré)
 
