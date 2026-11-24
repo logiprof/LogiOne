@@ -55,8 +55,11 @@ class GNE_App
 
     public function register_assets(): void
     {
-        wp_register_style('gne-app', GNE_URL . 'assets/app.css', array(), GNE_VERSION);
-        wp_register_script('gne-app', GNE_URL . 'assets/app.js', array(), GNE_VERSION, true);
+        // LogiOne 1.52.4 : la version suit la date des fichiers, pour qu'un cache (navigateur, FlyingPress…) ne serve
+        // jamais une ancienne copie après une mise à jour.
+        $dir = plugin_dir_path(dirname(__FILE__)) . 'assets/';
+        wp_register_style('gne-app', GNE_URL . 'assets/app.css', array(), GNE_VERSION . '.' . (int) @filemtime($dir . 'app.css'));
+        wp_register_script('gne-app', GNE_URL . 'assets/app.js', array(), GNE_VERSION . '.' . (int) @filemtime($dir . 'app.js'), true);
     }
 
     public function register_admin_menu(): void

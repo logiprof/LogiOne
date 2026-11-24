@@ -286,7 +286,10 @@ document.addEventListener('click', function (event) {
     if (!toggle) {
         return;
     }
-    const panel = document.querySelector('[data-gne-new-panel]');
+    // LogiOne 1.52.4 : le formulaire cherché est celui de la même page LogiNotes que le bouton (une page du portail
+    // peut contenir plusieurs blocs LogiNotes) ; s'il ne peut pas s'afficher, le lien recharge la page avec le formulaire ouvert.
+    const scope = toggle.closest('.gne-app') || document;
+    const panel = scope.querySelector('[data-gne-new-panel]') || document.querySelector('[data-gne-new-panel]');
     if (!panel) {
         return;
     }
@@ -302,6 +305,10 @@ document.addEventListener('click', function (event) {
         }
     }
     panel.hidden = !open;
+    if (open && !panel.getClientRects().length && toggle.getAttribute('href')) {
+        window.location.href = toggle.href; // le formulaire reste invisible (thème, cache JS…) : ouverture par la page
+        return;
+    }
     document.querySelectorAll('[data-gne-new-toggle]').forEach(function (button) {
         button.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
