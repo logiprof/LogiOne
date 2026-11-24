@@ -2,6 +2,7 @@
 <div class="wrap logieval-wrap">
 <img class="logieval-admin-logo" src="<?= esc_url(LOGIEVAL_URL . 'assets/logieval-logo.svg') ?>" alt="LogiEval by LogiProf" width="300" height="80">
 <h1>Tableau de bord</h1>
+<?php LOGIEVAL_Rollover::render_notice(); ?>
 
 <?php
 global $wpdb;

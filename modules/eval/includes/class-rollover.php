@@ -30,6 +30,18 @@ class LOGIEVAL_Rollover {
 		return is_array( $all ) ? array_map( 'intval', array_keys( $all ) ) : array();
 	}
 
+	/** Nom (et année) qu'avait la classe à une date donnée, d'après l'historique des passages d'année. */
+	public static function label_at( array $cl, string $when ): string {
+		$hist = get_option( self::HISTORY_OPTION, array() );
+		$ts   = strtotime( $when );
+		foreach ( ( is_array( $hist ) ? ( $hist[ (int) $cl['id'] ] ?? array() ) : array() ) as $h ) {
+			if ( $ts && $ts < strtotime( (string) $h['at'] ) && ! empty( $h['avant'] ) ) {
+				return trim( $h['avant']['nom'] . ( $h['avant']['annee_scolaire'] !== '' ? ' · ' . $h['avant']['annee_scolaire'] : '' ) );
+			}
+		}
+		return LOGIEVAL_Database::class_label( $cl );
+	}
+
 	public static function is_archived( int $classe_id ): bool {
 		return in_array( $classe_id, self::archived_ids(), true );
 	}
@@ -47,6 +59,56 @@ class LOGIEVAL_Rollover {
 	public static function sql_exclude( string $column ): string {
 		$archived = self::archived_ids();
 		return $archived ? ' AND ' . $column . ' NOT IN (' . implode( ',', $archived ) . ')' : '';
+	}
+
+	/* ── 1.53.6 : proposition automatique ─────────────────────────────
+	 * La rentrée est fin août. Une classe créée au moins 60 jours avant la rentrée appartient à l'année
+	 * qui se termine : elle est proposée au passage d'année. Une classe créée plus tard (ex. import d'août
+	 * ou de novembre pour l'année en cours) n'est pas touchée avant l'été suivant. */
+	const DONE_OPTION   = 'logieval_rollover_done';
+	const RENTREE_MD    = '08-31';
+	const DELAY_DAYS    = 60;
+	const PROPOSE_FROM  = 7; // la proposition apparaît dès juillet
+
+	/** Année de la rentrée concernée (2026 pour 2026-2027). */
+	public static function target_year(): int {
+		$y = (int) current_time( 'Y' );
+		return (int) current_time( 'n' ) >= self::PROPOSE_FROM ? $y : $y - 1;
+	}
+	public static function target_label(): string {
+		$y = self::target_year();
+		return $y . '-' . ( $y + 1 );
+	}
+	private static function year_start( string $annee ): int {
+		return preg_match( '/(\d{4})/', $annee, $m ) ? (int) $m[1] : 0;
+	}
+	/** La classe doit-elle être proposée au passage d'année cette fois-ci ? */
+	public static function is_due( array $cl ): bool {
+		$y = self::target_year();
+		if ( self::is_archived( (int) $cl['id'] ) ) return false;
+		$done = get_option( self::DONE_OPTION, array() );
+		if ( is_array( $done ) && (int) ( $done[ (int) $cl['id'] ] ?? 0 ) >= $y ) return false;
+		$start = self::year_start( (string) $cl['annee_scolaire'] );
+		if ( $start && $start >= $y ) return false; // déjà dans la nouvelle année (ou plus tard)
+		$limit = strtotime( $y . '-' . self::RENTREE_MD . ' 00:00:00' ) - self::DELAY_DAYS * DAY_IN_SECONDS;
+		$created = strtotime( (string) ( $cl['created_at'] ?? '' ) );
+		return $created && $created <= $limit;
+	}
+	/** Classes à proposer maintenant. */
+	public static function due_classes(): array {
+		$t = LOGIEVAL_Database::tables();
+		return array_values( array_filter( LOGIEVAL_Database::get_rows( $t['classes'], array(), 'nom' ), array( __CLASS__, 'is_due' ) ) );
+	}
+	/** Bandeau « nouvelle année scolaire » (page Classes et tableau de bord). */
+	public static function render_notice( bool $with_link = true ): void {
+		if ( ! current_user_can( 'lp_eval_admin' ) ) return;
+		$due = self::due_classes();
+		if ( ! $due ) return;
+		echo '<div class="notice notice-info logieval-notice" style="margin:12px 0"><p><strong>🎓 Nouvelle année scolaire ' . esc_html( self::target_label() ) . '</strong> : '
+			. count( $due ) . ' classe(s) de l’année précédente peuvent passer à l’année suivante ('
+			. esc_html( implode( ', ', array_map( static fn( $c ) => $c['nom'], array_slice( $due, 0, 8 ) ) ) ) . ( count( $due ) > 8 ? '…' : '' ) . ').'
+			. ( $with_link ? ' <a href="' . esc_url( admin_url( 'admin.php?page=logieval-classes#logieval-rollover' ) ) . '">Voir la proposition</a>' : ' Vérifiez la proposition ci-dessous.' )
+			. '</p></div>';
 	}
 
 	private static function next_year( string $year ): string {
@@ -101,7 +163,8 @@ class LOGIEVAL_Rollover {
 		<?php if ( '' !== $done ) : ?>
 			<div class="notice notice-success"><p><?php echo esc_html( $done ); ?></p></div>
 		<?php endif; ?>
-		<details class="logieval-card logieval-rollover" style="margin:16px 0;max-width:1100px">
+		<?php self::render_notice( false ); $due_ids = array_map( static fn( $c ) => (int) $c['id'], self::due_classes() ); ?>
+		<details id="logieval-rollover" class="logieval-card logieval-rollover" style="margin:16px 0;max-width:1100px"<?php echo $due_ids ? ' open' : ''; ?>>
 			<summary style="cursor:pointer;font-weight:700;font-size:15px">🎓 Passage d’année (une fois par année scolaire)</summary>
 			<p class="description">Chaque classe monte d’une année (C1 → C2, C2 → C3, « 2ème année » → « 3ème année », 2025-2026 → 2026-2027) avec ses élèves, ses enseignants et ses évaluations. Les classes de dernière année (C3) sont <strong>archivées</strong> : elles disparaissent des listes et des nouvelles évaluations, mais rien n’est supprimé et vous pouvez les restaurer. Vérifiez chaque ligne avant de valider.</p>
 			<?php if ( ! $active ) : ?>
@@ -116,11 +179,22 @@ class LOGIEVAL_Rollover {
 					<?php foreach ( $active as $cl ) :
 						$p      = self::proposal( $cl );
 						$id     = (int) $cl['id'];
+						$is_due = in_array( $id, $due_ids, true );
+						// Une classe du même nom existe déjà pour la nouvelle année (ex. créée par l'import) : on ne la double pas.
+						if ( 'up' === $p['action'] ) {
+							$twin = $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$t['classes']} WHERE nom=%s AND annee_scolaire=%s AND id<>%d LIMIT 1", $p['nom'], $p['annee_scolaire'], $id ) );
+							if ( $twin && ! self::is_archived( (int) $twin ) ) {
+								$p = array( 'action' => 'archive', 'reason' => $p['nom'] . ' ' . $p['annee_scolaire'] . ' existe déjà (import) : cette classe est archivée, ses évaluations restent liées aux élèves.' );
+							}
+						}
+						if ( ! $is_due ) {
+							$p['reason'] = 'Pas proposée : ' . ( self::year_start( (string) $cl['annee_scolaire'] ) >= self::target_year() ? 'déjà dans l’année ' . $cl['annee_scolaire'] : 'créée moins de 60 jours avant la rentrée, ou déjà traitée' ) . '. ' . $p['reason'];
+						}
 						$open   = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$t['evaluations']} WHERE classe_id=%d AND statut='active'", $id ) );
 						$nb     = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$t['eleves']} WHERE classe_id=%d", $id ) );
 						?>
 						<tr>
-							<td><input type="checkbox" name="rollover[<?php echo $id; ?>][apply]" value="1" <?php checked( 'none' !== $p['action'] ); ?>></td>
+							<td><input type="checkbox" name="rollover[<?php echo $id; ?>][apply]" value="1" <?php checked( $is_due && 'none' !== $p['action'] ); ?>></td>
 							<td><strong><?php echo esc_html( $cl['nom'] ); ?></strong><br><small><?php echo esc_html( trim( $cl['niveau'] . ' · ' . $cl['annee_scolaire'] . ' · ' . $nb . ' élève(s)', ' ·' ) ); ?></small></td>
 							<td>
 								<select name="rollover[<?php echo $id; ?>][action]">
@@ -137,6 +211,7 @@ class LOGIEVAL_Rollover {
 					<?php endforeach; ?>
 					</tbody>
 				</table>
+				<p class="description">Seules les classes cochées sont traitées. Cochée avec « Ne rien faire » : la classe n’est plus proposée cette année.</p>
 				<p><button class="button button-primary">Appliquer le passage d’année</button></p>
 			</form>
 			<?php endif; ?>
@@ -166,6 +241,8 @@ class LOGIEVAL_Rollover {
 		$history  = is_array( $history ) ? $history : array();
 		$up       = 0;
 		$archived = 0;
+		$done_list = get_option( self::DONE_OPTION, array() );
+		$done_list = is_array( $done_list ) ? $done_list : array();
 		foreach ( $rows as $id => $row ) {
 			$id = absint( $id );
 			if ( ! $id || empty( $row['apply'] ) ) {
@@ -176,6 +253,7 @@ class LOGIEVAL_Rollover {
 				continue;
 			}
 			$action = sanitize_key( $row['action'] ?? 'none' );
+			$done_list[ $id ] = self::target_year();
 			$entry  = array( 'at' => current_time( 'mysql' ), 'by' => get_current_user_id(), 'action' => $action, 'avant' => array( 'nom' => $cl['nom'], 'niveau' => $cl['niveau'], 'annee_scolaire' => $cl['annee_scolaire'] ) );
 			if ( 'up' === $action ) {
 				$data = array(
@@ -198,6 +276,7 @@ class LOGIEVAL_Rollover {
 		}
 		update_option( self::ARCHIVE_OPTION, $archive, false );
 		update_option( self::HISTORY_OPTION, $history, false );
+		update_option( self::DONE_OPTION, $done_list, false );
 		$msg = sprintf( 'Passage d’année appliqué : %d classe(s) montée(s), %d classe(s) archivée(s).', $up, $archived );
 		wp_safe_redirect( add_query_arg( 'logieval_rollover', rawurlencode( $msg ), admin_url( 'admin.php?page=logieval-classes' ) ) );
 		exit;

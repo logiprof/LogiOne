@@ -334,18 +334,31 @@ class LOGIEVAL_Importer {
         return '';
     }
 
+    /**
+     * Classe correspondant à un nom, pour une année scolaire donnée.
+     * Priorité : même nom + même année, puis même nom sans année. Une classe du même nom mais d'une AUTRE année
+     * n'est jamais utilisée ($other_year reçoit alors cette année, pour le message).
+     */
+    private static function resolve_class( array $classes, string $name, string $year, string &$other_year = '' ): int {
+        $key = preg_replace('/[^a-z0-9]/', '', self::normalize_str($name));
+        $no_year = 0; $other_year = '';
+        foreach ($classes as $cl) {
+            if (preg_replace('/[^a-z0-9]/', '', self::normalize_str((string) $cl['nom'])) !== $key) continue;
+            $y = trim((string) ($cl['annee_scolaire'] ?? ''));
+            if ($y === $year) return (int) $cl['id'];
+            if ($y === '') { $no_year = $no_year ?: (int) $cl['id']; }
+            else { $other_year = $y; }
+        }
+        if ($no_year) { $other_year = ''; }
+        return $no_year;
+    }
+
     private static function import_eleves( array $rows, bool $skip, bool $update, bool $create_classes = false, string $class_year = '' ): array {
         $t         = LOGIEVAL_Database::tables();
         $classes   = LOGIEVAL_Database::get_rows($t['classes'], [], 'nom');
         // 1.53.3 : les classes archivées (passage d'année) ne reçoivent jamais d'élèves importés.
         if ( class_exists('LOGIEVAL_Rollover') ) $classes = LOGIEVAL_Rollover::without_archived($classes);
         if ( $class_year === '' || ! preg_match('/^\d{4}-\d{4}$/', $class_year) ) $class_year = self::current_school_year();
-        $class_map = []; // nom_normalized => id
-        foreach ($classes as $cl) {
-            // Store multiple normalized versions for flexible matching
-            $class_map[self::normalize_str($cl['nom'])] = (int)$cl['id'];
-        }
-
         $required = ['nom','prenom','classe'];
         $result   = ['total'=>0,'imported'=>0,'updated'=>0,'skipped'=>0,'errors'=>[],'preview'=>[]];
 
@@ -373,21 +386,9 @@ class LOGIEVAL_Importer {
             $classe_raw = trim($row['classe']);
             $classe_nm  = self::normalize_str($classe_raw);
 
-            // 1. Exact normalized match
-            $classe_id = $class_map[$classe_nm] ?? null;
-
-            // (Ancienne correspondance partielle supprimée : « C1 » tombait dans « C1a ».)
-
-            // 3. Fuzzy: try removing all separators (CLLOG-C2e => cllogc2e)
-            if (!$classe_id) {
-                $stripped_input = preg_replace('/[^a-z0-9]/', '', $classe_nm);
-                foreach ($class_map as $cn => $cid) {
-                    $stripped_cn = preg_replace('/[^a-z0-9]/', '', $cn);
-                    if ($stripped_cn === $stripped_input) {
-                        $classe_id = $cid; break;
-                    }
-                }
-            }
+            // 1.53.6 : même nom ET même année scolaire. Une « C1e 2025-2026 » n'est jamais remplie avec les élèves de 2026-2027.
+            $other_year = '';
+            $classe_id  = self::resolve_class($classes, $classe_raw, $class_year, $other_year) ?: null;
 
             if (!$classe_id && $create_classes) {
                 $classe_id = (int) LOGIEVAL_Database::insert($t['classes'], [
@@ -396,8 +397,7 @@ class LOGIEVAL_Importer {
                     'annee_scolaire' => $class_year,
                 ]);
                 if ($classe_id) {
-                    $class_map[$classe_nm] = $classe_id;
-                    $classes[] = ['id'=>$classe_id,'nom'=>$classe_raw];
+                    $classes[] = ['id'=>$classe_id,'nom'=>sanitize_text_field($classe_raw),'annee_scolaire'=>$class_year];
                     $result['classes_created'][] = $classe_raw;
                 }
             }
@@ -405,7 +405,9 @@ class LOGIEVAL_Importer {
             if (!$classe_id) {
                 // Build helpful suggestion
                 $available = implode(', ', array_map(function($cl) { return '"'.$cl['nom'].'"'; }, $classes));
-                $reason = "Classe introuvable : \"$classe_raw\". Classes disponibles : $available";
+                $reason = $other_year !== ''
+                    ? "La classe \"$classe_raw\" n'existe que pour l'année $other_year (pas pour $class_year) : cochez « créer automatiquement les classes manquantes », ou faites d'abord le passage d'année."
+                    : "Classe introuvable : \"$classe_raw\". Classes disponibles : $available";
                 if (!$skip) return ['error' => "Ligne {$line_label} : $reason"];
                 $result['errors'][] = ['line'=>$line_label,'data'=>array_values($row),'reason'=>$reason];
                 continue;
@@ -555,8 +557,7 @@ class LOGIEVAL_Importer {
         $result  = ['total'=>0,'imported'=>0,'updated'=>0,'skipped'=>0,'errors'=>[],'preview'=>[],'teachers_created'=>[]];
         $classes = LOGIEVAL_Database::get_rows($t['classes'], [], 'nom');
         if (class_exists('LOGIEVAL_Rollover')) $classes = LOGIEVAL_Rollover::without_archived($classes);
-        $class_map = [];
-        foreach ($classes as $cl) $class_map[preg_replace('/[^a-z0-9]/', '', self::normalize_str($cl['nom']))] = (int) $cl['id'];
+        $year = self::current_school_year();
 
         $by_name = []; $by_mail = [];
         foreach (LOGIEVAL_Database::get_rows($t['enseignants']) as $e) {
@@ -570,9 +571,12 @@ class LOGIEVAL_Importer {
             if (!array_filter($vals, static fn($v) => $v !== '')) continue;
             $result['total']++;
             $classe = $vals[0] ?? '';
-            $cid    = $class_map[preg_replace('/[^a-z0-9]/', '', self::normalize_str($classe))] ?? 0;
+            $oy     = '';
+            $cid    = self::resolve_class($classes, $classe, $year, $oy);
             if (!$cid) {
-                $result['errors'][] = ['line'=>$label,'data'=>$vals,'reason'=>"Classe introuvable : \"$classe\" (importez d'abord les élèves pour créer les classes)."];
+                $result['errors'][] = ['line'=>$label,'data'=>$vals,'reason'=> $oy !== ''
+                    ? "La classe \"$classe\" n'existe que pour l'année $oy, pas pour $year : importez d'abord les élèves de $year (ou faites le passage d'année)."
+                    : "Classe introuvable : \"$classe\" (importez d'abord les élèves pour créer les classes)."];
                 continue;
             }
             $links = [];

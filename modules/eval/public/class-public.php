@@ -1285,7 +1285,7 @@ class LOGIEVAL_Public {
 
         // Get classes where this teacher is maître
         $classes_as_maitre = $wpdb->get_results($wpdb->prepare(
-            "SELECT cl.id, cl.nom FROM {$t['classes']} cl
+            "SELECT cl.id, cl.nom, cl.annee_scolaire FROM {$t['classes']} cl
              INNER JOIN {$t['classe_enseignant']} ce ON ce.classe_id=cl.id
              WHERE ce.enseignant_id=%d AND ce.est_maitre=1
              ORDER BY cl.nom", $ens_id
@@ -1356,7 +1356,7 @@ class LOGIEVAL_Public {
                         <select name="classe_id" id="create-classe-id" class="logieval-form-select" required onchange="updateEnseignants(this.value)">
                             <option value="">— Sélectionner une classe —</option>
                             <?php foreach ($classes_as_maitre as $cl): ?>
-                            <option value="<?=$cl['id']?>"><?=esc_html($cl['nom'])?></option>
+                            <option value="<?=$cl['id']?>"><?=esc_html(LOGIEVAL_Database::class_label($cl))?></option>
                             <?php endforeach ?>
                         </select>
                     </div>

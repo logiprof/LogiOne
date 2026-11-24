@@ -1,4 +1,4 @@
-# LogiOne 1.53.5
+# LogiOne 1.53.6
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,13 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.53.6
+
+- LogiEval › Élèves › « 📈 Suivi » : toutes les évaluations d'un élève, quelle que soit sa classe à l'époque (classe au moment de l'évaluation, points, note, export Word), plus ses changements de classe.
+- Import : une classe est reconnue par son nom ET son année scolaire. Une « C1e 2025-2026 » n'est jamais remplie avec les élèves de 2026-2027 : une nouvelle « C1e 2026-2027 » est créée.
+- Passage d'année proposé automatiquement (bandeau sur Classes et le tableau de bord, dès juillet) pour les classes créées au moins 60 jours avant la rentrée (fin août) ; les classes plus récentes ne sont pas touchées. Si la classe de destination existe déjà (créée par l'import), l'ancienne est proposée à l'archivage au lieu d'être dupliquée.
+- Listes de classes : l'année scolaire est affichée à côté du nom.
 
 ## Nouveautés 1.53.5
 

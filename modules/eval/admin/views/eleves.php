@@ -2,6 +2,9 @@
 <div class="wrap logieval-wrap">
 <h1>Élèves</h1>
 <?php
+// 1.53.6 : suivi d'un élève sur toutes ses évaluations, quelle que soit sa classe à l'époque.
+$suivi = intval($_GET['suivi'] ?? 0);
+if ($suivi) { include __DIR__ . '/eleve-suivi.php'; echo '</div>'; return; }
 $t = LOGIEVAL_Database::tables();
 $classes = LOGIEVAL_Database::get_rows($t['classes'], [], 'nom');
 $filter_classe = intval($_GET['classe_id'] ?? 0);
@@ -16,7 +19,7 @@ global $wpdb;
     <select id="filter-classe" onchange="location.href='?page=logieval-eleves&classe_id='+this.value">
         <option value="0">Toutes</option>
         <?php foreach ($classes as $cl): ?>
-        <option value="<?= $cl['id'] ?>" <?= $filter_classe==$cl['id']?'selected':'' ?>><?= esc_html($cl['nom']) ?></option>
+        <option value="<?= $cl['id'] ?>" <?= $filter_classe==$cl['id']?'selected':'' ?>><?= esc_html(LOGIEVAL_Database::class_label($cl)) ?></option>
         <?php endforeach ?>
     </select></label>
 </div>
@@ -32,7 +35,7 @@ if ( $dups ) : ?>
 <?php foreach ( $dups as $d ) : ?><li><?= esc_html( ucwords( $d['p'] . ' ' . $d['n'] ) ) ?> : <?= esc_html( implode( ', ', array_map( static fn( $x ) => explode( ':', $x, 2 )[1] ?? '', explode( '|', $d['lst'] ) ) ) ) ?></li><?php endforeach; ?>
 </ul></div>
 <?php endif; ?>
-<p class="description" style="max-width:820px">Changement de classe (redoublement, réorientation) : cliquez « Modifier » sur l’élève et choisissez sa nouvelle classe. Ses évaluations passées restent dans les résultats de son ancienne classe ; les nouvelles évaluations le comptent dans sa nouvelle classe.</p>
+<p class="description" style="max-width:820px">Changement de classe (redoublement, réorientation) : cliquez « Modifier » sur l’élève et choisissez sa nouvelle classe. Ses évaluations passées restent liées à lui (bouton « 📈 Suivi ») et dans les résultats de son ancienne classe ; les nouvelles évaluations le comptent dans sa nouvelle classe.</p>
 
 <button class="button button-primary" id="logieval-add-eleve">+ Nouvel élève</button>
 
@@ -43,7 +46,7 @@ if ( $dups ) : ?>
         <tr><th>Classe</th>
             <td><select id="eleve-classe">
                 <?php foreach ($classes as $cl): ?>
-                <option value="<?= $cl['id'] ?>" <?= $filter_classe==$cl['id']?'selected':'' ?>><?= esc_html($cl['nom']) ?></option>
+                <option value="<?= $cl['id'] ?>" <?= $filter_classe==$cl['id']?'selected':'' ?>><?= esc_html(LOGIEVAL_Database::class_label($cl)) ?></option>
                 <?php endforeach ?>
             </select></td>
         </tr>
@@ -59,7 +62,8 @@ if ( $dups ) : ?>
 <thead><tr><th>Nom</th><th>Prénom</th><th>N° élève</th><th>Classe</th><th>Actions</th></tr></thead>
 <tbody>
 <?php foreach ($eleves as $el):
-    $classe_nom = $wpdb->get_var($wpdb->prepare("SELECT nom FROM {$t['classes']} WHERE id=%d", $el['classe_id']));
+    $cl_row = LOGIEVAL_Database::get_row($t['classes'], ['id' => (int) $el['classe_id']]);
+    $classe_nom = $cl_row ? LOGIEVAL_Database::class_label($cl_row) : '';
 ?>
 <tr>
     <td><?= esc_html($el['nom']) ?></td>
@@ -71,6 +75,7 @@ if ( $dups ) : ?>
             data-id="<?= $el['id'] ?>" data-classe="<?= $el['classe_id'] ?>"
             data-prenom="<?= esc_attr($el['prenom']) ?>" data-nom="<?= esc_attr($el['nom']) ?>"
             data-num="<?= esc_attr($el['num_eleve']) ?>">Modifier</button>
+        <a class="button button-small" href="<?= esc_url(add_query_arg(['page'=>'logieval-eleves','suivi'=>(int)$el['id']], admin_url('admin.php'))) ?>">📈 Suivi</a>
         <button class="button button-small logieval-delete-eleve" data-id="<?= $el['id'] ?>">Supprimer</button>
     </td>
 </tr>

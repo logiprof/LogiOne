@@ -483,6 +483,25 @@ class LOGIEVAL_Database {
         return $row ?: null;
     }
 
+    /** « CLLOG-C1e · 2026-2027 » : nom de classe avec son année (deux classes peuvent porter le même nom). */
+    public static function class_label( array $cl ): string {
+        $y = trim( (string) ( $cl['annee_scolaire'] ?? '' ) );
+        return (string) $cl['nom'] . ( $y !== '' ? ' · ' . $y : '' );
+    }
+
+    /** Évaluations d'un élève, toutes classes confondues (suivi sur plusieurs semestres / années). */
+    public static function student_evaluations( int $eleve_id ): array {
+        global $wpdb;
+        $t  = self::tables();
+        $el = self::get_row( $t['eleves'], ['id' => $eleve_id] );
+        if ( ! $el ) return [];
+        return $wpdb->get_results( $wpdb->prepare(
+            "SELECT ev.* FROM {$t['evaluations']} ev
+             WHERE ev.id IN (SELECT DISTINCT evaluation_id FROM {$t['reponses']} WHERE eleve_id=%d)
+                OR (ev.classe_id=%d AND ev.statut='active')
+             ORDER BY ev.date_creation ASC, ev.id ASC", $eleve_id, (int) $el['classe_id'] ), ARRAY_A ) ?: [];
+    }
+
     /** E-mail provisoire d'un enseignant créé par import sans adresse (colonne email NOT NULL + UNIQUE). */
     public static function placeholder_email( string $ident ): string {
         return 'a-completer.' . strtolower( preg_replace( '/[^a-z0-9]/i', '', $ident ) ) . '@logieval.invalid';

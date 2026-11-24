@@ -215,7 +215,7 @@ foreach ($all_scs_raw as $sc) $scs_by_obj[$sc['objectif_id']][] = $sc;
             <td><select id="eval-classe" onchange="loadClasseTeachers(this.value)">
                 <option value="">— Choisir —</option>
                 <?php foreach ($classes as $cl): ?>
-                <option value="<?= $cl['id'] ?>"><?= esc_html($cl['nom']) ?></option>
+                <option value="<?= $cl['id'] ?>"><?= esc_html(LOGIEVAL_Database::class_label($cl)) ?></option>
                 <?php endforeach ?>
             </select></td>
         </tr>
