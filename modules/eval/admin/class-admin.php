@@ -133,6 +133,16 @@ class LOGIEVAL_Admin {
         if ( $data['prenom'] === '' || $data['nom'] === '' ) {
             wp_send_json_error(['message' => 'Le prénom et le nom de l’élève sont obligatoires.']); return;
         }
+        // 1.53.1 : un élève n'est que dans une seule classe.
+        $dup = LOGIEVAL_Database::find_duplicate_student( $data['prenom'], $data['nom'], $data['num_eleve'], $id );
+        if ( $dup ) {
+            $dup_classe = LOGIEVAL_Database::get_row( LOGIEVAL_Database::t('classes'), ['id' => (int) $dup['classe_id']] );
+            wp_send_json_error(['message' => sprintf( 'Cet élève existe déjà (%s %s, classe %s). Un élève ne peut être que dans une classe : modifiez sa fiche existante et changez-y sa classe.', $dup['prenom'], $dup['nom'], $dup_classe['nom'] ?? '?' )]); return;
+        }
+        if ( $id ) {
+            $before = LOGIEVAL_Database::get_row( LOGIEVAL_Database::t('eleves'), ['id' => $id] );
+            if ( $before ) LOGIEVAL_Database::log_student_move( $id, (int) $before['classe_id'], $data['classe_id'] );
+        }
         if ( $id ) LOGIEVAL_Database::update( LOGIEVAL_Database::t('eleves'), $data, ['id' => $id] );
         else $id = LOGIEVAL_Database::insert( LOGIEVAL_Database::t('eleves'), $data );
         if ( ! $id ) { wp_send_json_error(['message' => 'Enregistrement impossible (erreur base de données).']); return; }

@@ -293,7 +293,7 @@ class LOGIEVAL_Calculator {
         $eval = LOGIEVAL_Database::get_row($t['evaluations'], ['id'=>$eval_id]);
         if (!$eval) return [];
 
-        $eleves    = LOGIEVAL_Database::get_rows($t['eleves'], ['classe_id'=>$eval['classe_id']], 'nom,prenom');
+        $eleves    = LOGIEVAL_Database::eval_students($eval); // 1.53.1
         $grid        = self::grid( $eval_id );
         $objectifs   = $grid['objectifs'];
         $sous_by_obj = $grid['sous_by_obj'];

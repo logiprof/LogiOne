@@ -439,6 +439,46 @@ class LOGIEVAL_Database {
 
     public static function t( string $key ): string { return self::tables()[$key] ?? ''; }
 
+    /**
+     * LogiOne 1.53.1 : élèves d'une évaluation. Une évaluation clôturée garde les élèves qui y ont des réponses,
+     * même s'ils ont changé de classe depuis (redoublement) ; un élève arrivé après la clôture n'y apparaît pas.
+     * Une évaluation en cours montre la classe actuelle, plus un élève parti en cours de route qui a déjà des réponses.
+     */
+    public static function eval_students( array $eval ): array {
+        global $wpdb;
+        $t   = self::tables();
+        $eid = (int) $eval['id'];
+        $with_data = array_map( 'intval', $wpdb->get_col( $wpdb->prepare(
+            "SELECT eleve_id FROM {$t['reponses']} WHERE evaluation_id=%d
+             UNION SELECT eleve_id FROM {$t['non_evaluables']} WHERE evaluation_id=%d
+             UNION SELECT eleve_id FROM {$t['arbitrages']} WHERE evaluation_id=%d",
+            $eid, $eid, $eid
+        ) ) ?: [] );
+        $current = array_map( 'intval', $wpdb->get_col( $wpdb->prepare( "SELECT id FROM {$t['eleves']} WHERE classe_id=%d", (int) $eval['classe_id'] ) ) ?: [] );
+        $ids = ( ( $eval['statut'] ?? '' ) === 'cloturee' && $with_data ) ? $with_data : array_values( array_unique( array_merge( $current, $with_data ) ) );
+        if ( ! $ids ) return [];
+        return $wpdb->get_results( "SELECT * FROM {$t['eleves']} WHERE id IN (" . implode( ',', $ids ) . ") ORDER BY nom, prenom", ARRAY_A ) ?: [];
+    }
+
+    /** Autre élève portant le même nom et prénom (ou le même n° d'élève) : chaque élève n'est que dans une classe. */
+    public static function find_duplicate_student( string $prenom, string $nom, string $num, int $except_id = 0 ): ?array {
+        global $wpdb;
+        $t   = self::tables();
+        $sql = "SELECT * FROM {$t['eleves']} WHERE id<>%d AND ((LOWER(TRIM(nom))=LOWER(TRIM(%s)) AND LOWER(TRIM(prenom))=LOWER(TRIM(%s)))";
+        $args = [ $except_id, $nom, $prenom ];
+        if ( trim( $num ) !== '' ) { $sql .= " OR TRIM(num_eleve)=TRIM(%s)"; $args[] = $num; }
+        $row = $wpdb->get_row( $wpdb->prepare( $sql . ") LIMIT 1", ...$args ), ARRAY_A );
+        return $row ?: null;
+    }
+
+    public static function log_student_move( int $eleve_id, int $from, int $to ): void {
+        if ( $from === $to ) return;
+        $all = get_option( 'logieval_student_moves', [] );
+        $all = is_array( $all ) ? $all : [];
+        $all[ $eleve_id ][] = [ 'from' => $from, 'to' => $to, 'at' => current_time( 'mysql' ), 'by' => get_current_user_id() ];
+        update_option( 'logieval_student_moves', $all, false );
+    }
+
     public static function get_rows( string $table, array $where = [], string $order = '' ): array {
         global $wpdb;
         $sql = "SELECT * FROM {$table}";

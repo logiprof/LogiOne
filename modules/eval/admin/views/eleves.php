@@ -21,6 +21,19 @@ global $wpdb;
     </select></label>
 </div>
 
+<?php
+// 1.53.1 : un élève ne doit être que dans une seule classe. Doublons existants (même nom et prénom) à corriger.
+$dups = $wpdb->get_results(
+    "SELECT LOWER(TRIM(e.nom)) n, LOWER(TRIM(e.prenom)) p, GROUP_CONCAT(CONCAT(e.id, ':', IFNULL(c.nom,'?')) ORDER BY e.id SEPARATOR '|') lst, COUNT(*) k
+     FROM {$t['eleves']} e LEFT JOIN {$t['classes']} c ON c.id=e.classe_id
+     GROUP BY LOWER(TRIM(e.nom)), LOWER(TRIM(e.prenom)) HAVING k>1", ARRAY_A ) ?: [];
+if ( $dups ) : ?>
+<div class="notice notice-warning" style="margin:0 0 16px"><p><strong>Élèves présents dans plusieurs fiches</strong> — un élève ne doit être que dans une seule classe. Gardez la fiche de sa classe actuelle et supprimez l’autre (seulement si elle n’a pas d’évaluations), ou demandez-moi de les fusionner.</p><ul style="margin-left:18px;list-style:disc">
+<?php foreach ( $dups as $d ) : ?><li><?= esc_html( ucwords( $d['p'] . ' ' . $d['n'] ) ) ?> : <?= esc_html( implode( ', ', array_map( static fn( $x ) => explode( ':', $x, 2 )[1] ?? '', explode( '|', $d['lst'] ) ) ) ) ?></li><?php endforeach; ?>
+</ul></div>
+<?php endif; ?>
+<p class="description" style="max-width:820px">Changement de classe (redoublement, réorientation) : cliquez « Modifier » sur l’élève et choisissez sa nouvelle classe. Ses évaluations passées restent dans les résultats de son ancienne classe ; les nouvelles évaluations le comptent dans sa nouvelle classe.</p>
+
 <button class="button button-primary" id="logieval-add-eleve">+ Nouvel élève</button>
 
 <div id="logieval-eleve-form" class="logieval-card logieval-hidden" style="margin-top:20px;max-width:500px">

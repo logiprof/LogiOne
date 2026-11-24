@@ -695,7 +695,7 @@ class LOGIEVAL_Public {
         $is_maitre = !$is_site_admin && $ens_id && LOGIEVAL_Auth::is_maitre($ens_id,(int)$eval['classe_id']);
         $can_view_master_reserved = $is_maitre;
         $can_view_peer_details = $can_view_master_reserved || $is_site_admin;
-        $eleves    = LOGIEVAL_Database::get_rows($t['eleves'],['classe_id'=>$eval['classe_id']],'nom,prenom');
+        $eleves    = LOGIEVAL_Database::eval_students($eval); // 1.53.1
         $grid      = LOGIEVAL_Calculator::grid($eval_id); // figée si l'évaluation est clôturée
         $objectifs = $grid['objectifs'];
         $sous_by_obj = $grid['sous_by_obj'];
@@ -1817,7 +1817,7 @@ class LOGIEVAL_Public {
         if (!$eval) return ['évaluation introuvable'];
 
         $is_maitre = LOGIEVAL_Auth::is_maitre($ens_id, (int)$eval['classe_id']);
-        $eleves    = LOGIEVAL_Database::get_rows($t['eleves'], ['classe_id'=>$eval['classe_id']], 'nom,prenom');
+        $eleves    = LOGIEVAL_Database::eval_students($eval); // 1.53.1
         $objectifs = LOGIEVAL_Database::get_rows($t['objectifs'], ['actif'=>1], 'ordre');
         $all_sc    = $wpdb->get_results("SELECT * FROM {$t['sous_criteres']} ORDER BY objectif_id,ordre", ARRAY_A) ?: [];
         $sous_by_obj = [];
@@ -1927,8 +1927,7 @@ class LOGIEVAL_Public {
             $eval['classe_id']
         ), ARRAY_A);
         $maitre_name = $maitre ? $maitre['prenom'].' '.$maitre['nom'] : 'Maître de classe';
-        $where_eleves = ['classe_id'=>$eval['classe_id']];
-        $eleves = LOGIEVAL_Database::get_rows($t['eleves'], $where_eleves, 'nom,prenom');
+        $eleves = LOGIEVAL_Database::eval_students($eval); // 1.53.1
         if ($only_eleve_id) {
             $eleves = array_values(array_filter($eleves, fn($e) => (int)$e['id'] === $only_eleve_id));
         }

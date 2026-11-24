@@ -42,7 +42,7 @@ class LOGIEVAL_Exporter {
         global $wpdb;
         $t          = LOGIEVAL_Database::tables();
         $classe     = LOGIEVAL_Database::get_row($t['classes'],   ['id' => $eval['classe_id']]);
-        $eleves     = LOGIEVAL_Database::get_rows($t['eleves'],    ['classe_id' => $eval['classe_id']], 'nom,prenom');
+        $eleves     = LOGIEVAL_Database::eval_students($eval); // 1.53.1
         $grid        = LOGIEVAL_Calculator::grid($evaluation_id); // figée si l'évaluation est clôturée
         $objectifs   = $grid['objectifs'];
         $sous_by_obj = $grid['sous_by_obj'];

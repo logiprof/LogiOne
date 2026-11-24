@@ -1,4 +1,4 @@
-# LogiOne 1.53.0
+# LogiOne 1.53.1
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,12 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.53.1 (LogiEval : un élève, une classe)
+
+- Un élève ne peut plus être créé deux fois : à l'ajout ou à la modification, un élève de même nom et prénom (ou même n° d'élève) déjà présent dans une autre classe est refusé avec un message indiquant sa classe. À l'import, il n'est pas dupliqué ; avec « mettre à jour les existants », il change de classe.
+- Changement de classe (redoublement) : « Modifier » sur l'élève, nouvelle classe. Ses évaluations passées restent dans les résultats, impressions et exports de son ancienne classe ; les nouvelles évaluations le comptent dans sa nouvelle classe. Chaque changement est noté (option `logieval_student_moves`).
+- La page Élèves signale les doublons déjà existants (même élève dans plusieurs fiches) pour les corriger.
 
 ## Nouveautés 1.53.0 (LogiEval : passage d'année, allègement)
 

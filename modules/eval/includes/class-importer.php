@@ -377,6 +377,22 @@ class LOGIEVAL_Importer {
                 "SELECT id FROM {$t['eleves']} WHERE classe_id=%d AND nom=%s AND prenom=%s",
                 $classe_id, $nom, $prenom
             ));
+            // 1.53.1 : déjà dans une AUTRE classe → jamais de doublon ; avec « mettre à jour », l'élève change de classe.
+            if (!$existing_id) {
+                $other = LOGIEVAL_Database::find_duplicate_student($prenom, $nom, $num_eleve);
+                if ($other) {
+                    if ($update) {
+                        LOGIEVAL_Database::log_student_move((int) $other['id'], (int) $other['classe_id'], (int) $classe_id);
+                        LOGIEVAL_Database::update($t['eleves'], ['classe_id' => $classe_id, 'num_eleve' => $num_eleve !== '' ? $num_eleve : $other['num_eleve']], ['id' => (int) $other['id']]);
+                        $result['updated']++;
+                        $result['preview'][] = ['nom'=>$nom,'prenom'=>$prenom,'num_eleve'=>$num_eleve,'classe'=>$row['classe'],'_status'=>'updated'];
+                    } else {
+                        $result['skipped']++;
+                        $result['errors'][] = ['line'=>$line_label,'data'=>array_values($row),'reason'=>'Élève déjà dans une autre classe (cochez « mettre à jour » pour le changer de classe).'];
+                    }
+                    continue;
+                }
+            }
 
             if ($existing_id) {
                 if ($update) {
