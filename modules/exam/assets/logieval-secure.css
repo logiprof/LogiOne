@@ -3836,3 +3836,28 @@ body.les-fabs-off .les-fab-draft { opacity: 0 !important; pointer-events: none; 
 .logieval-secure .les-formative-copies ul { list-style: none; margin: 10px 0 0; padding: 0; }
 .logieval-secure .les-formative-copies li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 10px 0; border-top: 1px solid #e9e5ff; }
 .logieval-secure .les-formative-grade { margin-left: 8px; color: #5b21b6; font-size: 13px; }
+
+/* 1.52.1 : corrigé d'un test formatif (autocorrection) */
+.logieval-secure .les-formative-note { margin: 0 0 14px; padding: 10px 14px; border: 1px solid #ddd6fe; border-radius: 10px; background: #f5f3ff; color: #3b2a6b; }
+.logieval-secure .les-formative-copies li > span:last-child { display: flex; flex-wrap: wrap; gap: 8px; }
+.logieval-secure .les-answer-key { max-width: 1100px; margin: 0 auto; }
+.logieval-secure .les-answer-key-actions { display: flex; gap: 8px; }
+.logieval-secure .les-answer-key-lead { color: #475569; }
+.logieval-secure .les-answer-key-item { margin: 16px 0; padding: 16px 18px; border: 1px solid #e2e8f0; border-radius: 12px; background: #fff; break-inside: avoid; }
+.logieval-secure .les-answer-key-item header { display: flex; justify-content: space-between; gap: 12px; color: #5b21b6; }
+.logieval-secure .les-answer-key-prompt { font-weight: 700; margin: 8px 0 12px; }
+.logieval-secure .les-answer-key-context { color: #475569; font-size: 14px; }
+.logieval-secure .les-answer-key-media img { max-width: 100%; height: auto; border-radius: 8px; }
+.logieval-secure .les-answer-key-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.logieval-secure .les-answer-key-mine, .logieval-secure .les-answer-key-expected { padding: 10px 12px; border-radius: 8px; min-width: 0; overflow-wrap: anywhere; }
+.logieval-secure .les-answer-key-mine { background: #f1f5f9; border-left: 4px solid #64748b; }
+.logieval-secure .les-answer-key-expected { background: #ecfdf3; border-left: 4px solid #16a34a; }
+.logieval-secure .les-answer-key-criteria-title { margin: 8px 0 2px; font-weight: 600; font-size: 13px; }
+.logieval-secure .les-answer-key-criteria, .logieval-secure .les-answer-key-expected ul { margin: 4px 0 0 18px; }
+.logieval-secure .les-answer-key-self { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; margin: 12px 0 0; font-size: 14px; }
+.logieval-secure .les-answer-key-self label { display: inline-flex; gap: 4px; align-items: center; padding: 4px 10px; border-radius: 999px; border: 1px solid #e2e8f0; cursor: pointer; }
+.logieval-secure .les-answer-key-self label.is-ok:has(input:checked) { background: #dcfce7; border-color: #16a34a; }
+.logieval-secure .les-answer-key-self label.is-half:has(input:checked) { background: #fef3c7; border-color: #d97706; }
+.logieval-secure .les-answer-key-self label.is-ko:has(input:checked) { background: #fee2e2; border-color: #dc2626; }
+@media (max-width: 700px) { .logieval-secure .les-answer-key-grid { grid-template-columns: 1fr; } }
+@media print { .logieval-secure .les-answer-key-actions { display: none; } }

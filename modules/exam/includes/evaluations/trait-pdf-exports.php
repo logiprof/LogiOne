@@ -171,7 +171,21 @@ trait LogiEval_Secure_Evaluations_Pdf_Exports {	private static function codes_co
 		exit;
 	}
 
-	/** Liste des tests formatifs corrigés de l'élève connecté (page élève LogiExam). */
+	/** 1.52.1 : une copie de test formatif dont l'élève peut voir le corrigé (copie envoyée, non annulée). */
+	private static function formative_attempt_open_for_student( ?array $attempt ): ?array {
+		if ( ! $attempt || (int) $attempt['user_id'] !== get_current_user_id() || self::attempt_is_cheating_cancelled( $attempt ) ) {
+			return null;
+		}
+		$evaluation = self::get_evaluation( (int) $attempt['evaluation_id'] );
+		$submitted  = ! empty( $attempt['submitted_at'] ) || in_array( (string) $attempt['status'], array( 'submitted', 'submitted_locked', 'graded' ), true );
+		if ( ! $evaluation || 'deleted' === (string) ( $evaluation['status'] ?? '' ) || ! self::is_formative( $evaluation ) || ! $submitted ) {
+			return null;
+		}
+
+		return $evaluation;
+	}
+
+	/** Liste des tests formatifs de l'élève connecté (page élève LogiExam) : corrigé pour s'autocorriger. */
 	public static function render_student_formative_copies(): string {
 		global $wpdb;
 		$user_id = get_current_user_id();
@@ -179,26 +193,77 @@ trait LogiEval_Secure_Evaluations_Pdf_Exports {	private static function codes_co
 		if ( ! $user_id || ! $ids ) {
 			return '';
 		}
+		$attempt_id = absint( $_GET['les_corrige'] ?? 0 );
+		if ( $attempt_id && wp_verify_nonce( (string) wp_unslash( $_GET['_lesnonce'] ?? '' ), 'logiexam_corrige_' . $attempt_id ) ) {
+			$attempt    = self::get_attempt( $attempt_id );
+			$evaluation = self::formative_attempt_open_for_student( $attempt );
+			if ( $evaluation ) {
+				return self::render_formative_answer_key( $evaluation, $attempt );
+			}
+		}
 		$t    = LogiEval_Secure_Database::tables();
 		$in   = implode( ',', $ids );
 		$rows = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$t['attempts']} WHERE user_id=%d AND evaluation_id IN ({$in}) ORDER BY id DESC", $user_id ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$items = array();
 		foreach ( (array) $rows as $attempt ) {
-			$evaluation = self::get_evaluation( (int) $attempt['evaluation_id'] );
-			$result     = self::get_result_by_attempt( (int) $attempt['id'] );
-			if ( ! $evaluation || 'deleted' === (string) ( $evaluation['status'] ?? '' ) || self::attempt_is_cheating_cancelled( $attempt ) || ! self::attempt_correction_is_finished( $attempt, $result ) ) {
+			$evaluation = self::formative_attempt_open_for_student( $attempt );
+			if ( ! $evaluation ) {
 				continue;
 			}
-			$url     = wp_nonce_url( admin_url( 'admin-post.php?action=logiexam_formative_copy&attempt_id=' . (int) $attempt['id'] ), 'logiexam_formative_copy_' . (int) $attempt['id'] );
-			$items[] = '<li><span class="les-formative-copy-title"><strong>' . esc_html( (string) $evaluation['title'] ) . '</strong>'
-				. ( $result && null !== $result['final_grade'] ? ' <span class="les-formative-grade">' . esc_html( sprintf( __( 'Note indicative : %s', 'logieval-secure' ), self::format_points( (float) $result['final_grade'] ) ) ) . '</span>' : '' )
-				. '</span> <a class="button" href="' . esc_url( $url ) . '">' . esc_html__( 'Télécharger ma copie corrigée (PDF)', 'logieval-secure' ) . '</a></li>';
+			$url     = add_query_arg( array( 'les_corrige' => (int) $attempt['id'], '_lesnonce' => wp_create_nonce( 'logiexam_corrige_' . (int) $attempt['id'] ) ), get_permalink() ?: home_url( '/' ) );
+			$extra   = '';
+			if ( self::attempt_correction_is_finished( $attempt, self::get_result_by_attempt( (int) $attempt['id'] ) ) ) {
+				$pdf   = wp_nonce_url( admin_url( 'admin-post.php?action=logiexam_formative_copy&attempt_id=' . (int) $attempt['id'] ), 'logiexam_formative_copy_' . (int) $attempt['id'] );
+				$extra = ' <a class="button les-button-secondary" href="' . esc_url( $pdf ) . '">' . esc_html__( 'Copie annotée par l’enseignant (PDF)', 'logieval-secure' ) . '</a>';
+			}
+			$when    = ! empty( $attempt['submitted_at'] ) ? mysql2date( 'd.m.Y', (string) $attempt['submitted_at'] ) : '';
+			$items[] = '<li><span class="les-formative-copy-title"><strong>' . esc_html( (string) $evaluation['title'] ) . '</strong>' . ( $when ? ' <span class="les-formative-grade">' . esc_html( sprintf( __( 'envoyé le %s', 'logieval-secure' ), $when ) ) . '</span>' : '' ) . '</span>'
+				. '<span><a class="button" href="' . esc_url( $url ) . '">' . esc_html__( 'Voir le corrigé et m’autocorriger', 'logieval-secure' ) . '</a>' . $extra . '</span></li>';
 		}
 		if ( ! $items ) {
 			return '';
 		}
 
-		return '<section class="les-formative-copies"><h3>' . esc_html__( 'Mes tests formatifs corrigés', 'logieval-secure' ) . '</h3><p>' . esc_html__( 'Ces tests ne comptent pas dans vos notes : ils servent à voir ce qui est acquis et ce qui reste à travailler.', 'logieval-secure' ) . '</p><ul>' . implode( '', $items ) . '</ul></section>';
+		return '<section class="les-formative-copies"><h3>' . esc_html__( 'Mes tests formatifs', 'logieval-secure' ) . '</h3><p>' . esc_html__( 'Ces tests ne comptent pas dans vos notes. Comparez vos réponses avec le corrigé pour voir ce qui est acquis et ce qui reste à travailler.', 'logieval-secure' ) . '</p><ul>' . implode( '', $items ) . '</ul></section>';
+	}
+
+	/** Corrigé d'un test formatif : pour chaque question, la réponse de l'élève à côté de la réponse attendue. */
+	private static function render_formative_answer_key( array $evaluation, array $attempt ): string {
+		$answers = self::get_answers_for_attempt( (int) $attempt['id'] );
+		$back    = remove_query_arg( array( 'les_corrige', '_lesnonce' ) );
+		$data    = self::evaluation_export_data( $evaluation );
+		$raw     = self::get_questions_for_evaluation( (int) $evaluation['id'] );
+		ob_start();
+		?>
+		<section class="les-answer-key">
+			<p class="les-answer-key-actions"><a class="button les-button-secondary" href="<?php echo esc_url( $back ); ?>">← <?php esc_html_e( 'Retour', 'logieval-secure' ); ?></a> <button type="button" class="button" onclick="window.print()"><?php esc_html_e( 'Imprimer', 'logieval-secure' ); ?></button></p>
+			<span class="les-kicker"><?php esc_html_e( 'Test formatif · corrigé', 'logieval-secure' ); ?></span>
+			<h2><?php echo esc_html( (string) $evaluation['title'] ); ?></h2>
+			<p class="les-answer-key-lead"><?php esc_html_e( 'Pour chaque question, comparez votre réponse avec la réponse attendue et cochez « Juste », « À moitié » ou « À revoir ». Ce test ne compte pas dans vos notes.', 'logieval-secure' ); ?></p>
+			<?php foreach ( $data['questions'] as $i => $q ) : $row = self::answer_row_by_question( $answers, (int) ( $raw[ $i ]['id'] ?? 0 ) ); $mine = self::readable_answer( $row['answer'] ?? '' ); ?>
+				<article class="les-answer-key-item">
+					<header><strong><?php echo esc_html( sprintf( __( 'Question %d', 'logieval-secure' ), $i + 1 ) ); ?></strong><span><?php echo esc_html( self::format_points( (float) $q['points'] ) ); ?> pts</span></header>
+					<?php if ( '' !== $q['context'] ) : ?><p class="les-answer-key-context"><?php echo nl2br( esc_html( $q['context'] ) ); ?></p><?php endif; ?>
+					<?php if ( $q['media_id'] ) : ?><div class="les-answer-key-media"><?php echo wp_get_attachment_image( $q['media_id'], 'large' ); ?></div><?php endif; ?>
+					<p class="les-answer-key-prompt"><?php echo nl2br( esc_html( $q['prompt'] ) ); ?></p>
+					<div class="les-answer-key-grid">
+						<div class="les-answer-key-mine"><strong><?php esc_html_e( 'Ma réponse', 'logieval-secure' ); ?></strong><div><?php echo wp_kses_post( wpautop( esc_html( $mine ) ) ); ?></div></div>
+						<div class="les-answer-key-expected"><strong><?php esc_html_e( 'Réponse attendue', 'logieval-secure' ); ?></strong>
+							<?php if ( $q['options'] ) : ?><ul><?php foreach ( $q['options'] as $opt ) : ?><li><?php echo esc_html( str_replace( array( '[x] ', '[ ] ' ), array( '✓ ', '· ' ), $opt ) ); ?></li><?php endforeach; ?></ul><?php endif; ?>
+							<?php if ( '' !== $q['expected'] ) : ?><div><?php echo wp_kses_post( wpautop( esc_html( $q['expected'] ) ) ); ?></div><?php endif; ?>
+							<?php if ( $q['criteria'] ) : ?><p class="les-answer-key-criteria-title"><?php esc_html_e( 'Ce qu’il fallait dire :', 'logieval-secure' ); ?></p><ul class="les-answer-key-criteria"><?php foreach ( $q['criteria'] as $c ) : ?><li><?php echo esc_html( $c['label'] ); ?> <em>(<?php echo esc_html( self::format_points( (float) $c['points'] ) ); ?> pt)</em></li><?php endforeach; ?></ul><?php endif; ?>
+						</div>
+					</div>
+					<p class="les-answer-key-self"><span><?php esc_html_e( 'Mon autocorrection :', 'logieval-secure' ); ?></span>
+						<?php foreach ( array( 'ok' => __( 'Juste', 'logieval-secure' ), 'half' => __( 'À moitié', 'logieval-secure' ), 'ko' => __( 'À revoir', 'logieval-secure' ) ) as $k => $label ) : ?>
+							<label class="is-<?php echo esc_attr( $k ); ?>"><input type="radio" name="les_self_<?php echo (int) $i; ?>" value="<?php echo esc_attr( $k ); ?>"> <?php echo esc_html( $label ); ?></label>
+						<?php endforeach; ?>
+					</p>
+				</article>
+			<?php endforeach; ?>
+		</section>
+		<?php
+		return (string) ob_get_clean();
 	}
 
 	public static function handle_export_attempt_pdf(): void {

@@ -307,7 +307,7 @@ trait LogiEval_Secure_Evaluations_Data {
 
 	public static function render_formative_badge( $evaluation ): void {
 		if ( self::is_formative( $evaluation ) ) {
-			echo '<span class="les-formative-badge" title="' . esc_attr__( 'Test formatif : pas envoyé dans LogiNotes, copie corrigée visible par l’élève', 'logieval-secure' ) . '">' . esc_html__( 'Formatif', 'logieval-secure' ) . '</span>';
+			echo '<span class="les-formative-badge" title="' . esc_attr__( 'Test formatif : pas de correction, rien dans LogiNotes ; l’élève s’autocorrige avec le corrigé', 'logieval-secure' ) . '">' . esc_html__( 'Formatif', 'logieval-secure' ) . '</span>';
 		}
 	}
 

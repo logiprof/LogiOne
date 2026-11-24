@@ -105,6 +105,13 @@ final class LogiEval_Secure_Shortcodes {
 		if ( $here && get_option( 'logiexam_student_page_url' ) !== $here ) {
 			update_option( 'logiexam_student_page_url', $here, false );
 		}
+		// 1.52.1 : corrigé d'un test formatif (autocorrection), à la place de l'écran d'accès.
+		if ( isset( $_GET['les_corrige'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification -- vérifié dans la méthode.
+			$key = LogiEval_Secure_Evaluations::render_student_formative_copies();
+			if ( false !== strpos( $key, 'les-answer-key' ) ) {
+				return self::frontend_asset_fallback_markup() . '<div class="logieval-secure les-student">' . $key . '</div>';
+			}
+		}
 		ob_start();
 		?>
 		<?php echo self::frontend_asset_fallback_markup(); ?>

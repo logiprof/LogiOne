@@ -625,7 +625,7 @@ final class LogiPilot_Publisher
     {
         $exam_id = (int) $evaluation['id'];
         if (method_exists('LogiEval_Secure_Evaluations', 'is_formative') && LogiEval_Secure_Evaluations::is_formative($exam_id)) {
-            echo '<section class="logipilot-panel" id="logipilot-publish"><h3>Test formatif</h3><p>Ce test est <strong>formatif</strong> : ses résultats restent dans LogiExam et ne sont <strong>pas envoyés dans LogiNotes</strong> (pas de bonus / malus de progression). Chaque élève peut télécharger sa copie corrigée sur sa page LogiExam dès que sa correction est finalisée.</p><p class="description">Pour en faire une évaluation notée, décochez « Test formatif » dans l’étape Préparer.</p></section>';
+            echo '<section class="logipilot-panel" id="logipilot-publish"><h3>Test formatif</h3><p>Ce test est <strong>formatif</strong> : pas de correction à faire, rien n’est envoyé dans LogiNotes et aucun bonus / malus n’est appliqué. Dès qu’il a envoyé sa copie, chaque élève voit le <strong>corrigé</strong> sur sa page LogiExam et s’autocorrige.</p><p class="description">Pour en faire une évaluation notée, décochez « Test formatif » dans l’étape Préparer.</p></section>';
             return;
         }
         $overview = self::overview($exam_id);

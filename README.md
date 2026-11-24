@@ -1,4 +1,4 @@
-# LogiOne 1.52.0
+# LogiOne 1.52.1
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,11 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.52.1 (test formatif : autocorrection)
+
+- Un test formatif ne se corrige plus : ni IA, ni enseignant. Dès qu'il a envoyé sa copie, l'élève voit sur sa page LogiExam « Mes tests formatifs » › « Voir le corrigé et m'autocorriger » : pour chaque question, sa réponse à côté de la réponse attendue (bonnes réponses des QCM, ce qu'il fallait dire avec les points), et trois boutons « Juste / À moitié / À revoir » pour s'autocorriger ; bouton « Imprimer ». Seule sa propre copie est accessible.
+- Côté enseignant, l'étape Corriger l'indique (« aucune correction n'est nécessaire ») ; les copies restent consultables. Si une copie est quand même finalisée, l'élève peut aussi télécharger la copie annotée (PDF).
 
 ## Nouveautés 1.52.0 (LogiExam : test formatif)
 

@@ -193,7 +193,7 @@ trait LogiEval_Secure_Evaluations_Editor {		private static function render_creat
 				</div>
 				<label class="les-checkbox-line les-formative-choice">
 					<input type="checkbox" name="logiexam_formative" value="1" <?php checked( ! empty( $evaluation['id'] ) && self::is_formative( (int) $evaluation['id'] ) ); ?>>
-					<span><strong><?php esc_html_e( 'Test formatif', 'logieval-secure' ); ?></strong> — <?php esc_html_e( 'corrigé et noté dans LogiExam, mais pas envoyé dans LogiNotes et sans bonus / malus de progression. L’élève peut télécharger sa copie corrigée dès que vous avez finalisé la correction. La passation reste celle d’un examen (code, sécurité).', 'logieval-secure' ); ?></span>
+					<span><strong><?php esc_html_e( 'Test formatif', 'logieval-secure' ); ?></strong> — <?php esc_html_e( 'pour s’entraîner : pas de correction à faire (ni par l’IA, ni par vous), rien dans LogiNotes, pas de bonus / malus. Dès qu’il a envoyé sa copie, l’élève voit sur sa page LogiExam le corrigé (sa réponse à côté de la réponse attendue) pour s’autocorriger. La passation reste celle d’un examen (code, sécurité).', 'logieval-secure' ); ?></span>
 				</label>
 				<div data-logiexam-story-settings>
 					<label><?php esc_html_e( 'Introduction générale de l’histoire', 'logieval-secure' ); ?><textarea class="widefat" name="story_intro" rows="5"><?php echo esc_textarea( $evaluation['story_intro'] ?? '' ); ?></textarea></label>

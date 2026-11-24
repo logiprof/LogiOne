@@ -681,6 +681,9 @@ trait LogiEval_Secure_Evaluations_Workspace {
 		$mode_url    = static fn( string $m ) => self::evaluation_url( $id, 'grade', array( 'correction_mode' => 'question' === $m ? 'question' : 'student' ) );
 		?>
 		<section class="les-panel les-grade-step">
+			<?php if ( self::is_formative( $evaluation ) ) : ?>
+				<div class="les-formative-note"><strong><?php esc_html_e( 'Test formatif : aucune correction n’est nécessaire.', 'logieval-secure' ); ?></strong> <?php esc_html_e( 'Les élèves s’autocorrigent avec le corrigé affiché sur leur page LogiExam dès l’envoi de leur copie. Vous pouvez quand même consulter les copies ci-dessous.', 'logieval-secure' ); ?></div>
+			<?php endif; ?>
 			<div class="les-grade-toolbar">
 				<div class="les-segmented" role="tablist" aria-label="<?php esc_attr_e( 'Mode de correction', 'logieval-secure' ); ?>">
 					<a role="tab" class="<?php echo 'student' === $mode ? 'is-active' : ''; ?>" href="<?php echo esc_url( $mode_url( 'student' ) ); ?>"><?php esc_html_e( 'Par élève', 'logieval-secure' ); ?></a>
