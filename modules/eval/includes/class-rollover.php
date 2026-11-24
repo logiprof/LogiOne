@@ -64,14 +64,18 @@ class LOGIEVAL_Rollover {
 	/** Proposition pour une classe : action « up » (monter), « archive » ou « none », avec les nouvelles valeurs. */
 	public static function proposal( array $cl ): array {
 		$name = (string) $cl['nom'];
-		if ( ! preg_match( '/C(\d)/i', $name, $m ) ) {
-			return array( 'action' => 'none', 'reason' => 'Nom sans « C1 », « C2 » ou « C3 » : à traiter à la main.' );
+		// C = CFC (3 ans), CR = CFC réduit (2 ans), A = AFP (2 ans).
+		$re = '/(?<![a-z])(cr|c|a)(\d)/i';
+		if ( ! preg_match( $re, $name, $m ) ) {
+			return array( 'action' => 'none', 'reason' => 'Nom sans « C1 », « CR1 » ou « A1 » : à traiter à la main.' );
 		}
-		$level = (int) $m[1];
-		if ( $level >= self::LAST_YEAR ) {
-			return array( 'action' => 'archive', 'reason' => 'Dernière année (C' . $level . ') : archivée.' );
+		$prefix = strtoupper( $m[1] );
+		$level  = (int) $m[2];
+		$last   = 'C' === $prefix ? self::LAST_YEAR : 2;
+		if ( $level >= $last ) {
+			return array( 'action' => 'archive', 'reason' => 'Dernière année (' . $prefix . $level . ') : archivée.' );
 		}
-		$new_name   = (string) preg_replace_callback( '/C(\d)/i', static fn( $x ) => $x[0][0] . ( (int) $x[1] + 1 ), $name, 1 );
+		$new_name   = (string) preg_replace_callback( $re, static fn( $x ) => $x[1] . ( (int) $x[2] + 1 ), $name, 1 );
 		$new_name   = self::next_year( $new_name ); // une année écrite dans le nom suit aussi
 		$niveau     = (string) $cl['niveau'];
 		$new_niveau = preg_match( '/\d/', $niveau )
@@ -80,7 +84,7 @@ class LOGIEVAL_Rollover {
 		$year       = (string) $cl['annee_scolaire'];
 		$new_year   = '' !== trim( $year ) ? self::next_year( $year ) : '';
 
-		return array( 'action' => 'up', 'nom' => $new_name, 'niveau' => $new_niveau, 'annee_scolaire' => $new_year, 'reason' => 'C' . $level . ' → C' . ( $level + 1 ) );
+		return array( 'action' => 'up', 'nom' => $new_name, 'niveau' => $new_niveau, 'annee_scolaire' => $new_year, 'reason' => $prefix . $level . ' → ' . $prefix . ( $level + 1 ) );
 	}
 
 	public static function render_panel(): void {

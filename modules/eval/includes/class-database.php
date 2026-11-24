@@ -461,13 +461,25 @@ class LOGIEVAL_Database {
     }
 
     /** Autre élève portant le même nom et prénom (ou le même n° d'élève) : chaque élève n'est que dans une classe. */
-    public static function find_duplicate_student( string $prenom, string $nom, string $num, int $except_id = 0 ): ?array {
+    /**
+     * Même élève ? Priorité au numéro d'élève : même numéro = même personne.
+     * Même nom+prénom = même personne seulement si l'un des deux n'a pas de numéro
+     * (deux homonymes avec des numéros différents restent deux élèves).
+     * $only_class > 0 limite la recherche à une classe.
+     */
+    public static function find_duplicate_student( string $prenom, string $nom, string $num, int $except_id = 0, int $only_class = 0 ): ?array {
         global $wpdb;
-        $t   = self::tables();
-        $sql = "SELECT * FROM {$t['eleves']} WHERE id<>%d AND ((LOWER(TRIM(nom))=LOWER(TRIM(%s)) AND LOWER(TRIM(prenom))=LOWER(TRIM(%s)))";
+        $t     = self::tables();
+        $num   = trim( $num );
+        $scope = $only_class > 0 ? $wpdb->prepare( ' AND classe_id=%d', $only_class ) : '';
+        if ( $num !== '' ) {
+            $row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$t['eleves']} WHERE id<>%d AND TRIM(num_eleve)=%s{$scope} LIMIT 1", $except_id, $num ), ARRAY_A );
+            if ( $row ) return $row;
+        }
+        $sql  = "SELECT * FROM {$t['eleves']} WHERE id<>%d AND LOWER(TRIM(nom))=LOWER(TRIM(%s)) AND LOWER(TRIM(prenom))=LOWER(TRIM(%s)){$scope}";
         $args = [ $except_id, $nom, $prenom ];
-        if ( trim( $num ) !== '' ) { $sql .= " OR TRIM(num_eleve)=TRIM(%s)"; $args[] = $num; }
-        $row = $wpdb->get_row( $wpdb->prepare( $sql . ") LIMIT 1", ...$args ), ARRAY_A );
+        if ( $num !== '' ) { $sql .= " AND (num_eleve IS NULL OR TRIM(num_eleve)='' OR TRIM(num_eleve)=%s)"; $args[] = $num; }
+        $row = $wpdb->get_row( $wpdb->prepare( $sql . ' LIMIT 1', ...$args ), ARRAY_A );
         return $row ?: null;
     }
 

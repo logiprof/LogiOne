@@ -136,8 +136,14 @@ if (isset($_POST['logieval_import_submit']) && check_admin_referer('logieval_imp
                     <br>
                     <label>
                         <input type="checkbox" name="update_existing" value="1">
-                        Mettre à jour les entrées existantes (même e-mail / même nom+prénom+classe)
+                        Mettre à jour les entrées existantes (même e-mail / même n° d'élève / même nom+prénom) — un élève déjà dans une autre classe y est déplacé
                     </label>
+                    <br>
+                    <label>
+                        <input type="checkbox" name="create_classes" value="1">
+                        Élèves : créer automatiquement les classes manquantes, année scolaire
+                    </label>
+                    <input type="text" name="class_year" value="<?= esc_attr( LOGIEVAL_Importer::current_school_year() ) ?>" pattern="\d{4}-\d{4}" style="width:110px">
                 </td>
             </tr>
         </table>
@@ -201,6 +207,11 @@ if (isset($_POST['logieval_import_submit']) && check_admin_referer('logieval_imp
         <div class="logieval-import-success">
             ✅ Import terminé : <?= $imported ?> entrée<?= $imported > 1 ? 's' : '' ?> importée<?= $imported > 1 ? 's' : '' ?>
             <?= $updated > 0 ? ', '.$updated.' mise'.(($updated>1)?'s':'').' à jour' : '' ?>.
+        </div>
+        <?php endif ?>
+        <?php if (!empty($import_results['classes_created'])): ?>
+        <div class="logieval-import-success">
+            🏫 <?= count($import_results['classes_created']) ?> classe(s) créée(s) : <?= esc_html(implode(', ', $import_results['classes_created'])) ?>
         </div>
         <?php endif ?>
 

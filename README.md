@@ -1,4 +1,4 @@
-# LogiOne 1.53.2
+# LogiOne 1.53.3
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,13 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.53.3
+
+- LogiEval › Import élèves : nouvelle option « créer automatiquement les classes manquantes » (avec l'année scolaire, niveau déduit du nom : C1, CR2, A1…).
+- Un élève est reconnu d'abord par son n° d'élève ; deux homonymes avec des numéros différents ne sont plus fusionnés.
+- Les classes archivées ne reçoivent plus d'élèves importés.
+- Passage d'année : les classes CFC réduit (CR1 → CR2, CR2 archivée) et AFP (A1 → A2, A2 archivée) sont désormais reconnues.
 
 ## Nouveautés 1.53.2
 

@@ -30,7 +30,9 @@ class LOGIEVAL_Importer {
         $update_existing = ! empty($_POST['update_existing']);
 
         if ( $type === 'eleves' ) {
-            return self::import_eleves( $rows, $skip_errors, $update_existing );
+            $create_classes = ! empty($_POST['create_classes']);
+            $class_year     = sanitize_text_field( wp_unslash( $_POST['class_year'] ?? '' ) );
+            return self::import_eleves( $rows, $skip_errors, $update_existing, $create_classes, $class_year );
         } elseif ( $type === 'enseignants' ) {
             return self::import_enseignants( $rows, $skip_errors, $update_existing );
         }
@@ -310,9 +312,27 @@ class LOGIEVAL_Importer {
     }
 
     /* ── Import élèves ───────────────────────────────────────────── */
-    private static function import_eleves( array $rows, bool $skip, bool $update ): array {
+    /** Année scolaire en cours (« 2026-2027 » dès août). */
+    public static function current_school_year(): string {
+        $y = (int) current_time('Y'); $m = (int) current_time('n');
+        $start = $m >= 8 ? $y : $y - 1;
+        return $start . '-' . ($start + 1);
+    }
+
+    private static function guess_niveau( string $classe ): string {
+        if ( preg_match('/(?<![a-z])(?:cr|c|a)(\d)/i', $classe, $m) ) {
+            $n = (int) $m[1];
+            return $n . ( 1 === $n ? 'ère' : 'ème' ) . ' année';
+        }
+        return '';
+    }
+
+    private static function import_eleves( array $rows, bool $skip, bool $update, bool $create_classes = false, string $class_year = '' ): array {
         $t         = LOGIEVAL_Database::tables();
         $classes   = LOGIEVAL_Database::get_rows($t['classes'], [], 'nom');
+        // 1.53.3 : les classes archivées (passage d'année) ne reçoivent jamais d'élèves importés.
+        if ( class_exists('LOGIEVAL_Rollover') ) $classes = LOGIEVAL_Rollover::without_archived($classes);
+        if ( $class_year === '' || ! preg_match('/^\d{4}-\d{4}$/', $class_year) ) $class_year = self::current_school_year();
         $class_map = []; // nom_normalized => id
         foreach ($classes as $cl) {
             // Store multiple normalized versions for flexible matching
@@ -362,6 +382,19 @@ class LOGIEVAL_Importer {
                 }
             }
 
+            if (!$classe_id && $create_classes) {
+                $classe_id = (int) LOGIEVAL_Database::insert($t['classes'], [
+                    'nom'            => sanitize_text_field($classe_raw),
+                    'niveau'         => self::guess_niveau($classe_raw),
+                    'annee_scolaire' => $class_year,
+                ]);
+                if ($classe_id) {
+                    $class_map[$classe_nm] = $classe_id;
+                    $classes[] = ['id'=>$classe_id,'nom'=>$classe_raw];
+                    $result['classes_created'][] = $classe_raw;
+                }
+            }
+
             if (!$classe_id) {
                 // Build helpful suggestion
                 $available = implode(', ', array_map(function($cl) { return '"'.$cl['nom'].'"'; }, $classes));
@@ -373,10 +406,8 @@ class LOGIEVAL_Importer {
 
             // Check duplicate
             global $wpdb;
-            $existing_id = $wpdb->get_var($wpdb->prepare(
-                "SELECT id FROM {$t['eleves']} WHERE classe_id=%d AND nom=%s AND prenom=%s",
-                $classe_id, $nom, $prenom
-            ));
+            $same = LOGIEVAL_Database::find_duplicate_student($prenom, $nom, $num_eleve, 0, (int) $classe_id);
+            $existing_id = $same ? (int) $same['id'] : null;
             // 1.53.1 : déjà dans une AUTRE classe → jamais de doublon ; avec « mettre à jour », l'élève change de classe.
             if (!$existing_id) {
                 $other = LOGIEVAL_Database::find_duplicate_student($prenom, $nom, $num_eleve);
