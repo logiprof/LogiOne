@@ -1,4 +1,4 @@
-# LogiOne 1.52.2
+# LogiOne 1.52.3
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,10 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.52.3 (LogiExam : questions fermées sans IA)
+
+- « Pré-corriger avec l'IA » (une copie, une question ou toutes) n'envoie plus les questions fermées (Vrai/Faux, QCM, QCM à plusieurs réponses) à l'IA : LogiExam compare la réponse de l'élève à la réponse attendue enregistrée et écrit lui-même le commentaire (« Bonne réponse : … » / « Vous avez répondu …, la réponse attendue était … »). L'IA ne peut plus contredire le corrigé de l'enseignant. Sans réponse attendue enregistrée, l'IA reste utilisée.
 
 ## Nouveautés 1.52.2 (LogiExam : QCM corrigés automatiquement)
 

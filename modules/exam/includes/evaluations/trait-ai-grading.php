@@ -576,6 +576,11 @@ trait LogiEval_Secure_Evaluations_Ai_Grading {
 				self::save_ai_grade_result( $attempt, $question_id, $result );
 				wp_send_json_success( $result );
 			}
+			$closed = self::closed_question_result( $answer, $max_points ); // 1.52.3
+			if ( $closed ) {
+				self::save_ai_grade_result( $attempt, $question_id, $closed );
+				wp_send_json_success( $closed );
+			}
 
 			$result = self::request_ai_grade_answer( $answer, $max_points );
 			if ( is_wp_error( $result ) ) {
@@ -992,6 +997,38 @@ trait LogiEval_Secure_Evaluations_Ai_Grading {
 			return LogiEval_Secure_AI::model_label( get_current_user_id() );
 		}
 
+		/**
+		 * 1.52.3 : question fermée (QCM, QCM à plusieurs réponses, Vrai/Faux) : pas d'IA. LogiExam compare la réponse
+		 * de l'élève à la réponse attendue enregistrée par l'enseignant — l'IA ne peut plus contredire le corrigé.
+		 */
+		private static function closed_question_result( array $answer, float $max_points ): ?array {
+			$type = (string) ( $answer['type'] ?? '' );
+			if ( ! in_array( $type, array( 'qcm', 'multiple_choice', 'true_false' ), true ) ) {
+				return null;
+			}
+			$points = LogiEval_Secure_Grading::auto_points( array_merge( $answer, array( 'points' => $max_points ) ), $answer['answer'] ?? '' );
+			if ( null === $points ) {
+				return null; // pas de réponse attendue enregistrée : l'IA garde la main
+			}
+			$expected = self::readable_answer( (string) ( $answer['expected_answer'] ?? '' ) );
+			$given    = self::readable_answer( (string) ( $answer['answer'] ?? '' ) );
+			$full     = $points >= $max_points - 0.001;
+			$comment  = $full
+				? sprintf( __( 'Bonne réponse : « %s ».', 'logieval-secure' ), $expected )
+				: ( $points > 0
+					? sprintf( __( 'Réponse en partie juste. Vous avez répondu « %1$s » ; la réponse attendue était « %2$s ».', 'logieval-secure' ), $given, $expected )
+					: sprintf( __( 'Vous avez répondu « %1$s », mais la réponse attendue était « %2$s ».', 'logieval-secure' ), $given, $expected ) );
+
+			return array(
+				'points'       => self::format_points( $points ),
+				'comment'      => $comment,
+				'analysis'     => __( 'Question fermée corrigée par LogiExam : la réponse de l’élève est comparée à la réponse attendue enregistrée (pas d’IA).', 'logieval-secure' ),
+				'confidence'   => 1,
+				'needs_review' => false,
+				'model'        => 'LogiExam',
+			);
+		}
+
 		private static function ai_grade_answer_for_attempt( array $attempt, array $answer ) {
 			$question_id = absint( $answer['question_id'] ?? 0 );
 			$max_points  = max( 0, (float) ( $answer['points'] ?? 0 ) );
@@ -1006,6 +1043,11 @@ trait LogiEval_Secure_Evaluations_Ai_Grading {
 				);
 				self::save_ai_grade_result( $attempt, $question_id, $result );
 				return $result;
+			}
+			$closed = self::closed_question_result( $answer, $max_points );
+			if ( $closed ) {
+				self::save_ai_grade_result( $attempt, $question_id, $closed );
+				return $closed;
 			}
 			$result = self::request_ai_grade_answer( $answer, $max_points );
 			if ( is_wp_error( $result ) ) {
