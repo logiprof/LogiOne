@@ -1,10 +1,15 @@
-# Publie une version de LogiOne : pousser une étiquette vX.Y.Z (même numéro que « Version: » dans logipilot.php).
-# Le .zip installable (dossier « logipilot ») est joint à la release ; les sites WordPress le proposent alors en mise à jour.
+# Publie une version de LogiOne.
+# 1.53.6 : automatique — chaque envoi sur « main » qui change le numéro « Version: » de logipilot.php crée la release
+# vX.Y.Z (étiquette + .zip installable, dossier « logipilot »). Pousser une étiquette vX.Y.Z marche toujours aussi.
+# Les sites WordPress voient alors la mise à jour (LogiOne › Mises à jour › Vérifier maintenant, ou sous 6 h).
 name: Publier une version
 
 on:
   push:
+    branches: [main]
+    paths: ['logipilot.php']
     tags: ['v*']
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -15,35 +20,61 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Vérifier le numéro de version
+      - name: Numéro de version
+        id: v
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          TAG="${GITHUB_REF_NAME#v}"
+          if [ "${GITHUB_REF_TYPE}" = "tag" ]; then TAG="${GITHUB_REF_NAME}"; else
+            TAG="v$(sed -n "s/^define('LOGIPILOT_VERSION', '\(.*\)');/\1/p" logipilot.php)"; fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          if [ "${GITHUB_REF_TYPE}" != "tag" ] && gh release view "$TAG" > /dev/null 2>&1; then
+            echo "skip=1" >> "$GITHUB_OUTPUT"; echo "Release $TAG déjà publiée : rien à faire."
+          fi
+
+      - name: Vérifier le numéro de version
+        if: steps.v.outputs.skip != '1'
+        env:
+          REL: ${{ steps.v.outputs.tag }}
+        run: |
+          TAG="${REL#v}"
           grep -q "^ \* Version: ${TAG}$" logipilot.php || { echo "::error::logipilot.php n'indique pas « Version: ${TAG} »"; exit 1; }
           grep -q "define('LOGIPILOT_VERSION', '${TAG}');" logipilot.php || { echo "::error::LOGIPILOT_VERSION n'est pas ${TAG}"; exit 1; }
 
       - name: Vérifier la syntaxe PHP
+        if: steps.v.outputs.skip != '1'
+        env:
+          REL: ${{ steps.v.outputs.tag }}
         run: find . -name '*.php' -not -path './.git/*' -print0 | xargs -0 -n1 -P4 php -l > /dev/null
 
       - name: Construire le .zip
+        if: steps.v.outputs.skip != '1'
+        env:
+          REL: ${{ steps.v.outputs.tag }}
         run: |
-          TAG="${GITHUB_REF_NAME#v}"
+          TAG="${REL#v}"
           mkdir -p build
           git archive --format=zip --prefix=logipilot/ -o "build/logione-${TAG}.zip" HEAD
           unzip -l "build/logione-${TAG}.zip" | grep -q 'logipilot/logipilot.php'
 
       - name: Notes de version (section du README)
+        if: steps.v.outputs.skip != '1'
+        env:
+          REL: ${{ steps.v.outputs.tag }}
         run: |
-          TAG="${GITHUB_REF_NAME#v}"
+          TAG="${REL#v}"
           awk -v v="## Nouveautés ${TAG}" 'index($0, v) == 1 {on=1; next} on && /^## Nouveautés / {exit} on' README.md > build/notes.md
           [ -s build/notes.md ] || echo "LogiOne ${TAG}" > build/notes.md
 
       - name: Publier la release
+        if: steps.v.outputs.skip != '1'
         env:
+          REL: ${{ steps.v.outputs.tag }}
           GH_TOKEN: ${{ github.token }}
         run: |
-          TAG="${GITHUB_REF_NAME#v}"
-          if gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1; then
-            gh release upload "$GITHUB_REF_NAME" "build/logione-${TAG}.zip" --clobber
+          TAG="${REL#v}"
+          if gh release view "$REL" > /dev/null 2>&1; then
+            gh release upload "$REL" "build/logione-${TAG}.zip" --clobber
           else
-            gh release create "$GITHUB_REF_NAME" "build/logione-${TAG}.zip" --title "LogiOne ${TAG}" --notes-file build/notes.md
+            gh release create "$REL" "build/logione-${TAG}.zip" --target "$GITHUB_SHA" --title "LogiOne ${TAG}" --notes-file build/notes.md
           fi
