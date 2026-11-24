@@ -58,6 +58,15 @@ if (isset($_POST['logieval_import_submit']) && check_admin_referer('logieval_imp
                 <a href="<?= $assets ?>template-enseignants.csv"  class="button" download>⬇ CSV</a>
             </div>
         </div>
+        <div class="logieval-template-card">
+            <div class="logieval-template-icon">🏫</div>
+            <h3>Modèle Classes ↔ enseignants</h3>
+            <p>Colonne 1 : classe · colonne 2 : maître de classe · colonnes 3 à 5 : autres enseignants</p>
+            <p class="description">Enseignants connus : simplement liés à la classe. Inconnus : compte créé inactif, e-mail à compléter avant activation.</p>
+            <div class="logieval-template-btns">
+                <a href="<?= $assets ?>template-classes-enseignants.xlsx" class="button button-primary" download>⬇ Excel (.xlsx)</a>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -80,6 +89,10 @@ if (isset($_POST['logieval_import_submit']) && check_admin_referer('logieval_imp
                     <label>
                         <input type="radio" name="import_type" value="enseignants" onchange="updateTypeHint(this.value)">
                         👨‍🏫 Enseignants
+                    </label>
+                    <label style="margin-left:24px">
+                        <input type="radio" name="import_type" value="classes_enseignants" onchange="updateTypeHint(this.value)">
+                        🏫 Classes ↔ enseignants
                     </label>
                 </td>
             </tr>
@@ -181,7 +194,7 @@ if (isset($_POST['logieval_import_submit']) && check_admin_referer('logieval_imp
             </div>
             <div class="logieval-import-stat logieval-import-stat-ok">
                 <span class="logieval-import-stat-num"><?= $imported ?></span>
-                <span>Importés</span>
+                <span><?= ($type ?? '') === 'classes_enseignants' ? 'Liens créés' : 'Importés' ?></span>
             </div>
             <?php if ($updated > 0): ?>
             <div class="logieval-import-stat logieval-import-stat-updated">
@@ -192,7 +205,7 @@ if (isset($_POST['logieval_import_submit']) && check_admin_referer('logieval_imp
             <?php if ($skipped > 0): ?>
             <div class="logieval-import-stat logieval-import-stat-skip">
                 <span class="logieval-import-stat-num"><?= $skipped ?></span>
-                <span>Ignorés (doublons)</span>
+                <span><?= ($type ?? '') === 'classes_enseignants' ? 'Déjà liés' : 'Ignorés (doublons)' ?></span>
             </div>
             <?php endif ?>
             <?php if (count($errors) > 0): ?>
@@ -212,6 +225,13 @@ if (isset($_POST['logieval_import_submit']) && check_admin_referer('logieval_imp
         <?php if (!empty($import_results['classes_created'])): ?>
         <div class="logieval-import-success">
             🏫 <?= count($import_results['classes_created']) ?> classe(s) créée(s) : <?= esc_html(implode(', ', $import_results['classes_created'])) ?>
+        </div>
+        <?php endif ?>
+
+        <?php if (!empty($import_results['teachers_created'])): ?>
+        <div class="logieval-import-success" style="background:#FEF3C7;color:#92400E">
+            👤 <?= count($import_results['teachers_created']) ?> compte(s) enseignant créé(s), inactif(s) : <?= esc_html(implode(', ', $import_results['teachers_created'])) ?>.
+            Complétez leur e-mail dans LogiEval › Enseignants, puis activez-les.
         </div>
         <?php endif ?>
 
@@ -259,6 +279,10 @@ if (isset($_POST['logieval_import_submit']) && check_admin_referer('logieval_imp
                     <td>
                         <?php if (($row['_status'] ?? '') === 'updated'): ?>
                             <span style="color:#D97706">↺ Mis à jour</span>
+                        <?php elseif (($row['_status'] ?? '') === 'deja'): ?>
+                            <span style="color:#64748B">= Déjà lié</span>
+                        <?php elseif (($row['_status'] ?? '') === 'maitre'): ?>
+                            <span style="color:#D97706">👑 Devenu maître de classe</span>
                         <?php elseif (($row['_status'] ?? '') === 'new_inactive'): ?>
                             <span style="color:#475569">✓ Importé inactif</span>
                         <?php else: ?>
@@ -309,7 +333,8 @@ if (isset($_POST['logieval_import_submit']) && check_admin_referer('logieval_imp
 function updateTypeHint(type) {
     var hints = {
         eleves:       'Colonnes requises : <code>nom</code>, <code>prenom</code>, <code>num_eleve</code> (optionnel), <code>classe</code>',
-        enseignants:  'Colonnes requises : <code>nom</code>, <code>prenom</code>, <code>email</code>'
+        enseignants:  'Colonnes requises : <code>nom</code>, <code>prenom</code>, <code>email</code>',
+        classes_enseignants: 'Colonne 1 : <code>classe</code> · colonne 2 : <code>maître de classe</code> · colonnes 3 et suivantes : autres enseignants (« Prénom Nom », « NOM Prénom » ou e-mail). Les enseignants inconnus sont créés <strong>inactifs</strong>, avec un e-mail à compléter avant activation. Aucun lien existant n’est retiré.'
     };
     document.getElementById('type-hint').innerHTML = hints[type] || '';
     var ch = document.getElementById('classes-hint');

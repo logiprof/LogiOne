@@ -8,6 +8,45 @@ class LOGIEVAL_Admin {
         add_action( 'admin_enqueue_scripts',  [ $this, 'enqueue_assets' ] );
         add_action( 'wp_ajax_logieval_admin',    [ $this, 'handle_ajax' ] );
         add_action( 'admin_post_logieval_export', [ $this, 'handle_export' ] );
+        // 1.53.5 : écrans LogiEval affichés dans LogiOne (cadre intégré), sans le menu WordPress.
+        add_filter( 'admin_body_class', [ $this, 'embed_body_class' ] );
+        add_action( 'admin_head',   [ $this, 'embed_head' ] );
+        add_action( 'admin_footer', [ $this, 'embed_footer' ] );
+        add_filter( 'wp_redirect',  [ $this, 'embed_keep_on_redirect' ] );
+    }
+
+    private static function is_embed(): bool {
+        return ! empty( $_GET['lp_embed'] ) && strpos( (string) ( $_GET['page'] ?? '' ), 'logieval' ) === 0;
+    }
+    public function embed_body_class( $c ) { return self::is_embed() ? $c . ' lge-embed' : $c; }
+    public function embed_head(): void {
+        if ( ! self::is_embed() ) return;
+        echo '<style>html.wp-toolbar{padding-top:0!important}#wpadminbar,#adminmenumain,#adminmenuback,#adminmenuwrap,#wpfooter,#screen-meta-links,.update-nag,.notice:not(.logieval-notice):not(.notice-success):not(.notice-error){display:none!important}'
+           . '#wpcontent,#wpfooter{margin-left:0!important}#wpcontent{padding-left:16px!important}#wpbody-content{padding-bottom:20px!important}body.lge-embed{min-width:0}</style>';
+    }
+    public function embed_footer(): void {
+        if ( ! self::is_embed() ) return; ?>
+<script>(function(){
+  // Les liens et formulaires vers les écrans LogiEval restent dans le cadre ; le reste s'ouvre en pleine page.
+  function keep(u){ try{ var x=new URL(u,location.href); if(x.origin!==location.origin) return null;
+    if(/\/wp-admin\/admin\.php$/.test(x.pathname) && /^logieval/.test(x.searchParams.get('page')||'')){ x.searchParams.set('lp_embed','1'); return x.toString(); }
+    return null; }catch(e){ return null; } }
+  document.querySelectorAll('a[href]').forEach(function(a){ var h=a.getAttribute('href'); if(!h||h.charAt(0)==='#'||/^javascript:/i.test(h)) return;
+    var k=keep(a.href); if(k){ a.href=k; } else if(!a.target && !/admin-post\.php|admin-ajax\.php/.test(a.href)) { a.target='_top'; } });
+  document.querySelectorAll('form').forEach(function(f){ if((f.method||'').toLowerCase()==='get'){ if(!f.querySelector('[name=lp_embed]')){ var i=document.createElement('input'); i.type='hidden'; i.name='lp_embed'; i.value='1'; f.appendChild(i);} }
+    else { var k=keep(f.action||location.href); if(k) f.action=k; } });
+  function post(){ if(parent!==window) parent.postMessage({lgeHeight:document.documentElement.scrollHeight},location.origin); }
+  if(window.ResizeObserver) new ResizeObserver(post).observe(document.body); window.addEventListener('load',post); post();
+})();</script>
+<?php }
+    /** Après une action (admin-post), revenir dans le cadre si on en venait. */
+    public function embed_keep_on_redirect( $location ) {
+        $ref = (string) wp_get_referer();
+        if ( $ref && strpos( $ref, 'lp_embed=1' ) !== false && is_string( $location )
+            && strpos( $location, 'admin.php' ) !== false && preg_match( '/[?&]page=logieval/', $location ) && strpos( $location, 'lp_embed=' ) === false ) {
+            $location = add_query_arg( 'lp_embed', 1, $location );
+        }
+        return $location;
     }
 
     /* ── Menus ──────────────────────────────────────────────────── */
@@ -209,6 +248,10 @@ class LOGIEVAL_Admin {
             return;
         }
 
+        $ens = LOGIEVAL_Database::get_row( LOGIEVAL_Database::t('enseignants'), ['id' => $id] );
+        if ( $ens && LOGIEVAL_Database::is_placeholder_email( (string) $ens['email'] ) ) {
+            wp_send_json_error(['message' => 'Complétez d’abord l’e-mail de cet enseignant (bouton « Modifier ») : il a été créé par import, sans adresse.']); return;
+        }
         LOGIEVAL_Database::update( LOGIEVAL_Database::t('enseignants'), ['actif' => 1], ['id' => $id] );
         $sent = LOGIEVAL_Mailer::notify_teacher_access( $id );
         wp_send_json_success(['email_sent' => $sent ? 1 : 0]);

@@ -45,7 +45,7 @@ global $wpdb;
 <?php foreach ($classes as $cl):
     $nb_el = (int)$wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$t['eleves']} WHERE classe_id=%d", $cl['id']));
     $ens_rows = $wpdb->get_results($wpdb->prepare(
-        "SELECT e.id, e.prenom, e.nom, ce.est_maitre, ce.id AS ce_id
+        "SELECT e.id, e.prenom, e.nom, e.actif, ce.est_maitre, ce.id AS ce_id
          FROM {$t['classe_enseignant']} ce
          INNER JOIN {$t['enseignants']} e ON e.id = ce.enseignant_id
          WHERE ce.classe_id = %d ORDER BY e.nom, e.prenom", $cl['id']), ARRAY_A) ?: [];
@@ -64,7 +64,7 @@ global $wpdb;
             <?php foreach ($ens_rows as $er): ?>
             <span class="logieval-tag">
                 <?= $er['est_maitre'] ? '👑 ' : '' ?>
-                <?= esc_html($er['nom'].' '.$er['prenom']) ?>
+                <?= esc_html($er['nom'].' '.$er['prenom']) ?><?= empty($er['actif']) ? ' <small style="color:#B45309">(inactif)</small>' : '' ?>
             </span>
             <?php endforeach ?>
         <?php endif ?>

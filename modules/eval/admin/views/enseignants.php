@@ -30,7 +30,8 @@
 <?php $is_active = !empty($e['actif']); ?>
 <tr>
     <td><strong><?= esc_html($e['nom'].' '.$e['prenom']) ?></strong></td>
-    <td><?= esc_html($e['email']) ?></td>
+    <?php $todo_mail = LOGIEVAL_Database::is_placeholder_email((string) $e['email']); ?>
+    <td><?= $todo_mail ? '<span style="color:#B45309;font-weight:600">⚠ e-mail à compléter</span>' : esc_html($e['email']) ?></td>
     <td>
         <?php if ($is_active): ?>
             <span style="display:inline-block;background:#DCFCE7;color:#166534;border-radius:999px;padding:3px 10px;font-weight:600">Actif</span>
@@ -47,7 +48,7 @@
             data-id="<?= $e['id'] ?>"
             data-prenom="<?= esc_attr($e['prenom']) ?>"
             data-nom="<?= esc_attr($e['nom']) ?>"
-            data-email="<?= esc_attr($e['email']) ?>">Modifier</button>
+            data-email="<?= $todo_mail ? '' : esc_attr($e['email']) ?>">Modifier</button>
         <?php if ($is_active): ?>
             <button class="button button-small logieval-deactivate-ens" data-id="<?= $e['id'] ?>">Désactiver</button>
         <?php else: ?>

@@ -384,7 +384,51 @@ class LOGIEVAL_Public {
         return add_query_arg($args, $base);
     }
 
+    /* ── 1.53.5 : barre « Administration LogiEval » pour l'administration, dans LogiOne et sur la page LogiEval ── */
+    const ADMIN_SECTIONS = [
+        ''             => ['🔑', 'Accès enseignant'],
+        'dashboard'    => ['🏠', 'Tableau de bord',  'logieval'],
+        'evaluations'  => ['📋', 'Évaluations',      'logieval-evaluations'],
+        'classes'      => ['🏫', 'Classes',          'logieval-classes'],
+        'eleves'       => ['🎓', 'Élèves',           'logieval-eleves'],
+        'enseignants'  => ['👨‍🏫', 'Enseignants et codes', 'logieval-enseignants'],
+        'objectifs'    => ['🎯', 'Objectifs',        'logieval-objectifs'],
+        'import'       => ['📥', 'Import',           'logieval-import'],
+        'settings'     => ['⚙️', 'Réglages',         'logieval-settings'],
+    ];
+
     public function shortcode_login( $atts = [] ): string {
+        if ( ! current_user_can( 'lp_eval_admin' ) || isset($_GET['logieval_print']) || isset($_GET['logieval_export']) ) {
+            return $this->shortcode_login_inner( $atts );
+        }
+        $section = sanitize_key( wp_unslash( $_GET['logieval_admin'] ?? '' ) );
+        if ( ! isset( self::ADMIN_SECTIONS[ $section ] ) ) $section = '';
+        $here = remove_query_arg( ['logieval_admin','logieval_eval','logieval_new_eval','logieval_logout'], wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) );
+        $nav  = '<nav class="lge-adminbar" aria-label="Administration LogiEval"><span class="lge-adminbar-title">Administration</span>';
+        foreach ( self::ADMIN_SECTIONS as $key => $def ) {
+            $url  = $key === '' ? $here : add_query_arg( 'logieval_admin', $key, $here );
+            $nav .= '<a href="' . esc_url( $url ) . '"' . ( $key === $section ? ' aria-current="page" class="is-on"' : '' ) . '><span aria-hidden="true">' . $def[0] . '</span> ' . esc_html( $def[1] ) . '</a>';
+        }
+        $nav .= '</nav>';
+        $css = '<style>.lge-adminbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 16px;padding:10px 12px;background:#ecfeff;border:1px solid #a5f3fc;border-radius:10px;font-size:14px}'
+             . '.lge-adminbar-title{font-weight:700;color:#155e75;margin-right:6px}'
+             . '.lge-adminbar a{padding:6px 10px;border-radius:7px;text-decoration:none;color:#0e7490;background:#fff;border:1px solid #cffafe;line-height:1.2}'
+             . '.lge-adminbar a:hover{border-color:#0e7490}.lge-adminbar a.is-on{background:#0e7490;color:#fff;border-color:#0e7490}'
+             . '.lge-adminframe{width:100%;min-height:720px;border:1px solid #e2e8f0;border-radius:10px;background:#f0f0f1;display:block}'
+             . '.lge-adminframe-note{font-size:13px;color:#64748b;margin:6px 0 0}</style>';
+        if ( $section === '' ) {
+            return $css . $nav . $this->shortcode_login_inner( $atts );
+        }
+        $src = add_query_arg( ['page' => self::ADMIN_SECTIONS[ $section ][2], 'lp_embed' => 1], admin_url( 'admin.php' ) );
+        $full = remove_query_arg( 'lp_embed', $src );
+        $js = '<script>(function(){var f=document.getElementById("lge-adminframe");window.addEventListener("message",function(e){'
+            . 'if(e.origin!==location.origin||!e.data||e.data.lgeHeight===undefined)return;f.style.height=Math.max(720,e.data.lgeHeight+20)+"px";});})();</script>';
+        return $css . $nav
+            . '<iframe id="lge-adminframe" class="lge-adminframe" src="' . esc_url( $src ) . '" title="Administration LogiEval : ' . esc_attr( self::ADMIN_SECTIONS[ $section ][1] ) . '"></iframe>'
+            . '<p class="lge-adminframe-note">Même écran que dans l’administration WordPress. <a href="' . esc_url( $full ) . '" target="_blank" rel="noopener">Ouvrir en pleine page ↗</a></p>' . $js;
+    }
+
+    private function shortcode_login_inner( $atts = [] ): string {
         if (!defined('DONOTCACHEPAGE')) define('DONOTCACHEPAGE', true);
         self::load_assets(); // shortcode placed outside the page content (widget, page builder…)
         nocache_headers();

@@ -483,6 +483,14 @@ class LOGIEVAL_Database {
         return $row ?: null;
     }
 
+    /** E-mail provisoire d'un enseignant créé par import sans adresse (colonne email NOT NULL + UNIQUE). */
+    public static function placeholder_email( string $ident ): string {
+        return 'a-completer.' . strtolower( preg_replace( '/[^a-z0-9]/i', '', $ident ) ) . '@logieval.invalid';
+    }
+    public static function is_placeholder_email( string $email ): bool {
+        return (bool) preg_match( '/@logieval\.invalid$/i', trim( $email ) );
+    }
+
     public static function log_student_move( int $eleve_id, int $from, int $to ): void {
         if ( $from === $to ) return;
         $all = get_option( 'logieval_student_moves', [] );

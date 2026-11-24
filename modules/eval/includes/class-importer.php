@@ -35,6 +35,8 @@ class LOGIEVAL_Importer {
             return self::import_eleves( $rows, $skip_errors, $update_existing, $create_classes, $class_year );
         } elseif ( $type === 'enseignants' ) {
             return self::import_enseignants( $rows, $skip_errors, $update_existing );
+        } elseif ( $type === 'classes_enseignants' ) {
+            return self::import_classes_enseignants( $rows );
         }
 
         return ['error' => 'Type d\'import inconnu.'];
@@ -102,7 +104,12 @@ class LOGIEVAL_Importer {
             $n = self::normalize_str((string)$h);
             $n = trim(str_replace(['°', 'º'], ' ', $n));
             $n = preg_replace('/\s+/', ' ', $n);
-            $out[] = $aliases[$n] ?? str_replace(' ', '_', $n);
+            $key = $aliases[$n] ?? str_replace(' ', '_', $n);
+            if ($key === '') $key = 'col_' . (count($out) + 1);
+            // 1.53.5 : deux colonnes au même titre (« Enseignant », « Enseignant »…) ne s'écrasent plus.
+            $base = $key; $k = 2;
+            while (in_array($key, $out, true)) { $key = $base . '_' . $k++; }
+            $out[] = $key;
         }
         return $out;
     }
@@ -506,6 +513,112 @@ class LOGIEVAL_Importer {
             $result['imported']++;
             $result['preview'][] = ['nom'=>$nom,'prenom'=>$prenom,'email'=>$email,'identifiant'=>$ident,'_status'=>'new_inactive'];
         }
+        return $result;
+    }
+
+    /* ── Import classes ↔ enseignants (1.53.5) ─────────────────────
+     * Colonne 1 = classe, colonne 2 = maître de classe, colonnes suivantes = autres enseignants.
+     * Lecture par position : les titres des colonnes n'ont pas d'importance.
+     * Enseignant connu (nom+prénom dans n'importe quel ordre, ou e-mail) → simplement lié à la classe.
+     * Enseignant inconnu → compte créé INACTIF, avec un e-mail provisoire à compléter avant activation.
+     * Rien n'est jamais retiré : les liens déjà présents sont gardés. */
+    private static function name_key( string $s ): string {
+        $tok = preg_split('/[\s,]+/', self::normalize_str(str_replace('-', ' ', $s)), -1, PREG_SPLIT_NO_EMPTY);
+        sort($tok);
+        return implode(' ', $tok);
+    }
+
+    /** « NOM Prénom », « Prénom NOM », « Nom, Prénom » ou « Prénom Nom ». */
+    public static function split_name( string $full ): array {
+        $full = trim(preg_replace('/\s+/u', ' ', $full));
+        if (strpos($full, ',') !== false) {
+            [$nom, $prenom] = array_map('trim', explode(',', $full, 2));
+            return [$prenom, $nom];
+        }
+        $tok = explode(' ', $full);
+        if (count($tok) < 2) return ['', $full];
+        $upper = []; $other = [];
+        foreach ($tok as $w) {
+            $letters = preg_replace('/[^\p{L}]/u', '', $w);
+            if (mb_strlen($letters) >= 2 && $letters === mb_strtoupper($letters)) $upper[] = $w; else $other[] = $w;
+        }
+        if ($upper && $other) {
+            $nom = implode(' ', array_map(static fn($w) => mb_convert_case(mb_strtolower($w), MB_CASE_TITLE), $upper));
+            return [implode(' ', $other), $nom];
+        }
+        return [array_shift($tok), implode(' ', $tok)];
+    }
+
+    private static function import_classes_enseignants( array $rows ): array {
+        global $wpdb;
+        $t       = LOGIEVAL_Database::tables();
+        $result  = ['total'=>0,'imported'=>0,'updated'=>0,'skipped'=>0,'errors'=>[],'preview'=>[],'teachers_created'=>[]];
+        $classes = LOGIEVAL_Database::get_rows($t['classes'], [], 'nom');
+        if (class_exists('LOGIEVAL_Rollover')) $classes = LOGIEVAL_Rollover::without_archived($classes);
+        $class_map = [];
+        foreach ($classes as $cl) $class_map[preg_replace('/[^a-z0-9]/', '', self::normalize_str($cl['nom']))] = (int) $cl['id'];
+
+        $by_name = []; $by_mail = [];
+        foreach (LOGIEVAL_Database::get_rows($t['enseignants']) as $e) {
+            $by_name[self::name_key($e['prenom'].' '.$e['nom'])][] = (int) $e['id'];
+            $by_mail[strtolower(trim($e['email']))] = (int) $e['id'];
+        }
+
+        foreach ($rows as $line_num => $row) {
+            $vals  = array_values(array_map(static fn($v) => trim((string) $v), $row));
+            $label = $line_num + 2;
+            if (!array_filter($vals, static fn($v) => $v !== '')) continue;
+            $result['total']++;
+            $classe = $vals[0] ?? '';
+            $cid    = $class_map[preg_replace('/[^a-z0-9]/', '', self::normalize_str($classe))] ?? 0;
+            if (!$cid) {
+                $result['errors'][] = ['line'=>$label,'data'=>$vals,'reason'=>"Classe introuvable : \"$classe\" (importez d'abord les élèves pour créer les classes)."];
+                continue;
+            }
+            $links = [];
+            foreach (array_slice($vals, 1) as $pos => $cell) {
+                if ($cell === '') continue;
+                $is_maitre = ($pos === 0);
+                $eid = 0;
+                if (strpos($cell, '@') !== false && is_email($cell)) {
+                    $eid = $by_mail[strtolower($cell)] ?? 0;
+                    if (!$eid) { $result['errors'][] = ['line'=>$label,'data'=>$vals,'reason'=>"Aucun enseignant avec l'e-mail $cell : indiquez plutôt son nom et prénom pour le créer."]; continue; }
+                } else {
+                    $ids = $by_name[self::name_key($cell)] ?? [];
+                    if (count($ids) > 1) { $result['errors'][] = ['line'=>$label,'data'=>$vals,'reason'=>"Plusieurs enseignants s'appellent « $cell » : indiquez son e-mail à la place."]; continue; }
+                    if ($ids) {
+                        $eid = $ids[0];
+                    } else {
+                        [$prenom, $nom] = self::split_name($cell);
+                        $ident = LOGIEVAL_Auth::generate_identifier();
+                        $eid = LOGIEVAL_Database::insert($t['enseignants'], [
+                            'prenom' => sanitize_text_field($prenom), 'nom' => sanitize_text_field($nom),
+                            'email'  => LOGIEVAL_Database::placeholder_email($ident),
+                            'identifiant_unique' => $ident, 'actif' => 0,
+                        ]);
+                        if (!$eid) { $result['errors'][] = ['line'=>$label,'data'=>$vals,'reason'=>"Création impossible pour « $cell »."]; continue; }
+                        $by_name[self::name_key($cell)] = [$eid];
+                        $result['teachers_created'][] = trim("$prenom $nom");
+                    }
+                }
+                $links[] = [$eid, $is_maitre, $cell];
+            }
+            foreach ($links as [$eid, $is_maitre, $cell]) {
+                $ex = LOGIEVAL_Database::get_row($t['classe_enseignant'], ['classe_id'=>$cid,'enseignant_id'=>$eid]);
+                if ($is_maitre) $wpdb->query($wpdb->prepare("UPDATE {$t['classe_enseignant']} SET est_maitre=0 WHERE classe_id=%d AND enseignant_id<>%d", $cid, $eid));
+                if ($ex) {
+                    if ($is_maitre && !(int) $ex['est_maitre']) {
+                        LOGIEVAL_Database::update($t['classe_enseignant'], ['est_maitre'=>1], ['id'=>(int) $ex['id']]);
+                        $result['updated']++; $st = 'maitre';
+                    } else { $result['skipped']++; $st = 'deja'; }
+                } else {
+                    LOGIEVAL_Database::insert($t['classe_enseignant'], ['classe_id'=>$cid,'enseignant_id'=>$eid,'branche_id'=>null,'est_maitre'=>$is_maitre ? 1 : 0]);
+                    $result['imported']++; $st = 'new';
+                }
+                $result['preview'][] = ['classe'=>$classe,'enseignant'=>$cell,'rôle'=>$is_maitre ? 'Maître de classe' : 'Enseignant','_status'=>$st];
+            }
+        }
+        $result['teachers_created'] = array_values(array_unique($result['teachers_created']));
         return $result;
     }
 }
