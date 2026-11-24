@@ -26,6 +26,23 @@ class LOGIEVAL_Importer {
         if ( isset($rows['error']) ) return $rows;
         if ( empty($rows) ) return ['error' => 'Le fichier est vide ou ne contient pas de données.'];
 
+        // 1.53.8 : mauvais fichier ou mauvais type d'import → un message clair, rien n'est importé.
+        $keys = array_keys((array) reset($rows));
+        $looks_ce = isset($keys[0]) && $keys[0] === 'classe' && (bool) preg_grep('/^(maitre|enseignant)/', $keys);
+        if ( $type === 'eleves' && ( ! in_array('nom', $keys, true) || ! in_array('prenom', $keys, true) ) ) {
+            return ['error' => $looks_ce
+                ? 'Ce fichier est un fichier « Classes ↔ enseignants » (classe, maître de classe, enseignants). Choisissez le type d’import « 🏫 Classes ↔ enseignants » en haut, puis relancez. Rien n’a été importé.'
+                : 'Ce fichier n’a pas les colonnes « nom » et « prenom » sur sa première ligne (colonnes trouvées : ' . implode(', ', array_slice($keys, 0, 6)) . '). Vérifiez que c’est bien la liste des élèves et que la feuille des élèves est la première du classeur. Rien n’a été importé.'];
+        }
+        if ( $type === 'enseignants' && ( ! in_array('nom', $keys, true) || ! in_array('email', $keys, true) ) ) {
+            return ['error' => $looks_ce
+                ? 'Ce fichier est un fichier « Classes ↔ enseignants ». Choisissez le type d’import « 🏫 Classes ↔ enseignants » en haut, puis relancez. Rien n’a été importé.'
+                : 'Ce fichier n’a pas les colonnes « nom », « prenom » et « email » sur sa première ligne. Rien n’a été importé.'];
+        }
+        if ( $type === 'classes_enseignants' && in_array('nom', $keys, true) && in_array('prenom', $keys, true) ) {
+            return ['error' => 'Ce fichier ressemble à une liste d’élèves (colonnes nom, prénom). Pour l’import « Classes ↔ enseignants », la colonne 1 est la classe et la colonne 2 le maître de classe. Rien n’a été importé.'];
+        }
+
         $skip_errors     = ! empty($_POST['skip_errors']);
         $update_existing = ! empty($_POST['update_existing']);
 
