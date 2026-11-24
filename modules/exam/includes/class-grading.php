@@ -28,6 +28,31 @@ final class LogiEval_Secure_Grading {
 			return $special;
 		}
 
+		// 1.52.2 : les QCM sont corrigés automatiquement (avant, « qcm » et « multiple_choice » ne l'étaient jamais :
+		// ils n'étaient ni notés par LogiExam ni, pour multiple_choice, envoyés à la correction IA).
+		if ( '' !== $expected && 'qcm' === $type ) {
+			$given = $answer;
+			if ( is_string( $given ) && '[' === substr( trim( $given ), 0, 1 ) ) {
+				$decoded = json_decode( $given, true );
+				$given   = is_array( $decoded ) ? (string) reset( $decoded ) : $given;
+			}
+			if ( '' === trim( (string) ( is_array( $given ) ? reset( $given ) : $given ) ) ) {
+				return 0.0;
+			}
+			return self::normalize_answer( is_array( $given ) ? reset( $given ) : $given ) === self::normalize_answer( $expected ) ? $points : 0.0;
+		}
+		if ( '' !== $expected && 'multiple_choice' === $type ) {
+			$answer_items   = self::answer_items( $answer );
+			$expected_items = self::answer_items( $expected );
+			if ( empty( $expected_items ) ) {
+				return null;
+			}
+			$correct = count( array_intersect( $answer_items, $expected_items ) );
+			$wrong   = count( array_diff( $answer_items, $expected_items ) );
+			$score   = max( 0, $correct - $wrong ) / count( $expected_items );
+			return round( $points * min( 1, $score ), 2 );
+		}
+
 		if ( '' === $expected || ! in_array( $type, array( 'true_false', 'calculation' ), true ) ) {
 			return null;
 		}

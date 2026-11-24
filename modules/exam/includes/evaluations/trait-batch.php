@@ -62,6 +62,7 @@ trait LogiEval_Secure_Evaluations_Batch {
 		global $wpdb;
 		$t             = LogiEval_Secure_Database::tables();
 		$evaluation_id = (int) $evaluation['id'];
+		self::backfill_auto_points( $evaluation_id ); // 1.52.2
 		$sets          = self::finalizable_attempts( $evaluation );
 		$now           = current_time( 'mysql' );
 		$done          = 0;

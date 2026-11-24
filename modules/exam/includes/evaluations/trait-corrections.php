@@ -164,6 +164,27 @@ trait LogiEval_Secure_Evaluations_Corrections {		public static function attempt_
 	 * ------------------------------------------------------------------- */
 
 	/** @return array<int, array{label:string, points:float}> */
+	/**
+	 * 1.52.2 : points automatiques manquants (QCM des copies rendues avant la correction automatique des QCM).
+	 * Ne touche qu'aux réponses sans points automatiques ni points de l'enseignant ; les notes déjà finalisées
+	 * ne sont pas recalculées.
+	 */
+	public static function backfill_auto_points( int $evaluation_id ): int {
+		global $wpdb;
+		$t    = LogiEval_Secure_Database::tables();
+		$rows = $wpdb->get_results( $wpdb->prepare( "SELECT a.id, a.answer, a.question_id, q.type, q.expected_answer, q.options, COALESCE(NULLIF(eq.points,0), q.points) AS points FROM {$t['answers']} a INNER JOIN {$t['attempts']} t ON t.id=a.attempt_id INNER JOIN {$t['questions']} q ON q.id=a.question_id LEFT JOIN {$t['eval_questions']} eq ON eq.evaluation_id=t.evaluation_id AND eq.question_id=a.question_id WHERE t.evaluation_id=%d AND a.auto_points IS NULL AND a.manual_points IS NULL AND q.type IN ('qcm','multiple_choice','true_false')", $evaluation_id ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$done = 0;
+		foreach ( (array) $rows as $row ) {
+			$points = LogiEval_Secure_Grading::auto_points( $row, $row['answer'] );
+			if ( null !== $points ) {
+				$wpdb->update( $t['answers'], array( 'auto_points' => $points ), array( 'id' => (int) $row['id'] ) );
+				$done++;
+			}
+		}
+
+		return $done;
+	}
+
 	public static function decode_criteria( $json ): array {
 		$data = is_array( $json ) ? $json : json_decode( (string) $json, true );
 		$out  = array();

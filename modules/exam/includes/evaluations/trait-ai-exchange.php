@@ -26,7 +26,9 @@ trait LogiEval_Secure_Evaluations_Ai_Exchange {
 
 	/** Questions notées automatiquement (QCM, Vrai/Faux, Relier, Ordonner, Trous) : pas besoin de l'IA. */
 	private static function ai_exchange_is_auto_type( string $type ): bool {
-		return in_array( $type, array_merge( LogiEval_Secure_Question_Types::AUTO_TYPES, array( 'multiple_choice', 'true_false' ) ), true );
+		// 1.52.2 : questions corrigées par LogiExam lui-même (QCM compris). Le Vrai/Faux justifié est envoyé à l'IA
+		// (le choix est noté par LogiExam, la justification par l'IA).
+		return in_array( $type, array( LogiEval_Secure_Question_Types::ORDERING, LogiEval_Secure_Question_Types::MATCHING, LogiEval_Secure_Question_Types::BLANKS, 'qcm', 'multiple_choice', 'true_false' ), true );
 	}
 
 	/** Copies concernées : rendues, non annulées, correction pas encore terminée. */
@@ -96,6 +98,7 @@ trait LogiEval_Secure_Evaluations_Ai_Exchange {
 		$evaluation   = self::require_managed_evaluation( absint( $_GET['evaluation_id'] ?? 0 ) );
 		$id           = (int) $evaluation['id'];
 		$only_missing = ! empty( $_GET['only_missing'] );
+		self::backfill_auto_points( $id ); // 1.52.2 : QCM des copies déjà rendues
 		$attempts     = self::ai_exchange_attempts( $evaluation );
 
 		// Questions de l'évaluation (numéro = ordre dans l'évaluation, comme « Question n » à l'écran).
@@ -103,8 +106,8 @@ trait LogiEval_Secure_Evaluations_Ai_Exchange {
 		$qcodes    = array();
 		$first     = $attempts ? self::get_answers_for_attempt( (int) $attempts[0]['id'] ) : array();
 		foreach ( array_values( $first ) as $i => $answer ) {
-			if ( self::ai_exchange_is_auto_type( (string) $answer['type'] ) ) {
-				continue;
+			if ( self::ai_exchange_is_auto_type( (string) $answer['type'] ) && null !== LogiEval_Secure_Grading::auto_points( $answer, '' ) ) {
+				continue; // corrigée par LogiExam (une question auto sans bonne réponse enregistrée part quand même à l'IA)
 			}
 			$code       = 'Q' . ( $i + 1 );
 			$max        = max( 0, (float) $answer['points'] );

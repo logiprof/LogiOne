@@ -667,6 +667,7 @@ trait LogiEval_Secure_Evaluations_Workspace {
 
 	private static function render_step_grade( array $evaluation ): void {
 		$id       = (int) $evaluation['id'];
+		self::backfill_auto_points( $id ); // 1.52.2 : QCM des copies déjà rendues
 		$mode     = self::grade_mode_for( $id );
 		$attempts = array_values( array_filter( self::get_attempts( $id ), static fn( $a ) => self::attempt_is_cheating_cancelled( $a ) || ! empty( $a['submitted_at'] ) || in_array( (string) $a['status'], array( 'submitted', 'submitted_locked', 'graded' ), true ) ) );
 		usort(
