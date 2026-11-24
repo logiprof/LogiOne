@@ -137,6 +137,29 @@ class LOGIEVAL_Admin {
         $dup = LOGIEVAL_Database::find_duplicate_student( $data['prenom'], $data['nom'], $data['num_eleve'], $id );
         if ( $dup ) {
             $dup_classe = LOGIEVAL_Database::get_row( LOGIEVAL_Database::t('classes'), ['id' => (int) $dup['classe_id']] );
+            $new_classe = LOGIEVAL_Database::get_row( LOGIEVAL_Database::t('classes'), ['id' => $data['classe_id']] );
+            if ( (int) $dup['classe_id'] === $data['classe_id'] ) {
+                wp_send_json_error(['message' => sprintf( '%s %s est déjà dans la classe %s.', $dup['prenom'], $dup['nom'], $dup_classe['nom'] ?? '?' )]); return;
+            }
+            // 1.53.4 : nouvel élève déjà inscrit ailleurs → l'enseignant confirme, et l'élève CHANGE de classe (même fiche, données gardées).
+            if ( ! $id ) {
+                $confirm = intval( $_POST['confirm_move'] ?? 0 );
+                if ( $confirm !== (int) $dup['id'] ) {
+                    wp_send_json_error([
+                        'code'      => 'already_in_class',
+                        'dup_id'    => (int) $dup['id'],
+                        'eleve'     => trim( $dup['prenom'] . ' ' . $dup['nom'] ),
+                        'from'      => $dup_classe['nom'] ?? '?',
+                        'to'        => $new_classe['nom'] ?? '?',
+                        'message'   => sprintf( 'Cet élève est déjà dans la classe %s.', $dup_classe['nom'] ?? '?' ),
+                    ]); return;
+                }
+                $move = [ 'classe_id' => $data['classe_id'] ];
+                if ( $data['num_eleve'] !== '' && trim( (string) $dup['num_eleve'] ) === '' ) $move['num_eleve'] = $data['num_eleve'];
+                LOGIEVAL_Database::log_student_move( (int) $dup['id'], (int) $dup['classe_id'], $data['classe_id'] );
+                LOGIEVAL_Database::update( LOGIEVAL_Database::t('eleves'), $move, ['id' => (int) $dup['id']] );
+                wp_send_json_success( ['id' => (int) $dup['id'], 'moved' => true] ); return;
+            }
             wp_send_json_error(['message' => sprintf( 'Cet élève existe déjà (%s %s, classe %s). Un élève ne peut être que dans une classe : modifiez sa fiche existante et changez-y sa classe.', $dup['prenom'], $dup['nom'], $dup_classe['nom'] ?? '?' )]); return;
         }
         if ( $id ) {

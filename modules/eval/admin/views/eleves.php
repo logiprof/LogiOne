@@ -94,13 +94,34 @@ jQuery(function($){
         $('#eleve-prenom').val(d.prenom); $('#eleve-nom').val(d.nom); $('#eleve-num').val(d.num);
         $('#logieval-eleve-form').removeClass('logieval-hidden');
     });
-    $('#logieval-save-eleve').on('click', function(){
+    function saveEleve(confirmMove){
         $.post(logievalAdmin.ajax_url, {
             action:'logieval_admin', nonce:logievalAdmin.nonce, sub_action:'save_eleve',
             id:$('#eleve-id').val(), classe_id:$('#eleve-classe').val(),
-            prenom:$('#eleve-prenom').val(), nom:$('#eleve-nom').val(), num_eleve:$('#eleve-num').val()
-        }, logievalAfter);
-    });
+            prenom:$('#eleve-prenom').val(), nom:$('#eleve-nom').val(), num_eleve:$('#eleve-num').val(),
+            confirm_move: confirmMove || 0
+        }, function(r){
+            if (r && !r.success && r.data && r.data.code === 'already_in_class') { askMove(r.data); return; }
+            logievalAfter(r);
+        });
+    }
+    // 1.53.4 : bulle de confirmation quand l'élève est déjà dans une autre classe.
+    function askMove(d){
+        var esc=function(t){return $('<div>').text(t).html();};
+        var $o=$('<div class="logieval-move-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100000;display:flex;align-items:center;justify-content:center"></div>');
+        var $b=$('<div role="dialog" aria-modal="true" style="background:#fff;max-width:460px;width:92%;border-radius:10px;padding:22px 24px;box-shadow:0 10px 40px rgba(0,0,0,.25);font-size:14px;line-height:1.5"></div>');
+        $b.html('<h3 style="margin:0 0 10px">⚠️ Élève déjà dans une autre classe</h3>'
+          +'<p><strong>'+esc(d.eleve)+'</strong> est déjà présent·e dans la classe <strong>'+esc(d.from)+'</strong>.</p>'
+          +'<p>Veux-tu vraiment l’intégrer dans la classe <strong>'+esc(d.to)+'</strong> ?<br><span style="color:#555">Il ou elle quittera la classe '+esc(d.from)+'. Ses évaluations et ses résultats sont conservés.</span></p>'
+          +'<p style="text-align:right;margin:18px 0 0"><button type="button" class="button lg-no">Annuler</button> <button type="button" class="button button-primary lg-yes">Oui, le déplacer dans '+esc(d.to)+'</button></p>');
+        $o.append($b).appendTo('body');
+        var close=function(){ $o.remove(); $(document).off('keydown.lgmove'); };
+        $b.find('.lg-no').on('click', close).trigger('focus');
+        $o.on('click', function(e){ if(e.target===this) close(); });
+        $(document).on('keydown.lgmove', function(e){ if(e.key==='Escape') close(); });
+        $b.find('.lg-yes').on('click', function(){ $(this).prop('disabled',true); close(); saveEleve(d.dup_id); });
+    }
+    $('#logieval-save-eleve').on('click', function(){ saveEleve(0); });
     $(document).on('click','.logieval-delete-eleve', function(){
         if(!confirm('Supprimer cet élève ? Toutes ses réponses d’évaluation seront aussi supprimées définitivement.')) return;
         $.post(logievalAdmin.ajax_url, {action:'logieval_admin',nonce:logievalAdmin.nonce,sub_action:'delete_eleve',id:$(this).data('id')}, logievalAfter);

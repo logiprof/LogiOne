@@ -427,10 +427,7 @@ class LOGIEVAL_Importer {
 
             if ($existing_id) {
                 if ($update) {
-                    LOGIEVAL_Database::update($t['eleves'],
-                        ['num_eleve'=>$num_eleve],
-                        ['id'=>$existing_id]
-                    );
+                    if ($num_eleve !== '') LOGIEVAL_Database::update($t['eleves'], ['num_eleve'=>$num_eleve], ['id'=>$existing_id]);
                     $result['updated']++;
                     $result['preview'][] = ['nom'=>$nom,'prenom'=>$prenom,'num_eleve'=>$num_eleve,'classe'=>$row['classe'],'_status'=>'updated'];
                 } else {
