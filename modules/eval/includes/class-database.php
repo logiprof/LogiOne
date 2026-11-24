@@ -230,9 +230,20 @@ class LOGIEVAL_Database {
     }
 
     public static function maybe_upgrade(): void {
-        if (get_option('logieval_db_version') !== LOGIEVAL_VERSION || self::schema_needs_upgrade()) {
+        // LogiOne 1.53.0 : la vérification détaillée des tables (une quinzaine de requêtes) ne se fait plus à chaque
+        // page du site, mais après une mise à jour et au plus une fois par jour.
+        if (get_option('logieval_db_version') !== LOGIEVAL_VERSION) {
+            self::install();
+            set_transient('logieval_schema_checked', 1, DAY_IN_SECONDS);
+            return;
+        }
+        if (get_transient('logieval_schema_checked')) {
+            return;
+        }
+        if (self::schema_needs_upgrade()) {
             self::install();
         }
+        set_transient('logieval_schema_checked', 1, DAY_IN_SECONDS);
     }
 
     private static function schema_needs_upgrade(): bool {

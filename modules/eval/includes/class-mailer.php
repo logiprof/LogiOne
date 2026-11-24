@@ -3,6 +3,44 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 class LOGIEVAL_Mailer {
 
+    /* LogiOne 1.53.0 : envoi différé des e-mails de notification. La réponse part d'abord vers l'enseignant
+       (« Terminé » s'affiche tout de suite), les e-mails sont envoyés juste après, même si le serveur d'envoi est lent. */
+    private static $queue = [];
+
+    public static function later( string $method, array $args = [] ): void {
+        if ( ! method_exists( __CLASS__, $method ) ) return;
+        if ( ! self::$queue ) {
+            register_shutdown_function( [ __CLASS__, 'flush_queue' ] );
+        }
+        self::$queue[] = [ $method, $args ];
+    }
+
+    public static function flush_queue(): void {
+        $queue = self::$queue;
+        self::$queue = [];
+        if ( ! $queue ) return;
+        if ( function_exists( 'fastcgi_finish_request' ) ) {
+            @fastcgi_finish_request(); // la réponse est envoyée, la suite tourne en arrière-plan
+            @set_time_limit( 120 );
+            foreach ( $queue as $job ) {
+                try { call_user_func_array( [ __CLASS__, $job[0] ], $job[1] ); } catch ( \Throwable $e ) { error_log( 'LogiEval e-mail : ' . $e->getMessage() ); }
+            }
+            return;
+        }
+        // Sans PHP-FPM : tâche planifiée immédiate (lancée par WP-Cron dans une requête séparée).
+        foreach ( $queue as $i => $job ) {
+            wp_schedule_single_event( time() + $i, 'logieval_deferred_mail', [ $job[0], $job[1] ] );
+        }
+        if ( function_exists( 'spawn_cron' ) ) spawn_cron();
+    }
+
+    public static function run_deferred( $method, $args = [] ): void {
+        if ( is_string( $method ) && method_exists( __CLASS__, $method ) ) {
+            call_user_func_array( [ __CLASS__, $method ], (array) $args );
+        }
+    }
+
+
     public static function templates(): array {
         return [
             'assign' => [

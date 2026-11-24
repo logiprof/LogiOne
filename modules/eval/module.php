@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LOGIEVAL_VERSION', '2.3.0' );
+define( 'LOGIEVAL_VERSION', '2.3.0' ); // inchangée volontairement : pas de réinstallation des tables
 define( 'LOGIEVAL_PATH', plugin_dir_path( __FILE__ ) );
 define( 'LOGIEVAL_URL', plugin_dir_url( __FILE__ ) );
 
@@ -25,6 +25,8 @@ require_once LOGIEVAL_PATH . 'includes/class-mailer.php';
 require_once LOGIEVAL_PATH . 'includes/class-calculator.php';
 require_once LOGIEVAL_PATH . 'includes/class-exporter.php';
 require_once LOGIEVAL_PATH . 'includes/class-importer.php';
+require_once LOGIEVAL_PATH . 'includes/class-rollover.php';
+LOGIEVAL_Rollover::boot();
 require_once LOGIEVAL_PATH . 'admin/class-admin.php';
 require_once LOGIEVAL_PATH . 'public/class-public.php';
 
@@ -41,6 +43,7 @@ if ( did_action( 'plugins_loaded' ) ) {
 }
 
 add_action( 'logieval_daily_cron', array( 'LOGIEVAL_Mailer', 'send_reminders' ) );
+add_action( 'logieval_deferred_mail', array( 'LOGIEVAL_Mailer', 'run_deferred' ), 10, 2 ); // 1.53.0
 add_action(
 	'init',
 	static function () {

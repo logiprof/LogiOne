@@ -1,4 +1,4 @@
-# LogiOne 1.52.4
+# LogiOne 1.53.0
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,13 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.53.0 (LogiEval : passage d'année, allègement)
+
+- **Passage d'année des classes** (LogiEval › Classes › « 🎓 Passage d'année ») : chaque classe monte d'une année — nom (CLLOG-C2e → CLLOG-C3e), niveau (2ème → 3ème année) et année scolaire (2025-2026 → 2026-2027) — avec ses élèves, ses enseignants et ses évaluations (la note précédente reste reprise). Les classes de dernière année (C3…) sont **archivées** : masquées des listes, du tableau de bord des enseignants et des nouvelles évaluations, sans rien supprimer, et restaurables. Tout est proposé dans un tableau modifiable (action, nom, niveau, année) avant validation ; les classes au nom non reconnu ne sont pas touchées. Archivage et historique des passages dans des options WordPress : aucune table modifiée.
+- **Allègement du site** : la vérification des tables LogiEval (une quinzaine de requêtes) ne se fait plus à chaque page du site (y compris pendant les examens), mais après une mise à jour et au plus une fois par jour.
+- **E-mails différés** : les notifications (terminé, dernier enseignant, clôture, affectation) partent juste après la réponse ; « Terminer » s'affiche tout de suite même si l'envoi d'e-mails est lent.
+- **Connexion moins rigide** : blocage après 60 identifiants faux en 5 minutes depuis la même adresse internet (au lieu de 20 en 15 minutes), pour une école entière derrière la même adresse.
 
 ## Nouveautés 1.52.4 (LogiNotes : « Nouvelle évaluation »)
 

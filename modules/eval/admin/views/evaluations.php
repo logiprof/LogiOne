@@ -4,7 +4,7 @@
 <?php
 global $wpdb;
 $t = LOGIEVAL_Database::tables();
-$classes = LOGIEVAL_Database::get_rows($t['classes'], [], 'nom');
+$classes = LOGIEVAL_Rollover::without_archived(LOGIEVAL_Database::get_rows($t['classes'], [], 'nom')); // 1.53.0
 $all_ens = LOGIEVAL_Database::get_rows($t['enseignants'], [], 'nom, prenom');
 
 /* ══ DETAIL VIEW ══════════════════════════════════════════════ */

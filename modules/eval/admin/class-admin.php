@@ -272,7 +272,7 @@ class LOGIEVAL_Admin {
                 ]);
             }
             if ( ! empty($added_teacher_ids) ) {
-                LOGIEVAL_Mailer::notify_assignment($id, $added_teacher_ids);
+                LOGIEVAL_Mailer::later('notify_assignment', [$id, $added_teacher_ids]);
             }
         } else {
             // Anti double-clic : même classe et même semestre créés il y a moins de 60 s
@@ -316,7 +316,7 @@ class LOGIEVAL_Admin {
             }
 
             // Send notifications
-            LOGIEVAL_Mailer::notify_assignment( $id );
+            LOGIEVAL_Mailer::later('notify_assignment', [$id]);
         }
         wp_send_json_success( ['id' => $id] );
     }
@@ -390,7 +390,7 @@ class LOGIEVAL_Admin {
         $closed = $wpdb->update( $t['evaluations'], ['statut' => 'cloturee'], ['id' => $id, 'statut' => 'active'] );
         if ($closed) {
             LOGIEVAL_Calculator::freeze_grid( $id );
-            LOGIEVAL_Mailer::notify_closure( $id );
+            LOGIEVAL_Mailer::later('notify_closure', [$id]);
         }
         wp_send_json_success();
     }

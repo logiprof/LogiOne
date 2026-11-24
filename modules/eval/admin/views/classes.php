@@ -4,12 +4,13 @@
 
 <?php
 $t = LOGIEVAL_Database::tables();
-$classes      = LOGIEVAL_Database::get_rows($t['classes'], [], 'annee_scolaire DESC, nom');
+$classes      = LOGIEVAL_Rollover::without_archived(LOGIEVAL_Database::get_rows($t['classes'], [], 'annee_scolaire DESC, nom')); // 1.53.0 : archivées dans « Passage d'année »
 $all_ens      = LOGIEVAL_Database::get_rows($t['enseignants'], ['actif' => 1], 'nom, prenom');
 global $wpdb;
 ?>
 
 <button class="button button-primary" id="logieval-add-classe">+ Nouvelle classe</button>
+<?php LOGIEVAL_Rollover::render_panel(); ?>
 
 <div id="logieval-classe-form" class="logieval-card logieval-hidden" style="margin-top:20px;max-width:600px">
     <h3 id="logieval-classe-form-title">Nouvelle classe</h3>

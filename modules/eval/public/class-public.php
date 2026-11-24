@@ -549,6 +549,7 @@ class LOGIEVAL_Public {
                  WHERE ce.enseignant_id=%d AND ce.est_maitre=1
                  ORDER BY cl.nom", $eid
             ), ARRAY_A) ?: [];
+            $classes_as_maitre = LOGIEVAL_Rollover::without_archived($classes_as_maitre); // 1.53.0 : classes archivées masquées
             $maitre_class_ids = array_map('intval', array_column($classes_as_maitre, 'id'));
             $all_maitre_evals = [];
             if ($maitre_class_ids) {
@@ -1245,6 +1246,7 @@ class LOGIEVAL_Public {
              WHERE ce.enseignant_id=%d AND ce.est_maitre=1
              ORDER BY cl.nom", $ens_id
         ), ARRAY_A) ?: [];
+        $classes_as_maitre = LOGIEVAL_Rollover::without_archived($classes_as_maitre); // 1.53.0
 
         if (empty($classes_as_maitre)) {
             return '<div class="logieval-app logieval-eval-wrap"><div class="lge-body"><p class="logieval-error">Vous n\'êtes maître d\'aucune classe.</p>
@@ -1515,7 +1517,7 @@ class LOGIEVAL_Public {
         }
 
         // Send notifications
-        LOGIEVAL_Mailer::notify_assignment($eval_id);
+        LOGIEVAL_Mailer::later('notify_assignment', [$eval_id]);
 
         return ['success'=>true, 'eval_id'=>$eval_id];
     }
@@ -1589,18 +1591,18 @@ class LOGIEVAL_Public {
             );
             $pending = LOGIEVAL_Database::pending_teacher_count($eval_id);
             if ($changed_to_done && $pending === 1) {
-                LOGIEVAL_Mailer::notify_last_teacher_pending($eval_id);
+                LOGIEVAL_Mailer::later('notify_last_teacher_pending', [$eval_id]);
             } elseif ($changed_to_done) {
-                LOGIEVAL_Mailer::notify_teacher_completed($eval_id, $ens_id);
+                LOGIEVAL_Mailer::later('notify_teacher_completed', [$eval_id, $ens_id]);
             }
             if ($pending === 0) {
                 if ($changed_to_done) {
-                    LOGIEVAL_Mailer::notify_all_teachers_completed($eval_id, false);
+                    LOGIEVAL_Mailer::later('notify_all_teachers_completed', [$eval_id, false]);
                 }
                 $closed = $wpdb->update($t['evaluations'], ['statut'=>'cloturee'], ['id'=>$eval_id, 'statut'=>'active']);
                 if ($closed) {
                     LOGIEVAL_Calculator::freeze_grid($eval_id);
-                    LOGIEVAL_Mailer::notify_closure($eval_id);
+                    LOGIEVAL_Mailer::later('notify_closure', [$eval_id]);
                 }
             }
             wp_send_json_success([
@@ -1670,7 +1672,7 @@ class LOGIEVAL_Public {
                 ]);
             }
             if (!empty($added_teacher_ids)) {
-                LOGIEVAL_Mailer::notify_assignment($eval_id, $added_teacher_ids);
+                LOGIEVAL_Mailer::later('notify_assignment', [$eval_id, $added_teacher_ids]);
             }
 
             wp_send_json_success(['updated'=>true]);
@@ -1703,12 +1705,12 @@ class LOGIEVAL_Public {
                 ['evaluation_id'=>$eval_id,'enseignant_id'=>$ens_id,'statut'=>'en_cours']
             );
             if ($changed_to_done) {
-                LOGIEVAL_Mailer::notify_teacher_completed($eval_id, $ens_id);
+                LOGIEVAL_Mailer::later('notify_teacher_completed', [$eval_id, $ens_id]);
             }
             $closed = $wpdb->update($t['evaluations'], ['statut'=>'cloturee'], ['id'=>$eval_id, 'statut'=>'active']);
             if ($closed) {
                 LOGIEVAL_Calculator::freeze_grid($eval_id);
-                LOGIEVAL_Mailer::notify_closure($eval_id);
+                LOGIEVAL_Mailer::later('notify_closure', [$eval_id]);
             }
             wp_send_json_success(['forced'=>true]);
         } catch (Exception $e) {

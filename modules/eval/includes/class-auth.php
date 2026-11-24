@@ -22,8 +22,10 @@ class LOGIEVAL_Auth {
     /* Brute-force protection: failed logins are counted per IP address,
        whatever identifier is tried (counting per identifier let an attacker
        try a new identifier at every request without ever being slowed down). */
-    const MAX_FAILED_PER_IP = 20;
-    const LOCKOUT_MINUTES   = 15;
+    // LogiOne 1.53.0 : moins rigide pour une école entière derrière la même adresse internet
+    // (60 essais faux en 5 minutes ; avec des identifiants de 8 caractères ou plus, deviner reste impossible).
+    const MAX_FAILED_PER_IP = 60;
+    const LOCKOUT_MINUTES   = 5;
     const MIN_ID_LENGTH     = 8;
 
     /* ── HMAC helpers ───────────────────────────────────────────── */
