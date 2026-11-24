@@ -332,6 +332,10 @@ final class LogiPilot_Publisher
         global $wpdb;
 
         $report = array('done' => 0, 'unchanged' => 0, 'waiting' => 0, 'errors' => array());
+        if (method_exists('LogiEval_Secure_Evaluations', 'is_formative') && LogiEval_Secure_Evaluations::is_formative($exam_evaluation_id)) {
+            $report['errors'][] = 'Test formatif : les résultats ne sont pas envoyés dans LogiNotes.';
+            return $report;
+        }
         if (!LogiPilot_Plugin::service_enabled('exam_to_notes')) {
             $report['errors'][] = 'La liaison LogiExam → LogiNotes est désactivée par l’administrateur.';
             return $report;
@@ -620,6 +624,10 @@ final class LogiPilot_Publisher
     private static function render_publish_box_here(array $evaluation, string $return_url): void
     {
         $exam_id = (int) $evaluation['id'];
+        if (method_exists('LogiEval_Secure_Evaluations', 'is_formative') && LogiEval_Secure_Evaluations::is_formative($exam_id)) {
+            echo '<section class="logipilot-panel" id="logipilot-publish"><h3>Test formatif</h3><p>Ce test est <strong>formatif</strong> : ses résultats restent dans LogiExam et ne sont <strong>pas envoyés dans LogiNotes</strong> (pas de bonus / malus de progression). Chaque élève peut télécharger sa copie corrigée sur sa page LogiExam dès que sa correction est finalisée.</p><p class="description">Pour en faire une évaluation notée, décochez « Test formatif » dans l’étape Préparer.</p></section>';
+            return;
+        }
         $overview = self::overview($exam_id);
         $counts = array('ready' => 0, 'published' => 0, 'pending' => 0, 'revision' => 0, 'unmatched' => 0);
         foreach ($overview['rows'] as $row) {
@@ -713,6 +721,10 @@ final class LogiPilot_Publisher
     {
         $evaluation = class_exists('LogiEval_Secure_Evaluations') ? LogiEval_Secure_Evaluations::get_evaluation($exam_id) : null;
         if (!$evaluation) {
+            return;
+        }
+        if (method_exists('LogiEval_Secure_Evaluations', 'is_formative') && LogiEval_Secure_Evaluations::is_formative($exam_id)) {
+            echo '<p class="logipilot-progress-switch description"><strong>Test formatif :</strong> aucun bonus ni malus de progression n’est appliqué.</p>';
             return;
         }
         $off = LogiPilot_Snapshots::progress_off($exam_id);

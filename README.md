@@ -1,4 +1,4 @@
-# LogiOne 1.51.1
+# LogiOne 1.52.0
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,13 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.52.0 (LogiExam : test formatif)
+
+- Nouvelle case « Test formatif » dans l'étape Préparer d'une évaluation (badge violet « Formatif » dans les listes).
+- Un test formatif se passe comme un examen (code, sécurité) et se corrige comme d'habitude, mais ses résultats ne sont **jamais envoyés dans LogiNotes** (pas de fiche créée, publication bloquée) et **aucun bonus / malus de progression** n'est appliqué.
+- Dès que la correction d'une copie est finalisée, l'élève voit sur sa page LogiExam « Mes tests formatifs corrigés » avec sa note indicative et le bouton « Télécharger ma copie corrigée (PDF) » (seulement sa propre copie).
+- Réglage enregistré dans une option WordPress (`logiexam_formative`) : aucune table modifiée. Une fiche LogiNotes créée avant de cocher la case n'est pas supprimée.
 
 ## Nouveautés 1.51.1
 

@@ -49,6 +49,7 @@ unset( $logieval_part );
 		add_action( 'admin_post_logieval_secure_generate_codes', array( __CLASS__, 'handle_generate_codes' ) );
 		add_action( 'admin_post_logieval_secure_export_codes_pdf', array( __CLASS__, 'handle_export_codes_pdf' ) );
 		add_action( 'admin_post_logieval_secure_export_attempt_pdf', array( __CLASS__, 'handle_export_attempt_pdf' ) );
+		add_action( 'admin_post_logiexam_formative_copy', array( __CLASS__, 'handle_student_formative_pdf' ) ); // 1.52.0
 		add_action( 'admin_post_logieval_secure_export_evaluation', array( __CLASS__, 'handle_export_evaluation' ) );
 		add_action( 'admin_post_logieval_secure_grade_attempt', array( __CLASS__, 'handle_grade_attempt' ) );
 		add_action( 'admin_post_logieval_secure_save_question_corrections', array( __CLASS__, 'handle_save_question_corrections' ) );

@@ -127,6 +127,7 @@ final class LogiEval_Secure_Shortcodes {
 					<button type="submit"><?php esc_html_e( "Entrer dans l'évaluation", 'logieval-secure' ); ?></button>
 					<p class="les-message" data-les-message></p>
 				</form>
+					<?php echo LogiEval_Secure_Evaluations::render_student_formative_copies(); // phpcs:ignore WordPress.Security.EscapeOutput -- échappé dans la méthode. ?>
 					<div class="les-keys-warning is-compact les-keys-wide" role="note">
 						<p class="les-keys-title"><span class="les-keys-icon" aria-hidden="true">⚠</span><?php esc_html_e( 'Attention aux touches du clavier !', 'logieval-secure' ); ?></p>
 						<p class="les-keys-lead"><?php echo wp_kses( __( '<strong>Ne touchez jamais la touche Windows</strong> pendant l’évaluation, ni <kbd>Échap</kbd> ou <kbd>Alt</kbd> + <kbd>Tab</kbd> : une seule mauvaise touche vous fait sortir de l’écran et bloque l’évaluation. Regardez bien sur quelle touche vous appuyez.', 'logieval-secure' ), array( 'strong' => array(), 'kbd' => array() ) ); ?></p>

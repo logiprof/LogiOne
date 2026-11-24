@@ -452,6 +452,10 @@ final class LogiPilot_Links
         if (!$evaluation || ($evaluation['status'] ?? '') === 'deleted') {
             return null;
         }
+        if (method_exists('LogiEval_Secure_Evaluations', 'is_formative') && LogiEval_Secure_Evaluations::is_formative($exam_evaluation_id)) {
+            // 1.52.0 : test formatif, pas de fiche LogiNotes. Une fiche déjà créée avant est seulement relue.
+            return self::exam_link($exam_evaluation_id);
+        }
 
         $table = LogiPilot_Install::table('exam_links');
         $now = current_time('mysql');

@@ -423,6 +423,7 @@ trait LogiEval_Secure_Evaluations_Workspace {
 				<h3><a href="<?php echo esc_url( self::evaluation_url( $id ) ); ?>"><?php echo esc_html( $evaluation['title'] ); ?></a></h3>
 				<div class="les-eval-card-meta">
 					<?php self::render_status_badge( $workflow ); ?>
+					<?php self::render_formative_badge( $evaluation ); ?>
 					<?php if ( ! empty( $evaluation['is_shared'] ) ) : ?><span class="les-shared-badge"><?php esc_html_e( 'Partagée', 'logieval-secure' ); ?></span><?php endif; ?>
 					<?php if ( ! empty( $options['in_library'] ) ) : ?><span class="les-library-badge"><?php esc_html_e( 'Dans ma bibliothèque', 'logieval-secure' ); ?></span><?php endif; ?>
 					<?php if ( ! empty( $options['shuffle_questions'] ) ) : ?><span class="les-shuffle-badge"><?php esc_html_e( 'Ordre aléatoire', 'logieval-secure' ); ?></span><?php endif; ?>
@@ -509,6 +510,7 @@ trait LogiEval_Secure_Evaluations_Workspace {
 					<h2><?php echo esc_html( $evaluation['title'] ); ?></h2>
 					<div class="les-eval-card-meta">
 						<?php self::render_status_badge( $workflow ); ?>
+						<?php self::render_formative_badge( $evaluation ); ?>
 						<span><?php echo esc_html( self::evaluation_group_names( $evaluation ) ?: __( 'Aucune classe', 'logieval-secure' ) ); ?></span>
 						<span><?php echo esc_html( sprintf( _n( '%d question', '%d questions', $c['questions'], 'logieval-secure' ), $c['questions'] ) ); ?> · <?php echo esc_html( self::format_points( (float) $evaluation['total_points'] ) ); ?> pts</span>
 						<?php if ( ! empty( $evaluation['opens_at'] ) || ! empty( $evaluation['closes_at'] ) ) : ?>

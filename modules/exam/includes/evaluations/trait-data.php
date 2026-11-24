@@ -282,6 +282,35 @@ trait LogiEval_Secure_Evaluations_Data {
 			);
 		}
 
+	/**
+	 * 1.52.0 : test formatif (réglage par évaluation, enregistré dans une option WordPress : aucune table modifiée).
+	 * Corrigé et noté dans LogiExam, jamais envoyé dans LogiNotes, sans bonus / malus de progression ;
+	 * l'élève peut télécharger sa copie corrigée dès que la correction est finalisée.
+	 */
+	public static function is_formative( $evaluation ): bool {
+		$id  = is_array( $evaluation ) ? (int) ( $evaluation['id'] ?? 0 ) : (int) $evaluation;
+		$all = get_option( 'logiexam_formative', array() );
+
+		return $id > 0 && is_array( $all ) && ! empty( $all[ $id ] );
+	}
+
+	public static function set_formative( int $evaluation_id, bool $formative ): void {
+		$all = get_option( 'logiexam_formative', array() );
+		$all = is_array( $all ) ? $all : array();
+		if ( $formative ) {
+			$all[ $evaluation_id ] = 1;
+		} else {
+			unset( $all[ $evaluation_id ] );
+		}
+		update_option( 'logiexam_formative', $all, true );
+	}
+
+	public static function render_formative_badge( $evaluation ): void {
+		if ( self::is_formative( $evaluation ) ) {
+			echo '<span class="les-formative-badge" title="' . esc_attr__( 'Test formatif : pas envoyé dans LogiNotes, copie corrigée visible par l’élève', 'logieval-secure' ) . '">' . esc_html__( 'Formatif', 'logieval-secure' ) . '</span>';
+		}
+	}
+
 	public static function get_settings(): array {
 		$settings = get_option( self::SETTINGS_OPTION, array() );
 		return wp_parse_args( is_array( $settings ) ? $settings : array(), self::default_settings() );

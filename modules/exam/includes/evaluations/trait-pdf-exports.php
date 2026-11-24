@@ -145,6 +145,62 @@ trait LogiEval_Secure_Evaluations_Pdf_Exports {	private static function codes_co
 		exit;
 	}
 
+	/**
+	 * 1.52.0 : test formatif — l'élève télécharge sa propre copie corrigée (PDF élève), une fois la correction finalisée.
+	 */
+	public static function handle_student_formative_pdf(): void {
+		$attempt_id = absint( $_GET['attempt_id'] ?? 0 );
+		check_admin_referer( 'logiexam_formative_copy_' . $attempt_id );
+		$attempt    = self::get_attempt( $attempt_id );
+		$evaluation = $attempt ? self::get_evaluation( (int) $attempt['evaluation_id'] ) : null;
+		if ( ! is_user_logged_in() || ! $attempt || ! $evaluation || (int) $attempt['user_id'] !== get_current_user_id()
+			|| ! self::is_formative( $evaluation ) || self::attempt_is_cheating_cancelled( $attempt )
+			|| ! self::attempt_correction_is_finished( $attempt, self::get_result_by_attempt( $attempt_id ) ) ) {
+			wp_die( esc_html__( 'Cette copie corrigée n’est pas disponible.', 'logieval-secure' ), '', array( 'response' => 403 ) );
+		}
+		$pdf      = self::build_attempt_pdf( $evaluation, $attempt );
+		$filename = sanitize_file_name( 'ma-copie-corrigee-' . sanitize_title( (string) $evaluation['title'] ) . '.pdf' );
+		while ( ob_get_level() ) {
+			ob_end_clean();
+		}
+		nocache_headers();
+		header( 'Content-Type: application/pdf' );
+		header( 'Content-Disposition: attachment; filename="' . $filename . '"' );
+		header( 'Content-Length: ' . strlen( $pdf ) );
+		echo $pdf; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		exit;
+	}
+
+	/** Liste des tests formatifs corrigés de l'élève connecté (page élève LogiExam). */
+	public static function render_student_formative_copies(): string {
+		global $wpdb;
+		$user_id = get_current_user_id();
+		$ids     = array_map( 'intval', array_keys( array_filter( (array) get_option( 'logiexam_formative', array() ) ) ) );
+		if ( ! $user_id || ! $ids ) {
+			return '';
+		}
+		$t    = LogiEval_Secure_Database::tables();
+		$in   = implode( ',', $ids );
+		$rows = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$t['attempts']} WHERE user_id=%d AND evaluation_id IN ({$in}) ORDER BY id DESC", $user_id ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$items = array();
+		foreach ( (array) $rows as $attempt ) {
+			$evaluation = self::get_evaluation( (int) $attempt['evaluation_id'] );
+			$result     = self::get_result_by_attempt( (int) $attempt['id'] );
+			if ( ! $evaluation || 'deleted' === (string) ( $evaluation['status'] ?? '' ) || self::attempt_is_cheating_cancelled( $attempt ) || ! self::attempt_correction_is_finished( $attempt, $result ) ) {
+				continue;
+			}
+			$url     = wp_nonce_url( admin_url( 'admin-post.php?action=logiexam_formative_copy&attempt_id=' . (int) $attempt['id'] ), 'logiexam_formative_copy_' . (int) $attempt['id'] );
+			$items[] = '<li><span class="les-formative-copy-title"><strong>' . esc_html( (string) $evaluation['title'] ) . '</strong>'
+				. ( $result && null !== $result['final_grade'] ? ' <span class="les-formative-grade">' . esc_html( sprintf( __( 'Note indicative : %s', 'logieval-secure' ), self::format_points( (float) $result['final_grade'] ) ) ) . '</span>' : '' )
+				. '</span> <a class="button" href="' . esc_url( $url ) . '">' . esc_html__( 'Télécharger ma copie corrigée (PDF)', 'logieval-secure' ) . '</a></li>';
+		}
+		if ( ! $items ) {
+			return '';
+		}
+
+		return '<section class="les-formative-copies"><h3>' . esc_html__( 'Mes tests formatifs corrigés', 'logieval-secure' ) . '</h3><p>' . esc_html__( 'Ces tests ne comptent pas dans vos notes : ils servent à voir ce qui est acquis et ce qui reste à travailler.', 'logieval-secure' ) . '</p><ul>' . implode( '', $items ) . '</ul></section>';
+	}
+
 	public static function handle_export_attempt_pdf(): void {
 		check_admin_referer( self::NONCE_ACTION );
 		if ( ! LogiEval_Secure_Ultimate_Member::current_user_can_teach() || ! current_user_can( 'lp_exam_export' ) ) {

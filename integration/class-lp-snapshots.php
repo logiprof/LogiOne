@@ -33,6 +33,9 @@ final class LogiPilot_Snapshots
 
     public static function progress_off(int $exam_evaluation_id): bool
     {
+        if (method_exists('LogiEval_Secure_Evaluations', 'is_formative') && LogiEval_Secure_Evaluations::is_formative($exam_evaluation_id)) {
+            return true; // 1.52.0 : test formatif, jamais de bonus / malus de progression
+        }
         $off = get_option(self::OPTION_PROGRESS_OFF, array());
 
         return is_array($off) && isset($off[$exam_evaluation_id]);
