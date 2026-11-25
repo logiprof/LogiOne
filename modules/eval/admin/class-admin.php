@@ -257,6 +257,7 @@ class LOGIEVAL_Admin {
         LOGIEVAL_Database::update( LOGIEVAL_Database::t('enseignants'), ['actif' => 1], ['id' => $id] );
         // 1.53.11 : « Activer sans e-mail » → les accès seront envoyés plus tard.
         if ( isset( $_POST['send'] ) && ! intval( $_POST['send'] ) ) { wp_send_json_success(['email_sent' => -1]); return; }
+        if ( empty( LOGIEVAL_Database::teacher_class_counts()[ $id ] ) ) { wp_send_json_success(['email_sent' => -2]); return; }
         $sent = LOGIEVAL_Mailer::notify_teacher_access( $id );
         wp_send_json_success(['email_sent' => $sent ? 1 : 0]);
     }
@@ -267,7 +268,8 @@ class LOGIEVAL_Admin {
         $ids = array_values( array_unique( array_filter( array_map( 'intval', (array) ( $_POST['ids'] ?? [] ) ) ) ) );
         $op  = sanitize_key( $_POST['op'] ?? '' );
         if ( ! $ids ) { wp_send_json_error(['message' => 'Aucun enseignant coché.']); return; }
-        $done = 0; $skipped = []; $failed = [];
+        $done = 0; $skipped = []; $failed = []; $noclass = [];
+        $counts = LOGIEVAL_Database::teacher_class_counts();
         foreach ( $ids as $id ) {
             $e = LOGIEVAL_Database::get_row( $t, ['id' => $id] );
             if ( ! $e ) continue;
@@ -276,10 +278,12 @@ class LOGIEVAL_Admin {
             if ( $op === 'activate' || $op === 'activate_send' ) {
                 if ( $todo ) { $skipped[] = $name; continue; }
                 if ( empty( $e['actif'] ) ) LOGIEVAL_Database::update( $t, ['actif' => 1], ['id' => $id] );
+                if ( $op === 'activate_send' && empty( $counts[ $id ] ) ) { $noclass[] = $name; continue; }
                 if ( $op === 'activate_send' && ! LOGIEVAL_Mailer::notify_teacher_access( $id ) ) { $failed[] = $name; continue; }
                 $done++;
             } elseif ( $op === 'send' ) {
                 if ( empty( $e['actif'] ) || $todo ) { $skipped[] = $name; continue; }
+                if ( empty( $counts[ $id ] ) ) { $noclass[] = $name; continue; }
                 if ( LOGIEVAL_Mailer::notify_teacher_access( $id ) ) $done++; else $failed[] = $name;
             } elseif ( $op === 'deactivate' ) {
                 LOGIEVAL_Database::update( $t, ['actif' => 0], ['id' => $id] ); $done++;
@@ -289,6 +293,7 @@ class LOGIEVAL_Admin {
                  'send' => '%d e-mail(s) d’accès envoyé(s).', 'deactivate' => '%d enseignant(s) désactivé(s).' ][ $op ];
         $out = sprintf( $msg, $done );
         if ( $skipped ) $out .= "\n\nIgnorés (" . count( $skipped ) . ") — e-mail à compléter" . ( $op === 'send' ? ' ou compte inactif' : '' ) . " : " . implode( ', ', $skipped );
+        if ( $noclass ) $out .= "\n\nSans classe, rien envoyé (" . count( $noclass ) . ") : " . implode( ', ', $noclass ) . ( $op === 'activate_send' ? ' (compte activé quand même)' : '' ) . ".";
         if ( $failed )  $out .= "\n\nE-mail non parti (" . count( $failed ) . ") : " . implode( ', ', $failed ) . ". Vérifiez la configuration e-mail du site.";
         wp_send_json_success(['message' => $out]);
     }

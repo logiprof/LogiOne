@@ -502,6 +502,17 @@ class LOGIEVAL_Database {
              ORDER BY ev.date_creation ASC, ev.id ASC", $eleve_id, (int) $el['classe_id'] ), ARRAY_A ) ?: [];
     }
 
+    /** 1.53.14 : nombre de classes (non archivées) d'un enseignant, par id. */
+    public static function teacher_class_counts(): array {
+        global $wpdb;
+        $t = self::tables();
+        $ex = class_exists('LOGIEVAL_Rollover') ? LOGIEVAL_Rollover::sql_exclude('classe_id') : '';
+        $rows = $wpdb->get_results( "SELECT enseignant_id, COUNT(DISTINCT classe_id) n FROM {$t['classe_enseignant']} WHERE 1=1{$ex} GROUP BY enseignant_id", ARRAY_A ) ?: [];
+        $out = [];
+        foreach ( $rows as $r ) $out[ (int) $r['enseignant_id'] ] = (int) $r['n'];
+        return $out;
+    }
+
     /** E-mail provisoire d'un enseignant créé par import sans adresse (colonne email NOT NULL + UNIQUE). */
     public static function placeholder_email( string $ident ): string {
         return 'a-completer.' . strtolower( preg_replace( '/[^a-z0-9]/i', '', $ident ) ) . '@logieval.invalid';

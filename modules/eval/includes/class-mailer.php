@@ -572,6 +572,10 @@ L'équipe de direction",
         if ( ! $ens || empty( $ens['email'] ) || empty( $ens['actif'] ) ) {
             return false;
         }
+        // 1.53.14 : un enseignant sans classe ne reçoit pas d'accès.
+        if ( empty( LOGIEVAL_Database::teacher_class_counts()[ $enseignant_id ] ) ) {
+            return false;
+        }
 
         $vars = [
             '{nom_enseignant}' => $ens['prenom'] . ' ' . $ens['nom'],

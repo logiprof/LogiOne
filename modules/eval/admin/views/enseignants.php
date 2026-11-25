@@ -9,17 +9,22 @@ if ($access_sent === null) { // 1.53.11 : les comptes déjà actifs avant cette 
     update_option('logieval_access_sent', $access_sent, false);
 }
 $access_sent = is_array($access_sent) ? $access_sent : [];
-$pending = array_filter($ens_list, static fn($e) => !empty($e['actif']) && empty($access_sent[(int)$e['id']]) && !LOGIEVAL_Database::is_placeholder_email((string)$e['email'])); ?>
+$class_counts = LOGIEVAL_Database::teacher_class_counts();
+$pending_all = array_filter($ens_list, static fn($e) => !empty($e['actif']) && empty($access_sent[(int)$e['id']]) && !LOGIEVAL_Database::is_placeholder_email((string)$e['email']));
+// 1.53.14 : seuls les enseignants affectés à au moins une classe reçoivent leurs accès
+$pending = array_filter($pending_all, static fn($e) => !empty($class_counts[(int)$e['id']]));
+$pending_noclass = count($pending_all) - count($pending); ?>
 
 <button class="button button-primary" id="logieval-add-ens">+ Nouvel enseignant</button>
 <p class="description" style="margin-top:8px;max-width:900px">
-    Les enseignants importés ou créés ici restent inactifs tant que vous ne les activez pas. Pour préparer tranquillement :
+    Seuls les enseignants affectés à au moins une classe (colonne « Classes ») reçoivent leurs accès. Les enseignants importés ou créés ici restent inactifs tant que vous ne les activez pas. Pour préparer tranquillement :
     <strong>Activer sans e-mail</strong> (ils peuvent être ajoutés aux évaluations, rien ne leur est envoyé), puis, quand tout est prêt,
     <strong>Envoyer les accès</strong>. La colonne « Accès envoyé » indique qui les a déjà reçus.
 </p>
 <?php if ($pending): ?>
 <div class="notice notice-info inline" style="margin:12px 0;padding:10px 12px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
     <span><strong><?= count($pending) ?> enseignant(s) actif(s)</strong> n’ont pas encore reçu leur e-mail d’accès.</span>
+    <?php if ($pending_noclass): ?><span class="description"><?= (int)$pending_noclass ?> autre(s) sans classe : rien ne leur sera envoyé.</span><?php endif ?>
     <button type="button" class="button button-primary" id="lge-send-pending" data-ids="<?= esc_attr(implode(',', array_map(static fn($e) => (int)$e['id'], $pending))) ?>">Envoyer les accès maintenant (<?= count($pending) ?>)</button>
 </div>
 <?php endif ?>
@@ -50,7 +55,7 @@ $pending = array_filter($ens_list, static fn($e) => !empty($e['actif']) && empty
 </div>
 <table class="wp-list-table widefat fixed striped logieval-table" style="margin-top:10px">
 <thead>
-    <tr><td class="manage-column check-column" style="width:2.2em"><label class="screen-reader-text" for="lge-ens-all">Tout cocher</label><input type="checkbox" id="lge-ens-all"></td><th>Nom</th><th>E-mail</th><th>Statut</th><th>Accès envoyé</th><th>Identifiant unique</th><th>Actions</th></tr>
+    <tr><td class="manage-column check-column" style="width:2.2em"><label class="screen-reader-text" for="lge-ens-all">Tout cocher</label><input type="checkbox" id="lge-ens-all"></td><th>Nom</th><th>E-mail</th><th style="width:70px">Classes</th><th>Statut</th><th>Accès envoyé</th><th>Identifiant unique</th><th>Actions</th></tr>
 </thead>
 <tbody>
 <?php foreach ($ens_list as $e): ?>
@@ -60,6 +65,8 @@ $pending = array_filter($ens_list, static fn($e) => !empty($e['actif']) && empty
     <td><strong><?= esc_html($e['nom'].' '.$e['prenom']) ?></strong></td>
     <?php $todo_mail = LOGIEVAL_Database::is_placeholder_email((string) $e['email']); ?>
     <td><?= $todo_mail ? '<span style="color:#B45309;font-weight:600">⚠ e-mail à compléter</span>' : esc_html($e['email']) ?></td>
+    <?php $nc = (int)($class_counts[(int)$e['id']] ?? 0); ?>
+    <td><?= $nc ? $nc : '<span style="color:#B45309" title="Aucune classe : ne recevra pas d’accès">0</span>' ?></td>
     <td>
         <?php if ($is_active): ?>
             <span style="display:inline-block;background:#DCFCE7;color:#166534;border-radius:999px;padding:3px 10px;font-weight:600">Actif</span>
@@ -81,7 +88,7 @@ $pending = array_filter($ens_list, static fn($e) => !empty($e['actif']) && empty
             data-nom="<?= esc_attr($e['nom']) ?>"
             data-email="<?= $todo_mail ? '' : esc_attr($e['email']) ?>">Modifier</button>
         <?php if ($is_active): ?>
-            <?php if (empty($access_sent[(int)$e['id']])): ?>
+            <?php if (empty($access_sent[(int)$e['id']]) && $nc): ?>
             <button class="button button-primary button-small lge-send-one" data-id="<?= $e['id'] ?>">Envoyer l’accès</button>
             <?php endif ?>
             <button class="button button-small logieval-deactivate-ens" data-id="<?= $e['id'] ?>">Désactiver</button>
@@ -166,6 +173,7 @@ jQuery(function($){
         btn.prop('disabled',true).text('Activation…');
         $.post(logievalAdmin.ajax_url, {action:'logieval_admin', nonce:logievalAdmin.nonce, sub_action:'activate_enseignant', id:id}, function(r){
             if(r.success) {
+                if (r.data && r.data.email_sent === -2) alert('Enseignant activé. Aucun e-mail envoyé : il n’est affecté à aucune classe.');
                 if (r.data && r.data.email_sent === 0) alert('Enseignant activé, mais l’e-mail d’accès n’a PAS pu être envoyé. Communiquez-lui son identifiant et le lien de connexion manuellement, ou vérifiez la configuration e-mail du site.');
                 location.reload();
             }
