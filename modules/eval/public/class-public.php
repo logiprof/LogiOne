@@ -1304,9 +1304,9 @@ class LOGIEVAL_Public {
         $all_ens_by_class = [];
         foreach ($classes_as_maitre as $cl) {
             $rows = $wpdb->get_results($wpdb->prepare(
-                "SELECT e.id, e.prenom, e.nom FROM {$t['enseignants']} e
+                "SELECT e.id, e.prenom, e.nom, e.actif FROM {$t['enseignants']} e
                  INNER JOIN {$t['classe_enseignant']} ce ON ce.enseignant_id=e.id
-                 WHERE ce.classe_id=%d AND e.actif=1 ORDER BY e.nom, e.prenom", $cl['id']
+                 WHERE ce.classe_id=%d ORDER BY e.actif DESC, e.nom, e.prenom", $cl['id']
             ), ARRAY_A) ?: [];
             $all_ens_by_class[$cl['id']] = $rows;
         }
@@ -1388,14 +1388,17 @@ class LOGIEVAL_Public {
                             <p class="logieval-empty">Aucun enseignant affecté à cette classe.</p>
                         <?php else: ?>
                         <div class="logieval-ens-checkboxes">
-                            <?php foreach ($ens_list as $e): ?>
-                            <label class="logieval-ens-check-label">
+                            <?php $inactifs = 0; foreach ($ens_list as $e): $on = ! empty($e['actif']); if (!$on) $inactifs++; ?>
+                            <label class="logieval-ens-check-label"<?= $on ? '' : ' style="opacity:.55"' ?>>
                                 <input type="checkbox" name="enseignant_ids[]"
-                                       value="<?=$e['id']?>" checked>
-                                <?=esc_html($e['nom'].' '.$e['prenom'])?>
+                                       value="<?=$e['id']?>" <?= $on ? 'checked' : 'disabled' ?>>
+                                <?=esc_html($e['nom'].' '.$e['prenom'])?><?= $on ? '' : ' <small>(compte pas encore activé)</small>' ?>
                             </label>
                             <?php endforeach ?>
                         </div>
+                        <?php if ($inactifs): ?>
+                        <p style="font-size:13px;color:#92400E;margin:6px 0 0">⚠ <?= (int) $inactifs ?> collègue(s) de la classe n’ont pas encore de compte actif : l’administrateur doit compléter leur e-mail et les activer. Vous pourrez ensuite les ajouter avec « Modifier l’évaluation ».</p>
+                        <?php endif ?>
                         <?php endif ?>
                     </div>
                     <?php endforeach ?>

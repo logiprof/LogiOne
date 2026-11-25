@@ -387,10 +387,12 @@ function loadClasseTeachers(classe_id) {
         sub_action: 'get_classe_teachers', classe_id: classe_id
     }, function(r){
         if (!r.success) return;
-        var html = '';
+        var html = '', off = 0;
         r.data.forEach(function(e){
-            html += '<label style="display:block;margin:4px 0"><input type="checkbox" class="eval-ens-check" value="'+parseInt(e.id, 10)+'" checked> '+escHtml(e.nom)+' '+escHtml(e.prenom)+'</label>';
+            var on = parseInt(e.actif, 10) === 1; if (!on) off++;
+            html += '<label style="display:block;margin:4px 0'+(on?'':';opacity:.55')+'"><input type="checkbox" class="eval-ens-check" value="'+parseInt(e.id, 10)+'" '+(on?'checked':'disabled')+'> '+escHtml(e.nom)+' '+escHtml(e.prenom)+(on?'':' <small>(compte inactif)</small>')+'</label>';
         });
+        if (off) html += '<p style="color:#92400E;margin:6px 0 0">⚠ '+off+' enseignant(s) de cette classe ne sont pas encore activés : complétez leur e-mail puis activez-les dans <a href="admin.php?page=logieval-enseignants">LogiEval › Enseignants</a>. Ils pourront ensuite être ajoutés à l’évaluation.</p>';
         jQuery('#eval-ens-list').html(html || '<em>Aucun enseignant dans cette classe</em>');
     });
 }

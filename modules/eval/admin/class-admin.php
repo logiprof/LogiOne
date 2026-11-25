@@ -694,9 +694,9 @@ class LOGIEVAL_Admin {
         $t = LOGIEVAL_Database::tables();
         $classe_id = intval($_POST['classe_id'] ?? 0);
         $rows = $wpdb->get_results($wpdb->prepare(
-            "SELECT e.id, e.prenom, e.nom FROM {$t['enseignants']} e
+            "SELECT e.id, e.prenom, e.nom, e.actif FROM {$t['enseignants']} e
              INNER JOIN {$t['classe_enseignant']} ce ON ce.enseignant_id=e.id
-             WHERE ce.classe_id=%d AND e.actif=1 ORDER BY e.nom, e.prenom", $classe_id
+             WHERE ce.classe_id=%d ORDER BY e.actif DESC, e.nom, e.prenom", $classe_id
         ), ARRAY_A);
         wp_send_json_success($rows);
     }
