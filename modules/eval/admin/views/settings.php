@@ -27,6 +27,13 @@ $email_login_url = LOGIEVAL_Mailer::login_url();
             </p>
         </td>
     </tr>
+    <tr><th>Guide de l’enseignant (PDF)</th>
+        <td>
+            <p style="margin-top:0"><a class="button" href="<?= esc_url(LOGIEVAL_Mailer::guide_url()) ?>" target="_blank" rel="noopener">📘 Ouvrir le guide actuel</a></p>
+            <input type="url" id="cfg-guide-url" class="regular-text" placeholder="Laisser vide : guide fourni avec LogiEval" value="<?= esc_attr(get_option('logieval_guide_url','')) ?>">
+            <p class="description">Ce guide est envoyé avec les identifiants (variable <code>{guide}</code>) et s’ouvre avec le bouton « Aide » des enseignants. Pour utiliser votre propre version, téléversez le PDF dans la Médiathèque et collez son adresse ici.</p>
+        </td>
+    </tr>
 </table>
 
 <h2>Identifiants enseignants</h2>
@@ -90,6 +97,7 @@ jQuery(function($){
             action:'logieval_admin', nonce:logievalAdmin.nonce, sub_action:'save_settings',
             logieval_etablissement: $('#cfg-etablissement').val(),
             logieval_login_page: $('#cfg-login-page').val(),
+            logieval_guide_url: $('#cfg-guide-url').val(),
             logieval_id_prefix: $('#cfg-id-prefix').val(),
             logieval_id_length: $('#cfg-id-length').val()
         };

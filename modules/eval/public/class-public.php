@@ -134,11 +134,13 @@ class LOGIEVAL_Public {
         $h  = '<header class="lge-hero">';
         $h .= '<div class="lge-hero-top">';
         $h .= '<a class="lge-brand" href="' . esc_url(self::portal_url()) . '"><img class="lge-logo" src="' . esc_url(LOGIEVAL_URL . 'assets/logieval-logo-blanc.svg') . '" alt="LogiEval by LogiProf" width="300" height="80" decoding="async"></a>';
+        // 1.53.12 : bouton « Aide » → guide PDF de l'enseignant
+        $help = '<a class="lge-help" href="' . esc_url( LOGIEVAL_Mailer::guide_url() ) . '" target="_blank" rel="noopener" title="Guide de l’enseignant (PDF)" style="display:inline-flex;align-items:center;gap:6px;background:#f5c400;color:#313a45 !important;font-weight:700;border-radius:999px;padding:5px 12px;text-decoration:none"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M9.5 9.3a2.6 2.6 0 0 1 5 .9c0 1.8-2.5 2.2-2.5 3.8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="17.2" r="1.3" fill="currentColor"/></svg>Aide</a>';
         if ( $user && LOGIEVAL_Auth::is_linked() ) {
-            $h .= '<div class="lge-user"><span>' . esc_html(trim(($user['prenom'] ?? '') . ' ' . ($user['nom'] ?? ''))) . ' · reconnu par votre compte</span></div>';
+            $h .= '<div class="lge-user"><span>' . esc_html(trim(($user['prenom'] ?? '') . ' ' . ($user['nom'] ?? ''))) . ' · reconnu par votre compte</span>' . $help . '</div>';
         } elseif ( $user ) {
             $h .= '<div class="lge-user"><span>Identifiant <code>' . esc_html($user['identifiant_unique']) . '</code></span>'
-                . '<a href="' . esc_url(self::logout_url()) . '">Se déconnecter</a></div>';
+                . $help . '<a href="' . esc_url(self::logout_url()) . '">Se déconnecter</a></div>';
         }
         $h .= '</div>';
         if ( ! empty($o['back']) || ! empty($o['actions']) ) {
@@ -491,7 +493,7 @@ class LOGIEVAL_Public {
                     <input type="text" id="logieval-identifier" name="logieval_identifier" value="" placeholder="ex. ENS-A3F7K2C9" class="logieval-input-code" autocomplete="off" autocapitalize="characters" spellcheck="false" autofocus>
                     <button type="submit" name="logieval_login_submit" class="logieval-btn logieval-btn-primary">Se connecter →</button>
                     <label class="logieval-shared"><input type="checkbox" name="logieval_shared" value="1"> Ordinateur partagé (salle des maîtres…) : me déconnecter en fermant le navigateur</label>
-                    <p class="logieval-login-help">Pas besoin de compte sur le site : votre identifiant personnel, reçu par e-mail, suffit.</p>
+                    <p class="logieval-login-help">Pas besoin de compte sur le site : votre identifiant personnel, reçu par e-mail, suffit.<br><a href="<?= esc_url( LOGIEVAL_Mailer::guide_url() ) ?>" target="_blank" rel="noopener">📘 Guide de l’enseignant (PDF)</a></p>
                 </form>
             </div>
             </div>

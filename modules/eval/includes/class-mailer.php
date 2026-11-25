@@ -69,7 +69,7 @@ L'équipe de direction",
                 'title'     => 'Activation du profil enseignant',
                 'subject'   => 'logieval_mail_teacher_access_subject',
                 'body'      => 'logieval_mail_teacher_access_body',
-                'variables' => '{nom_enseignant}, {identifiant}, {lien}',
+                'variables' => '{nom_enseignant}, {identifiant}, {lien}, {guide}',
                 'default_subject' => '[LogiEval] Votre accès enseignant est activé',
                 'default_body'    => "Bonjour {nom_enseignant},
 
@@ -78,7 +78,9 @@ Votre profil enseignant LogiEval est maintenant activé.
 Votre identifiant personnel : {identifiant}
 Lien d'accès               : {lien}
 
-Conservez cet identifiant : il vous permettra d'accéder aux évaluations qui vous seront attribuées.
+Guide de l'enseignant (PDF, 12 pages) : {guide}
+
+Conservez cet identifiant : il vous permettra d'accéder aux évaluations qui vous seront attribuées. Une fois connecté, le bouton « Aide » vous ramène au guide à tout moment.
 
 Cordialement,
 L'équipe de direction",
@@ -575,12 +577,16 @@ L'équipe de direction",
             '{nom_enseignant}' => $ens['prenom'] . ' ' . $ens['nom'],
             '{identifiant}'    => $ens['identifiant_unique'],
             '{lien}'           => self::login_url(),
+            '{guide}'          => self::guide_url(),
         ];
+        $body = self::template_body('teacher_access');
+        // 1.53.12 : un modèle personnalisé sans {guide} reçoit quand même le lien vers le guide.
+        if ( strpos( $body, '{guide}' ) === false ) $body .= "\n\nGuide de l'enseignant (PDF) : {guide}";
 
         $ok = self::send(
             $ens['email'],
             self::parse( self::template_subject('teacher_access'), $vars ),
-            self::parse( self::template_body('teacher_access'), $vars )
+            self::parse( $body, $vars )
         );
         if ( $ok ) { // 1.53.11 : date d'envoi des accès, pour savoir à qui il reste à les envoyer
             $sent = get_option( 'logieval_access_sent', [] );
@@ -599,6 +605,14 @@ L'équipe de direction",
 
     private static function parse( string $template, array $vars ): string {
         return str_replace( array_keys( $vars ), array_values( $vars ), $template );
+    }
+
+    /** 1.53.12 : guide PDF de l'enseignant (fourni avec LogiEval, remplaçable dans les Réglages). */
+    public static function guide_url(): string {
+        $custom = trim( (string) get_option( 'logieval_guide_url', '' ) );
+        if ( $custom !== '' ) return $custom;
+        $file = LOGIEVAL_PATH . 'assets/guide-logieval.pdf';
+        return LOGIEVAL_URL . 'assets/guide-logieval.pdf' . ( is_file( $file ) ? '?v=' . filemtime( $file ) : '' );
     }
 
     public static function login_url(): string {
