@@ -577,11 +577,18 @@ L'équipe de direction",
             '{lien}'           => self::login_url(),
         ];
 
-        return self::send(
+        $ok = self::send(
             $ens['email'],
             self::parse( self::template_subject('teacher_access'), $vars ),
             self::parse( self::template_body('teacher_access'), $vars )
         );
+        if ( $ok ) { // 1.53.11 : date d'envoi des accès, pour savoir à qui il reste à les envoyer
+            $sent = get_option( 'logieval_access_sent', [] );
+            $sent = is_array( $sent ) ? $sent : [];
+            $sent[ $enseignant_id ] = current_time( 'mysql' );
+            update_option( 'logieval_access_sent', $sent, false );
+        }
+        return $ok;
     }
 
     /* ── Core send ──────────────────────────────────────────────── */
