@@ -12,6 +12,8 @@ $eleves = $filter_classe
     ? LOGIEVAL_Database::get_rows($t['eleves'], ['classe_id' => $filter_classe], 'nom, prenom')
     : LOGIEVAL_Database::get_rows($t['eleves'], [], 'nom, prenom');
 global $wpdb;
+// 1.53.9 : élèves qui ont déjà des réponses (avertissement avant une suppression groupée).
+$with_data = array_flip( array_map( 'intval', $wpdb->get_col( "SELECT DISTINCT eleve_id FROM {$t['reponses']}" ) ?: [] ) );
 ?>
 
 <div style="margin-bottom:16px">
@@ -58,14 +60,34 @@ if ( $dups ) : ?>
        <button class="button" id="logieval-cancel-eleve">Annuler</button></p>
 </div>
 
-<table class="wp-list-table widefat fixed striped logieval-table" style="margin-top:20px">
-<thead><tr><th>Nom</th><th>Prénom</th><th>N° élève</th><th>Classe</th><th>Actions</th></tr></thead>
+<div id="lge-bulk" style="margin-top:20px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;background:#fff;border:1px solid #c3c4c7;border-radius:6px">
+    <strong id="lge-bulk-count">0 élève coché</strong>
+    <label class="screen-reader-text" for="lge-bulk-op">Action groupée</label>
+    <select id="lge-bulk-op">
+        <option value="">Actions groupées…</option>
+        <option value="move">Changer de classe</option>
+        <option value="delete">Supprimer</option>
+    </select>
+    <label class="screen-reader-text" for="lge-bulk-classe">Classe de destination</label>
+    <select id="lge-bulk-classe" style="display:none">
+        <option value="0">— classe de destination —</option>
+        <?php foreach ($classes as $cl): ?>
+        <option value="<?= $cl['id'] ?>"><?= esc_html(LOGIEVAL_Database::class_label($cl)) ?></option>
+        <?php endforeach ?>
+    </select>
+    <button type="button" class="button" id="lge-bulk-apply" disabled>Appliquer</button>
+    <span class="description">Cochez des élèves (ou la case du titre pour tous ceux affichés).</span>
+</div>
+
+<table class="wp-list-table widefat fixed striped logieval-table" style="margin-top:10px">
+<thead><tr><td class="manage-column check-column" style="width:2.2em"><label class="screen-reader-text" for="lge-check-all">Tout cocher</label><input type="checkbox" id="lge-check-all"></td><th>Nom</th><th>Prénom</th><th>N° élève</th><th>Classe</th><th>Actions</th></tr></thead>
 <tbody>
 <?php foreach ($eleves as $el):
     $cl_row = LOGIEVAL_Database::get_row($t['classes'], ['id' => (int) $el['classe_id']]);
     $classe_nom = $cl_row ? LOGIEVAL_Database::class_label($cl_row) : '';
 ?>
 <tr>
+    <th scope="row" class="check-column"><label class="screen-reader-text" for="lge-ck-<?= (int)$el['id'] ?>">Cocher <?= esc_html($el['prenom'].' '.$el['nom']) ?></label><input type="checkbox" class="lge-ck" id="lge-ck-<?= (int)$el['id'] ?>" value="<?= (int)$el['id'] ?>" data-has-data="<?= isset($with_data[(int)$el['id']]) ? 1 : 0 ?>"></th>
     <td><?= esc_html($el['nom']) ?></td>
     <td><?= esc_html($el['prenom']) ?></td>
     <td><?= esc_html($el['num_eleve']) ?></td>
@@ -127,6 +149,33 @@ jQuery(function($){
         $b.find('.lg-yes').on('click', function(){ $(this).prop('disabled',true); close(); saveEleve(d.dup_id); });
     }
     $('#logieval-save-eleve').on('click', function(){ saveEleve(0); });
+    // 1.53.9 : sélection multiple
+    function checked(){ return $('.lge-ck:checked'); }
+    function refreshBulk(){
+        var n=checked().length, op=$('#lge-bulk-op').val();
+        $('#lge-bulk-count').text(n+(n>1?' élèves cochés':' élève coché'));
+        $('#lge-bulk-classe').toggle(op==='move');
+        $('#lge-bulk-apply').prop('disabled', !n || !op || (op==='move' && $('#lge-bulk-classe').val()==='0'));
+        $('#lge-check-all').prop('checked', n>0 && n===$('.lge-ck').length).prop('indeterminate', n>0 && n<$('.lge-ck').length);
+    }
+    $('#lge-check-all').on('change', function(){ $('.lge-ck').prop('checked', this.checked); refreshBulk(); });
+    $(document).on('change','.lge-ck', refreshBulk);
+    $('#lge-bulk-op, #lge-bulk-classe').on('change', refreshBulk);
+    $('#lge-bulk-apply').on('click', function(){
+        var $c=checked(), op=$('#lge-bulk-op').val(), ids=$c.map(function(){return this.value;}).get();
+        if(op==='delete'){
+            var withData=$c.filter('[data-has-data=1]').length;
+            var msg='Supprimer définitivement '+ids.length+' élève(s) ?';
+            if(withData) msg+='\n\n⚠ '+withData+' d’entre eux ont déjà des réponses d’évaluation : elles seront supprimées aussi. Pour un élève qui change de classe, utilisez plutôt « Changer de classe ».';
+            if(!confirm(msg)) return;
+        } else if(op==='move'){
+            if(!confirm('Déplacer '+ids.length+' élève(s) dans la classe « '+$('#lge-bulk-classe option:selected').text()+' » ? Leurs évaluations restent liées à eux.')) return;
+        }
+        $(this).prop('disabled',true).text('…');
+        $.post(logievalAdmin.ajax_url, {action:'logieval_admin',nonce:logievalAdmin.nonce,sub_action:'bulk_eleves',op:op,ids:ids,classe_id:$('#lge-bulk-classe').val()}, logievalAfter);
+    });
+    refreshBulk();
+
     $(document).on('click','.logieval-delete-eleve', function(){
         if(!confirm('Supprimer cet élève ? Toutes ses réponses d’évaluation seront aussi supprimées définitivement.')) return;
         $.post(logievalAdmin.ajax_url, {action:'logieval_admin',nonce:logievalAdmin.nonce,sub_action:'delete_eleve',id:$(this).data('id')}, logievalAfter);

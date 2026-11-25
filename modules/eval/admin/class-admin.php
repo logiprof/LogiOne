@@ -109,6 +109,7 @@ class LOGIEVAL_Admin {
             case 'delete_classe':       $this->ajax_delete_classe(); break;
             case 'save_eleve':          $this->ajax_save_eleve(); break;
             case 'delete_eleve':        $this->ajax_delete_eleve(); break;
+            case 'bulk_eleves':         $this->ajax_bulk_eleves(); break;
             case 'save_enseignant':     $this->ajax_save_enseignant(); break;
             case 'delete_enseignant':   $this->ajax_delete_enseignant(); break;
             case 'activate_enseignant': $this->ajax_activate_enseignant(); break;
@@ -510,6 +511,36 @@ class LOGIEVAL_Admin {
         }
         $wpdb->delete( $t['eleves'], ['id' => $id] );
         wp_send_json_success();
+    }
+
+    /** 1.53.9 : actions groupées sur les élèves cochés (supprimer, changer de classe). */
+    private function ajax_bulk_eleves(): void {
+        global $wpdb;
+        $t   = LOGIEVAL_Database::tables();
+        $ids = array_values( array_unique( array_filter( array_map( 'intval', (array) ( $_POST['ids'] ?? [] ) ) ) ) );
+        $op  = sanitize_key( $_POST['op'] ?? '' );
+        if ( ! $ids ) { wp_send_json_error(['message' => 'Aucun élève coché.']); return; }
+        if ( $op === 'delete' ) {
+            foreach ( $ids as $id ) {
+                foreach ( ['reponses', 'non_evaluables', 'arbitrages', 'notes_ref'] as $k ) $wpdb->delete( $t[$k], ['eleve_id' => $id] );
+                $wpdb->delete( $t['eleves'], ['id' => $id] );
+            }
+            wp_send_json_success(['message' => count( $ids ) . ' élève(s) supprimé(s).']); return;
+        }
+        if ( $op === 'move' ) {
+            $to = intval( $_POST['classe_id'] ?? 0 );
+            if ( ! $to || ! LOGIEVAL_Database::get_row( $t['classes'], ['id' => $to] ) ) { wp_send_json_error(['message' => 'Choisissez la classe de destination.']); return; }
+            $n = 0;
+            foreach ( $ids as $id ) {
+                $el = LOGIEVAL_Database::get_row( $t['eleves'], ['id' => $id] );
+                if ( ! $el || (int) $el['classe_id'] === $to ) continue;
+                LOGIEVAL_Database::log_student_move( $id, (int) $el['classe_id'], $to );
+                LOGIEVAL_Database::update( $t['eleves'], ['classe_id' => $to], ['id' => $id] );
+                $n++;
+            }
+            wp_send_json_success(['message' => $n . ' élève(s) déplacé(s).']); return;
+        }
+        wp_send_json_error(['message' => 'Action inconnue.']);
     }
 
     /** Enseignant : refusé s'il a déjà donné des réponses ; on propose de le désactiver. */
