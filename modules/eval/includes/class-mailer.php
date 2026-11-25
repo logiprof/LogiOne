@@ -44,6 +44,7 @@ class LOGIEVAL_Mailer {
     public static function templates(): array {
         return [
             'assign' => [
+                'to'        => 'Les enseignants cochés dans l’évaluation (comptes actifs).',
                 'title'     => 'Attribution d’une nouvelle évaluation',
                 'subject'   => 'logieval_mail_assign_subject',
                 'body'      => 'logieval_mail_assign_body',
@@ -66,6 +67,7 @@ Cordialement,
 L'équipe de direction",
             ],
             'teacher_access' => [
+                'to'        => 'L’enseignant activé, seulement s’il est affecté à au moins une classe.',
                 'title'     => 'Activation du profil enseignant',
                 'subject'   => 'logieval_mail_teacher_access_subject',
                 'body'      => 'logieval_mail_teacher_access_body',
@@ -86,6 +88,7 @@ Cordialement,
 L'équipe de direction",
             ],
             'reminder' => [
+                'to'        => 'Les enseignants de l’évaluation qui n’ont pas encore terminé.',
                 'title'     => 'Relance automatique avant échéance',
                 'subject'   => 'logieval_mail_reminder_subject',
                 'body'      => 'logieval_mail_reminder_body',
@@ -108,6 +111,7 @@ Cordialement,
 L'équipe de direction",
             ],
             'closure' => [
+                'to'        => 'Le maître de classe (si l’option est cochée dans l’évaluation).',
                 'title'     => 'Évaluation clôturée - message au maître de classe',
                 'subject'   => 'logieval_mail_closure_subject',
                 'body'      => 'logieval_mail_closure_body',
@@ -125,6 +129,7 @@ Cordialement,
 L'équipe de direction",
             ],
             'teacher_completed' => [
+                'to'        => 'Uniquement les enseignants de l’évaluation qui n’ont PAS encore terminé (pas ceux qui ont déjà terminé, ni celui qui vient de terminer). Option à cocher dans l’évaluation.',
                 'title'     => 'Un enseignant a terminé son évaluation',
                 'subject'   => 'logieval_mail_teacher_completed_subject',
                 'body'      => 'logieval_mail_teacher_completed_body',
@@ -147,6 +152,7 @@ Cordialement,
 L'équipe de direction",
             ],
             'all_completed' => [
+                'to'        => 'Le maître de classe (si l’option est cochée dans l’évaluation).',
                 'title'     => 'Tous les enseignants ont terminé - message au maître de classe',
                 'subject'   => 'logieval_mail_all_completed_subject',
                 'body'      => 'logieval_mail_all_completed_body',
@@ -169,6 +175,7 @@ Cordialement,
 L'équipe de direction",
             ],
             'pending_completion' => [
+                'to'        => 'Les enseignants de l’évaluation qui n’ont pas encore terminé.',
                 'title'     => 'Relance manuelle aux enseignants en attente',
                 'subject'   => 'logieval_mail_pending_completion_subject',
                 'body'      => 'logieval_mail_pending_completion_body',
@@ -191,6 +198,7 @@ Cordialement,
 L'équipe de direction",
             ],
             'last_teacher_pending' => [
+                'to'        => 'Le dernier enseignant qui n’a pas encore terminé.',
                 'title'     => 'Relance automatique au dernier enseignant en attente',
                 'subject'   => 'logieval_mail_last_teacher_pending_subject',
                 'body'      => 'logieval_mail_last_teacher_pending_body',
@@ -213,6 +221,7 @@ Cordialement,
 L'équipe de direction",
             ],
             'class_report' => [
+                'to'        => 'Les destinataires choisis lors de l’envoi du rapport.',
                 'title'     => 'Envoi du rapport détaillé de classe',
                 'subject'   => 'logieval_mail_class_report_subject',
                 'body'      => 'logieval_mail_class_report_body',
@@ -375,7 +384,7 @@ L'équipe de direction",
         global $wpdb;
         $t    = LOGIEVAL_Database::tables();
         $eval = LOGIEVAL_Database::get_row( $t['evaluations'], ['id' => $evaluation_id] );
-        if ( ! $eval || empty( $eval['mail_teacher_completed'] ) ) return;
+        if ( ! $eval || empty( $eval['mail_teacher_completed'] ) || ( $eval['statut'] ?? '' ) !== 'active' ) return;
 
         $classe    = LOGIEVAL_Database::get_row( $t['classes'], ['id' => $eval['classe_id']] );
         $completed = LOGIEVAL_Database::get_row( $t['enseignants'], ['id' => $completed_enseignant_id] );

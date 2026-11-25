@@ -77,6 +77,7 @@ $email_login_url = LOGIEVAL_Mailer::login_url();
                 <textarea class="large-text logieval-mail-field"
                           rows="9"
                           data-option="<?= esc_attr($tpl['body']) ?>"><?= esc_textarea($body_value) ?></textarea>
+                <?php if (!empty($tpl['to'])): ?><p class="description" style="color:#1d2327"><strong>Destinataires :</strong> <?= esc_html($tpl['to']) ?></p><?php endif ?>
                 <p class="description"><strong>Variables disponibles :</strong> <?= esc_html($tpl['variables']) ?></p>
             </td>
         </tr>
