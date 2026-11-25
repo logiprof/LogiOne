@@ -1,4 +1,4 @@
-# LogiOne 1.53.15
+# LogiOne 1.53.16
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,12 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.53.16
+
+- **Logi3D intégré à LogiOne.** Les animations 3D font maintenant partie de la suite : même menu « Logi3D » dans l’administration, mêmes codes courts (`[logi3d …]`, `[logi3d_…]`, anciens `[animation …]`), et une tuile Logi3D dans le portail avec le catalogue des animations (aperçu, plein écran, code court).
+- **Données conservées et indépendantes.** Le module reprend telles quelles les options `logi3d_animations` et `logi3d_logo` et le dossier `wp-content/uploads/logi3d/` : les animations ajoutées et le logo restent en place, rien n’est copié ni supprimé.
+- Tant que l’extension autonome Logi3D est active, le module n’est pas chargé (avis de conflit). Désactivez-la : le module prend le relais avec les mêmes données.
 
 ## Nouveautés 1.53.15
 

@@ -84,6 +84,12 @@ final class LogiPilot_Portal
                 'text' => 'Les travaux notés en groupe de vos apprentis.',
                 'points' => array('Dépôt des présentations par les apprentis', 'Correction assistée par l’IA', 'Notes et retours publiés aux apprentis'),
             ),
+            // LogiOne 1.53.16 : Logi3D, catalogue des animations 3D.
+            'logi3d' => array(
+                'label' => $labels['logi3d'], 'tag' => 'logi3d_catalogue', 'cap' => 'edit_posts', 'can' => array('LogiOne_Logi3D', 'can_view'), 'module' => 'logi3d', 'color' => '#4338ca',
+                'text' => 'Les animations 3D à projeter en classe.',
+                'points' => array('Surfaces et volumes de l’entrepôt', 'Aperçu et plein écran', 'Code court pour vos pages et leçons'),
+            ),
         );
 
         // Tuiles de contenu créées par l'administration, à la suite des outils.

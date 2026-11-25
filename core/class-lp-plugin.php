@@ -65,6 +65,13 @@ final class LogiPilot_Plugin
             'legacy' => 'logiprojet.php',
             'class' => 'LogiProjet_App',
         ),
+        // LogiOne 1.53.16 : Logi3D (animations 3D). Mêmes options et même dossier d'envoi que l'extension autonome.
+        'logi3d' => array(
+            'label' => 'Logi3D',
+            'file' => 'modules/logi3d/module.php',
+            'legacy' => 'logi3d.php',
+            'class' => 'LogiOne_Logi3D',
+        ),
         'tiles' => array(
             'label' => 'Tuiles de contenu',
             'file' => 'modules/tiles/module.php',

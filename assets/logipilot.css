@@ -347,6 +347,8 @@ tr.logipilot-warning td { color: #8a4b00; }
 /* LogiProjet : tuile orange clair, cube avec une diapositive (LogiOne 1.51.1) */
 .lpp-tile-projet { --tile-bg: #fde9d9; --tile-fg: var(--ink); --tile-muted: #7c3a12; --cta: #c2410c; }
 .lpp-tile-projet .lpp-iso { --gap: #fde9d9; --check: #c2410c; }
+.lpp-tile-logi3d { --tile-bg: #e0e7ff; --tile-fg: var(--ink); --tile-muted: #312e81; --cta: #4338ca; }
+.lpp-tile-logi3d .lpp-iso { --gap: #e0e7ff; --check: #4338ca; }
 
 /* LogiLive : tuile menthe, cube avec le tracé « en direct » */
 .lpp-tile-live { --tile-bg: #dcefe3; --tile-fg: var(--ink); --tile-muted: #3f5a48; --cta: var(--green); }

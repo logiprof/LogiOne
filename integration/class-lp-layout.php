@@ -210,7 +210,7 @@ final class LogiPilot_Layout
     /** Couleur de fond de la tuile, pour l'aperçu. */
     private static function preview_color(string $key, array $tool): string
     {
-        $builtin = array('classe' => '#313a45', 'progress' => '#067030', 'notes' => '#ffffff', 'exam' => '#f5c400', 'eval' => '#0e7490', 'planning' => '#ffffff', 'live' => '#dcefe3', 'projet' => '#fde9d9');
+        $builtin = array('classe' => '#313a45', 'progress' => '#067030', 'notes' => '#ffffff', 'exam' => '#f5c400', 'eval' => '#0e7490', 'planning' => '#ffffff', 'live' => '#dcefe3', 'projet' => '#fde9d9', 'logi3d' => '#e0e7ff');
         if (isset($builtin[$key])) {
             return $builtin[$key];
         }
