@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: pip install edge-tts==7.0.2
+      - run: pip install --upgrade edge-tts
       - name: Générer les fichiers audio
         run: |
           mkdir -p audio
