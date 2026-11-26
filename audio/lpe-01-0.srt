@@ -1,4 +1,4 @@
 1
-00:00:00,100 --> 00:00:08,212
-Rendez-vous sur le site logiprof, point, fontesse tiret oliveira, point, C H, et connectez-vous avec votre compte enseignant.
+00:00:00,100 --> 00:00:08,000
+Connectez-vous sur le site logiprof, point, fontesse tiret oliveira, point, C H, et ouvrez le portail LogiOne.
 
