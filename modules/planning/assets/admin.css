@@ -322,8 +322,9 @@
 .lplms-day-more > summary span { color: #646970; }
 .lplms-day-more-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 16px; padding: 8px 0 8px; }
 .lplms-day-more-grid label { display: grid; gap: 4px; }
+.lplms-day-more-grid .lplms-category-picker label { display: flex; gap: 8px; align-items: flex-start; }
 .lplms-day-more-grid .lplms-wide { grid-column: 1 / -1; }
-.lplms-day-more-grid textarea, .lplms-day-more-grid input, .lplms-day-more-grid select { width: 100%; }
+.lplms-day-more-grid textarea, .lplms-day-more-grid input:not([type=checkbox]):not([type=radio]), .lplms-day-more-grid select { width: 100%; }
 .lplms-propagate { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .lplms-days-save { position: sticky; bottom: 0; z-index: 2; display: flex; align-items: center; gap: 14px; padding: 12px 0; background: #f0f0f1; }
 .lplms-dirty { color: #b32d2e; font-weight: 600; }

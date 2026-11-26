@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 final class LogiOne_Planning {
-	const VERSION   = '1.2.5';
+	const VERSION   = '1.2.6';
 	const PAGE      = 'logiplanning-lms';
 	const SHORTCODE = 'logiplanning_lms';
 	const NONCE     = 'logiplanning_lms_nonce';

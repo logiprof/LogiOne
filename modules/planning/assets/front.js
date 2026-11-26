@@ -67,8 +67,9 @@
 		return html;
 	}
 
-	function stateBadge(day) {
-		if (!day.state || day.state.key === 'none' || !day.state.label) { return ''; }
+	// Pas de badge d'avancement pour l'enseignant qui consulte le plan d'une classe : ce serait le sien, pas celui des élèves.
+	function stateBadge(day, show) {
+		if (!show || !day.state || day.state.key === 'none' || !day.state.label) { return ''; }
 		return '<span class="lpl-state is-' + esc(day.state.key) + '">' + esc(day.state.label) + '</span>';
 	}
 
@@ -100,7 +101,7 @@
 				'<' + (past ? 'button type="button" aria-expanded="false" data-lpl-toggle' : 'div') + ' class="lpl-day-head">' +
 					'<span class="lpl-day-title"><span class="lpl-sr">' + esc(longDate(day.date)) + ' : </span>' + esc(day.branch || 'Journée de formation') + '</span>' +
 					(rel ? '<span class="lpl-rel">' + esc(rel) + '</span>' : '') +
-					stateBadge(day) +
+					stateBadge(day, show) +
 					(past ? '<span class="lpl-chev">' + icon('chev') + '<span class="lpl-sr">Afficher le détail</span></span>' : '') +
 				'</' + (past ? 'button' : 'div') + '>' +
 				'<div class="lpl-day-body"' + (past ? ' hidden' : '') + '>' + body + '</div>' +
