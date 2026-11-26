@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Les actions groupées s'appliquent aux apprentis cochés. Exporter les apprentis télécharge toutes les fiches.

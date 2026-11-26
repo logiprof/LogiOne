@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Ici, une liste de classe : choisissez Liste des apprentis, le fichier, puis Analyser le fichier.

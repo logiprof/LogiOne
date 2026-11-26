@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Les petits boutons permettent de modifier, de marquer comme traité, ou de supprimer une situation.

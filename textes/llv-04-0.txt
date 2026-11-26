@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Pour chaque élève, la colonne État indique s'il est en leçon,

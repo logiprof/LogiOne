@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+L'onglet À traiter calcule les situations tout seul après chaque import.

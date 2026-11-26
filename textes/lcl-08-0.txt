@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Actions exécutées liste tout ce qui a été envoyé, classe par classe, avec les destinataires et le PDF.

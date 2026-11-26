@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Les onglets regroupent tout le suivi : situations à traiter, classes, apprentis, formateurs, actions et messages.

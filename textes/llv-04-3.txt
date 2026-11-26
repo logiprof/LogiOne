@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Page ou leçon montre ce qu'il a ouvert en ce moment. Un clic ouvre la même leçon.

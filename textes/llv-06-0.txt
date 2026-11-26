@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-LogiLive ne note que le type d'action : jamais le texte copié, ni ce que l'élève tape. Ces actions sont effacées après vingt-quatre heures.

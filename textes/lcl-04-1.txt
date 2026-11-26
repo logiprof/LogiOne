@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Cochez Sauvegarder ce mapping pour le réutiliser au prochain import, puis cliquez sur Valider l'import.

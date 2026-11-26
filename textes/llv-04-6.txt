@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Pour un élève hors ligne, vous voyez la dernière leçon consultée et l'heure de sa dernière activité.

@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Chaque ligne explique la situation et sa cause : ici, quatre retards pour un seuil de trois.

@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Pendant un cours en ligne, LogiLive vous montre en direct qui est connecté, sur quelle leçon, et qui a décroché.

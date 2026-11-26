@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Un élève est connecté s'il a été actif dans les cinq dernières minutes.
