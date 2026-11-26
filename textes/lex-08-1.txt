@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Il lit les règles et confirme qu'il les a comprises.

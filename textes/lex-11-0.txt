@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+L'étape Résultats affiche les points et la note de chaque élève, avec sa copie en PDF.

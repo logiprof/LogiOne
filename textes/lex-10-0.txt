@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+À l'étape Corriger, les Q C M et les questions vrai ou faux sont déjà corrigés automatiquement.

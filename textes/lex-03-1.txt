@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Cochez Test formatif seulement pour un entraînement : rien n'est noté, rien ne part dans LogiNotes.

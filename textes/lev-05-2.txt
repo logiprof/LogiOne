@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-La fiche est complète. En bas, Élève suivant vous amène directement au prochain élève.

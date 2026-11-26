@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Sur la page LogiExam, l'élève saisit son code et clique sur Entrer dans l'évaluation.

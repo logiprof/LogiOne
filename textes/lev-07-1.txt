@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Relancer les retardataires leur envoie un rappel par e-mail.
