@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Ce cadre liste les apprentis qui n'ont pas encore de groupe.

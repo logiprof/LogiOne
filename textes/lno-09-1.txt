@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Saisissez les points de chaque évaluation : la note se calcule toute seule.

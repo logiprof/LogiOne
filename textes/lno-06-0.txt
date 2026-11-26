@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Tapez les points obtenus par chaque élève. La note est calculée tout de suite : points sur le total, fois cinq, plus un, arrondie au demi-point.

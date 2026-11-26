@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Vous arrivez dans votre espace enseignant. Chaque carte est un travail, avec son statut et le nombre de dépôts.

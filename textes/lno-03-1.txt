@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Pour ajouter les élèves, collez la liste : nom, point-virgule, prénom, une ligne par élève, ou importez un fichier Excel ou CSV.
