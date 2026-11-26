@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:04,687
+Oui à tous les critères restants met Oui partout où vous n'avez pas encore répondu.
+
+2
+00:00:04,637 --> 00:00:07,262
+Corrigez ensuite les exceptions.
+

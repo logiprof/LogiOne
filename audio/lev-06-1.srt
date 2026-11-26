@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:02,762
+Votre évaluation est terminée.
+
+2
+00:00:02,712 --> 00:00:07,437
+Tant qu'elle n'est pas clôturée, Corriger mes réponses vous permet encore de la modifier.
+

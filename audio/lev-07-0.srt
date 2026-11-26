@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:06,737
+Si vous êtes maître de classe, vous suivez aussi vos collègues : un nom en vert a terminé, un nom en blanc est encore en cours.
+

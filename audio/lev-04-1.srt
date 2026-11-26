@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,200
+Vous ne pouvez pas évaluer tout un objectif ?
+
+2
+00:00:03,150 --> 00:00:07,087
+Cliquez sur Non évaluable : l'élève n'est pas pénalisé.
+

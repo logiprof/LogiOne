@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:05,250
+Maître de classe : suivez vos collègues, clôturez, puis imprimez les résultats.
+
+2
+00:00:05,200 --> 00:00:07,125
+Bonne évaluation !
+

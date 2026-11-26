@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,125
+Vous voyez la liste des élèves de la classe, avec leur avancement.
+

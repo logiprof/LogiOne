@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,487
+En résumé : répondez pour chaque élève, critère par critère.
+

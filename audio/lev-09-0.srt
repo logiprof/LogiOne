@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:08,262
+Le menu Imprimer, exporter, propose l'impression de la classe, les fiches élèves en PDF, un export Word et le rapport par e-mail.
+

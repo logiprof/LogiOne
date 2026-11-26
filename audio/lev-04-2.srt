@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,512
+Chaque réponse est enregistrée automatiquement : vous pouvez vous arrêter et reprendre plus tard.
+

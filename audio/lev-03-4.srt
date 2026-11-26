@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,587
+ou Sans avis, si vous ne pouvez pas juger : cela ne compte pas dans la note.
+

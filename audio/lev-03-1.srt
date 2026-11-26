@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:03,537
+Cliquez sur le nom d'un élève pour ouvrir sa fiche.
+

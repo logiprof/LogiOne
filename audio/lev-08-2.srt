@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,000
+L'évaluation clôturée affiche la note de chaque élève.
+

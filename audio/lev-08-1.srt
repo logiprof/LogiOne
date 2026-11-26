@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:02,375
+Un collègue ne termine pas ?
+
+2
+00:00:02,325 --> 00:00:08,162
+Une fois votre propre travail terminé, cliquez sur Clôturer maintenant : il ne compte pas dans les résultats.
+
