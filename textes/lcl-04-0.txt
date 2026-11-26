@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-LogiClass reconnaît les colonnes de votre fichier. Vérifiez chaque correspondance.

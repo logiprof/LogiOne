@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-L'historique garde chaque import, avec son auteur et son résultat.

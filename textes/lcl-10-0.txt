@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-L'onglet Apprentis permet des corrections rapides sur toute la classe : genre, e-mail, responsable, vérification.

@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+L'onglet Élèves inactifs liste ceux qui ont un cours commencé, sans activité depuis au moins sept jours.

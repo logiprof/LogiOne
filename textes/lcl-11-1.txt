@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Traitez les situations : convocation, justificatif ou message au formateur.

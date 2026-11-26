@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+La dernière colonne indique la dernière activité. En orange : aucune activité depuis longtemps.

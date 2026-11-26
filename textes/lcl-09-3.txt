@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Les compteurs peuvent être corrigés à la main : ils sont alors protégés contre les imports.

@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-La fiche reprend toutes les informations de l'apprenti. Cochez Données vérifiées une fois relue : les prochains imports n'écraseront plus vos corrections.
