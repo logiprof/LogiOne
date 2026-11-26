@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Vous voyez la liste des élèves de la classe, avec leur avancement.

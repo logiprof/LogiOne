@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Le bouton jaune Aide ouvre le guide de l'enseignant.
