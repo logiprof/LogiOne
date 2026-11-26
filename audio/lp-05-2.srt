@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,862
+Vous pourrez encore rejoindre un camarade plus tard, tant que le travail n'est pas remis.
+

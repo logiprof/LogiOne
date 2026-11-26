@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,112
+Une confirmation vous est demandée : vérifiez le nom du fichier, puis confirmez.
+

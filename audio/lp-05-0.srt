@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:02,250
+Vous travaillez seul ?
+
+2
+00:00:02,200 --> 00:00:06,137
+Si votre enseignant l'autorise, cliquez sur Je travaille seul.
+

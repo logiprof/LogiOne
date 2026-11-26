@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:03,625
+Puis cliquez sur Enregistrer comme fichier de travail.
+

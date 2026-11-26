@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:02,687
+En haut, la date de remise.
+
+2
+00:00:02,637 --> 00:00:05,725
+Attention : un retard fait perdre des points.
+

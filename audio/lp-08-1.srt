@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,150
+En duo, votre partenaire peut aussi le récupérer, par exemple si vous êtes absent.
+

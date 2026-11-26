@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:02,787
+Vous vous êtes trompé de camarade ?
+
+2
+00:00:02,737 --> 00:00:06,662
+Cliquez sur Modifier le groupe, tant que le travail n'est pas remis.
+

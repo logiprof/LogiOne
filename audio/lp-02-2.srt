@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,112
+Plus bas, vous retrouvez toute la consigne et la grille d'évaluation.
+

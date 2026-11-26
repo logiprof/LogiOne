@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:02,525
+Votre travail est terminé ?
+
+2
+00:00:02,475 --> 00:00:06,062
+Cliquez sur le bouton jaune : Remettre le travail.
+

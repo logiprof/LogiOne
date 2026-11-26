@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,612
+Quand votre enseignant aura corrigé, vous y verrez votre note et ses commentaires.
+

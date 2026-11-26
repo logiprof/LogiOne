@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:02,525
+Vous y trouvez tous vos travaux.
+
+2
+00:00:02,475 --> 00:00:07,075
+Le badge jaune « À rendre » signale un travail que vous devez encore remettre.
+

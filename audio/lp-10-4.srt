@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:04,475
+Le fichier est verrouillé : plus personne ne peut l'ouvrir ni le remplacer.
+
+2
+00:00:04,425 --> 00:00:08,125
+Pour le corriger, demandez à votre enseignant de vous le rendre.
+

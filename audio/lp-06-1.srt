@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,937
+La période se termine et votre présentation n'est pas finie ?
+
+2
+00:00:03,887 --> 00:00:08,525
+Glissez votre fichier dans la zone de dépôt, ou cliquez dessus pour le choisir.
+

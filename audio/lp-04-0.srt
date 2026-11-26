@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,187
+Votre duo est enregistré : votre partenaire voit maintenant le même travail que vous.
+

@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,350
+Et quand tout est prêt, remettez votre travail.
+
+2
+00:00:03,300 --> 00:00:05,175
+Bon travail !
+

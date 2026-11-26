@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,900
+Quand vous avez avancé, déposez la nouvelle version, puis cliquez sur Mettre à jour le fichier de travail.
+
