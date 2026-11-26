@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,287
+puis attribuez les points : tous, la moitié, aucun, ou un nombre précis.
+

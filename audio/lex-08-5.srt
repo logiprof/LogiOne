@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:02,400
+Sa copie est envoyée.
+
+2
+00:00:02,350 --> 00:00:06,187
+Pendant cinq minutes, il peut encore la rouvrir s'il s'est trompé.
+

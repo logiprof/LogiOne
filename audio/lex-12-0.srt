@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:06,575
+La première fois, reliez chaque élève à sa fiche LogiNotes : LogiExam propose la fiche qui porte le même nom.
+

@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:03,825
+Le barème se calcule tout seul à partir du total des points.
+

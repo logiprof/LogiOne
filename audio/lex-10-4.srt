@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:06,375
+Correction avec une IA externe prépare les copies pour Claude ou Tchate G P T, puis importe son compte rendu.
+
+2
+00:00:06,325 --> 00:00:08,400
+C'est vous qui validez.
+

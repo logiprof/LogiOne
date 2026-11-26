@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,875
+À l'étape Corriger, les Q C M et les questions vrai ou faux sont déjà corrigés automatiquement.
+

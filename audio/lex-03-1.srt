@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,912
+Cochez Test formatif seulement pour un entraînement : rien n'est noté, rien ne part dans LogiNotes.
+

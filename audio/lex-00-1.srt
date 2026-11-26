@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:07,500
+LogiExam permet de faire passer des évaluations numériques sécurisées, de les corriger, puis d'envoyer les notes dans LogiNotes.
+

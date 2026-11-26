@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,612
+Corrigez, puis publiez les notes dans LogiNotes.
+
+2
+00:00:03,562 --> 00:00:05,500
+Bonne évaluation !
+

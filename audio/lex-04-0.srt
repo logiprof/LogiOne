@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:04,237
+Pour chaque question, choisissez le type, les points et l'énoncé.
+
+2
+00:00:04,187 --> 00:00:06,887
+Ici, un Q C M,
+

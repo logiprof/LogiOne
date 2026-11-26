@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:07,162
+Votre espace enseignant regroupe vos évaluations, la bibliothèque partagée, la banque de questions et la création avec l'IA.
+

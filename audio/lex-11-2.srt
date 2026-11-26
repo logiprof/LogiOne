@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:06,800
+Pour envoyer les notes dans LogiNotes, choisissez la classe et le semestre, puis cliquez sur Compléter la fiche LogiNotes.
+

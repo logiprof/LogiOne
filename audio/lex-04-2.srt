@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:06,187
+Ajouter une question ajoute la question suivante : vrai ou faux, réponse courte, et ainsi de suite.
+

@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,850
+Pour une réponse courte, comparez la réponse de l'élève avec la réponse attendue,
+

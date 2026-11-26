@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,087
+Pour une réponse courte, indiquez la réponse attendue : elle vous aidera à corriger.
+

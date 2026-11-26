@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,025
+Cliquez sur Débloquer l'élève : il reprend là où il en était.
+

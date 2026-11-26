@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:03,412
+Imprimez les codes et distribuez-les en classe.
+

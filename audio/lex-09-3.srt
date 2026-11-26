@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,425
+Le bouton Gérer permet aussi d'ajouter du temps, ou de terminer une copie restée en cours.
+

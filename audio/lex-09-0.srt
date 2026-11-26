@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:06,200
+Pendant l'évaluation, le suivi en direct montre chaque élève : statut, temps restant et avancement.
+
+2
+00:00:06,150 --> 00:00:08,987
+La page s'actualise toute seule.
+

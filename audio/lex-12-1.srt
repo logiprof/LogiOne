@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:02,737
+Un élève n'a pas encore de fiche ?
+
+2
+00:00:02,687 --> 00:00:05,900
+Choisissez Créer sa fiche dans LogiNotes.
+

@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:02,762
+Vous corrigez question par question.
+
+2
+00:00:02,712 --> 00:00:05,800
+Élève suivant passe à la copie suivante.
+

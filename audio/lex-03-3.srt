@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,125
+Choisissez la classe, et laissez le mode sécurisé activé.
+

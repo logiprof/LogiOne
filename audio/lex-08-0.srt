@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,250
+Sur la page LogiExam, l'élève saisit son code et clique sur Entrer dans l'évaluation.
+

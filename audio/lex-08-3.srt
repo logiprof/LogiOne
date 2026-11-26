@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,412
+Il répond aux questions, avec sa progression et le minuteur en haut,
+
