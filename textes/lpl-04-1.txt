@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Dessous : le message du jour et les cours LogiProf à suivre. Un clic ouvre le cours.

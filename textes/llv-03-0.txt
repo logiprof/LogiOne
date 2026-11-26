@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+En haut : le nombre d'élèves connectés, ceux qui ont une leçon ouverte, et ceux qui sont hors ligne.

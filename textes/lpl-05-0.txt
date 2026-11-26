@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Calendrier affiche le mois entier. Les flèches changent de période. Aujourd'hui revient à la date du jour.

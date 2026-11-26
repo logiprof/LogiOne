@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Chaque journée y apparaît avec la couleur de sa branche.

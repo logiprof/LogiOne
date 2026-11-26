@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Le tableau se met à jour tout seul toutes les quinze secondes : l'heure de la dernière mise à jour est affichée en haut à droite.

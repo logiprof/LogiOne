@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Lisez l'état de chaque élève : en leçon, onglet quitté ou inactif.

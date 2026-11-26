@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+En résumé : choisissez votre groupe classe, le tableau s'actualise tout seul.
