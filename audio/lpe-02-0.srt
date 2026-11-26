@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:02,862
+Vous arrivez dans votre espace enseignant.
+
+2
+00:00:02,812 --> 00:00:07,025
+Chaque carte est un travail, avec son statut et le nombre de dépôts.
+

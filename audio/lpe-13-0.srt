@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,137
+En résumé : créez le travail et sa grille à partir du cours.
+

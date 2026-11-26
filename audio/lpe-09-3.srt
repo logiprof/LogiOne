@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,762
+C'est vous qui décidez : vérifiez chaque critère et corrigez la note si besoin.
+

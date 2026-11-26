@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:02,325
+Le travail est ouvert.
+
+2
+00:00:02,275 --> 00:00:07,150
+Avec Statut par classe, vous pouvez aussi l'ouvrir ou le verrouiller pour une seule classe.
+

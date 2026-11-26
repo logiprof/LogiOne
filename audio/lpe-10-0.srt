@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,550
+Ajoutez vos points forts et une piste d'amélioration.
+
+2
+00:00:03,500 --> 00:00:07,225
+En bas, vous voyez les points, la note et la note finale.
+

@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,287
+Pour corriger, vous pouvez demander à l'IA une proposition de note pour tous les travaux remis.
+

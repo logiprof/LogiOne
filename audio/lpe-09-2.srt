@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:04,525
+À gauche, le contenu du PowerPoint, slide par slide.
+
+2
+00:00:04,475 --> 00:00:08,812
+À droite, la grille avec la proposition de l'IA et ses commentaires.
+

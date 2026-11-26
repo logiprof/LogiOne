@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,662
+Vous pouvez importer un travail préparé par un collègue, ou en créer un nouveau.
+

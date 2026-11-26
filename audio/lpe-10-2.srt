@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,662
+Les apprentis voient alors leur note, la grille commentée et votre retour.
+

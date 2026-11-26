@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,600
+Le fichier redevient un fichier de travail : les apprentis peuvent le modifier, puis le remettre.
+

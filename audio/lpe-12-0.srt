@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,600
+Enfin, imprimez les grilles ou exportez les notes en CSV pour les reporter dans votre bulletin.
+

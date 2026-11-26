@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:05,637
+La consigne est déjà remplie avec le modèle, section par section, comme le document Word.
+
+2
+00:00:05,587 --> 00:00:07,875
+Adaptez-la si besoin.
+

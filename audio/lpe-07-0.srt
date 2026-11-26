@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:02,937
+Le travail est enregistré en brouillon.
+
+2
+00:00:02,887 --> 00:00:07,450
+Avec Aperçu apprenti, vous voyez exactement ce que verront les apprentis.
+

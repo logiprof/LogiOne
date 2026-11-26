@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:07,550
+La grille d'évaluation est prête : un critère par leçon, puis l'explication, la structure, la lisibilité et la forme.
+

@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,562
+Les leçons de contenu sont cochées automatiquement.
+
+2
+00:00:03,512 --> 00:00:06,450
+Le titre et le module se remplissent aussi.
+

@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,287
+Chaque critère vaut zéro, un ou deux points.
+
+2
+00:00:03,237 --> 00:00:07,450
+Vous pouvez modifier les textes, ajouter ou supprimer des critères.
+

@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:06,037
+Le tableau montre chaque groupe : travail remis, ou encore en cours avec un fichier de travail enregistré.
+

@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,550
+Indiquez la date de début et la date de remise.
+
+2
+00:00:03,500 --> 00:00:07,387
+Après cette date, les retards sont pénalisés automatiquement.
+
