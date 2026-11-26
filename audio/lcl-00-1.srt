@@ -1,4 +1,4 @@
 1
-00:00:00,100 --> 00:00:07,962
-LogiClass vous aide à suivre vos apprentis : retards, absences, mises à la porte, convocations et échanges avec les formateurs.
+00:00:00,100 --> 00:00:05,812
+LogiClass vient en complément d'AGAPEPE : il facilite le suivi de nos actions pour chaque apprenti.
 
