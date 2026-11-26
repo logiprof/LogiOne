@@ -6,11 +6,12 @@
 $suivi = intval($_GET['suivi'] ?? 0);
 if ($suivi) { include __DIR__ . '/eleve-suivi.php'; echo '</div>'; return; }
 $t = LOGIEVAL_Database::tables();
-$classes = LOGIEVAL_Database::get_rows($t['classes'], [], 'nom');
+$classes = LOGIEVAL_Demo::hide(LOGIEVAL_Database::get_rows($t['classes'], [], 'nom'), 'classes');
 $filter_classe = intval($_GET['classe_id'] ?? 0);
 $eleves = $filter_classe
     ? LOGIEVAL_Database::get_rows($t['eleves'], ['classe_id' => $filter_classe], 'nom, prenom')
     : LOGIEVAL_Database::get_rows($t['eleves'], [], 'nom, prenom');
+$eleves = LOGIEVAL_Demo::hide($eleves, 'eleves'); // 1.53.19
 global $wpdb;
 // 1.53.9 : élèves qui ont déjà des réponses (avertissement avant une suppression groupée).
 $with_data = array_flip( array_map( 'intval', $wpdb->get_col( "SELECT DISTINCT eleve_id FROM {$t['reponses']}" ) ?: [] ) );

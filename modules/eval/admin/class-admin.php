@@ -126,6 +126,8 @@ class LOGIEVAL_Admin {
             case 'set_maitre_classe':              $this->ajax_set_maitre_classe(); break;
             case 'get_classe_teachers_detail':     $this->ajax_get_classe_teachers_detail(); break;
             case 'save_settings':                  $this->ajax_save_settings(); break;
+            case 'demo_toggle':                    update_option( LOGIEVAL_Demo::ENABLED_OPTION, empty( $_POST['on'] ) ? 0 : 1 ); wp_send_json_success( [ 'on' => LOGIEVAL_Demo::enabled() ] ); break;
+            case 'demo_purge':                     wp_send_json_success( [ 'n' => LOGIEVAL_Demo::purge_all() ] ); break;
             case 'get_classe_teachers':            $this->ajax_get_classe_teachers(); break;
             case 'save_objectif':          $this->ajax_save_objectif(); break;
             case 'delete_objectif':        $this->ajax_delete_objectif(); break;

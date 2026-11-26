@@ -36,6 +36,21 @@ $email_login_url = LOGIEVAL_Mailer::login_url();
     </tr>
 </table>
 
+<h2 id="demo">Mode démonstration</h2>
+<?php $demo_on = LOGIEVAL_Demo::enabled(); $demo_n = LOGIEVAL_Demo::count(); ?>
+<table class="form-table">
+    <tr><th>Présentation aux collègues</th>
+        <td>
+            <label><input type="checkbox" id="cfg-demo-on" <?= $demo_on ? 'checked' : '' ?>> <strong>Proposer « Essayer LogiEval » sur la page de connexion</strong></label>
+            <p class="description">Chaque collègue choisit son profil (<b>maître de classe</b> ou <b>enseignant·e</b>) et reçoit sa propre classe fictive de 5 élèves avec une évaluation courte (3 objectifs, 4 questions), sans identifiant.
+            Les essais n’envoient aucun e-mail, n’apparaissent pas dans vos listes (classes, élèves, enseignants, évaluations) et n’utilisent pas vos vrais objectifs. Ils sont effacés quand le collègue quitte la démonstration, ou au bout de 3 jours.</p>
+            <p class="description" id="cfg-demo-state"><?= $demo_n ? esc_html( $demo_n . ' essai' . ( $demo_n > 1 ? 's' : '' ) . ' en cours.' ) : 'Aucun essai en cours.' ?></p>
+            <p><button type="button" class="button" id="cfg-demo-purge">Effacer toutes les données de démonstration</button></p>
+            <p class="description">Pensez à décocher la case après la présentation.</p>
+        </td>
+    </tr>
+</table>
+
 <h2>Identifiants enseignants</h2>
 <table class="form-table">
     <tr><th>Préfixe</th>
@@ -93,6 +108,17 @@ $email_login_url = LOGIEVAL_Mailer::login_url();
 
 <script>
 jQuery(function($){
+    $('#cfg-demo-on').on('change', function(){
+        $.post(logievalAdmin.ajax_url, {action:'logieval_admin', nonce:logievalAdmin.nonce, sub_action:'demo_toggle', on: this.checked ? 1 : 0}, function(r){
+            if (r.success) { $('#cfg-demo-state').text(r.data.on ? 'Mode démonstration activé : la carte « Essayer LogiEval » est visible sur la page de connexion.' : 'Mode démonstration désactivé.'); }
+        });
+    });
+    $('#cfg-demo-purge').on('click', function(){
+        if (!confirm('Effacer toutes les données de démonstration (classes, élèves, collègues et évaluations fictifs) ? Vos vraies données ne sont pas touchées.')) return;
+        $.post(logievalAdmin.ajax_url, {action:'logieval_admin', nonce:logievalAdmin.nonce, sub_action:'demo_purge'}, function(r){
+            if (r.success) { $('#cfg-demo-state').text(r.data.n + ' essai(s) effacé(s). Données de démonstration supprimées.'); }
+        });
+    });
     $('#logieval-save-settings').on('click', function(){
         var data = {
             action:'logieval_admin', nonce:logievalAdmin.nonce, sub_action:'save_settings',

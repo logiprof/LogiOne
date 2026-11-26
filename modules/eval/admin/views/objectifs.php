@@ -3,7 +3,7 @@
 <h1>Objectifs évaluateurs</h1>
 <?php
 $t = LOGIEVAL_Database::tables();
-$objectifs = LOGIEVAL_Database::get_rows($t['objectifs'], [], 'ordre');
+$objectifs = array_values(array_filter(LOGIEVAL_Database::get_rows($t['objectifs'], [], 'ordre'), static fn($o) => ! in_array((int)$o['id'], LOGIEVAL_Demo::objective_ids(), true))); // 1.53.19 : sans la grille de démonstration
 $total_max = LOGIEVAL_Database::get_total_max_points();
 global $wpdb;
 

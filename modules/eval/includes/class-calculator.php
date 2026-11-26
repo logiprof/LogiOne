@@ -33,11 +33,13 @@ class LOGIEVAL_Calculator {
                 return self::freeze_grid( $eval_id, 1 );
             }
         }
-        return self::live_grid() + ['frozen' => false, 'rule' => 2];
+        return self::live_grid( $eval_id ) + ['frozen' => false, 'rule' => 2];
     }
 
-    private static function live_grid(): array {
+    private static function live_grid( int $eval_id = 0 ): array {
         global $wpdb;
+        // 1.53.19 : évaluation d'essai (mode démonstration) : grille courte de démonstration.
+        if ( $eval_id && class_exists( 'LOGIEVAL_Demo' ) && LOGIEVAL_Demo::is_demo_eval( $eval_id ) ) return LOGIEVAL_Demo::grid();
         $t = LOGIEVAL_Database::tables();
         $objectifs = LOGIEVAL_Database::get_rows( $t['objectifs'], ['actif' => 1], 'ordre' );
         $all_sc    = $wpdb->get_results( "SELECT * FROM {$t['sous_criteres']} ORDER BY objectif_id,ordre", ARRAY_A ) ?: [];
@@ -48,7 +50,7 @@ class LOGIEVAL_Calculator {
 
     /** Fige la grille d'une évaluation (appelé à chaque clôture). */
     public static function freeze_grid( int $eval_id, int $rule = 2 ): array {
-        $grid = self::live_grid() + ['rule' => $rule];
+        $grid = self::live_grid( $eval_id ) + ['rule' => $rule];
         update_option( 'logieval_grid_' . $eval_id, $grid, false );
         return $grid + ['frozen' => true];
     }

@@ -190,6 +190,14 @@ class LOGIEVAL_Auth {
         return true;
     }
 
+    /** 1.53.19 : connexion d'un visiteur du mode démonstration (cookie de session, 12 h au plus). */
+    public static function login_demo( int $ens_id ): bool {
+        $ens = LOGIEVAL_Database::get_row( LOGIEVAL_Database::t('enseignants'), ['id' => $ens_id] );
+        if ( ! $ens ) return false;
+        self::set_cookie( $ens_id, $ens, true );
+        return true;
+    }
+
     public static function logout(): void {
         self::clear_cookie();
     }

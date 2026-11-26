@@ -1,4 +1,4 @@
-# LogiOne 1.53.18
+# LogiOne 1.53.19
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,11 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.53.19
+
+- **LogiEval : mode démonstration** pour présenter l’outil aux collègues. À activer dans LogiEval › Réglages › Mode démonstration : la page de connexion propose « Essayer LogiEval sans identifiant ». Chaque collègue choisit son profil (**maître de classe** ou **enseignant·e**) et reçoit sa propre classe fictive (5 élèves, deux collègues fictifs dont un qui a déjà terminé) avec une évaluation courte : 3 objectifs, 4 questions (Oui/Non/Sans avis, un choix unique, un objectif réservé au maître).
+- Les essais n’envoient aucun e-mail, n’apparaissent pas dans les listes de l’administration et n’utilisent pas les vrais objectifs (la grille de démonstration est inactive). Un essai est effacé quand le collègue quitte la démonstration, au bout de 3 jours, ou d’un clic (« Effacer toutes les données de démonstration »). Aucune table modifiée (option `logieval_demo`).
 
 ## Nouveautés 1.53.18
 

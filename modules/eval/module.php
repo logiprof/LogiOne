@@ -26,6 +26,7 @@ require_once LOGIEVAL_PATH . 'includes/class-calculator.php';
 require_once LOGIEVAL_PATH . 'includes/class-exporter.php';
 require_once LOGIEVAL_PATH . 'includes/class-importer.php';
 require_once LOGIEVAL_PATH . 'includes/class-rollover.php';
+require_once LOGIEVAL_PATH . 'includes/class-demo.php'; // 1.53.19 : mode démonstration
 LOGIEVAL_Rollover::boot();
 require_once LOGIEVAL_PATH . 'admin/class-admin.php';
 require_once LOGIEVAL_PATH . 'public/class-public.php';

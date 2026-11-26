@@ -248,6 +248,7 @@ L'équipe de direction",
 
     /* ── Send assignment notification ───────────────────────────── */
     public static function notify_assignment( int $evaluation_id, array $enseignant_ids = [] ): int {
+        if ( self::is_demo( $evaluation_id ) ) return 0; // 1.53.19 : démonstration, aucun e-mail
         global $wpdb;
         $t   = LOGIEVAL_Database::tables();
         $eval = LOGIEVAL_Database::get_row( $t['evaluations'], ['id' => $evaluation_id] );
@@ -298,6 +299,11 @@ L'équipe de direction",
     }
 
     /* ── Send reminders (called daily by cron) ──────────────────── */
+    /** 1.53.19 : évaluation d'essai du mode démonstration (aucun e-mail). */
+    private static function is_demo( int $evaluation_id ): bool {
+        return class_exists( 'LOGIEVAL_Demo' ) && LOGIEVAL_Demo::is_demo_eval( $evaluation_id );
+    }
+
     public static function send_reminders(): void {
         global $wpdb;
         $t = LOGIEVAL_Database::tables();
@@ -317,6 +323,7 @@ L'équipe de direction",
         ), ARRAY_A ) ?: [];
 
         foreach ( $evals as $eval ) {
+            if ( self::is_demo( (int) $eval['id'] ) ) continue; // 1.53.19
             if ( get_option( 'logieval_j7_sent_' . $eval['id'] ) ) continue;
             update_option( 'logieval_j7_sent_' . $eval['id'], current_time( 'mysql' ), false );
             $days_left = max( 0, (int) round( ( strtotime( $eval['date_echeance'] ) - strtotime( $today ) ) / DAY_IN_SECONDS ) );
@@ -349,6 +356,7 @@ L'équipe de direction",
 
     /* ── Notify closure to maître de classe ─────────────────────── */
     public static function notify_closure( int $evaluation_id ): void {
+        if ( self::is_demo( $evaluation_id ) ) return; // 1.53.19 : démonstration, aucun e-mail
         global $wpdb;
         $t    = LOGIEVAL_Database::tables();
         $eval = LOGIEVAL_Database::get_row( $t['evaluations'], ['id' => $evaluation_id] );
@@ -381,6 +389,7 @@ L'équipe de direction",
     }
 
     public static function notify_teacher_completed( int $evaluation_id, int $completed_enseignant_id ): void {
+        if ( self::is_demo( $evaluation_id ) ) return; // 1.53.19 : démonstration, aucun e-mail
         global $wpdb;
         $t    = LOGIEVAL_Database::tables();
         $eval = LOGIEVAL_Database::get_row( $t['evaluations'], ['id' => $evaluation_id] );
@@ -421,6 +430,7 @@ L'équipe de direction",
     }
 
     public static function notify_all_teachers_completed( int $evaluation_id, bool $has_arbitrages = false ): void {
+        if ( self::is_demo( $evaluation_id ) ) return; // 1.53.19 : démonstration, aucun e-mail
         global $wpdb;
         $t    = LOGIEVAL_Database::tables();
         $eval = LOGIEVAL_Database::get_row( $t['evaluations'], ['id' => $evaluation_id] );
@@ -454,6 +464,7 @@ L'équipe de direction",
     }
 
     public static function notify_pending_completion( int $evaluation_id ): int {
+        if ( self::is_demo( $evaluation_id ) ) return 0; // 1.53.19 : démonstration, aucun e-mail
         global $wpdb;
         $t    = LOGIEVAL_Database::tables();
         $eval = LOGIEVAL_Database::get_row( $t['evaluations'], ['id' => $evaluation_id] );
@@ -493,6 +504,7 @@ L'équipe de direction",
     }
 
     public static function notify_last_teacher_pending( int $evaluation_id ): int {
+        if ( self::is_demo( $evaluation_id ) ) return 0; // 1.53.19 : démonstration, aucun e-mail
         global $wpdb;
         $t = LOGIEVAL_Database::tables();
         $eval = LOGIEVAL_Database::get_row($t['evaluations'], ['id'=>$evaluation_id]);
@@ -542,6 +554,7 @@ L'équipe de direction",
     }
 
     public static function send_class_report( int $evaluation_id, string $report_url ): int {
+        if ( self::is_demo( $evaluation_id ) ) return 0; // 1.53.19 : démonstration, aucun e-mail
         global $wpdb;
         $t    = LOGIEVAL_Database::tables();
         $eval = LOGIEVAL_Database::get_row( $t['evaluations'], ['id' => $evaluation_id] );
@@ -577,6 +590,7 @@ L'équipe de direction",
     }
 
     public static function notify_teacher_access( int $enseignant_id ): bool {
+        if ( class_exists( 'LOGIEVAL_Demo' ) && LOGIEVAL_Demo::is_demo_teacher( $enseignant_id ) ) return false; // 1.53.19
         $ens = LOGIEVAL_Database::get_row( LOGIEVAL_Database::t('enseignants'), ['id' => $enseignant_id] );
         if ( ! $ens || empty( $ens['email'] ) || empty( $ens['actif'] ) ) {
             return false;

@@ -97,7 +97,7 @@ class LOGIEVAL_Rollover {
 	/** Classes à proposer maintenant. */
 	public static function due_classes(): array {
 		$t = LOGIEVAL_Database::tables();
-		return array_values( array_filter( LOGIEVAL_Database::get_rows( $t['classes'], array(), 'nom' ), array( __CLASS__, 'is_due' ) ) );
+		return array_values( array_filter( LOGIEVAL_Demo::hide( LOGIEVAL_Database::get_rows( $t['classes'], array(), 'nom' ), 'classes' ), array( __CLASS__, 'is_due' ) ) );
 	}
 	/** Bandeau « nouvelle année scolaire » (page Classes et tableau de bord). */
 	public static function render_notice( bool $with_link = true ): void {

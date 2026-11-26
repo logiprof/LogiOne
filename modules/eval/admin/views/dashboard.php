@@ -60,11 +60,13 @@ $steps_done = count(array_filter($steps, fn($s) => $s[1]));
 <?php
 global $wpdb;
 $t = LOGIEVAL_Database::tables();
-$nb_classes    = $wpdb->get_var("SELECT COUNT(*) FROM {$t['classes']}");
-$nb_eleves     = $wpdb->get_var("SELECT COUNT(*) FROM {$t['eleves']}");
-$nb_ens        = $wpdb->get_var("SELECT COUNT(*) FROM {$t['enseignants']}");
-$nb_eval_act   = $wpdb->get_var("SELECT COUNT(*) FROM {$t['evaluations']} WHERE statut='active'");
-$nb_eval_clos  = $wpdb->get_var("SELECT COUNT(*) FROM {$t['evaluations']} WHERE statut='cloturee'");
+// 1.53.19 : sans les essais du mode démonstration
+$demo_ens      = LOGIEVAL_Demo::teacher_ids();
+$nb_classes    = $wpdb->get_var("SELECT COUNT(*) FROM {$t['classes']} WHERE 1=1" . LOGIEVAL_Demo::sql_exclude('id'));
+$nb_eleves     = $wpdb->get_var("SELECT COUNT(*) FROM {$t['eleves']} WHERE 1=1" . LOGIEVAL_Demo::sql_exclude('classe_id'));
+$nb_ens        = $wpdb->get_var("SELECT COUNT(*) FROM {$t['enseignants']}" . ( $demo_ens ? ' WHERE id NOT IN (' . implode(',', $demo_ens) . ')' : '' ));
+$nb_eval_act   = $wpdb->get_var("SELECT COUNT(*) FROM {$t['evaluations']} WHERE statut='active'" . LOGIEVAL_Demo::sql_exclude('classe_id'));
+$nb_eval_clos  = $wpdb->get_var("SELECT COUNT(*) FROM {$t['evaluations']} WHERE statut='cloturee'" . LOGIEVAL_Demo::sql_exclude('classe_id'));
 $evals_actives = $wpdb->get_results(
     "SELECT ev.*, cl.nom AS classe_nom,
             COUNT(ee.id) AS nb_ens,
@@ -72,7 +74,7 @@ $evals_actives = $wpdb->get_results(
      FROM {$t['evaluations']} ev
      INNER JOIN {$t['classes']} cl ON cl.id = ev.classe_id
      LEFT JOIN {$t['eval_enseignant']} ee ON ee.evaluation_id = ev.id
-     WHERE ev.statut = 'active'
+     WHERE ev.statut = 'active'" . LOGIEVAL_Demo::sql_exclude('ev.classe_id') . "
      GROUP BY ev.id
      ORDER BY ev.date_echeance ASC", ARRAY_A
 );

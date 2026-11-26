@@ -53,8 +53,25 @@ class LOGIEVAL_Public {
                 self::$auth_state = LOGIEVAL_Auth::is_rate_limited() ? 'rate' : 'fail';
             }
             nocache_headers();
+        } elseif ( isset( $_POST['logieval_demo_start'] ) && class_exists( 'LOGIEVAL_Demo' ) && LOGIEVAL_Demo::enabled() ) {
+            // 1.53.19 : mode démonstration : un espace d'essai par visiteur, sans identifiant.
+            $profil = sanitize_key( wp_unslash( $_POST['logieval_demo_profil'] ?? '' ) );
+            $prenom = sanitize_text_field( wp_unslash( $_POST['logieval_demo_prenom'] ?? '' ) );
+            if ( wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_lgedemo'] ?? '' ) ), 'logieval_demo_start' ) && LOGIEVAL_Demo::start( $profil, $prenom ) ) {
+                self::$auth_state = 'ok';
+                if ( ! headers_sent() ) {
+                    nocache_headers();
+                    wp_safe_redirect( remove_query_arg( [ 'logieval_logout', 'logieval_eval', 'logieval_demo' ], add_query_arg( [] ) ), 303 );
+                    exit;
+                }
+            } else {
+                self::$auth_state = 'demo_fail';
+            }
+            nocache_headers();
         } elseif ( isset( $_GET['logieval_logout'] ) ) {
+            $demo_sb = class_exists( 'LOGIEVAL_Demo' ) ? LOGIEVAL_Demo::current_sandbox() : null;
             LOGIEVAL_Auth::logout();
+            if ( $demo_sb ) LOGIEVAL_Demo::delete_sandbox( (int) $demo_sb['classe_id'] ); // « Quitter la démonstration » : l'essai est effacé
             self::$auth_state = 'logout';
             nocache_headers();
         }
@@ -333,7 +350,8 @@ class LOGIEVAL_Public {
         if ( $sc_id ) {
             $sc = LOGIEVAL_Database::get_row($t['sous_criteres'], ['id' => $sc_id]);
             $obj = $sc ? LOGIEVAL_Database::get_row($t['objectifs'], ['id' => $sc['objectif_id']]) : null;
-            if ( ! $sc || ! $obj || empty($obj['actif']) ) {
+            $demo_ok = $obj && class_exists('LOGIEVAL_Demo') && LOGIEVAL_Demo::is_demo_eval($eval) && in_array((int)$obj['id'], LOGIEVAL_Demo::objective_ids(), true);
+            if ( ! $sc || ! $obj || ( empty($obj['actif']) && ! $demo_ok ) ) {
                 return ['ok' => false, 'message' => "Critère introuvable."];
             }
             if ( ! empty($obj['maitre_seulement']) && ! LOGIEVAL_Auth::is_maitre($ens_id, (int)$eval['classe_id']) ) {
@@ -479,6 +497,58 @@ class LOGIEVAL_Public {
         return $this->render_login_form($error ?? '');
     }
 
+    /** 1.53.19 : carte « Essayer LogiEval » sur l'écran de connexion (mode démonstration activé). */
+    private static function demo_card(): string {
+        if ( ! class_exists( 'LOGIEVAL_Demo' ) || ! LOGIEVAL_Demo::enabled() ) return '';
+        $err = 'demo_fail' === self::$auth_state ? '<p class="logieval-error">La démonstration n’a pas pu démarrer. Rechargez la page et réessayez.</p>' : '';
+        $action = esc_url( remove_query_arg( [ 'logieval_logout', 'logieval_eval' ], wp_unslash( $_SERVER['REQUEST_URI'] ?? '' ) ) );
+        $nonce  = wp_create_nonce( 'logieval_demo_start' );
+        ob_start(); ?>
+        <div class="logieval-login-card lge-demo-card">
+            <span class="lge-demo-kicker">Démonstration</span>
+            <h3>Essayer LogiEval sans identifiant</h3>
+            <p class="lge-demo-lead">Vous recevez votre propre classe fictive (5 élèves) et une évaluation courte : 3 objectifs, 4 questions. Rien n’est envoyé, rien ne compte : l’essai est effacé quand vous quittez la démonstration.</p>
+            <?= $err ?>
+            <form method="post" action="<?= $action ?>" class="lge-demo-form">
+                <input type="hidden" name="_lgedemo" value="<?= esc_attr( $nonce ) ?>">
+                <input type="hidden" name="logieval_demo_start" value="1">
+                <label class="lge-demo-name">Votre prénom <span>(facultatif)</span><input type="text" name="logieval_demo_prenom" maxlength="40" autocomplete="given-name" placeholder="ex. Julie"></label>
+                <p class="lge-demo-q">Avec quel profil voulez-vous essayer ?</p>
+                <div class="lge-demo-choices">
+                    <button type="submit" name="logieval_demo_profil" value="maitre" class="lge-demo-choice"><b>Maître de classe</b><span>Vous suivez vos collègues, arbitrez, clôturez et imprimez les résultats.</span></button>
+                    <button type="submit" name="logieval_demo_profil" value="enseignant" class="lge-demo-choice"><b>Enseignant·e</b><span>Vous répondez pour chaque élève, puis marquez votre évaluation comme terminée.</span></button>
+                </div>
+            </form>
+        </div>
+        <style>
+        .lge-demo-card{border:2px dashed #f5c400;background:#fffbea;margin-top:18px}
+        .lge-demo-kicker{display:inline-block;background:#f5c400;color:#313a45;font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:99px}
+        .lge-demo-card h3{margin:10px 0 6px}
+        .lge-demo-lead{margin:0 0 12px;font-size:14px;line-height:1.5;color:#4a5563}
+        .lge-demo-name{display:flex;flex-direction:column;gap:4px;font-weight:600;font-size:14px;margin-bottom:10px}
+        .lge-demo-name span{font-weight:400;color:#5b6672}
+        .lge-demo-name input{padding:9px 11px;border:1px solid #d9ddd6;border-radius:8px;font-size:15px;max-width:280px}
+        .lge-demo-q{margin:4px 0 8px;font-weight:600;font-size:14px}
+        .lge-demo-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+        .lge-demo-choice{display:flex;flex-direction:column;gap:4px;text-align:left;padding:14px 16px;border:2px solid #313a45;border-radius:12px;background:#fff;color:#313a45 !important;cursor:pointer;font:inherit}
+        .lge-demo-choice:hover,.lge-demo-choice:focus{border-color:#067030;background:#f0faf3}
+        .lge-demo-choice b{font-size:16px}
+        .lge-demo-choice span{font-size:13px;line-height:1.45;color:#4a5563}
+        </style>
+        <?php return ob_get_clean();
+    }
+
+    /** 1.53.19 : bandeau du visiteur en démonstration (accueil et évaluation). */
+    private static function demo_banner(): string {
+        $sb = class_exists( 'LOGIEVAL_Demo' ) ? LOGIEVAL_Demo::current_sandbox() : null;
+        if ( ! $sb ) return '';
+        $role = 'maitre' === $sb['profil'] ? 'maître de classe' : 'enseignant·e (Marie Exemple est la maîtresse de classe)';
+        $quit = self::logout_url();
+        return '<div class="lge-demo-banner" role="status"><b>Mode démonstration</b> · Vous essayez LogiEval comme <b>' . esc_html( $role ) . '</b>. Élèves et collègues fictifs, aucun e-mail envoyé. '
+            . '<a href="' . esc_url( $quit ) . '">Quitter la démonstration</a> (l’essai est effacé ; vous pourrez en recommencer un autre).</div>'
+            . '<style>.lge-demo-banner{background:#fffbea;border:2px dashed #f5c400;border-radius:12px;padding:10px 14px;margin:0 0 16px;font-size:14px;line-height:1.5;color:#313a45}.lge-demo-banner a{color:#067030;font-weight:600}</style>';
+    }
+
     private function render_login_form( string $message = '' ): string {
         $action_url = esc_url(remove_query_arg(['logieval_logout'], wp_unslash($_SERVER['REQUEST_URI'] ?? '')));
         ob_start(); ?>
@@ -496,6 +566,7 @@ class LOGIEVAL_Public {
                     <p class="logieval-login-help">Pas besoin de compte sur le site : votre identifiant personnel, reçu par e-mail, suffit.<br><a href="<?= esc_url( LOGIEVAL_Mailer::guide_url() ) ?>" target="_blank" rel="noopener">📘 Guide de l’enseignant (PDF)</a></p>
                 </form>
             </div>
+            <?= self::demo_card() ?>
             </div>
         </div>
         <?php return ob_get_clean();
@@ -577,6 +648,7 @@ class LOGIEVAL_Public {
         <div class="logieval-app logieval-portal-wrap">
             <?= self::hero(['title'=>'Bonjour '.$ens['prenom'], 'lead'=>'Vos évaluations de la posture professionnelle des apprenti·es, au même endroit.', 'user'=>$ens, 'art'=>true]) ?>
             <div class="lge-body">
+            <?= self::demo_banner() ?>
             <?php if (!empty($delete_success) || !empty($reopen_success)): ?>
             <script>if (window.history && history.replaceState) { history.replaceState(null, '', location.href); }</script>
             <?php endif ?>
@@ -891,6 +963,7 @@ class LOGIEVAL_Public {
         <div class="logieval-app logieval-eval-wrap" data-can-peer="<?=$can_view_peer_details ? 1 : 0?>">
             <?= self::hero(['title'=>$classe['nom'], 'kicker'=>$eval['semestre'], 'meta'=>$hero_meta, 'back'=>true, 'actions'=>$hero_actions, 'user'=>$ens_id ? LOGIEVAL_Auth::current_enseignant() : null]) ?>
             <div class="lge-body">
+            <?= self::demo_banner() ?>
             <?php if ($is_test_mode): ?>
             <div class="logieval-test-banner">
                 <strong>Entraînement</strong>
@@ -1870,10 +1943,9 @@ class LOGIEVAL_Public {
 
         $is_maitre = LOGIEVAL_Auth::is_maitre($ens_id, (int)$eval['classe_id']);
         $eleves    = LOGIEVAL_Database::eval_students($eval); // 1.53.1
-        $objectifs = LOGIEVAL_Database::get_rows($t['objectifs'], ['actif'=>1], 'ordre');
-        $all_sc    = $wpdb->get_results("SELECT * FROM {$t['sous_criteres']} ORDER BY objectif_id,ordre", ARRAY_A) ?: [];
-        $sous_by_obj = [];
-        foreach ($all_sc as $sc) $sous_by_obj[$sc['objectif_id']][] = $sc;
+        $grid_mr     = LOGIEVAL_Calculator::grid($eval_id); // 1.53.19 : même grille que l'écran (grille courte en démonstration)
+        $objectifs   = $grid_mr['objectifs'];
+        $sous_by_obj = $grid_mr['sous_by_obj'];
 
         $rows = $wpdb->get_results($wpdb->prepare(
             "SELECT eleve_id, sous_critere_id, vote
@@ -2394,7 +2466,7 @@ class LOGIEVAL_Public {
             $t = LOGIEVAL_Database::tables();
             $sql = "SELECT sc.id FROM {$t['sous_criteres']} sc
                     INNER JOIN {$t['objectifs']} o ON o.id = sc.objectif_id
-                    WHERE o.actif = 1 AND o.type = 'checkbox' AND o.maitre_seulement = 0
+                    WHERE " . ( LOGIEVAL_Demo::is_demo_eval($ctx['eval']) && LOGIEVAL_Demo::objective_ids() ? 'o.id IN (' . implode(',', LOGIEVAL_Demo::objective_ids()) . ')' : 'o.actif = 1' ) . " AND o.type = 'checkbox' AND o.maitre_seulement = 0
                       AND o.id NOT IN (SELECT objectif_id FROM {$t['non_evaluables']} WHERE evaluation_id=%d AND enseignant_id=%d AND eleve_id=%d)
                       AND sc.id NOT IN (SELECT sous_critere_id FROM {$t['reponses']} WHERE evaluation_id=%d AND enseignant_id=%d AND eleve_id=%d AND vote_set=1)";
             $args = [$eval_id, $ens_id, $eleve_id, $eval_id, $ens_id, $eleve_id];

@@ -4,8 +4,8 @@
 
 <?php
 $t = LOGIEVAL_Database::tables();
-$classes      = LOGIEVAL_Rollover::without_archived(LOGIEVAL_Database::get_rows($t['classes'], [], 'annee_scolaire DESC, nom')); // 1.53.0 : archivées dans « Passage d'année »
-$all_ens      = LOGIEVAL_Database::get_rows($t['enseignants'], ['actif' => 1], 'nom, prenom');
+$classes      = LOGIEVAL_Demo::hide(LOGIEVAL_Rollover::without_archived(LOGIEVAL_Database::get_rows($t['classes'], [], 'annee_scolaire DESC, nom')), 'classes'); // 1.53.0 : archivées dans « Passage d'année »
+$all_ens      = LOGIEVAL_Demo::hide(LOGIEVAL_Database::get_rows($t['enseignants'], ['actif' => 1], 'nom, prenom'), 'enseignants');
 global $wpdb;
 ?>
 

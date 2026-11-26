@@ -1,7 +1,7 @@
 <?php if (!defined('ABSPATH')) exit; ?>
 <div class="wrap logieval-wrap">
 <h1>Enseignants</h1>
-<?php $ens_list = LOGIEVAL_Database::get_rows(LOGIEVAL_Database::t('enseignants'), [], 'nom, prenom');
+<?php $ens_list = LOGIEVAL_Demo::hide(LOGIEVAL_Database::get_rows(LOGIEVAL_Database::t('enseignants'), [], 'nom, prenom'), 'enseignants'); // 1.53.19 : sans les essais de démonstration
 $access_sent = get_option('logieval_access_sent', null);
 if ($access_sent === null) { // 1.53.11 : les comptes déjà actifs avant cette version ont déjà reçu leur accès
     $access_sent = [];

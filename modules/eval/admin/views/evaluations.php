@@ -4,8 +4,8 @@
 <?php
 global $wpdb;
 $t = LOGIEVAL_Database::tables();
-$classes = LOGIEVAL_Rollover::without_archived(LOGIEVAL_Database::get_rows($t['classes'], [], 'nom')); // 1.53.0
-$all_ens = LOGIEVAL_Database::get_rows($t['enseignants'], [], 'nom, prenom');
+$classes = LOGIEVAL_Demo::hide(LOGIEVAL_Rollover::without_archived(LOGIEVAL_Database::get_rows($t['classes'], [], 'nom')), 'classes'); // 1.53.0
+$all_ens = LOGIEVAL_Demo::hide(LOGIEVAL_Database::get_rows($t['enseignants'], [], 'nom, prenom'), 'enseignants');
 
 /* ══ DETAIL VIEW ══════════════════════════════════════════════ */
 $detail_id = intval($_GET['eval_id'] ?? 0);
@@ -254,6 +254,7 @@ $evals = $wpdb->get_results(
      FROM {$t['evaluations']} ev
      INNER JOIN {$t['classes']} cl ON cl.id = ev.classe_id
      LEFT JOIN  {$t['eval_enseignant']} ee ON ee.evaluation_id = ev.id
+     WHERE 1=1" . LOGIEVAL_Demo::sql_exclude('ev.classe_id') . "
      GROUP BY ev.id
      ORDER BY ev.date_creation DESC",
     ARRAY_A
