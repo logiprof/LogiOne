@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Vous pouvez importer un travail préparé par un collègue, ou en créer un nouveau.

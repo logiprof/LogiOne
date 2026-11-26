@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Le travail est ouvert. Avec Statut par classe, vous pouvez aussi l'ouvrir ou le verrouiller pour une seule classe.

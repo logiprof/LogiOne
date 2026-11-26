@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Le tableau montre chaque groupe : travail remis, ou encore en cours avec un fichier de travail enregistré.

@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Chaque critère vaut zéro, un ou deux points. Vous pouvez modifier les textes, ajouter ou supprimer des critères.

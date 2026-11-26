@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Cochez les classes concernées et choisissez le nombre d'apprentis par groupe : ici, des duos.
