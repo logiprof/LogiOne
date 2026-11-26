@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-En haut : le nombre d'élèves, la progression moyenne, ceux qui ont tout terminé,

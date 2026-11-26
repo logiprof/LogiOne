@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Le contrôle automatique liste chaque critère. Ici, le corps du texte n'est pas justifié et la bordure de l'encadré manque.

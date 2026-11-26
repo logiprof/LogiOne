@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-LogiProgress montre, leçon par leçon, où en sont vos apprentis dans les cours en ligne de LogiProf.

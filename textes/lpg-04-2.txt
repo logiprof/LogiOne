@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Pour les leçons avec quiz, le nombre de questions est affiché.

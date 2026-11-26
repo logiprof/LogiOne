@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+En haut, une case par leçon : le nombre d'apprentis qui ont rendu, et combien sont à corriger.

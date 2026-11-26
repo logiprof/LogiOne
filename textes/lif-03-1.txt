@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Ensuite, la copie et le résultat attendu s'affichent côte à côte, avec le même défilement.

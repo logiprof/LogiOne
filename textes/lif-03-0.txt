@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+La fiche vérifie d'abord qui a travaillé sur le fichier : ici, le nom correspond bien au compte de l'apprenti.

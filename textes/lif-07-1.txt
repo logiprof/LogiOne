@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Vérifiez le contrôle automatique, l'auteur du fichier et la comparaison avec le résultat attendu.
