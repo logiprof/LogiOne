@@ -1,8 +1,0 @@
-1
-00:00:00,100 --> 00:00:01,700
-Bonjour !
-
-2
-00:00:01,650 --> 00:00:10,425
-Dans cette vidéo, vous allez apprendre à rendre votre travail dans LogiProjet : former votre duo, enregistrer votre fichier de travail, puis le remettre à votre enseignant.
-
