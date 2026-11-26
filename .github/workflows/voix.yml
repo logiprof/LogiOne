@@ -1,0 +1,28 @@
+name: Voix de synthèse
+on:
+  push:
+    branches: [outils-voix]
+    paths: ['textes/**']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  voix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install edge-tts==7.0.2
+      - name: Générer les fichiers audio
+        run: |
+          mkdir -p audio
+          for f in textes/*.txt; do
+            n=$(basename "$f" .txt)
+            v=$(head -1 "$f"); r=$(sed -n 2p "$f")
+            tail -n +3 "$f" > /tmp/t.txt
+            edge-tts --voice "$v" --rate="$r" -f /tmp/t.txt --write-media "audio/$n.mp3" --write-subtitles "audio/$n.srt"
+          done
+          edge-tts --list-voices | grep -i "^fr-" > audio/voix-fr.txt || true
+      - name: Enregistrer
+        run: |
+          git config user.name "voix-bot"; git config user.email "voix-bot@users.noreply.github.com"
+          git add audio; git commit -m "Audio généré" || exit 0; git push
