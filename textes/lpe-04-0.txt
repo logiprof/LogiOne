@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-La grille d'évaluation est prête : un critère par leçon, puis l'explication, la structure, la lisibilité et la forme.

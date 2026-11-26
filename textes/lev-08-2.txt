@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+L'évaluation clôturée affiche la note de chaque élève.
