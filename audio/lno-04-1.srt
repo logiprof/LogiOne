@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,762
+Dans Semestres, indiquez le nom, l'année scolaire et les dates du semestre.
+

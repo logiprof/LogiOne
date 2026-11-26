@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:04,550
+Suivez les moyennes dans le relevé, puis reportez les notes dans AGAPEPE.
+
+2
+00:00:04,500 --> 00:00:06,387
+Bon travail !
+

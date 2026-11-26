@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,412
+Le Relevé réunit toutes les notes d'une classe pour un semestre, avec la moyenne de chaque élève.
+

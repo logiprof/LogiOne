@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:07,987
+Les onglets en haut donnent accès à tout : évaluations, groupes classes, branches, semestres, relevé, AGAPEPE et paramètres.
+

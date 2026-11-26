@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:08,350
+Pour ajouter les élèves, collez la liste : nom, point-virgule, prénom, une ligne par élève, ou importez un fichier Excel ou CSV.
+

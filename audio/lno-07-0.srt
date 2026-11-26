@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:02,775
+L'évaluation est enregistrée.
+
+2
+00:00:02,725 --> 00:00:06,487
+Le bouton Exporter PDF imprime la liste des notes.
+

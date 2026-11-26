@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,400
+Choisissez ensuite le groupe classe : la liste des élèves apparaît.
+

@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,637
+Saisissez les points de chaque évaluation : la note se calcule toute seule.
+

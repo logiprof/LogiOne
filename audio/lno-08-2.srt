@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,487
+L'onglet AGAPEPE liste les notes à reporter.
+
+2
+00:00:03,437 --> 00:00:06,875
+Une fois reportées, cliquez sur Marquer saisi.
+

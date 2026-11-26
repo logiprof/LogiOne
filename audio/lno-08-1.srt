@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,350
+Exporter le semestre PDF en fait un document à imprimer.
+

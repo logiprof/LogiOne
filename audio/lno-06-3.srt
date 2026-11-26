@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:02,987
+Un élève ne fera pas cette évaluation ?
+
+2
+00:00:02,937 --> 00:00:06,700
+Cochez Ne sera pas faite : elle ne compte pas dans sa moyenne.
+

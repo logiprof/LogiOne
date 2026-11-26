@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:07,200
+Dans Évaluations, une colonne par classe montre vos évaluations, de la plus récente à la plus ancienne, avec la moyenne.
+

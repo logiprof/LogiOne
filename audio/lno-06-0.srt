@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,087
+Tapez les points obtenus par chaque élève.
+
+2
+00:00:03,037 --> 00:00:09,400
+La note est calculée tout de suite : points sur le total, fois cinq, plus un, arrondie au demi-point.
+

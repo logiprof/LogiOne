@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,062
+Dans le portail LogiOne, cliquez sur la tuile LogiNotes.
+

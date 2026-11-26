@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:02,587
+Les élèves sont dans le groupe.
+
+2
+00:00:02,537 --> 00:00:06,237
+Vous pouvez corriger un nom ou ajouter un élève à tout moment.
+

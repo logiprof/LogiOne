@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:06,437
+Dans Paramètres, indiquez votre adresse e-mail : LogiNotes vous prévient si une note manque encore après quinze jours.
+
