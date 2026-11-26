@@ -76,6 +76,31 @@
     });
     return out;
   }
+  /* 1.53.18 : statut par classe. Badge du travail : statut commun, ou détail par classe s'il diffère. */
+  function mixedStatus(t) {
+    var cl = t.classes || [];
+    if (cl.length < 2) { return false; }
+    return cl.some(function (c) { return c.status !== cl[0].status; });
+  }
+  function travailBadge(t) {
+    if (!mixedStatus(t)) { return statusBadge((t.classes && t.classes.length) ? t.classes[0].status : t.status, ST_T); }
+    return t.classes.map(function (c) { return '<span class="lpj-badge st-' + esc(c.status) + '" style="max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="' + esc(c.title + ' : ' + ST_T[c.status]) + '">' + esc(c.title) + ' · ' + esc(ST_T[c.status] === 'Ouvert aux dépôts' ? 'Ouvert' : ST_T[c.status]) + '</span>'; }).join('');
+  }
+  function anyOpen(t) {
+    return (t.classes && t.classes.length) ? t.classes.some(function (c) { return c.status !== 'brouillon'; }) : t.status !== 'brouillon';
+  }
+  function classStatusPanel(t) {
+    var cl = t.classes || [];
+    if (cl.length < 2) { return ''; }
+    return '<section class="lpj-card"><h3>Statut par classe</h3><p class="lpj-muted" style="margin:0 0 10px">Ouvrez ou verrouillez ce travail pour une classe sans toucher aux autres. Une classe en brouillon ne voit pas le travail ; une classe fermée le voit mais ne peut plus déposer.</p>' +
+      '<div style="display:flex;flex-wrap:wrap;gap:12px">' + cl.map(function (c) {
+        var own = t.class_status && t.class_status[c.id] ? t.class_status[c.id] : '';
+        return '<label class="lpj-field" style="min-width:220px;margin:0"><span><b>' + esc(c.title) + '</b></span><select data-class-status="' + c.id + '">' +
+          '<option value=""' + (own ? '' : ' selected') + '>Comme le travail (' + esc(ST_T[t.status]) + ')</option>' +
+          Object.keys(ST_T).map(function (k) { return '<option value="' + k + '"' + (own === k ? ' selected' : '') + '>' + ST_T[k] + '</option>'; }).join('') +
+          '</select></label>';
+      }).join('') + '</div></section>';
+  }
   function statusBadge(st, map) { return '<span class="lpj-badge st-' + esc(st) + '">' + esc((map || ST_D)[st] || st) + '</span>'; }
 
   /* ---------- Gabarit ---------- */
@@ -101,10 +126,10 @@
     api('travaux' + (S.allT ? '?tous=1' : '')).then(function (list) {
       var warn = S.me.ai_ready ? '' : '<div class="lpj-alert is-y"><b>Aucune clé API d’IA n’est configurée.</b> Les apprentis peuvent déposer, mais la correction par IA ne fonctionnera pas. ' + (S.me.settings ? '<a href="' + esc(S.me.settings) + '">Ouvrir les réglages</a>' : 'Demandez à l’administrateur du site.') + '</div>';
       var tiles = list.map(function (t) {
-        var cls = t.status === 'ouvert' ? (t.due_passed ? 'is-b' : (soon(t.due_at) ? 'is-y' : '')) : 'is-g';
+        var cls = (t.classes && t.classes.length ? t.classes.some(function (c) { return c.status === 'ouvert'; }) : t.status === 'ouvert') ? (t.due_passed ? 'is-b' : (soon(t.due_at) ? 'is-y' : '')) : 'is-g';
         var c = t.counts;
         return '<article class="lpj-tile lpj-tile-click ' + cls + '" data-go="#/travail/' + t.id + '" tabindex="0">' +
-          '<div class="lpj-meta">' + (t.module ? '<b>' + esc(t.module) + '</b>' : '') + statusBadge(t.status, ST_T) + (t.graded === false ? '<span class="lpj-badge">Non noté</span>' : '') + '</div>' +
+          '<div class="lpj-meta">' + (t.module ? '<b>' + esc(t.module) + '</b>' : '') + travailBadge(t) + (t.graded === false ? '<span class="lpj-badge">Non noté</span>' : '') + '</div>' +
           '<h3>' + esc(t.title) + '</h3>' +
           (t.mine === false ? '<div class="lpj-meta"><span class="lpj-badge lpj-badge-author">Créé par ' + esc(t.author) + '</span></div>' : '') +
           '<div class="lpj-meta">' + (t.due_at ? '<span>À rendre le ' + esc(fmtDate(t.due_at)) + '</span>' : '<span>Sans date limite</span>') + '<span>' + t.grille.length + ' critères · ' + t.total + ' points</span></div>' +
@@ -400,7 +425,7 @@
     }).join('');
     var groupNames = (S.groups || []).filter(function (g) { return t.group_ids.indexOf(g.id) > -1; }).map(function (g) { return g.title; });
     var body = '<div class="lpj-crumb"><a href="#/" data-go="#/">Vos travaux</a> / ' + esc(t.title) + '</div>' +
-      '<div class="lpj-bar"><h2>' + esc(t.title) + ' ' + statusBadge(t.status, ST_T) + '</h2>' +
+      '<div class="lpj-bar"><h2>' + esc(t.title) + ' ' + travailBadge(t) + '</h2>' +
       '<button class="lpj-btn" data-go="#/travail/' + t.id + '/modifier">Modifier</button>' +
       '<button class="lpj-btn" data-go="#/travail/' + t.id + '/apercu">Aperçu apprenti</button>' +
       '<a class="lpj-btn" href="' + esc(t.print_url) + '" target="_blank" rel="noopener">' + (t.depots.length ? 'Imprimer les grilles' : 'Grille vierge') + '</a>' +
@@ -412,9 +437,10 @@
       '<span>' + (t.due_at ? 'À rendre le ' + esc(fmtDate(t.due_at)) : 'Sans date limite') + '</span><span>' + t.grille.length + ' critères · ' + t.total + ' points</span>' +
       '<span>' + (groupNames.length ? 'Classes : ' + esc(groupNames.join(', ')) : (t.group_ids.length ? t.group_ids.length + ' classe(s)' : 'Toutes les classes')) + '</span></div>' +
       dueBanner(t) +
-      (t.status === 'brouillon' ? '<div class="lpj-alert is-y">Ce travail est en <b>brouillon</b> : les apprentis ne le voient pas encore. <button class="lpj-btn lpj-btn-sm lpj-btn-yellow" data-act="open-travail" style="margin-left:8px">Ouvrir aux dépôts</button></div>' : '') +
+      (!anyOpen(t) ? '<div class="lpj-alert is-y">Ce travail est en <b>brouillon</b> : les apprentis ne le voient pas encore. <button class="lpj-btn lpj-btn-sm lpj-btn-yellow" data-act="open-travail" style="margin-left:8px">Ouvrir aux dépôts</button></div>' : '') +
       (progress ? '<div class="lpj-alert is-b"><b>Correction par l’IA en cours : ' + progress.done + ' / ' + progress.total + '</b> · ne fermez pas cette page.<div class="lpj-progress"><span style="width:' + Math.round(progress.done / progress.total * 100) + '%"></span></div></div>' : '') +
       (S.me.ai_ready ? '' : '<div class="lpj-alert is-y">Aucune clé API configurée : la correction directe par IA est désactivée. Utilisez « Corriger dans Claude » ci-dessous.</div>') +
+      classStatusPanel(t) +
       claudePanel(t) +
       classesPanel(t) +
       (t.depots.length ? rows :
@@ -1140,6 +1166,11 @@
   root.addEventListener('change', function (e) {
     var el = e.target;
     if (el.hasAttribute('data-file')) { setFile(el.files[0]); return; }
+    if (el.hasAttribute('data-class-status') && S.travail) {
+      var map = {}; root.querySelectorAll('[data-class-status]').forEach(function (x) { if (x.value) { map[x.getAttribute('data-class-status')] = x.value; } });
+      api('travaux/' + S.travail.id, { method: 'PUT', body: { class_status: map } }).then(function (t) { S.travail = t; toast('Statut de la classe enregistré.'); drawTravail(); }).catch(function (er) { toast(er.message, true); drawTravail(); });
+      return;
+    }
     if (el.hasAttribute('data-import')) { importTravail(el.files[0]); el.value = ''; return; }
     if (el.hasAttribute('data-all-travaux')) { S.allT = el.checked; try { localStorage.setItem('lpj-tous', el.checked ? '1' : '0'); } catch (er) {} teacherHome(); return; }
     if (el.hasAttribute('data-corr-import')) { importCorrection(el.files[0]); el.value = ''; return; }

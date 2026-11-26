@@ -132,6 +132,13 @@ class LogiProjet_Rest {
 		);
 		if ( $teacher ) {
 			$out['group_ids'] = array_map( 'intval', (array) $t['group_ids'] );
+			$out['class_status'] = (object) LogiProjet_Access::class_status( $t );
+			$out['classes']      = array();
+			foreach ( (array) $t['group_ids'] as $g ) {
+				if ( 'group' === get_post_type( $g ) ) {
+					$out['classes'][] = array( 'id' => (int) $g, 'title' => html_entity_decode( get_the_title( $g ), ENT_QUOTES, 'UTF-8' ), 'status' => LogiProjet_Access::status_for_group( $t, $g ) );
+				}
+			}
 			$out['counts']    = LogiProjet_Store::counts( $t['id'] );
 			$out['author']    = LogiProjet_Sensei::user_label( $t['author_id'] );
 			$out['mine']      = (int) $t['author_id'] === get_current_user_id();
@@ -559,6 +566,14 @@ class LogiProjet_Rest {
 		}
 		LogiProjet_Store::save_travail( $data, $t['id'] );
 		$t = LogiProjet_Store::travail( $t['id'] );
+		$p = $req->get_json_params();
+		if ( is_array( $p ) && array_key_exists( 'class_status', $p ) ) {
+			$map = is_array( $p['class_status'] ) ? $p['class_status'] : array();
+			if ( in_array( 'ouvert', $map, true ) && ! $t['grille'] && $t['graded'] ) {
+				return self::err( 'La grille d’évaluation est vide : ajoutez au moins un critère avant d’ouvrir le travail.' );
+			}
+			LogiProjet_Access::save_class_status( $t['id'], $map );
+		}
 		// Les notes dépendent de la grille : on les recalcule.
 		foreach ( LogiProjet_Store::depots( $t['id'] ) as $d ) {
 			if ( $d['scores'] ) {
@@ -867,10 +882,12 @@ class LogiProjet_Rest {
 	public static function eleve_travaux() {
 		$uid = get_current_user_id();
 		$out = array();
-		foreach ( LogiProjet_Store::travaux( array( 'status' => array( 'ouvert', 'ferme' ) ) ) as $t ) {
+		// 1.53.18 : un travail en brouillon peut être ouvert pour une seule classe (statut par classe).
+		foreach ( LogiProjet_Store::travaux() as $t ) {
 			if ( ! LogiProjet_Access::student_can_see( $t, $uid ) ) {
 				continue;
 			}
+			$t['status'] = LogiProjet_Access::status_for( $t, $uid );
 			$o          = self::travail_out( $t, false );
 			$d          = LogiProjet_Store::depot_for_user( $t['id'], $uid );
 			$o['depot'] = $d ? self::depot_out( $d, $t, false ) : null;
@@ -915,6 +932,7 @@ class LogiProjet_Rest {
 		if ( ! $t || ! LogiProjet_Access::student_can_see( $t, $uid ) ) {
 			return self::err( 'Travail introuvable.', 404 );
 		}
+		$t['status'] = LogiProjet_Access::status_for( $t, $uid );
 		if ( 'ouvert' !== $t['status'] ) {
 			return self::err( 'Ce travail est fermé. Contactez votre enseignant.', 403 );
 		}
