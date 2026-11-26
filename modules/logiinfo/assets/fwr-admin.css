@@ -63,5 +63,5 @@
 .fwr-dec{display:inline-block;margin-top:3px;padding:1px 7px;border-radius:10px;font-size:11.5px;font-weight:600}.fwr-dec.ok{background:#E8F5E9;color:#1B6E20}.fwr-dec.ko{background:#FDECEA;color:#B71C1C}
 .fwr-idc{border-radius:8px;padding:10px 14px;margin:12px 0;border:1px solid}.fwr-idc ul{margin:6px 0 4px 18px;list-style:disc}
 .fwr-idc.ok{background:#F1F8F2;border-color:#B9DDBF}.fwr-idc.info{background:#F6F7F7;border-color:#DCDCDE}.fwr-idc.ko{background:#FDECEA;border-color:#E8A39C;border-left:5px solid #C62828}
-.fwr-decision{border:1px solid #DCDCDE;border-radius:8px;padding:8px 12px 10px;margin:0 0 12px}.fwr-dec-opt{margin-right:14px}
+.fwr-decision{border:1px solid #DCDCDE;border-radius:8px;padding:8px 12px 10px;margin:0 0 12px;min-width:0;max-width:100%;box-sizing:border-box}.fwr-dec-opt{margin-right:14px}
 #fwr-motif-box{margin-top:8px}#fwr-motif-box.req input{border-color:#C62828}#fwr-motif-box select{margin-top:6px;max-width:100%}

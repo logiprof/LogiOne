@@ -13,7 +13,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'LI_VERSION', '2.8.1' );
+define( 'LI_VERSION', '2.8.3' );
 define( 'LI_DIR', __DIR__ );
 define( 'LI_FILE', __FILE__ );
 define( 'LIR_VERSION', LI_VERSION );
@@ -90,7 +90,9 @@ final class LogiOne_LogiInfo {
 			$cards[] = array( 'Remises des exercices', $n ? $n . ' remise' . ( $n > 1 ? 's' : '' ) . ' à corriger' : 'Aucune remise en attente', admin_url( 'admin.php?page=fw-remises' ), true );
 			$cards[] = array( 'Correction par l’IA', 'Export des copies et import de la correction', admin_url( 'admin.php?page=fw-remises-ia' ), false );
 		}
-		$cards[] = array( 'Progression des élèves', 'Étapes terminées, leçon par leçon', admin_url( 'admin.php?page=lpfi-progress' ), false );
+		if ( current_user_can( LI_ADMIN_CAP ) || current_user_can( 'manage_sensei_grades' ) ) { // même droit que la page elle-même
+			$cards[] = array( 'Progression des élèves', 'Étapes terminées, leçon par leçon', admin_url( 'admin.php?page=lpfi-progress' ), false );
+		}
 		if ( current_user_can( LI_ADMIN_CAP ) ) {
 			$cards[] = array( 'Cours et fichiers', 'Cours Sensei Word, Excel, PowerPoint, Présentations', admin_url( 'admin.php?page=lpfi' ), false );
 			$cards[] = array( 'Formateurs et classes', 'Qui reçoit les exercices de quelle classe', admin_url( 'admin.php?page=logiinfo-formateurs' ), false );

@@ -264,7 +264,7 @@ class LIR_Core {
 		return $out;
 	}
 	public static function ref_url( $lecon, $k, $type ) {
-		return wp_nonce_url( admin_url( 'admin-post.php?action=fwr_ref&lecon=' . (int) $lecon . '&k=' . (int) $k . '&type=' . $type ), 'fwr_ref' );
+		return add_query_arg( array( 'action' => 'fwr_ref', 'lecon' => (int) $lecon, 'k' => (int) $k, 'type' => sanitize_key( $type ), '_wpnonce' => wp_create_nonce( 'fwr_ref' ) ), admin_url( 'admin-post.php' ) );
 	}
 	public static function handle_ref() {
 		check_admin_referer( 'fwr_ref' );
@@ -617,7 +617,8 @@ class LIR_Core {
 
 	/* ---------------------------------------------------------------- téléchargement sécurisé */
 	public static function download_url( $id, $k ) {
-		return wp_nonce_url( admin_url( 'admin-post.php?action=fwr_dl&id=' . (int) $id . '&f=' . (int) $k ), 'fwr_dl_' . (int) $id );
+		// Adresse brute (sans &amp;) : elle sert aussi au fetch de l'aperçu côte à côte ; les liens l'échappent à l'affichage.
+		return add_query_arg( array( 'action' => 'fwr_dl', 'id' => (int) $id, 'f' => (int) $k, '_wpnonce' => wp_create_nonce( 'fwr_dl_' . (int) $id ) ), admin_url( 'admin-post.php' ) );
 	}
 	public static function handle_download() {
 		$id = isset( $_GET['id'] ) ? (int) $_GET['id'] : 0;

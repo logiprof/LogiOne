@@ -1,7 +1,7 @@
 /* Fiche de correction : copie de l'apprenti·e et résultat attendu côte à côte. */
 (function () {
 	'use strict';
-	var cfg = window.FWR_COMPARE;
+	var cfg = window.LIR_COMPARE || window.FWR_COMPARE; // nom donné par class-fwr-admin.php (LogiOne)
 	if (!cfg || !window.docx) { return; }
 	var root = document.getElementById('fwr-compare');
 	if (!root) { return; }
