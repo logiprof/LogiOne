@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:06,225
+Une ligne par élève, une colonne par leçon : terminée, en cours, à reprendre ou pas commencée.
+

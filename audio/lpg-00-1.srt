@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:06,025
+LogiProgress montre, leçon par leçon, où en sont vos apprentis dans les cours en ligne de LogiProf.
+

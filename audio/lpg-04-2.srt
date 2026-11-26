@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,062
+Pour les leçons avec quiz, le nombre de questions est affiché.
+

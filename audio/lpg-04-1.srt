@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,512
+La dernière colonne indique la dernière activité.
+
+2
+00:00:03,462 --> 00:00:06,762
+En orange : aucune activité depuis longtemps.
+

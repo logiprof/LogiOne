@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,162
+En haut : le nombre d'élèves, la progression moyenne, ceux qui ont tout terminé,
+

@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,000
+Choisissez d'abord votre groupe classe.
+
+2
+00:00:02,950 --> 00:00:05,612
+L'étoile l'ajoute à vos favoris.
+

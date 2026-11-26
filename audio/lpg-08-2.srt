@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:05,337
+Vérifiez les rythmes suspects, relancez les inactifs et exportez en PDF.
+
+2
+00:00:05,287 --> 00:00:07,037
+Bon suivi !
+

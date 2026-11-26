@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,537
+le tableau est prêt au format A 4, module par module, à imprimer ou à enregistrer.
+

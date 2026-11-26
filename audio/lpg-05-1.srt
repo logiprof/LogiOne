@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:05,400
+Un triangle signale un rythme suspect : plusieurs leçons validées en moins de trois minutes.
+
+2
+00:00:05,350 --> 00:00:07,837
+Allez vérifier ses réponses.
+

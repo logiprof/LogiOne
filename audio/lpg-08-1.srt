@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,537
+Lisez le tableau leçon par leçon, et filtrez les élèves à relancer.
+

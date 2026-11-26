@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:06,150
+L'onglet Élèves inactifs liste ceux qui ont un cours commencé, sans activité depuis au moins sept jours.
+
