@@ -1,4 +1,4 @@
 1
-00:00:00,100 --> 00:00:03,725
-Connectez-vous au site, puis ouvrez la page Mes travaux.
+00:00:00,100 --> 00:00:03,550
+Vous arrivez sur la page Mes travaux de LogiProjet.
 
