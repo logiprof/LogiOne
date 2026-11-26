@@ -197,6 +197,19 @@ class GCA_Importer
             $normalized_headers[$header] = $this->normalize_label((string) $header);
         }
 
+        // Une colonne reconnue exactement pour un champ n'est pas reprise « à peu près » pour un autre
+        // (ex. « Entreprise formatrice » ne doit pas remplir l'adresse, le NPA ou la ville de l'entreprise).
+        $exact_owner = array();
+        foreach ($fields as $field => $definition) {
+            foreach ($normalized_headers as $header => $normalized_header) {
+                foreach ($definition['aliases'] as $alias) {
+                    if ($normalized_header === $this->normalize_label($alias) && !isset($exact_owner[$header])) {
+                        $exact_owner[$header] = $field;
+                    }
+                }
+            }
+        }
+
         foreach ($fields as $field => $definition) {
             $best_header = '';
             $best_score = 0;
@@ -212,6 +225,10 @@ class GCA_Importer
                         $score = 70 + strlen($normalized_alias);
                     } elseif (str_contains($normalized_alias, $normalized_header) && strlen($normalized_header) > 3) {
                         $score = 40 + strlen($normalized_header);
+                    }
+
+                    if ($score < 100 && isset($exact_owner[$header]) && $exact_owner[$header] !== $field) {
+                        $score = 0;
                     }
 
                     if ($score > $best_score) {
