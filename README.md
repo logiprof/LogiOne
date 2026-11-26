@@ -1,4 +1,4 @@
-# LogiOne 1.53.16
+# LogiOne 1.53.17
 
 La suite pédagogique de LogiProf. LogiNotes, LogiProgress, LogiExam et LogiClass réunis, plus des tuiles de contenu dans un seul plugin WordPress, avec :
 
@@ -60,6 +60,13 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 | Intégration | `lp_integration_link`, `lp_integration_sync` |
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
+
+## Nouveautés 1.53.17
+
+- **LogiInfo intégré à LogiOne.** Les formations Word, Excel, PowerPoint et « Réussir ses présentations » font partie de la suite : même menu « LogiInfo » dans l’administration (remises, correction par l’IA, progression, cours et fichiers, formateurs, données, réglages), mêmes codes courts (`[fw_remise …]`, `[fw_mes_remises]`, `[logiinfo_remise …]`) déjà placés dans les leçons Sensei.
+- **Tuile LogiInfo dans le portail** : remises à corriger (avec leur nombre), correction par l’IA, progression des élèves et, pour l’administrateur, cours, formateurs et sauvegarde.
+- **Base de données indépendante, conservée** : tables `logiinfo_remises`, `logiinfo_progression`, `logiinfo_eleves`, `logiinfo_exercices`, `logiinfo_journal`, réglages et fichiers des élèves (`uploads/logiinfo/`) repris tels quels. Rien n’est copié, vidé ni supprimé.
+- Tant que l’extension autonome LogiInfo est active, le module n’est pas chargé (avis de conflit). Désactivez-la : le module prend le relais avec les mêmes données.
 
 ## Nouveautés 1.53.16
 

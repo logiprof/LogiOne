@@ -1,0 +1,19 @@
+.fw-progress{margin:0 0 18px;position:sticky;top:8px;z-index:5}
+.admin-bar .fw-progress{top:40px}
+.lpex-bar{background:#fff;border:2px solid #067030;border-radius:10px;padding:12px 16px;font-family:'LP Poppins','Poppins',system-ui,sans-serif;color:#313a45;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.lpex-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.lpex-count{font-weight:600;color:#067030}
+.lpex-track{height:10px;background:#dcefe3;border-radius:6px;margin:8px 0;overflow:hidden}
+.lpex-fill{height:100%;width:0;background:#067030;border-radius:6px;transition:width .3s}
+.lpex-complete .lpex-fill{background:#f5c400}
+.lpex-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:.92em}
+.lpex-resume{font-weight:600;color:#067030!important;text-decoration:none!important}
+.lpex-resume[href]:hover{text-decoration:underline!important}
+.lpex-msg{color:#5b6672;font-size:.9em}
+.lpex-note{margin:6px 0 0;font-size:.82em;color:#5b6672}
+.lpex-check{display:inline-flex;align-items:center;gap:8px;margin:10px 0 0;padding:6px 14px;border:2px solid #067030;border-radius:20px;background:#fff;color:#067030;font-weight:600;cursor:pointer;font-size:.92em;user-select:none}
+.lpex-check input{width:18px;height:18px;accent-color:#067030;margin:0;cursor:pointer}
+.lpex-done .lpex-check{background:#067030;color:#fff}
+.lpex-done .lpex-check input{accent-color:#f5c400}
+.lpex-check:focus-within{outline:3px solid #f5c400;outline-offset:2px}
+@media print{.lpex-bar,.lpex-check{display:none}}

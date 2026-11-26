@@ -1,0 +1,67 @@
+.fwr-badge{display:inline-block;min-width:44px;text-align:center;padding:2px 8px;border-radius:12px;font-weight:600;color:#fff}
+.fwr-badge.ok{background:#2E7D32}.fwr-badge.mid{background:#E08A00}.fwr-badge.ko{background:#C62828}
+.fwr-st{display:inline-block;padding:2px 8px;border-radius:10px;font-size:12px;font-weight:600}
+.fwr-st-depose{background:#FFF3E0;color:#A35200}.fwr-st-corrige{background:#E3F2FD;color:#185ABD}.fwr-st-publie{background:#E8F5E9;color:#1B6E20}
+.fwr-stats{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
+.fwr-stat{display:flex;flex-direction:column;min-width:96px;padding:8px 10px;border:1px solid #DCDCDE;border-radius:8px;background:#fff;text-decoration:none;color:#1d2327}
+.fwr-stat b{color:#185ABD}.fwr-stat span{font-size:12px}.fwr-stat em{font-size:11px;color:#A35200;font-style:normal;font-weight:600}
+.fwr-cols{display:flex;gap:24px;flex-wrap:wrap}.fwr-col{flex:1 1 460px;min-width:320px}
+.fwr-crit td:first-child{width:24px}
+.fwr-struct pre{max-height:420px;overflow:auto;background:#f6f7f7;padding:10px;font-size:11px;white-space:pre-wrap}
+/* ---- fiche : comparaison côte à côte */
+.fwr-meta{margin-top:4px}
+.fwr-compare{background:#fff;border:1px solid #DCDCDE;border-radius:8px;padding:10px 12px;margin:12px 0 18px}
+.fwr-cmp-bar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+.fwr-cmp-zoom{display:inline-flex;align-items:center;gap:4px}
+.fwr-cmp-zoom span{min-width:52px;text-align:center;font-variant-numeric:tabular-nums}
+.fwr-cmp-panes{display:flex;gap:12px}
+.fwr-pane{flex:1 1 0;min-width:0;display:flex;flex-direction:column;border:1px solid #DCDCDE;border-radius:6px;overflow:hidden}
+.fwr-pane-head{display:flex;align-items:center;gap:8px;padding:6px 10px;background:#F6F7F7;border-bottom:1px solid #DCDCDE;min-height:34px}
+.fwr-pane-title{font-weight:600;margin-right:auto}
+#fwr-left .fwr-pane-head{background:#FFF8EF}#fwr-right .fwr-pane-head{background:#EEF7EE}
+.fwr-pane-body{height:72vh;overflow:auto;background:#8A8A8A;position:relative}
+.fwr-pane-body .docx-wrapper{background:transparent!important;padding:16px!important;transform-origin:top left}
+.fwr-pane-body .docx-wrapper>section.docx{box-shadow:0 0 6px rgba(0,0,0,.35);margin-bottom:16px!important}
+.fwr-wait{color:#fff;padding:20px;margin:0}
+.fwr-pdf{width:100%;height:100%;border:0;display:block;background:#fff}
+.fwr-seg{display:inline-flex;border:1px solid #8C8F94;border-radius:4px;overflow:hidden}
+.fwr-seg button{border:0;background:#fff;padding:3px 10px;cursor:pointer;font-size:12px}
+.fwr-seg button.on{background:#185ABD;color:#fff}
+.fwr-pane-objets{font-size:12px;background:#FFFBEA;border-top:1px solid #F0E3A8;padding:6px 10px;line-height:1.5}
+.fwr-obj-title{font-weight:600;color:#7A5B00}
+.fwr-cmp-note{margin:8px 2px 0}
+.fwr-compare.fwr-full{position:fixed;inset:32px 0 0 0;z-index:99990;margin:0;border-radius:0;display:flex;flex-direction:column}
+.fwr-compare.fwr-full .fwr-cmp-panes{flex:1;min-height:0}
+.fwr-compare.fwr-full .fwr-pane-body{height:auto;flex:1}
+.fwr-compare.fwr-full .fwr-cmp-note{display:none}
+/* ---- fiche : 3 cartes */
+.fwr-cols3{display:grid;grid-template-columns:repeat(3,minmax(300px,1fr));gap:16px;align-items:start}
+@media (max-width:1400px){.fwr-cols3{grid-template-columns:1fr 1fr}.fwr-cols3>.fwr-card:last-child{grid-column:1/-1}}
+@media (max-width:900px){.fwr-cols3{grid-template-columns:1fr}.fwr-cmp-panes{flex-direction:column}}
+.fwr-card{background:#fff;border:1px solid #DCDCDE;border-radius:8px;padding:4px 16px 14px}
+.fwr-card h2{font-size:15px;display:flex;align-items:center;gap:8px}
+.fwr-pts{white-space:nowrap;text-align:right}
+.fwr-ia{border-color:#C9B6F2;background:#FBF9FF}
+.fwr-ia h4{margin:12px 0 4px}
+.fwr-ia-meta{color:#646970;font-size:12px;margin-top:-6px}
+.fwr-ia-note strong{font-size:16px;color:#5E35B1}
+.fwr-ia-com{background:#fff;border:1px solid #E4DAF7;border-radius:6px;padding:4px 10px}
+.fwr-ia-list{margin:0 0 0 18px;list-style:disc}
+.fwr-ia-ecart{margin-top:10px;background:#FFF4E5;border:1px solid #F5C987;border-radius:6px;padding:6px 10px;font-size:12.5px}
+.fwr-ia-tag{display:inline-block;margin-top:3px;font-size:11px;background:#EDE7F6;color:#5E35B1;border-radius:10px;padding:1px 7px}
+.fwr-actions .button{margin-bottom:4px}
+/* Traçabilité (v1.2) */
+.fwr-tr{display:inline-block;padding:2px 8px;border-radius:12px;font-size:12px;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle}
+.fwr-tr.ok{background:#dcefe3;color:#0b4d22}.fwr-tr.ko{background:#fff4c2;color:#5c4800;border:1px solid #f5c400}
+.fwr-trace{margin:14px 0}.fwr-trace table{margin:8px 0}
+.fwr-trace-alert{background:#fff4c2;border-left:5px solid #f5c400;padding:8px 14px;margin:10px 0;color:#5c4800}.fwr-trace-alert ul{margin:4px 0 0 18px;list-style:disc}
+.fwr-trace-ok{background:#dcefe3;border-left:5px solid #067030;padding:8px 14px;color:#0b4d22}
+.fwr-mdp{font-size:15px;padding:4px 10px;background:#313a45;color:#fff;border-radius:4px;letter-spacing:.03em}
+
+/* ---- vérification de l'auteur et décision */
+.fwr-id{display:inline-block;padding:1px 7px;border-radius:10px;font-size:11.5px;font-weight:600}.fwr-id.ko{background:#FDECEA;color:#B71C1C}
+.fwr-dec{display:inline-block;margin-top:3px;padding:1px 7px;border-radius:10px;font-size:11.5px;font-weight:600}.fwr-dec.ok{background:#E8F5E9;color:#1B6E20}.fwr-dec.ko{background:#FDECEA;color:#B71C1C}
+.fwr-idc{border-radius:8px;padding:10px 14px;margin:12px 0;border:1px solid}.fwr-idc ul{margin:6px 0 4px 18px;list-style:disc}
+.fwr-idc.ok{background:#F1F8F2;border-color:#B9DDBF}.fwr-idc.info{background:#F6F7F7;border-color:#DCDCDE}.fwr-idc.ko{background:#FDECEA;border-color:#E8A39C;border-left:5px solid #C62828}
+.fwr-decision{border:1px solid #DCDCDE;border-radius:8px;padding:8px 12px 10px;margin:0 0 12px}.fwr-dec-opt{margin-right:14px}
+#fwr-motif-box{margin-top:8px}#fwr-motif-box.req input{border-color:#C62828}#fwr-motif-box select{margin-top:6px;max-width:100%}

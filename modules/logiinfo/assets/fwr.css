@@ -1,0 +1,60 @@
+.fwr-box{border:1px solid #D9DDD6;border-radius:10px;padding:18px 20px;margin:28px 0;background:#F5F6F3}
+.fwr-h{margin:0 0 10px;font-size:1.15em;color:#067030}
+.fwr-h4{margin:18px 0 6px;font-size:1em}
+.fwr-hint{margin:0 0 8px;color:#555;font-size:.92em}
+.fwr-form{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.fwr-form .fwr-hint{flex-basis:100%}
+.fwr-btn{background:#067030;color:#fff;border:0;border-radius:6px;padding:9px 18px;font-weight:600;cursor:pointer}
+.fwr-btn:hover{background:#0B4D22}
+.fwr-alert{padding:10px 14px;border-radius:6px;margin:0 0 12px}
+.fwr-alert.ok{background:#DCEFE3;border:1px solid #A5D6A7}
+.fwr-alert.err{background:#FDECEA;border:1px solid #F5A9A0}
+.fwr-table{width:100%;border-collapse:collapse;font-size:.93em;background:#fff}
+.fwr-table th{background:#067030;color:#fff;text-align:left;padding:7px 10px}
+.fwr-table td{border-bottom:1px solid #D9DDD6;padding:7px 10px;vertical-align:top}
+.fwr-tag{display:inline-block;padding:2px 9px;border-radius:12px;background:#FFF4C2;color:#5C4800;font-size:.85em;font-weight:600}
+.fwr-tag.ok{background:#DCEFE3;color:#0B4D22}
+.fwr-tag.off{background:#EEE;color:#666}
+.fwr-fb td{background:#F4F8F2}
+.fwr-note{font-size:1.05em;margin-bottom:6px}
+.fwr-comment p{margin:4px 0}
+.fwr-details summary{cursor:pointer;color:#067030;margin-top:6px}
+.fwr-crit{list-style:none;margin:6px 0 0;padding:0}
+.fwr-crit li{padding:3px 0 3px 24px;position:relative}
+.fwr-crit li:before{position:absolute;left:0}
+.fwr-crit li.ok:before{content:'✅'}
+.fwr-crit li.mid:before{content:'🟠'}
+.fwr-crit li.ko:before{content:'❌'}
+
+/* ---- encadré « Rendre mon exercice » : bien visible, différent de la théorie et de l'exercice */
+.fwr-box#fwr-depot{background:#fff4c2;border:3px solid #f5c400;border-radius:14px;padding:0;margin:36px 0 12px;overflow:hidden;box-shadow:0 6px 18px rgba(49,58,69,.12);font-family:'LP Poppins','Poppins',system-ui,sans-serif;color:#313a45}
+#fwr-depot .fwr-band{background:#313a45;color:#fff;padding:16px 22px 14px}
+#fwr-depot .fwr-band-k{display:block;color:#f5c400;font-weight:700;font-size:.8em;letter-spacing:.09em;text-transform:uppercase}
+#fwr-depot .fwr-h{color:#fff;font-size:1.5em;font-weight:700;margin:2px 0 2px;font-family:inherit}
+#fwr-depot .fwr-band-t{color:#dcefe3;font-size:.92em}
+#fwr-depot .fwr-in{padding:18px 22px 20px}
+#fwr-depot .fwr-hint{color:#5c4800;font-size:.95em}
+#fwr-depot .fwr-form{gap:12px}
+.fwr-drop{flex:1 1 320px;display:flex;align-items:center;gap:12px;min-height:64px;padding:12px 16px;background:#fff;border:2px dashed #b38b00;border-radius:10px;cursor:pointer;font-weight:600;color:#313a45;transition:background .15s,border-color .15s}
+.fwr-drop:hover{background:#fffbe6;border-color:#067030}
+.fwr-drop.has{border-style:solid;border-color:#067030;background:#eef6f0;color:#0b4d22}
+.fwr-drop-i{font-size:1.7em}
+.fwr-drop input[type=file]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.fwr-drop:focus-within{outline:3px solid #067030;outline-offset:2px}
+.fwr-btn-big{padding:16px 24px;font-size:1.05em;border-radius:10px;min-height:64px}
+a.fwr-btn{display:inline-block;color:#fff!important;text-decoration:none!important;margin-left:6px}
+#fwr-depot .fwr-h4{color:#313a45;font-weight:700;margin-top:22px}
+#fwr-depot .fwr-table{border-radius:8px;overflow:hidden}
+#fwr-depot .fwr-alert{font-weight:600}
+@media (max-width:600px){.fwr-btn-big{width:100%}}
+#fwr-depot .fwr-h4,#fwr-depot .fwr-btn{font-family:inherit}
+.fwr-prof{flex:1 1 100%;display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-weight:600;color:#313a45}
+.fwr-prof select{min-height:44px;padding:6px 12px;border:2px solid #b38b00;border-radius:10px;background:#fff;font:inherit;font-weight:600;color:#0b4d22;min-width:240px}
+.fwr-prof select:focus{outline:3px solid #067030;outline-offset:2px}
+.fwr-prof-fixe{flex:1 1 100%;margin:0;color:#313a45;font-size:.95em}
+
+.fwr-tag.ko{background:#FDECEA;color:#B71C1C}
+.fwr-verdict{border-radius:8px;padding:10px 14px;margin:0 0 10px;line-height:1.5}
+.fwr-verdict.ok{background:#E8F5E9;border-left:5px solid #2E7D32;color:#1B5E20}
+.fwr-verdict.ko{background:#FDECEA;border-left:5px solid #C62828;color:#8E1B1B}
+.fwr-verdict-next{font-size:.9em;opacity:.85}

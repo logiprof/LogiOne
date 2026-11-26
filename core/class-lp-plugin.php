@@ -72,6 +72,13 @@ final class LogiPilot_Plugin
             'legacy' => 'logi3d.php',
             'class' => 'LogiOne_Logi3D',
         ),
+        // LogiOne 1.53.17 : LogiInfo (formations informatiques). Mêmes tables, options et fichiers que l'extension autonome.
+        'logiinfo' => array(
+            'label' => 'LogiInfo',
+            'file' => 'modules/logiinfo/module.php',
+            'legacy' => 'logiinfo.php',
+            'class' => 'LogiOne_LogiInfo',
+        ),
         'tiles' => array(
             'label' => 'Tuiles de contenu',
             'file' => 'modules/tiles/module.php',

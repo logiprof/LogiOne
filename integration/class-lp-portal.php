@@ -90,6 +90,12 @@ final class LogiPilot_Portal
                 'text' => 'Les animations 3D à projeter en classe.',
                 'points' => array('Surfaces et volumes de l’entrepôt', 'Aperçu et plein écran', 'Code court pour vos pages et leçons'),
             ),
+            // LogiOne 1.53.17 : LogiInfo, formations Word, Excel, PowerPoint et Présentations.
+            'logiinfo' => array(
+                'label' => $labels['logiinfo'], 'tag' => 'logiinfo_portail', 'cap' => 'fwr_corriger', 'can' => array('LogiOne_LogiInfo', 'can_view'), 'module' => 'logiinfo', 'color' => '#0369a1',
+                'text' => 'Les formations informatiques de vos apprentis.',
+                'points' => array('Exercices rendus et contrôle automatique', 'Progression des élèves', 'Correction et retours publiés'),
+            ),
         );
 
         // Tuiles de contenu créées par l'administration, à la suite des outils.
