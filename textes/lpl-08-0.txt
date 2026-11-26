@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Importez le planning depuis un fichier Excel : date, branche, modalité, enseignant et horaire.

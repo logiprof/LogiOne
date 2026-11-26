@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Pendant l'évaluation, le suivi en direct montre chaque élève : statut, temps restant et avancement. La page s'actualise toute seule.

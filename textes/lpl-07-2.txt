@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Copiez le code court et collez-le dans la page de la classe : les apprentis y voient leur planning.

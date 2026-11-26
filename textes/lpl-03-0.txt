@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Ce cadre présente la journée du jour : la branche, l'horaire, la salle et l'enseignant.

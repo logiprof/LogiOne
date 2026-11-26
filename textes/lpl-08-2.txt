@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Dans Journées de formation, chaque ligne est une journée : date, branche, modalité, horaire, enseignant et salle.

@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Le bouton Gérer permet aussi d'ajouter du temps, ou de terminer une copie restée en cours.

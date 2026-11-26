@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Puis il accepte le mode sécurisé : l'évaluation s'ouvre en plein écran.

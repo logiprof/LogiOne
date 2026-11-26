@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Vous êtes responsable des plans ? Modifier les journées et Importer un fichier ouvrent l'administration de LogiPlanning.

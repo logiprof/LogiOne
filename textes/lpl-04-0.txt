@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Chaque journée indique l'horaire, le lieu ou l'enseignement à distance, et l'enseignant.

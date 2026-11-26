@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Correction avec une IA externe prépare les copies pour Claude ou Tchate G P T, puis importe son compte rendu. C'est vous qui validez.

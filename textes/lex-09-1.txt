@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Un élève qui quitte le plein écran est bloqué : il apparaît en rouge, en haut. À la quatrième sortie, sa copie est annulée.

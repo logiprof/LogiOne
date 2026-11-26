@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-puis attribuez les points : tous, la moitié, aucun, ou un nombre précis.

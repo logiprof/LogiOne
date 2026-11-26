@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Plus ouvre le message du jour et les cours LogiProf à afficher : trois catégories au maximum.

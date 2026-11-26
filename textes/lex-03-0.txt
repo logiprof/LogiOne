@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Donnez un titre, puis choisissez la structure : ici, un test simple avec questions et réponses.

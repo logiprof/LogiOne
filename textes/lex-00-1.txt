@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-LogiExam permet de faire passer des évaluations numériques sécurisées, de les corriger, puis d'envoyer les notes dans LogiNotes.

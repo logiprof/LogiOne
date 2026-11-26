@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Le barème se calcule tout seul à partir du total des points.
