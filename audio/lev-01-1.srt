@@ -1,4 +1,4 @@
 1
-00:00:00,100 --> 00:00:02,962
-Cliquez sur la tuile LogiEval.
+00:00:00,100 --> 00:00:08,762
+Sinon, ouvrez directement l'adresse logiprof, point, fontesse tiret oliveira, point, C H, barre oblique, logieval.
 

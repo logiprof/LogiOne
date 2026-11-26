@@ -1,8 +1,4 @@
 1
-00:00:00,100 --> 00:00:04,012
-Vous êtes reconnu par votre compte : pas besoin d'identifiant.
-
-2
-00:00:03,962 --> 00:00:08,112
+00:00:00,100 --> 00:00:04,300
 La rubrique À faire montre les évaluations qui attendent vos réponses.
 

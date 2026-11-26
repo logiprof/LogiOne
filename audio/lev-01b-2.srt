@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:06,062
+Sur un ordinateur partagé, cochez cette case : vous serez déconnecté en fermant le navigateur.
+

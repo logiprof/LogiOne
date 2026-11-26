@@ -1,4 +1,8 @@
 1
-00:00:00,100 --> 00:00:08,000
-Connectez-vous sur le site logiprof, point, fontesse tiret oliveira, point, C H, et ouvrez le portail LogiOne.
+00:00:00,100 --> 00:00:02,850
+Vous avez un compte sur LogiProf ?
+
+2
+00:00:02,800 --> 00:00:07,000
+Ouvrez le portail LogiOne et cliquez sur la tuile LogiEval.
 
