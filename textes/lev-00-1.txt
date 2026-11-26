@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+LogiEval permet d'évaluer ensemble la posture professionnelle des apprentis : chaque enseignant donne son avis, et LogiEval calcule la note.

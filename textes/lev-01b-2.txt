@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Sur un ordinateur partagé, cochez cette case : vous serez déconnecté en fermant le navigateur.

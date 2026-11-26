@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-LogiNotes est votre carnet de notes : vous y saisissez les points, et la note est calculée automatiquement.

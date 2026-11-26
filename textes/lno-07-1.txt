@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Dans Évaluations, une colonne par classe montre vos évaluations, de la plus récente à la plus ancienne, avec la moyenne.

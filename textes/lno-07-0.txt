@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-L'évaluation est enregistrée. Le bouton Exporter PDF imprime la liste des notes.

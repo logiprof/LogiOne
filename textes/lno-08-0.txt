@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Le Relevé réunit toutes les notes d'une classe pour un semestre, avec la moyenne de chaque élève.

@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Les onglets en haut donnent accès à tout : évaluations, groupes classes, branches, semestres, relevé, AGAPEPE et paramètres.

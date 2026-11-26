@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Cliquez sur le nom d'un élève pour ouvrir sa fiche.

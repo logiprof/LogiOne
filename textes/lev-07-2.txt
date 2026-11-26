@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Le cadre Modifier l'évaluation permet de changer la date de remise et les enseignants attribués.
