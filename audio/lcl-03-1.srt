@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,162
+Vous pouvez aussi ajouter les photos de classe depuis le PDF, et importer des notes.
+

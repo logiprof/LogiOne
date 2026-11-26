@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:07,400
+L'onglet Apprentis permet des corrections rapides sur toute la classe : genre, e-mail, responsable, vérification.
+

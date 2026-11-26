@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,462
+Le PDF de convocation est créé et joint.
+
+2
+00:00:03,412 --> 00:00:06,100
+Cliquez sur Envoyer et archiver.
+

@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,562
+L'historique garde chaque import, avec son auteur et son résultat.
+

@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,475
+L'onglet À traiter calcule les situations tout seul après chaque import.
+

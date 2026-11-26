@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,175
+Un justificatif d'absence s'ajoute ici, avec le jour et le nombre de périodes.
+

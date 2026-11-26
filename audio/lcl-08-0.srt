@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:06,637
+Actions exécutées liste tout ce qui a été envoyé, classe par classe, avec les destinataires et le PDF.
+

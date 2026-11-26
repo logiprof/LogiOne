@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,562
+Pour des absences, vous pouvez justifier sans e-mail, ou écrire au responsable de formation.
+

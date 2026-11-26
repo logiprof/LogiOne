@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,450
+Les actions groupées s'appliquent aux apprentis cochés.
+
+2
+00:00:03,400 --> 00:00:06,950
+Exporter les apprentis télécharge toutes les fiches.
+

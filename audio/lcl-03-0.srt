@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:06,812
+Le plus simple : l'export C S V de Lagap E P. Les retards, absences et mises à la porte sont repris tels quels.
+

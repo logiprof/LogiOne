@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,200
+L'apprenti ne s'est pas présenté à la retenue ?
+
+2
+00:00:03,150 --> 00:00:07,612
+Cliquez sur Non présenté : ce sera rappelé dans la prochaine convocation.
+

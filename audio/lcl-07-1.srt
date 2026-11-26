@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,662
+Choisissez la date de convocation, puis relisez l'objet et le message.
+

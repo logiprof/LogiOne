@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:06,000
+Cochez Sauvegarder ce mapping pour le réutiliser au prochain import, puis cliquez sur Valider l'import.
+

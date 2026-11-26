@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,625
+La fiche reprend toutes les informations de l'apprenti.
+
+2
+00:00:03,575 --> 00:00:08,625
+Cochez Données vérifiées une fois relue : les prochains imports n'écraseront plus vos corrections.
+

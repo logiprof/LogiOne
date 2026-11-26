@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:07,962
+LogiClass vous aide à suivre vos apprentis : retards, absences, mises à la porte, convocations et échanges avec les formateurs.
+

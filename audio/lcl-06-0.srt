@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,737
+Chaque ligne explique la situation et sa cause : ici, quatre retards pour un seuil de trois.
+

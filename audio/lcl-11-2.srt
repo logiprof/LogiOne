@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:04,875
+Chaque envoi est archivé, avec son PDF, dans la fiche de l'apprenti.
+
+2
+00:00:04,825 --> 00:00:06,575
+Bon suivi !
+
