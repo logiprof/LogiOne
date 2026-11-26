@@ -3946,6 +3946,14 @@ class GNE_App
     {
         if ($this->is_admin_app_request() && !isset($fields['page'])) {
             $fields = array('page' => sanitize_key(wp_unslash($_GET['page'] ?? 'gne_app'))) + $fields;
+        } elseif (!is_admin()) {
+            // LogiOne 1.53.20 : un formulaire GET (relevé, comparaison) remplace toute la requête ;
+            // on garde l'outil ouvert dans le portail LogiOne (lp_module) et la page sans jolis liens (page_id).
+            foreach (array('page_id', 'lp_module') as $keep) {
+                if (!isset($fields[$keep]) && isset($_GET[$keep]) && '' !== $_GET[$keep]) {
+                    $fields = array($keep => sanitize_key(wp_unslash($_GET[$keep]))) + $fields;
+                }
+            }
         }
 
         foreach ($fields as $key => $value) {
