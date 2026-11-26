@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:06,600
+La fiche vérifie d'abord qui a travaillé sur le fichier : ici, le nom correspond bien au compte de l'apprenti.
+

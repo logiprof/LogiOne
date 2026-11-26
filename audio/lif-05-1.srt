@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:02,862
+Vérifiez d'abord avec l'apprenti.
+
+2
+00:00:02,812 --> 00:00:06,262
+Si besoin, cliquez sur Préparer l'invalidation.
+

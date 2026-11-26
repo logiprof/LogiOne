@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,925
+En haut, une case par leçon : le nombre d'apprentis qui ont rendu, et combien sont à corriger.
+

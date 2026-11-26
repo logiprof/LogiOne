@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:07,500
+Pour cette copie, LogiInfo signale une incohérence : le fichier a été enregistré par une autre apprentie, et il est identique au sien.
+

@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,150
+Dessous, chaque copie avec son contrôle automatique : la note proposée en pour cent.
+

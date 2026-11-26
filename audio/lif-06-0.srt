@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:02,087
+Beaucoup de copies ?
+
+2
+00:00:02,037 --> 00:00:06,875
+Exportez-les pour l'IA : le fichier est anonymisé, sans nom ni e-mail.
+

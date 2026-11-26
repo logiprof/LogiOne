@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,562
+Ensuite, la copie et le résultat attendu s'affichent côte à côte, avec le même défilement.
+

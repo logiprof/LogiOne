@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,912
+Vérifiez le contrôle automatique, l'auteur du fichier et la comparaison avec le résultat attendu.
+

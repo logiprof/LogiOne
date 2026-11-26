@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,662
+Les propositions de l'IA s'affichent dans chaque fiche.
+
+2
+00:00:03,612 --> 00:00:06,550
+C'est toujours vous qui validez et publiez.
+

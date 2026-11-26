@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,562
+Le contrôle automatique liste chaque critère.
+
+2
+00:00:03,512 --> 00:00:08,287
+Ici, le corps du texte n'est pas justifié et la bordure de l'encadré manque.
+

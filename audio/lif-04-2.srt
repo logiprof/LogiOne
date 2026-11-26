@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,037
+Ajoutez un commentaire pour l'apprenti, puis cliquez sur Enregistrer et publier.
+

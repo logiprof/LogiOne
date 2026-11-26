@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:07,662
+LogiInfo réunit les formations Word, Excel et PowerPoint : les apprentis y rendent leurs exercices, que vous corrigez ici.
+

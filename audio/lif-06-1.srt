@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,000
+Faites-le corriger par Claude, puis importez le fichier correction point jeyssonne.
+
