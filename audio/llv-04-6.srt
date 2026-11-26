@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,512
+Pour un élève hors ligne, vous voyez la dernière leçon consultée et l'heure de sa dernière activité.
+

@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:03,812
+Bienvenue dans ce tutoriel LogiLive pour les enseignants.
+

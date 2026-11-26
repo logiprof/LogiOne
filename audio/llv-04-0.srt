@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:03,737
+Pour chaque élève, la colonne État indique s'il est en leçon,
+

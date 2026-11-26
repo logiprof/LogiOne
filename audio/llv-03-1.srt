@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,362
+Un élève est connecté s'il a été actif dans les cinq dernières minutes.
+

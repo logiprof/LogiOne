@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,750
+En haut : le nombre d'élèves connectés, ceux qui ont une leçon ouverte, et ceux qui sont hors ligne.
+
