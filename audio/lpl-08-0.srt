@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:06,737
+Importez le planning depuis un fichier Excel : date, branche, modalité, enseignant et horaire.
+

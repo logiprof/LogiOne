@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:04,137
+Dessous : le message du jour et les cours LogiProf à suivre.
+
+2
+00:00:04,087 --> 00:00:06,250
+Un clic ouvre le cours.
+

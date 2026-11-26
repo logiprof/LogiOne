@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,987
+En haut, choisissez le plan de formation de votre classe.
+
+2
+00:00:03,937 --> 00:00:06,987
+Vous le voyez exactement comme vos apprentis.
+

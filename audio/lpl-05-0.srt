@@ -1,0 +1,12 @@
+1
+00:00:00,100 --> 00:00:02,825
+Calendrier affiche le mois entier.
+
+2
+00:00:02,775 --> 00:00:05,375
+Les flèches changent de période.
+
+3
+00:00:05,375 --> 00:00:08,175
+Aujourd'hui revient à la date du jour.
+

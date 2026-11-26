@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:07,812
+Ajouter tout l'agenda à venir ajoute toutes les prochaines journées à votre agenda : Outlook, Google Agenda ou celui de votre téléphone.
+

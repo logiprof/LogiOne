@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:02,850
+Ajoutez les journées à votre agenda.
+
+2
+00:00:02,800 --> 00:00:04,700
+Bonne formation !
+

@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,512
+Les journées passées sont repliées : cliquez sur l'une d'elles pour la rouvrir.
+

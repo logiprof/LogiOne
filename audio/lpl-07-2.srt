@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,375
+Copiez le code court et collez-le dans la page de la classe : les apprentis y voient leur planning.
+

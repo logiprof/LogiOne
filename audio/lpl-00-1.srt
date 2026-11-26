@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:06,987
+LogiPlanning affiche le plan de formation de chaque classe : les journées, les salles, les enseignants et les cours à suivre.
+

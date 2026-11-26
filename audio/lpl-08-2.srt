@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:07,575
+Dans Journées de formation, chaque ligne est une journée : date, branche, modalité, horaire, enseignant et salle.
+
