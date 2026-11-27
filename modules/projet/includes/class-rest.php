@@ -173,6 +173,14 @@ class LogiProjet_Rest {
 				}
 			}
 			$out['locked_now'] = ! empty( $t['date_debut'] ) && strtotime( $t['date_debut'] . ' UTC' ) > time();
+			// 1.54.3 : dates gérées par classe. L'aperçu apprenti et la consigne montrent les dates de la première classe.
+			if ( $out['classes'] && ( empty( $t['date_debut'] ) || empty( $t['due_at'] ) ) ) {
+				$g0          = $out['classes'][0]['id'];
+				$tv          = $t;
+				$tv['date_debut'] = LogiProjet_Access::start_for_group( $t, $g0 );
+				$tv['due_at']     = LogiProjet_Access::due_for_group( $t, $g0 );
+				$out['vars'] = LogiProjet_Consigne::vars( $tv );
+			}
 			$out['counts']    = LogiProjet_Store::counts( $t['id'] );
 			$out['author']    = LogiProjet_Sensei::user_label( $t['author_id'] );
 			$out['mine']      = (int) $t['author_id'] === get_current_user_id();
@@ -236,6 +244,7 @@ class LogiProjet_Rest {
 			'ext'          => strtolower( pathinfo( (string) $d['file_name'], PATHINFO_EXTENSION ) ),
 			'retard_jours' => LogiProjet_Grading::late_days( $t, $d ),
 			'retard_excuse'=> ! empty( $d['late_excused'] ),
+			'echeance'     => self::local_date( LogiProjet_Access::due_for_users( $t, $d['members'] ?? array() ) ),
 		);
 		if ( $teacher ) {
 			$out += array(

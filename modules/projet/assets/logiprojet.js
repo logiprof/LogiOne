@@ -170,13 +170,15 @@
     api('travaux' + (S.allT ? '?tous=1' : '')).then(function (list) {
       var warn = S.me.ai_ready ? '' : '<div class="lpj-alert is-y"><b>Aucune clé API d’IA n’est configurée.</b> Les apprentis peuvent déposer, mais la correction par IA ne fonctionnera pas. ' + (S.me.settings ? '<a href="' + esc(S.me.settings) + '">Ouvrir les réglages</a>' : 'Demandez à l’administrateur du site.') + '</div>';
       var tiles = list.map(function (t) {
-        var cls = (t.classes && t.classes.length ? t.classes.some(function (c) { return c.status === 'ouvert'; }) : t.status === 'ouvert') ? (t.due_passed ? 'is-b' : (soon(t.due_at) ? 'is-y' : '')) : 'is-g';
+        var dues = datesOf(t, 'due').filter(Boolean).sort();
+        var allPast = dues.length && new Date(dues[dues.length - 1]) < new Date();
+        var cls = (t.classes && t.classes.length ? t.classes.some(function (c) { return c.status === 'ouvert'; }) : t.status === 'ouvert') ? (allPast ? 'is-b' : (dues.some(soon) ? 'is-y' : '')) : 'is-g';
         var c = t.counts;
         return '<article class="lpj-tile lpj-tile-click ' + cls + '" data-go="#/travail/' + t.id + '" tabindex="0">' +
           '<div class="lpj-meta">' + (t.module ? '<b>' + esc(t.module) + '</b>' : '') + travailBadge(t) + (t.graded === false ? '<span class="lpj-badge">Non noté</span>' : '') + '</div>' +
           '<h3>' + esc(t.title) + '</h3>' +
           (t.mine === false ? '<div class="lpj-meta"><span class="lpj-badge lpj-badge-author">Créé par ' + esc(t.author) + '</span></div>' : '') +
-          '<div class="lpj-meta">' + (t.due_at ? '<span>À rendre le ' + esc(fmtDate(t.due_at)) + '</span>' : '<span>Sans date limite</span>') + '<span>' + t.grille.length + ' critères · ' + t.total + ' points</span></div>' +
+          '<div class="lpj-meta"><span>' + esc(rangeTxt(datesOf(t, 'due'), 'À rendre le', 'Sans date limite')) + '</span><span>' + t.grille.length + ' critères · ' + t.total + ' points</span></div>' +
           '<div class="lpj-stats"><span class="lpj-badge st-depose">' + c.total + ' dépôt' + (c.total > 1 ? 's' : '') + '</span>' +
           (c.groupe ? '<span class="lpj-badge st-groupe">' + c.groupe + ' en cours, pas remis</span>' : '') +
           (c.propose ? '<span class="lpj-badge st-propose">' + c.propose + ' à valider</span>' : '') +
@@ -188,6 +190,18 @@
         (list.length ? '<div class="lpj-grid">' + tiles + '</div>' : '<div class="lpj-empty"><b>Aucun travail pour l’instant</b>Vous ne voyez que les travaux que vous avez créés. Créez votre premier travail : choisissez le cours Sensei, et la grille se remplit avec ses leçons.<br><br><button class="lpj-btn lpj-btn-yellow" data-go="#/nouveau">+ Nouveau travail</button> <button class="lpj-btn" data-go="#/modeles">📚 Partir d’un modèle</button></div>');
       draw(page('LogiProjet · Espace enseignant', 'Bonjour ' + S.me.first_name, 'Activités notées ou formatives, seul ou en groupe, corrigées avec l’aide de l’IA', body));
     }).catch(fail);
+  }
+  /* 1.54.3 : dates par classe. Liste des dates (début ou fin) des classes visées, sinon celle du travail. */
+  function datesOf(t, key) {
+    var cl = t.classes || [];
+    if (cl.length) { return cl.map(function (c) { return c[key === 'due' ? 'due' : 'start'] || ''; }); }
+    return [key === 'due' ? (t.due_at || '') : (t.date_debut || '')];
+  }
+  function rangeTxt(list, one, none) {
+    var v = list.filter(Boolean).sort();
+    if (!v.length) { return none; }
+    if (v[0] === v[v.length - 1] && v.length === list.length) { return one + ' ' + fmtDate(v[0]); }
+    return one + ' ' + fmtDate(v[0]) + ' → ' + fmtDate(v[v.length - 1]) + ' (selon la classe)';
   }
   function soon(due) {
     if (!due) { return false; }
@@ -206,6 +220,11 @@
       var t = r[2];
       S.form = t ? JSON.parse(JSON.stringify(t)) : { id: 0, title: '', module: '', course_id: 0, lessons: [], grille: [], consignes: '', consigne: null, date_debut: '', group_size: 2, graded: true, formats: ['pptx'], consigne_url: '', group_ids: [], due_at: '', oral_bonus: true, allow_solo: true, status: 'brouillon', class_start: {}, class_due: {} };
       ['class_start', 'class_due'].forEach(function (k) { S.form[k] = S.form[k] && !Array.isArray(S.form[k]) ? Object.assign({}, S.form[k]) : {}; });
+      // Dates par classe : chaque classe reprend sa date effective (la date générale d'un ancien travail est reportée sur ses classes).
+      (S.form.classes || []).forEach(function (c) {
+        if (!S.form.class_start[c.id] && c.start) { S.form.class_start[c.id] = c.start; }
+        if (!S.form.class_due[c.id] && c.due) { S.form.class_due[c.id] = c.due; }
+      });
       S.lessons = [];
       S.dirty = false;
       if (S.form.course_id) {
@@ -250,9 +269,10 @@
       '<section class="lpj-card"><h3><span class="lpj-num">2</span>Le travail</h3>' +
       '<label class="lpj-field"><span>Titre</span><input type="text" data-f="title" value="' + esc(f.title) + '" placeholder="Présenter le contenu du module M109"></label>' +
       '<div class="lpj-row"><label class="lpj-field"><span>Module</span><input type="text" data-f="module" value="' + esc(f.module) + '" placeholder="M109"></label>' +
-      '</div><div class="lpj-row"><label class="lpj-field"><span>Date de début</span><input type="datetime-local" data-f="date_debut" value="' + esc(f.date_debut || '') + '"></label>' +
+      '</div>' + (f.group_ids.length ? classStartRows(f) :
+      '<div class="lpj-row"><label class="lpj-field"><span>Date de début</span><input type="datetime-local" data-f="date_debut" value="' + esc(f.date_debut || '') + '"></label>' +
       '<label class="lpj-field"><span>Date de fin · rendu du fichier</span><input type="datetime-local" data-f="due_at" value="' + esc(f.due_at || '') + '"></label></div>' +
-      classStartRows(f) +
+      '<small class="lpj-muted" style="display:block;margin:-6px 0 12px">Cochez les classes concernées (section 3) pour fixer les dates classe par classe.</small>') +
       '<label class="lpj-field"><span>Statut</span><select data-f="status">' + Object.keys(ST_T).map(function (k) { return '<option value="' + k + '"' + (k === f.status ? ' selected' : '') + '>' + ST_T[k] + '</option>'; }).join('') + '</select>' +
       '<small>Brouillon : invisible pour les apprentis. Ouvert : ils voient le travail et, à partir de la date de début, peuvent l’ouvrir et déposer (avant, il apparaît verrouillé). Fermé : ils voient le travail, mais ne peuvent plus déposer.</small></label>' +
       '<label class="lpj-field"><span>Lien vers la consigne PDF (facultatif)</span><input type="url" data-f="consigne_url" value="' + esc(f.consigne_url) + '" placeholder="https://… (médiathèque)"></label>' +
@@ -282,13 +302,13 @@
   }
   function classStartRows(f) {
     var sel = (S.groups || []).filter(function (g) { return f.group_ids.indexOf(g.id) > -1; });
-    if (sel.length < 2) { return ''; }
+    if (!sel.length) { return ''; }
     var cs = f.class_start || {}, cd = f.class_due || {};
-    return '<div class="lpj-field"><span>Dates par classe <small style="font-weight:400">(facultatif)</small></span><div class="lpj-cls-grid">' + sel.map(function (g) {
+    return '<div class="lpj-field"><span>Dates de chaque classe</span><div class="lpj-cls-grid">' + sel.map(function (g) {
       return '<div class="lpj-cls"><b>' + esc(g.title) + '</b>' +
         '<label class="lpj-cls-date"><small>Début</small><input type="datetime-local" data-class-start="' + g.id + '" value="' + esc(cs[g.id] || '') + '"></label>' +
         '<label class="lpj-cls-date"><small>Fin · rendu du fichier</small><input type="datetime-local" data-class-due="' + g.id + '" value="' + esc(cd[g.id] || '') + '"></label></div>';
-    }).join('') + '</div><small>Une date vide suit la date du travail ci-dessus. Les pénalités de retard se calculent avec la date de fin de la classe.</small></div>';
+    }).join('') + '</div><small>Début vide : accès dès l’ouverture. Fin vide : pas de date limite. Les pénalités de retard se calculent avec la date de fin de chaque classe.</small></div>';
   }
   var FORMATS = [['pptx', 'PowerPoint (.pptx)'], ['pdf', 'PDF (.pdf)'], ['docx', 'Word (.docx)'], ['xlsx', 'Excel (.xlsx)'], ['odp', 'Impress (.odp)'], ['key', 'Keynote (.key)'], ['img', 'Image (.jpg, .png)'], ['mp4', 'Vidéo (.mp4)'], ['zip', 'Archive (.zip)']];
   var CF = [
@@ -366,7 +386,13 @@
     } else if (el.hasAttribute('data-group')) {
       var g = parseInt(el.getAttribute('data-group'), 10);
       f.group_ids = f.group_ids.filter(function (x) { return x !== g; });
-      if (el.checked) { f.group_ids.push(g); }
+      if (el.checked) {
+        var src = f.group_ids.filter(function (x) { return (f.class_start && f.class_start[x]) || (f.class_due && f.class_due[x]); })[0];
+        f.class_start = f.class_start || {}; f.class_due = f.class_due || {};
+        if (src) { f.class_start[g] = f.class_start[g] || f.class_start[src] || ''; f.class_due[g] = f.class_due[g] || f.class_due[src] || ''; }
+        else if (!f.group_ids.length) { f.class_start[g] = f.class_start[g] || f.date_debut || ''; f.class_due[g] = f.class_due[g] || f.due_at || ''; }
+        f.group_ids.push(g);
+      }
       S.dirty = true; drawForm(); return;
     }
     S.dirty = true;
@@ -412,6 +438,7 @@
     S.importWarnings = null;
     var f = S.form;
     var body = { title: f.title, module: f.module, course_id: f.course_id, lessons: f.lessons, grille: f.grille, consignes: f.consignes, consigne: f.consigne, date_debut: f.date_debut || '', group_size: f.group_size || 2, graded: f.graded !== false, formats: f.formats && f.formats.length ? f.formats : ['pptx'], consigne_url: f.consigne_url, group_ids: f.group_ids, due_at: f.due_at || '', oral_bonus: !!f.oral_bonus, allow_solo: !!f.allow_solo, status: f.status };
+    if (f.group_ids.length) { body.date_debut = ''; body.due_at = ''; }
     ['class_start', 'class_due'].forEach(function (k) {
       if (!f[k]) { return; }
       var m = {}; Object.keys(f[k]).forEach(function (g) { if (f.group_ids.indexOf(parseInt(g, 10)) > -1) { m[g] = f[k][g]; } }); body[k] = m;
@@ -620,8 +647,8 @@
       '<button class="lpj-btn" data-act="export-travail" title="Fichier .json pour un collègue d’un autre site">Exporter le travail</button>' +
       '<button class="lpj-btn lpj-btn-yellow" data-act="ai-all"' + (todo.length && !S.busy ? '' : ' disabled') + '>Corriger avec l’IA (' + todo.length + ')</button></div>' +
       '<div class="lpj-meta" style="margin-bottom:14px">' + (t.module ? '<span>Module <b>' + esc(t.module) + '</b></span>' : '') +
-      (t.date_debut ? '<span>Début le ' + esc(fmtDate(t.date_debut)) + '</span>' : '') +
-      '<span>' + (t.due_at ? 'À rendre le ' + esc(fmtDate(t.due_at)) : 'Sans date limite') + '</span><span>' + t.grille.length + ' critères · ' + t.total + ' points</span>' +
+      (datesOf(t, 'start').some(Boolean) ? '<span>' + esc(rangeTxt(datesOf(t, 'start'), 'Début le', '')) + '</span>' : '') +
+      '<span>' + esc(rangeTxt(datesOf(t, 'due'), 'À rendre le', 'Sans date limite')) + '</span><span>' + t.grille.length + ' critères · ' + t.total + ' points</span>' +
       '<span>' + (groupNames.length ? 'Classes : ' + esc(groupNames.join(', ')) : (t.group_ids.length ? t.group_ids.length + ' classe(s)' : 'Toutes les classes')) + '</span></div>' +
       dueBanner(t) + lockBanner(t) +
       (!anyOpen(t) ? '<div class="lpj-alert is-y">Ce travail est en <b>brouillon</b> : les apprentis ne le voient pas encore. <button class="lpj-btn lpj-btn-sm lpj-btn-yellow" data-act="open-travail" style="margin-left:8px">Ouvrir aux dépôts</button></div>' : '') +
@@ -639,7 +666,7 @@
     if (!d.retard_jours) { return ''; }
     var graded = t.graded !== false;
     return '<section class="lpj-card lpj-latecard' + (d.retard_excuse ? ' is-excused' : '') + '"><h3>Remis avec ' + d.retard_jours + ' jour' + (d.retard_jours > 1 ? 's' : '') + ' de retard</h3>' +
-      '<p style="margin:0 0 8px">Échéance : ' + esc(fmtDate(t.due_at)) + ' · remis le ' + esc(fmtDate(d.submitted_at)) + '.' +
+      '<p style="margin:0 0 8px">Échéance : ' + esc(fmtDate(d.echeance || t.due_at)) + ' · remis le ' + esc(fmtDate(d.submitted_at)) + '.' +
       (graded ? ' Pénalité : <b>' + (d.retard_jours > 14 ? 'note 1 (plus de 14 jours)' : (d.retard_jours > 7 ? '−1 point (8 à 14 jours)' : '−0.5 point (1 à 7 jours)')) + '</b>, déjà comptée dans la note finale.' : ' Activité non notée : pas de pénalité.') + '</p>' +
       (graded ? '<label class="lpj-check"><input type="checkbox" data-late-excuse' + (d.retard_excuse ? ' checked' : '') + (val ? ' disabled' : '') + '> <span>Excuser ce retard (certificat médical, accord préalable…) : aucune pénalité</span></label>' : '') + '</section>';
   }
@@ -668,12 +695,18 @@
         (t.graded === false ? '<span class="lpj-muted">Activité non notée : les remises en retard sont signalées, sans pénalité.</span>' :
           '<span class="lpj-due-rule">Retard (selon la classe) : 1 à 7 j <b>−0.5</b> · 8 à 14 j <b>−1</b> · plus de 14 j <b>note 1</b></span>') + '</div>';
     }
-    if (!t.due_at) { return '<div class="lpj-due is-none"><span class="lpj-due-label">Date de remise</span><b>aucune date limite</b><span class="lpj-muted">Ajoutez-la dans « Modifier » pour appliquer les pénalités de retard.</span></div>'; }
-    var ms = (t.due_in || 0) * 1000;
+    var oneDue = t.due_at, oneTxt = (t.vars && t.vars['{date_fin}']) || fmtDate(t.due_at), dueIn = t.due_in;
+    if (cl.length) {
+      oneDue = cl[0].due || '';
+      oneTxt = fmtDate(oneDue);
+      dueIn = oneDue ? Math.round((new Date(oneDue) - new Date()) / 1000) : null;
+    }
+    if (!oneDue) { return '<div class="lpj-due is-none"><span class="lpj-due-label">Date de remise</span><b>aucune date limite</b><span class="lpj-muted">Ajoutez-la dans « Modifier » (dates de chaque classe) pour appliquer les pénalités de retard.</span></div>'; }
+    var ms = (dueIn || 0) * 1000;
     var days = Math.ceil(Math.abs(ms) / 86400000);
     var cls = ms < 0 ? 'is-late' : (days <= 3 ? 'is-soon' : '');
     var when = ms < 0 ? 'dépassée depuis ' + days + ' jour' + (days > 1 ? 's' : '') : (days <= 1 ? 'dans moins de 24 h' : 'dans ' + days + ' jours');
-    return '<div class="lpj-due ' + cls + '"><span class="lpj-due-label">Remise au plus tard</span><b>' + esc((t.vars && t.vars['{date_fin}']) || fmtDate(t.due_at)) + '</b><span class="lpj-due-when">' + when + '</span>' +
+    return '<div class="lpj-due ' + cls + '"><span class="lpj-due-label">Remise au plus tard</span><b>' + esc(oneTxt) + '</b><span class="lpj-due-when">' + when + '</span>' +
       (t.graded === false ? '<span class="lpj-muted">Activité non notée : les remises en retard sont signalées, sans pénalité.</span>' :
         '<span class="lpj-due-rule">Retard : 1 à 7 j <b>−0.5</b> · 8 à 14 j <b>−1</b> · plus de 14 j <b>note 1</b></span>') + '</div>';
   }
