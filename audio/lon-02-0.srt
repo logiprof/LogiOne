@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,012
+Dans chaque outil, le même menu en haut : un clic pour passer d'un outil à l'autre,
+

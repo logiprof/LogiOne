@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,575
+Chaque outil a son tutoriel vidéo pour démarrer.
+
+2
+00:00:03,525 --> 00:00:05,412
+Bon travail !
+

@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:03,925
+Passez de l'un à l'autre en un clic, sans rien ressaisir.
+

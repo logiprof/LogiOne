@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,200
+LogiProgress : la progression de vos groupes dans les cours en ligne, leçon par leçon.
+

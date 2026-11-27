@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,050
+LogiPlanning : les plans de formation de vos classes, tels que les voient vos élèves.
+

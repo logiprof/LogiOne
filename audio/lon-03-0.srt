@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:05,800
+LogiClass vient en complément d'AGAPEPE : il facilite le suivi de nos actions pour chaque apprenti.
+
+2
+00:00:05,750 --> 00:00:09,550
+Absences, situations à traiter, convocations.
+

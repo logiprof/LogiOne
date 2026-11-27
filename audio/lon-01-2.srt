@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:03,737
+Vos données restent les vôtres : aucun collègue ne les voit.
+

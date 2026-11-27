@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,062
+LogiProjet : les travaux de groupe.
+
+2
+00:00:03,012 --> 00:00:07,562
+Dépôt des présentations, correction assistée, retours publiés.
+

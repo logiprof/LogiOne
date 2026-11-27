@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,275
+Logi 3 D : des animations en 3 D à projeter en classe.
+
