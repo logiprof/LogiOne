@@ -448,31 +448,74 @@
       }).catch(function (e) { toast(e.message, true); });
     });
   }
+  /* Série d'un modèle : M107 → M100, M2xx → M200… (d'après le module, sinon le titre ou le cours). */
+  function serieOf(m) {
+    var src = [m.module, m.name, m.title, m.course].join(' ');
+    var x = src.match(/\bM\s?(\d)(\d\d)\b/i);
+    return x ? 'M' + x[1] + '00' : 'Autres';
+  }
+  function normTxt(v) { return String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+  function modeleCard(m) {
+    return '<article class="lpj-tile lpj-modele">' +
+      '<div class="lpj-meta">' + (m.module ? '<b>' + esc(m.module) + '</b>' : '') + '<span>' + (m.graded ? 'Noté' : 'Formatif') + ' · ' + esc(groupWord(m.group_size)) + '</span>' + (m.shared ? '<span class="lpj-badge st-valide">Partagé</span>' : '') + '</div>' +
+      '<h3>' + esc(m.name) + '</h3>' +
+      (m.title && m.title !== m.name ? '<div class="lpj-muted" style="font-size:14px">Travail : ' + esc(m.title) + '</div>' : '') +
+      '<div class="lpj-meta">' + (m.course ? '<span>' + esc(m.course) + '</span>' : '') + '<span>' + m.lessons + ' leçon' + (m.lessons > 1 ? 's' : '') + ' · ' + m.criteres + ' critères · ' + m.points + ' points</span><span>' + esc(m.formats) + '</span>' + (m.has_pdf ? '<span>Consigne PDF</span>' : '') + '</div>' +
+      '<div class="lpj-meta"><span>' + (m.mine ? 'Votre modèle' : 'Par ' + esc(m.author)) + ' · ' + esc(fmtDate(m.created)) + (m.uses ? ' · utilisé ' + m.uses + ' fois' : '') + '</span></div>' +
+      '<div class="lpj-modele-actions"><button class="lpj-btn lpj-btn-yellow lpj-btn-sm" data-act="use-modele" data-id="' + esc(m.id) + '">Utiliser ce modèle</button>' +
+      (m.can_edit ? '<button class="lpj-btn lpj-btn-sm" data-act="ren-modele" data-id="' + esc(m.id) + '">Renommer</button>' +
+        '<button class="lpj-btn lpj-btn-sm" data-act="share-modele" data-id="' + esc(m.id) + '" data-v="' + (m.shared ? '0' : '1') + '">' + (m.shared ? 'Ne plus partager' : 'Partager') + '</button>' +
+        '<button class="lpj-btn lpj-btn-sm lpj-btn-danger" data-act="del-modele" data-id="' + esc(m.id) + '">Supprimer</button>' : '') + '</div></article>';
+  }
   function showModeles() {
     loading();
     api('modeles').then(function (list) {
       S.modeles = list;
-      var card = function (m) {
-        return '<article class="lpj-tile lpj-modele">' +
-          '<div class="lpj-meta">' + (m.module ? '<b>' + esc(m.module) + '</b>' : '') + '<span>' + (m.graded ? 'Noté' : 'Formatif') + ' · ' + esc(groupWord(m.group_size)) + '</span>' + (m.shared ? '<span class="lpj-badge st-valide">Partagé</span>' : '') + '</div>' +
-          '<h3>' + esc(m.name) + '</h3>' +
-          (m.title && m.title !== m.name ? '<div class="lpj-muted" style="font-size:14px">Travail : ' + esc(m.title) + '</div>' : '') +
-          '<div class="lpj-meta">' + (m.course ? '<span>' + esc(m.course) + '</span>' : '') + '<span>' + m.lessons + ' leçon' + (m.lessons > 1 ? 's' : '') + ' · ' + m.criteres + ' critères · ' + m.points + ' points</span><span>' + esc(m.formats) + '</span>' + (m.has_pdf ? '<span>Consigne PDF</span>' : '') + '</div>' +
-          '<div class="lpj-meta"><span>' + (m.mine ? 'Votre modèle' : 'Par ' + esc(m.author)) + ' · ' + esc(fmtDate(m.created)) + (m.uses ? ' · utilisé ' + m.uses + ' fois' : '') + '</span></div>' +
-          '<div class="lpj-modele-actions"><button class="lpj-btn lpj-btn-yellow lpj-btn-sm" data-act="use-modele" data-id="' + esc(m.id) + '">Utiliser ce modèle</button>' +
-          (m.can_edit ? '<button class="lpj-btn lpj-btn-sm" data-act="ren-modele" data-id="' + esc(m.id) + '">Renommer</button>' +
-            '<button class="lpj-btn lpj-btn-sm" data-act="share-modele" data-id="' + esc(m.id) + '" data-v="' + (m.shared ? '0' : '1') + '">' + (m.shared ? 'Ne plus partager' : 'Partager') + '</button>' +
-            '<button class="lpj-btn lpj-btn-sm lpj-btn-danger" data-act="del-modele" data-id="' + esc(m.id) + '">Supprimer</button>' : '') + '</div></article>';
-      };
-      var mine = list.filter(function (m) { return m.mine; }), others = list.filter(function (m) { return !m.mine; });
+      if (S.mq === undefined) { S.mq = ''; S.mser = ''; S.mwho = ''; }
+      var series = [];
+      list.forEach(function (m) { m.serie = serieOf(m); m.hay = normTxt([m.name, m.title, m.module, m.course, m.author, m.formats].join(' ')); if (series.indexOf(m.serie) < 0) { series.push(m.serie); } });
+      series.sort(function (a, b) { return a === 'Autres' ? 1 : (b === 'Autres' ? -1 : a.localeCompare(b, 'fr', { numeric: true })); });
+      if (S.mser && series.indexOf(S.mser) < 0) { S.mser = ''; }
+      var chip = function (v, label, n) { return '<button type="button" class="lpj-chip' + (S.mser === v ? ' is-on' : '') + '" data-mser="' + esc(v) + '">' + esc(label) + ' <span>' + n + '</span></button>'; };
+      var tools = list.length ? '<div class="lpj-mtools">' +
+        '<label class="lpj-msearch"><span aria-hidden="true">🔍</span><input type="search" data-mq value="' + esc(S.mq) + '" placeholder="Rechercher un modèle : module, titre, cours, collègue…" aria-label="Rechercher un modèle"></label>' +
+        '<select data-mwho aria-label="Auteur"><option value=""' + (S.mwho ? '' : ' selected') + '>Tous les modèles</option><option value="mine"' + (S.mwho === 'mine' ? ' selected' : '') + '>Mes modèles</option><option value="others"' + (S.mwho === 'others' ? ' selected' : '') + '>Partagés par mes collègues</option></select>' +
+        '</div><div class="lpj-chips">' + chip('', 'Toutes les séries', list.length) + series.map(function (sr) { return chip(sr, sr === 'Autres' ? 'Autres' : sr, list.filter(function (m) { return m.serie === sr; }).length); }).join('') + '</div>' : '';
       var body = '<div class="lpj-crumb"><a href="#/" data-go="#/">Vos travaux</a> / Bibliothèque de modèles</div>' +
         '<div class="lpj-bar"><h2>Bibliothèque de modèles</h2><button class="lpj-btn" data-go="#/nouveau">+ Travail vide</button></div>' +
         '<p class="lpj-muted" style="margin:-4px 0 16px">« Utiliser ce modèle » crée un nouveau travail en brouillon avec le cours, les leçons, la grille et la consigne du modèle. Il ne reste qu’à cocher les classes et indiquer les dates. Pour ajouter un modèle : ouvrez un travail, puis « Enregistrer comme modèle ».</p>' +
-        (mine.length ? '<h3 class="lpj-sec-title">Vos modèles</h3><div class="lpj-grid">' + mine.map(card).join('') + '</div>' :
-          '<div class="lpj-empty"><b>Aucun modèle pour l’instant</b>Ouvrez un de vos travaux et cliquez sur « 📚 Enregistrer comme modèle » : vous pourrez le réutiliser ici pour d’autres classes, l’année prochaine.</div>') +
-        (others.length ? '<h3 class="lpj-sec-title" style="margin-top:26px">Partagés par vos collègues</h3><div class="lpj-grid">' + others.map(card).join('') + '</div>' : '');
-      draw(page('LogiProjet · Espace enseignant', 'Bibliothèque de modèles', 'Vos travaux prêts à réutiliser, d’une classe à l’autre', body));
+        tools + '<div data-mlist></div>';
+      draw(page('LogiProjet · Espace enseignant', 'Bibliothèque de modèles', 'Vos travaux prêts à réutiliser, classés par série de modules', body));
+      drawModeleList();
     }).catch(fail);
+  }
+  function drawModeleList() {
+    var box = root.querySelector('[data-mlist]');
+    if (!box) { return; }
+    var list = S.modeles || [];
+    if (!list.length) {
+      box.innerHTML = '<div class="lpj-empty"><b>Aucun modèle pour l’instant</b>Ouvrez un de vos travaux et cliquez sur « 📚 Enregistrer comme modèle » : vous pourrez le réutiliser ici pour d’autres classes, l’année prochaine.</div>';
+      return;
+    }
+    var words = normTxt(S.mq).split(/\s+/).filter(Boolean);
+    var shown = list.filter(function (m) {
+      if (S.mser && m.serie !== S.mser) { return false; }
+      if (S.mwho === 'mine' && !m.mine) { return false; }
+      if (S.mwho === 'others' && m.mine) { return false; }
+      return words.every(function (w) { return m.hay.indexOf(w) > -1 || normTxt(m.serie).indexOf(w) > -1; });
+    });
+    if (!shown.length) {
+      box.innerHTML = '<div class="lpj-empty"><b>Aucun modèle ne correspond</b>Essayez un autre mot, ou choisissez « Toutes les séries ».</div>';
+      return;
+    }
+    var groups = {}, order = [];
+    shown.forEach(function (m) { if (!groups[m.serie]) { groups[m.serie] = []; order.push(m.serie); } groups[m.serie].push(m); });
+    order.sort(function (a, b) { return a === 'Autres' ? 1 : (b === 'Autres' ? -1 : a.localeCompare(b, 'fr', { numeric: true })); });
+    box.innerHTML = order.map(function (sr) {
+      var g = groups[sr].sort(function (a, b) { return (a.module || '').localeCompare(b.module || '', 'fr', { numeric: true }) || a.name.localeCompare(b.name, 'fr'); });
+      return '<section class="lpj-serie"><h3 class="lpj-serie-h"><span class="lpj-serie-tag">' + esc(sr) + '</span>' + (sr === 'Autres' ? 'Sans module' : 'Modules ' + esc(sr.replace(/00$/, '')) + 'xx') + '<small>' + g.length + ' modèle' + (g.length > 1 ? 's' : '') + '</small></h3>' +
+        '<div class="lpj-grid">' + g.map(modeleCard).join('') + '</div></section>';
+    }).join('');
   }
   function useModele(id) {
     var m = (S.modeles || []).filter(function (x) { return x.id === id; })[0];
@@ -1239,6 +1282,8 @@
     }
     var lk = e.target.closest('[data-locked]');
     if (lk) { var lt = (S.elist || []).filter(function (x) { return String(x.id) === lk.getAttribute('data-locked'); })[0]; toast('Ce travail n’a pas encore commencé. Il s’ouvre le ' + (lt ? fmtDate(lt.date_debut) : '…') + '.'); return; }
+    var ms = e.target.closest('[data-mser]');
+    if (ms) { S.mser = ms.getAttribute('data-mser'); root.querySelectorAll('[data-mser]').forEach(function (x) { x.classList.toggle('is-on', x === ms); }); drawModeleList(); return; }
     var hv = e.target.closest('[data-help-video]');
     if (hv) { e.preventDefault(); var dm = hv.closest('details'); if (dm) { dm.open = false; } openVideo(hv.getAttribute('data-help-video')); return; }
     var nav = e.target.closest('[data-go]');
@@ -1307,6 +1352,7 @@
   });
   root.addEventListener('input', function (e) {
     var el = e.target;
+    if (el.hasAttribute('data-mq')) { S.mq = el.value; drawModeleList(); return; }
     if (S.form && root.querySelector('[data-act="save-travail"]') && (el.matches('[data-f],[data-gi],[data-blocname],[data-cf],[data-ct],[data-ci]') && el.type !== 'checkbox' && el.tagName !== 'SELECT')) { formInput(el); return; }
     if (S.depot && el.hasAttribute('data-comment')) {
       var id = el.getAttribute('data-comment');
@@ -1332,6 +1378,7 @@
       return;
     }
     if (el.hasAttribute('data-class-start') && S.form) { S.form.class_start = S.form.class_start || {}; S.form.class_start[el.getAttribute('data-class-start')] = el.value; S.dirty = true; return; }
+    if (el.hasAttribute('data-mwho')) { S.mwho = el.value; drawModeleList(); return; }
     if (el.hasAttribute('data-import')) { importTravail(el.files[0]); el.value = ''; return; }
     if (el.hasAttribute('data-all-travaux')) { S.allT = el.checked; try { localStorage.setItem('lpj-tous', el.checked ? '1' : '0'); } catch (er) {} teacherHome(); return; }
     if (el.hasAttribute('data-corr-import')) { importCorrection(el.files[0]); el.value = ''; return; }

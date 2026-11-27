@@ -363,7 +363,8 @@ if ( 'enseignant' === $qui ) {
 	</ol>
 	<h3>Utiliser un modèle</h3>
 	<ol class="steps">
-		<li>Sur la page d’accueil, cliquez sur <span class="btn">Bibliothèque de modèles</span>.</li>
+		<li>Sur la page d’accueil, cliquez sur <span class="btn">Bibliothèque de modèles</span>. Les modèles y sont rangés par série de modules : <b>M100</b>, <b>M200</b>, <b>M300</b>… (d’après le module du travail).</li>
+		<li>Pour trouver un modèle, cliquez sur une série, tapez un mot dans la <b>recherche</b> (module, titre, cours ou nom d’un collègue), ou choisissez « Mes modèles » / « Partagés par mes collègues ».</li>
 		<li>Sur la carte du modèle, cliquez sur <span class="btn y">Utiliser ce modèle</span>.</li>
 		<li>Un nouveau travail est créé <b>en brouillon</b> et s’ouvre dans le formulaire : cochez les classes, indiquez les dates, vérifiez le PDF de consigne, puis enregistrez.</li>
 	</ol>

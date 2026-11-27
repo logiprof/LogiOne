@@ -392,3 +392,18 @@
 .lpj-band:has(.lpj-help-menu[open]){overflow:visible;z-index:20}
 .lpj-video-bar .lpj-btn{border:0;border-radius:8px;padding:8px 14px;font:600 14px/1.2 "LogiProjet Poppins",system-ui,sans-serif;background:#fff;color:#252c35!important;text-decoration:none}
 .lpj-video-bar .lpj-btn-yellow{background:#f5c400}
+.lpj-mtools{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 12px}
+.lpj-msearch{flex:1 1 320px;display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--line);border-radius:var(--radius);padding:0 12px}
+.lpj-msearch:focus-within{border-color:var(--green)}
+.lpj .lpj-msearch input{flex:1;border:0!important;outline:0;box-shadow:none!important;background:transparent;font:inherit;font-size:15px;padding:11px 0;min-width:0}
+.lpj .lpj-mtools select{flex:0 1 260px;font:inherit;font-size:14px;padding:9px 10px;border:1.5px solid var(--line);border-radius:var(--radius);background:#fff}
+.lpj-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.lpj .lpj-chip{font:inherit;font-size:14px;font-weight:600;padding:7px 14px;border-radius:20px;border:1.5px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.lpj .lpj-chip span{font-size:12px;font-weight:600;background:var(--paper);border-radius:10px;padding:1px 7px;color:var(--muted)}
+.lpj .lpj-chip:hover{border-color:var(--ink)}
+.lpj .lpj-chip.is-on{background:var(--ink);border-color:var(--ink);color:#fff}
+.lpj .lpj-chip.is-on span{background:var(--yellow);color:var(--ink-deep)}
+.lpj-serie{margin:0 0 26px}
+.lpj-serie-h{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;margin:0 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line)}
+.lpj-serie-tag{background:var(--green);color:#fff;font-size:14px;padding:3px 10px;border-radius:6px;letter-spacing:.03em}
+.lpj-serie-h small{margin-left:auto;font-size:13px;font-weight:500;color:var(--muted)}
