@@ -281,7 +281,8 @@ class LIR_Admin {
 			$r = LIR_Core::get( $id );
 		}
 		$L = LIR_Core::lecon( $r['lecon'] );
-		echo '<p><a href="' . esc_url( admin_url( 'admin.php?page=fw-remises' ) ) . '">← Retour à la liste</a></p>';
+		$nx = self::next_to_correct( $r['id'], (int) $r['lecon'], $nleft );
+		echo '<p><a href="' . esc_url( admin_url( 'admin.php?page=fw-remises' ) ) . '">← Retour à la liste</a>' . ( $nx ? ' <span class="fwr-skip">· <a href="' . esc_url( admin_url( 'admin.php?page=fw-remises&vue=fiche&id=' . $nx ) ) . '">Passer à la remise suivante à corriger →</a> <span class="description">(' . (int) $nleft . ' à corriger)</span></span>' : '' ) . '</p>';
 		echo '<h1>' . esc_html( LIR_Core::user_label( $r['user_id'] ) ) . ' – ' . esc_html( LIR_Core::lecon_label( $r['lecon'] ) ) . '</h1>';
 		self::notice();
 		echo '<p class="fwr-meta">Exercice : <strong>' . esc_html( $L['exercice'] ) . '</strong> · Version ' . (int) $r['version'] . ' déposée le ' . esc_html( mysql2date( 'd.m.Y à H:i', $r['created_at'] ) ) . ' · <span class="fwr-st fwr-st-' . esc_attr( $r['statut'] ) . '">' . esc_html( LIR_Core::STATUTS[ $r['statut'] ] ) . '</span> · ';
@@ -376,6 +377,9 @@ class LIR_Admin {
 		echo '</select></div></fieldset>';
 		echo '<p><label><strong>Commentaire pour l\'apprenti·e</strong><br><textarea id="fwr-commentaire" name="commentaire" rows="12" class="large-text">' . esc_textarea( (string) $r['commentaire'] ) . '</textarea></label></p>';
 		echo '<p><label><input type="checkbox" name="detail" value="1"' . checked( (int) $r['detail'], 1, false ) . '> Montrer aussi la liste des points vérifiés</label></p>';
+		$suite = '0' !== get_user_meta( get_current_user_id(), 'lir_suivante', true );
+		self::next_to_correct( $r['id'], (int) $r['lecon'], $left );
+		echo '<p class="fwr-suite"><label><input type="checkbox" name="suivante" value="1"' . checked( $suite, true, false ) . '> Ensuite, ouvrir la remise suivante à corriger</label> <span class="description">(' . ( $left ? 'encore ' . (int) $left . ' à corriger, la même leçon d\'abord' : 'aucune autre remise à corriger' ) . ')</span></p>';
 		echo '<p class="fwr-actions"><button class="button" name="publier" value="0">💾 Enregistrer sans publier</button> <button class="button button-primary" name="publier" value="1">📣 Enregistrer et publier</button>';
 		if ( 'publie' === $r['statut'] ) { echo ' <button class="button-link" name="publier" value="-1">Retirer la publication</button>'; }
 		echo '</p></form></div></div></div>';
@@ -413,8 +417,42 @@ class LIR_Admin {
 		LIR_Core::log( 'correction', $id, $data['statut'] . ( $val ? ' · ' . $val : '' ) );
 		if ( 1 === $pub ) { do_action( 'fwr_retour_publie', $id ); }
 		$msg = 1 === $pub ? 'Retour publié : l\'apprenti·e le voit sous l\'exercice.' : 'Correction enregistrée (non visible par l\'apprenti·e).';
+		// 1.54.6 : après l'enregistrement, ouvrir directement la prochaine remise à corriger (sauf « Retirer la publication » ou case décochée).
+		$suite = -1 !== $pub && ! empty( $_POST['suivante'] );
+		update_user_meta( get_current_user_id(), 'lir_suivante', -1 === $pub ? get_user_meta( get_current_user_id(), 'lir_suivante', true ) : ( $suite ? '1' : '0' ) );
+		if ( $suite ) {
+			$r    = LIR_Core::get( $id );
+			$next = self::next_to_correct( $id, (int) $r['lecon'], $left );
+			if ( $next ) {
+				$msg .= ' Voici la remise suivante à corriger (' . $left . ' à corriger, celle-ci comprise).';
+				wp_safe_redirect( admin_url( 'admin.php?page=fw-remises&vue=fiche&id=' . $next . '&fwr_msg=' . rawurlencode( $msg ) ) );
+			} else {
+				wp_safe_redirect( admin_url( 'admin.php?page=fw-remises&fwr_msg=' . rawurlencode( $msg . ' 🎉 Il n\'y a plus aucune remise à corriger.' ) ) );
+			}
+			exit;
+		}
 		wp_safe_redirect( admin_url( 'admin.php?page=fw-remises&vue=fiche&id=' . $id . '&fwr_msg=' . rawurlencode( $msg ) ) );
 		exit;
+	}
+
+	/**
+	 * Prochaine remise à corriger (statut « À corriger », dernière version, visible par ce formateur) :
+	 * d'abord la même leçon, puis les remises attribuées à ce formateur, puis la plus ancienne. $left = nombre restant.
+	 */
+	public static function next_to_correct( $exclude, $lecon = 0, &$left = 0 ) {
+		$f   = array( 'lecon' => 0, 'statut' => 'depose', 'toutes' => false, 'formateur' => -1, 'classe' => 0, 's' => '' );
+		$ids = array_values( array_diff( LIR_List::query_ids( $f, 'created_at', 'ASC' ), array( (int) $exclude ) ) );
+		$left = count( $ids );
+		if ( ! $ids ) { return 0; }
+		$mine = LI_Formateurs::of_user( get_current_user_id() );
+		$best = 0; $key = null;
+		foreach ( $ids as $i => $rid ) {
+			$r = LIR_Core::get( $rid );
+			if ( ! $r ) { continue; }
+			$k = array( (int) $r['lecon'] === (int) $lecon ? 0 : 1, in_array( (int) $r['formateur_id'], $mine, true ) ? 0 : 1, $i );
+			if ( null === $key || $k < $key ) { $key = $k; $best = $rid; }
+		}
+		return $best;
 	}
 
 	/* ---------------------------------------------------------------- actions groupées */
