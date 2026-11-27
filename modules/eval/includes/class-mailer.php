@@ -642,6 +642,27 @@ L'équipe de direction",
         return LOGIEVAL_URL . 'assets/guide-logieval.pdf' . ( is_file( $file ) ? '?v=' . filemtime( $file ) : '' );
     }
 
+    /**
+     * 1.53.25 : tutoriel vidéo (Réglages › Général). Lien YouTube (watch, youtu.be, shorts, embed)
+     * ou fichier vidéo de la Médiathèque (.mp4/.webm). Tableau vide si rien n'est réglé.
+     * @return array{type:string,id?:string,src:string,watch:string}|array{}
+     */
+    public static function tutorial_video(): array {
+        $url = trim( (string) get_option( 'logieval_tutorial_url', '' ) );
+        if ( $url === '' ) return [];
+        if ( preg_match( '~(?:youtube(?:-nocookie)?\.com/(?:watch\?(?:.*&)?v=|embed/|shorts/|live/|v/)|youtu\.be/)([A-Za-z0-9_-]{11})~', $url, $m ) ) {
+            $id    = $m[1];
+            $start = preg_match( '~[?&#](?:t|start)=(\d+)~', $url, $t ) ? (int) $t[1] : 0;
+            // youtube-nocookie : mode « confidentialité renforcée » ; rel=0 : à la fin, seulement des vidéos de la même chaîne.
+            $src = 'https://www.youtube-nocookie.com/embed/' . $id . '?rel=0&modestbranding=1&playsinline=1&autoplay=1' . ( $start ? '&start=' . $start : '' );
+            return [ 'type' => 'youtube', 'id' => $id, 'src' => $src, 'watch' => 'https://www.youtube.com/watch?v=' . $id . ( $start ? '&t=' . $start . 's' : '' ) ];
+        }
+        if ( preg_match( '~\.(mp4|webm|m4v)(\?.*)?$~i', $url ) ) {
+            return [ 'type' => 'file', 'src' => $url, 'watch' => $url ];
+        }
+        return [];
+    }
+
     public static function login_url(): string {
         $page_id = absint( get_option( 'logieval_login_page', 0 ) );
         $url = '';

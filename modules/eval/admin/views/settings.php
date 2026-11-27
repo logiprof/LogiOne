@@ -34,6 +34,16 @@ $email_login_url = LOGIEVAL_Mailer::login_url();
             <p class="description">Ce guide est envoyé avec les identifiants (variable <code>{guide}</code>) et s’ouvre avec le bouton « Aide » des enseignants. Pour utiliser votre propre version, téléversez le PDF dans la Médiathèque et collez son adresse ici.</p>
         </td>
     </tr>
+    <tr><th>Tutoriel vidéo</th>
+        <td>
+            <?php $tuto = LOGIEVAL_Mailer::tutorial_video(); ?>
+            <input type="url" id="cfg-tutorial-url" class="regular-text" placeholder="https://youtu.be/… ou https://www.youtube.com/watch?v=…" value="<?= esc_attr(get_option('logieval_tutorial_url','')) ?>">
+            <p class="description">Collez ici le lien de la vidéo YouTube (une vidéo « non répertoriée » convient). Un bouton <strong>« Tutoriel vidéo »</strong> apparaît alors à côté de « Aide » et sur la page de connexion : la vidéo s’ouvre dans une fenêtre sur le site, avec un lien « Ouvrir sur YouTube ». Laisser vide : pas de bouton.<br>
+            Vous pouvez aussi coller l’adresse d’un fichier MP4 de la Médiathèque : la vidéo est alors lue directement depuis le site, sans YouTube ni publicité.</p>
+            <?php if ($tuto): ?><p class="description" style="color:#067030"><strong>✓ Vidéo reconnue</strong> (<?= $tuto['type']==='youtube' ? 'YouTube · '.esc_html($tuto['id']) : 'fichier vidéo' ?>) — <a href="<?= esc_url($tuto['watch']) ?>" target="_blank" rel="noopener">vérifier</a></p>
+            <?php elseif (get_option('logieval_tutorial_url','') !== ''): ?><p class="description" style="color:#b32d2e"><strong>Lien non reconnu</strong> : collez un lien YouTube ou l’adresse d’un fichier .mp4.</p><?php endif ?>
+        </td>
+    </tr>
 </table>
 
 <h2 id="demo">Mode démonstration</h2>
@@ -125,6 +135,7 @@ jQuery(function($){
             logieval_etablissement: $('#cfg-etablissement').val(),
             logieval_login_page: $('#cfg-login-page').val(),
             logieval_guide_url: $('#cfg-guide-url').val(),
+            logieval_tutorial_url: $('#cfg-tutorial-url').val(),
             logieval_id_prefix: $('#cfg-id-prefix').val(),
             logieval_id_length: $('#cfg-id-length').val()
         };

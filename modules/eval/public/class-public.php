@@ -153,6 +153,7 @@ class LOGIEVAL_Public {
         $h .= '<a class="lge-brand" href="' . esc_url(self::portal_url()) . '"><img class="lge-logo" src="' . esc_url(LOGIEVAL_URL . 'assets/logieval-logo-blanc.svg') . '" alt="LogiEval by LogiProf" width="300" height="80" decoding="async"></a>';
         // 1.53.12 : bouton « Aide » → guide PDF de l'enseignant
         $help = '<a class="lge-help" href="' . esc_url( LOGIEVAL_Mailer::guide_url() ) . '" target="_blank" rel="noopener" title="Guide de l’enseignant (PDF)" style="display:inline-flex;align-items:center;gap:6px;background:#f5c400;color:#313a45 !important;font-weight:700;border-radius:999px;padding:5px 12px;text-decoration:none"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M9.5 9.3a2.6 2.6 0 0 1 5 .9c0 1.8-2.5 2.2-2.5 3.8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="17.2" r="1.3" fill="currentColor"/></svg>Aide</a>';
+        if ( $user ) { $help .= self::tutorial_button(); } // seulement quand le bandeau affiche les boutons
         if ( $user && LOGIEVAL_Auth::is_linked() ) {
             $h .= '<div class="lge-user"><span>' . esc_html(trim(($user['prenom'] ?? '') . ' ' . ($user['nom'] ?? ''))) . ' · reconnu par votre compte</span>' . $help . '</div>';
         } elseif ( $user ) {
@@ -549,6 +550,31 @@ class LOGIEVAL_Public {
             . '<style>.lge-demo-banner{background:#fffbea;border:2px dashed #f5c400;border-radius:12px;padding:10px 14px;margin:0 0 16px;font-size:14px;line-height:1.5;color:#313a45}.lge-demo-banner a{color:#067030;font-weight:600}</style>';
     }
 
+    /**
+     * 1.53.25 : bouton « Tutoriel vidéo » (si un lien est réglé). La vidéo s'ouvre dans une fenêtre sur le site ;
+     * « Ouvrir sur YouTube » reste proposé. La fenêtre et son script ne sont ajoutés qu'une fois par page.
+     */
+    private static function tutorial_button( string $style = 'pill' ): string {
+        $v = LOGIEVAL_Mailer::tutorial_video();
+        if ( ! $v ) return '';
+        $icon = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor" opacity=".18"/><path d="M10 8.2v7.6l6-3.8z" fill="currentColor"/></svg>';
+        $attrs = ' data-lge-video="' . esc_attr( $v['src'] ) . '" data-lge-video-type="' . esc_attr( $v['type'] ) . '" data-lge-video-watch="' . esc_attr( $v['watch'] ) . '"';
+        $btn = 'link' === $style
+            ? '<a href="' . esc_url( $v['watch'] ) . '" class="lge-video-btn lge-video-link"' . $attrs . ' style="font-weight:600">▶️ Tutoriel vidéo</a>'
+            : '<a href="' . esc_url( $v['watch'] ) . '" class="lge-video-btn"' . $attrs . ' title="Tutoriel vidéo" style="display:inline-flex;align-items:center;gap:6px;background:#fff;color:#313a45 !important;font-weight:700;border-radius:999px;padding:5px 12px;text-decoration:none">' . $icon . 'Tutoriel vidéo</a>';
+        static $modal = false;
+        if ( $modal ) return $btn;
+        $modal = true;
+        return $btn . '<dialog class="lge-video-dlg" aria-label="Tutoriel vidéo LogiEval"><div class="lge-video-head"><strong>Tutoriel vidéo · LogiEval</strong><span><a class="lge-video-yt" href="#" target="_blank" rel="noopener">Ouvrir sur YouTube ↗</a><button type="button" class="lge-video-close" aria-label="Fermer" autofocus>✕</button></span></div><div class="lge-video-box"></div></dialog>'
+            . '<style>.lge-video-dlg{width:min(1100px,94vw);max-width:none;padding:0;border:0;border-radius:14px;background:#1f2730;color:#fff;box-shadow:0 20px 60px rgba(0,0,0,.45)}.lge-video-dlg::backdrop{background:rgba(15,20,26,.75)}.lge-video-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 14px;font-size:15px}.lge-video-head span{display:flex;align-items:center;gap:12px}.lge-video-yt{color:#f5c400 !important;font-weight:600;text-decoration:none;font-size:14px}.lge-video-close{background:none;border:0;color:#fff;font-size:20px;line-height:1;cursor:pointer;padding:4px 6px}.lge-video-box{position:relative;aspect-ratio:16/9;background:#000;border-radius:0 0 14px 14px;overflow:hidden}.lge-video-box iframe,.lge-video-box video{position:absolute;inset:0;width:100%;height:100%;border:0}</style>'
+            . '<script>(function(){var d=document.querySelector(".lge-video-dlg");if(!d||!d.showModal)return;var box=d.querySelector(".lge-video-box"),yt=d.querySelector(".lge-video-yt");'
+            . 'function close(){box.innerHTML="";if(d.open)d.close();}'
+            . 'document.addEventListener("click",function(e){var b=e.target.closest("[data-lge-video]");if(!b)return;e.preventDefault();var src=b.getAttribute("data-lge-video"),type=b.getAttribute("data-lge-video-type");'
+            . 'box.innerHTML=type==="file"?\'<video controls autoplay playsinline preload="metadata"></video>\':\'<iframe title="Tutoriel vidéo LogiEval" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>\';'
+            . 'box.firstChild.src=src;yt.href=b.getAttribute("data-lge-video-watch");yt.style.display=type==="file"?"none":"";d.showModal();});'
+            . 'd.querySelector(".lge-video-close").addEventListener("click",close);d.addEventListener("click",function(e){if(e.target===d)close();});d.addEventListener("close",function(){box.innerHTML="";});})();</script>';
+    }
+
     private function render_login_form( string $message = '' ): string {
         $action_url = esc_url(remove_query_arg(['logieval_logout'], wp_unslash($_SERVER['REQUEST_URI'] ?? '')));
         ob_start(); ?>
@@ -564,6 +590,7 @@ class LOGIEVAL_Public {
                     <button type="submit" name="logieval_login_submit" class="logieval-btn logieval-btn-primary">Se connecter →</button>
                     <label class="logieval-shared"><input type="checkbox" name="logieval_shared" value="1"> Ordinateur partagé (salle des maîtres…) : me déconnecter en fermant le navigateur</label>
                     <p class="logieval-login-help">Pas besoin de compte sur le site : votre identifiant personnel, reçu par e-mail, suffit.<br><a href="<?= esc_url( LOGIEVAL_Mailer::guide_url() ) ?>" target="_blank" rel="noopener">📘 Guide de l’enseignant (PDF)</a></p>
+                    <?php if ( LOGIEVAL_Mailer::tutorial_video() ) : ?><p class="logieval-login-help" style="margin-top:4px"><?= self::tutorial_button( 'link' ) ?></p><?php endif; ?>
                 </form>
             </div>
             <?= self::demo_card() ?>

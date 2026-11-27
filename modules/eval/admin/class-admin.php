@@ -746,7 +746,7 @@ class LOGIEVAL_Admin {
     private function ajax_save_settings(): void {
         $keys = [
             'logieval_etablissement', 'logieval_id_prefix', 'logieval_id_length',
-            'logieval_login_page', 'logieval_guide_url',
+            'logieval_login_page', 'logieval_guide_url', 'logieval_tutorial_url',
         ];
         foreach (LOGIEVAL_Mailer::templates() as $tpl) {
             $keys[] = $tpl['subject'];
@@ -757,7 +757,7 @@ class LOGIEVAL_Admin {
             $value = wp_unslash($_POST[$k]);
             if ( $k === 'logieval_login_page' ) {
                 update_option( $k, absint($value) );
-            } elseif ( $k === 'logieval_guide_url' ) {
+            } elseif ( $k === 'logieval_guide_url' || $k === 'logieval_tutorial_url' ) {
                 update_option( $k, esc_url_raw( trim( (string) $value ) ) );
             } elseif ( $k === 'logieval_id_length' ) {
                 update_option( $k, min( 16, max( LOGIEVAL_Auth::MIN_ID_LENGTH, absint($value) ) ) );
