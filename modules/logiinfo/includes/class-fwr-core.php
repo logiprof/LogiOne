@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 class LIR_Core {
 	const DB_VERSION = '7';
-	const REPORT_VERSION = 2; // 2 : pénalités (texte perdu, nom du fichier)
+	const REPORT_VERSION = 3; // 2 : pénalités (texte perdu, nom du fichier) · 3 : ¶ supprimés en suivi des modifications
 	const NAME_PENALTY = 1; // points retirés si le nom du fichier ne respecte pas la consigne
 	const STATUTS = array( 'depose' => 'À corriger', 'corrige' => 'Corrigé (non publié)', 'publie' => 'Retour publié', 'corbeille' => 'Corbeille' );
 
@@ -372,6 +372,13 @@ class LIR_Core {
 		return array_values( array_unique( $m[1] ) );
 	}
 
+	/** Formes acceptées d'un prénom ou d'un nom composé : le premier mot, les deux premiers…, le nom complet (lettres et chiffres seulement). */
+	private static function name_variants( $name ) {
+		$t = preg_split( '/[\s\-]+/u', trim( (string) $name ), -1, PREG_SPLIT_NO_EMPTY );
+		$out = array(); $acc = '';
+		foreach ( $t as $w ) { $acc .= LIR_Rules::compact( $w ); $out[] = $acc; }
+		return array_unique( $out );
+	}
 	/** Vérifie le nom des fichiers déposés : rend null (pas de consigne), ou array( ok, libellé ). */
 	public static function check_names( $lecon, $files, $user_id ) {
 		$want = self::expected_names( $lecon );
@@ -390,7 +397,12 @@ class LIR_Core {
 				$pre   = call_user_func( $c, $parts[0] );
 				$suf   = call_user_func( $c, $parts[1] ?? '' );
 				if ( '' !== $first && '' !== $last ) {
-					if ( $got === $pre . call_user_func( $c, $first ) . call_user_func( $c, $last ) . $suf ) { $hit = true; break; }
+					// Prénoms et noms composés : « Lopes » ou « Lopes_Santos » pour Lopes Santos, « Jean » ou « Jean-Marc » pour Jean-Marc.
+					foreach ( self::name_variants( $first ) as $fv ) {
+						foreach ( self::name_variants( $last ) as $lv ) {
+							if ( $got === $pre . $fv . $lv . $suf ) { $hit = true; break 3; }
+						}
+					}
 				} elseif ( 0 === strpos( $got, $pre ) && strlen( $got ) > strlen( $pre . $suf ) && ( '' === $suf || substr( $got, -strlen( $suf ) ) === $suf ) ) {
 					$hit = true; break;
 				}
@@ -398,7 +410,7 @@ class LIR_Core {
 			if ( ! $hit ) { $ok_all = false; $bad[] = $f['name']; }
 		}
 		$exp = array();
-		foreach ( $want as $w ) { $exp[] = ( '' !== $first && '' !== $last ) ? str_replace( array( 'Prénom', 'Prenom', 'Nom' ), array( $first, $first, $last ), $w ) : $w; }
+		foreach ( $want as $w ) { $exp[] = ( '' !== $first && '' !== $last ) ? str_replace( array( 'Prénom', 'Prenom', 'Nom' ), array( preg_replace( '/\s+/u', '_', $first ), preg_replace( '/\s+/u', '_', $first ), preg_replace( '/\s+/u', '_', $last ) ), $w ) : $w; }
 		$exp = implode( ' / ', array_unique( $exp ) );
 		return array( $ok_all, $ok_all ? 'Nom du fichier conforme à la consigne (' . $exp . ')' : 'Nom du fichier incorrect : « ' . implode( ' », « ', $bad ) . ' » au lieu de ' . $exp );
 	}
@@ -696,12 +708,19 @@ class LIR_Core {
 		if ( ! file_exists( $path ) ) { wp_die( 'Fichier introuvable sur le serveur.' ); }
 		$name = sanitize_file_name( sprintf( '%s_%s_v%d_%s', self::code( $r['lecon'] ), self::user_label( $r['user_id'] ), $r['version'], $f['name'] ) );
 		$ft = wp_check_filetype( $path );
+		// 1.54.7 : &final=1 → version « Aucune marque » (modifications acceptées) pour l'aperçu côte à côte.
+		$tmp = '';
+		if ( ! empty( $_GET['final'] ) && 'docx' === strtolower( pathinfo( $path, PATHINFO_EXTENSION ) ) ) {
+			$tmp = LIR_Docx::final_copy( $path );
+			if ( $tmp ) { $path = $tmp; }
+		}
 		nocache_headers();
 		header( 'X-Content-Type-Options: nosniff' );
 		header( 'Content-Type: ' . ( $ft['type'] ? $ft['type'] : 'application/octet-stream' ) );
 		header( 'Content-Disposition: attachment; filename="' . $name . '"' );
 		header( 'Content-Length: ' . filesize( $path ) );
 		readfile( $path ); // phpcs:ignore
+		if ( $tmp ) { @unlink( $tmp ); } // phpcs:ignore
 		exit;
 	}
 }

@@ -67,6 +67,25 @@ class LIR_Docx {
 	 * comme si toutes les modifications étaient acceptées (texte supprimé et anciennes mises en forme retirés).
 	 */
 	private static function accept_revisions( $x ) {
+		// 1.54.7 : marque de paragraphe supprimée (¶ effacé en suivi des modifications) : le paragraphe fusionne avec le suivant,
+		// comme dans Word avec « Aucune marque ». Sans cela, les lignes vides supprimées restaient comptées.
+		foreach ( iterator_to_array( $x->query( '//w:p[w:pPr/w:rPr/w:del or w:pPr/w:rPr/w:moveFrom]' ) ) as $p ) {
+			if ( ! $p->parentNode ) { continue; }
+			$next = $p->nextSibling;
+			while ( $next && ! ( XML_ELEMENT_NODE === $next->nodeType && 'p' === $next->localName && self::NS['w'] === $next->namespaceURI ) ) {
+				if ( XML_ELEMENT_NODE === $next->nodeType && in_array( $next->localName, array( 'tbl', 'sectPr', 'sdt' ), true ) ) { $next = null; break; }
+				$next = $next->nextSibling;
+			}
+			if ( ! $next ) { continue; } // dernier paragraphe : rien à fusionner, la marque supprimée est simplement retirée plus bas
+			$anchor = null;
+			foreach ( $next->childNodes as $c ) { if ( XML_ELEMENT_NODE === $c->nodeType && 'pPr' === $c->localName ) { $anchor = $c->nextSibling; break; } }
+			if ( null === $anchor && $next->firstChild && ! ( XML_ELEMENT_NODE === $next->firstChild->nodeType && 'pPr' === $next->firstChild->localName ) ) { $anchor = $next->firstChild; }
+			foreach ( iterator_to_array( $p->childNodes ) as $c ) {
+				if ( XML_ELEMENT_NODE === $c->nodeType && 'pPr' === $c->localName ) { continue; }
+				$next->insertBefore( $c, $anchor );
+			}
+			$p->parentNode->removeChild( $p );
+		}
 		$drop = array( 'del', 'moveFrom', 'rPrChange', 'pPrChange', 'sectPrChange', 'tblPrChange', 'tblPrExChange', 'tblGridChange', 'trPrChange', 'tcPrChange', 'numberingChange',
 			'moveFromRangeStart', 'moveFromRangeEnd', 'moveToRangeStart', 'moveToRangeEnd', 'customXmlDelRangeStart', 'customXmlDelRangeEnd', 'customXmlInsRangeStart', 'customXmlInsRangeEnd',
 			'customXmlMoveFromRangeStart', 'customXmlMoveFromRangeEnd', 'customXmlMoveToRangeStart', 'customXmlMoveToRangeEnd' );
@@ -80,6 +99,34 @@ class LIR_Docx {
 				$n->parentNode->removeChild( $n );
 			}
 		}
+	}
+
+	/**
+	 * Copie du document « toutes modifications acceptées » (Aucune marque), pour l'aperçu côte à côte.
+	 * Rend le chemin du fichier temporaire, ou '' en cas d'échec.
+	 */
+	public static function final_copy( $src ) {
+		$tmp = tempnam( get_temp_dir(), 'lirfinal' );
+		if ( ! $tmp || ! copy( $src, $tmp ) ) { return ''; }
+		$z = new ZipArchive();
+		if ( true !== $z->open( $tmp ) ) { return ''; }
+		for ( $i = 0; $i < $z->numFiles; $i++ ) {
+			$n = $z->getNameIndex( $i );
+			if ( ! preg_match( '#^word/(document|header\d*|footer\d*|footnotes|endnotes)\.xml$#', $n ) ) { continue; }
+			$xml = $z->getFromIndex( $i );
+			if ( false === strpos( $xml, '<w:del' ) && false === strpos( $xml, '<w:ins' ) && false === strpos( $xml, '<w:move' ) && false === strpos( $xml, 'Change' ) ) { continue; }
+			$dom = new DOMDocument();
+			$prev = libxml_use_internal_errors( true );
+			$ok = $dom->loadXML( $xml, LIBXML_NONET | LIBXML_PARSEHUGE );
+			libxml_use_internal_errors( $prev );
+			if ( ! $ok ) { continue; }
+			$x = new DOMXPath( $dom );
+			foreach ( self::NS as $k => $v ) { $x->registerNamespace( $k, $v ); }
+			self::accept_revisions( $x );
+			$z->addFromString( $n, $dom->saveXML() );
+		}
+		$z->close();
+		return $tmp;
 	}
 
 	/* ------------------------------------------------------------ traçabilité (suivi des modifications) */

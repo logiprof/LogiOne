@@ -259,7 +259,7 @@ class LIR_Admin {
 		wp_enqueue_script( 'fwr-compare', LIR_URL . 'assets/fwr-compare.js', array( 'fwr-docx-preview' ), LIR_VERSION, true );
 		$left = array();
 		foreach ( $r['files'] as $k => $f ) {
-			$left[] = array( 'label' => $f['name'], 'docx' => LIR_Core::download_url( $r['id'], $k ), 'objets' => LIR_Core::objets_non_affiches( LIR_Core::abs_path( $f['stored'] ) ) );
+			$left[] = array( 'label' => $f['name'], 'docx' => add_query_arg( 'final', 1, LIR_Core::download_url( $r['id'], $k ) ), 'objets' => LIR_Core::objets_non_affiches( LIR_Core::abs_path( $f['stored'] ) ) );
 		}
 		$right = array();
 		foreach ( LIR_Core::references( $r['lecon'] ) as $k => $ref ) {
