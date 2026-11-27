@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:02,850
+puis la page WordPress à ouvrir.
+
+2
+00:00:02,800 --> 00:00:06,250
+Un lien peut aussi être réservé à certains rôles.
+

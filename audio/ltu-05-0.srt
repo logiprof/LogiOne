@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:03,962
+Les liens apparaissent dans la liste, et l'aperçu se met à jour.
+

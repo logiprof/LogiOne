@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,100
+Ajoutez ensuite le contenu : une rubrique déroulante, un lien ou un texte.
+

@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,262
+Pour une nouvelle tuile, cliquez sur Créer une tuile et donnez-lui un nom.
+

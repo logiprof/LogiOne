@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:07,400
+Sur le site logiprof, point, fontesse tiret oliveira, point, C H, ouvrez le portail LogiOne.
+
+2
+00:00:07,350 --> 00:00:11,150
+Les tuiles de contenu suivent les outils, en bas de la page.
+

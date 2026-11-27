@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:05,725
+L'onglet Accès et comportement réserve la tuile à certains rôles, par exemple un groupe d'enseignants.
+
+2
+00:00:05,675 --> 00:00:08,362
+Sinon, tous les enseignants la voient.
+

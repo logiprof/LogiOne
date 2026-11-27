@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:05,662
+Choisissez la tuile à modifier : son nom, sa phrase, sa couleur et son icône.
+

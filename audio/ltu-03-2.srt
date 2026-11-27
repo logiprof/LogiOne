@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,450
+À droite, l'aperçu montre la tuile telle que les enseignants la verront.
+

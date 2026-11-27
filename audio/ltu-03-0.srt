@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:02,812
+Vous avez le droit Tuiles de contenu ?
+
+2
+00:00:02,762 --> 00:00:06,125
+Une tuile Gérer les tuiles s'ajoute dans le portail.
+

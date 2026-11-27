@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:04,075
+Partagez-la avec tous, ou réservez-la à certains rôles.
+
+2
+00:00:04,025 --> 00:00:06,075
+Bonne utilisation !
+
