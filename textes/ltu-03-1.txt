@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Choisissez la tuile à modifier : son nom, sa phrase, sa couleur et son icône.

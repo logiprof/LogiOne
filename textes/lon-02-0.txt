@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Dans chaque outil, le même menu en haut : un clic pour passer d'un outil à l'autre,

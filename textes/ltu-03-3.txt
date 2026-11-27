@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Pour une nouvelle tuile, cliquez sur Créer une tuile et donnez-lui un nom.

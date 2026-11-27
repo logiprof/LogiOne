@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Les liens apparaissent dans la liste, et l'aperçu se met à jour.

@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+LogiNotes : le carnet de notes de vos classes, avec moyennes et relevés en P D F.

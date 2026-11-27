@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+LogiInfo : les exercices informatiques rendus par vos apprentis, contrôlés automatiquement.

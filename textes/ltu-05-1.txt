@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-L'onglet Accès et comportement réserve la tuile à certains rôles, par exemple un groupe d'enseignants. Sinon, tous les enseignants la voient.

@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Pour un lien : son titre, une courte description et une icône,
