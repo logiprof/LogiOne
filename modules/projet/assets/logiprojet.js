@@ -178,7 +178,8 @@
           '<div class="lpj-meta">' + (t.module ? '<b>' + esc(t.module) + '</b>' : '') + travailBadge(t) + (t.graded === false ? '<span class="lpj-badge">Non noté</span>' : '') + '</div>' +
           '<h3>' + esc(t.title) + '</h3>' +
           (t.mine === false ? '<div class="lpj-meta"><span class="lpj-badge lpj-badge-author">Créé par ' + esc(t.author) + '</span></div>' : '') +
-          '<div class="lpj-meta"><span>' + esc(rangeTxt(datesOf(t, 'due'), 'À rendre le', 'Sans date limite')) + '</span><span>' + t.grille.length + ' critères · ' + t.total + ' points</span></div>' +
+          tileClasses(t) +
+          '<div class="lpj-meta">' + (t.classes && t.classes.length ? '' : '<span>' + esc(rangeTxt(datesOf(t, 'due'), 'À rendre le', 'Sans date limite')) + '</span>') + '<span>' + t.grille.length + ' critères · ' + t.total + ' points</span></div>' +
           '<div class="lpj-stats"><span class="lpj-badge st-depose">' + c.total + ' dépôt' + (c.total > 1 ? 's' : '') + '</span>' +
           (c.groupe ? '<span class="lpj-badge st-groupe">' + c.groupe + ' en cours, pas remis</span>' : '') +
           (c.propose ? '<span class="lpj-badge st-propose">' + c.propose + ' à valider</span>' : '') +
@@ -202,6 +203,17 @@
     if (!v.length) { return none; }
     if (v[0] === v[v.length - 1] && v.length === list.length) { return one + ' ' + fmtDate(v[0]); }
     return one + ' ' + fmtDate(v[0]) + ' → ' + fmtDate(v[v.length - 1]) + ' (selon la classe)';
+  }
+  /* Classes affectées au travail, avec la date de remise de chacune (carte de l'accueil enseignant). */
+  function tileClasses(t) {
+    var cl = t.classes || [];
+    if (!cl.length) { return '<div class="lpj-tile-cls"><div><b>Toutes les classes</b><span>' + esc(t.due_at ? 'à rendre le ' + fmtDate(t.due_at) : 'sans date limite') + '</span></div></div>'; }
+    var now = new Date();
+    return '<div class="lpj-tile-cls">' + cl.map(function (c) {
+      var late = c.due && new Date(c.due) < now;
+      var info = c.status === 'brouillon' ? 'brouillon' : (c.locked ? '🔒 s’ouvre le ' + fmtDate(c.start) + (c.due ? ' · à rendre le ' + fmtDate(c.due) : '') : (c.due ? 'à rendre le ' + fmtDate(c.due) : 'sans date limite'));
+      return '<div class="' + (late && c.status !== 'brouillon' && !c.locked ? 'is-late' : '') + '"><b>' + esc(c.title) + '</b><span>' + esc(info) + '</span></div>';
+    }).join('') + '</div>';
   }
   function soon(due) {
     if (!due) { return false; }

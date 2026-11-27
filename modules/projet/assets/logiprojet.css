@@ -414,3 +414,8 @@
 .lpj-due-list span{font-size:14px}
 .lpj-due-list em{font-style:normal;color:var(--green);font-weight:600;margin-left:4px}
 .lpj-due-list .is-soon em{color:#9a6b00}.lpj-due-list .is-late em{color:var(--red)}
+.lpj-tile-cls{display:flex;flex-direction:column;gap:5px;margin:2px 0}
+.lpj-tile-cls>div{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;font-size:13.5px;line-height:1.35;padding:5px 9px;border-radius:6px;background:var(--paper);border-left:3px solid var(--green)}
+.lpj-tile-cls b{font-weight:700;color:var(--ink)}
+.lpj-tile-cls span{color:var(--muted)}
+.lpj-tile-cls>div.is-late{border-left-color:var(--red)}.lpj-tile-cls>div.is-late span{color:var(--red)}
