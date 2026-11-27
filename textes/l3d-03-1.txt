@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-À gauche, l'entrepôt en 3 D : glissez pour le faire tourner, touchez une zone pour voir sa surface.

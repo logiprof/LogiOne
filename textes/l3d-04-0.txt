@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Changez de vue : 3 D, dessus ou face. Les deux derniers boutons agrandissent la scène et passent en plein écran.

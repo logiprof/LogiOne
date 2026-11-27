@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Logi3D propose des animations en trois dimensions pour expliquer les surfaces et les volumes de l'entrepôt.

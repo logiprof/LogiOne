@@ -1,3 +1,3 @@
 fr-CH-ArianeNeural
 +0%
-Cliquez sur Voir.
+Cliquez sur Afficher.
