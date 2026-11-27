@@ -415,6 +415,12 @@ class LIR_Core {
 		return array( $ok_all, $ok_all ? 'Nom du fichier conforme à la consigne (' . $exp . ')' : 'Nom du fichier incorrect : « ' . implode( ' », « ', $bad ) . ' » au lieu de ' . $exp );
 	}
 
+	/** Condition SQL : seulement la dernière version de chaque exercice (une nouvelle version remplace les précédentes). */
+	public static function latest_sql( $alias = 'r' ) {
+		$t = self::table();
+		return "$alias.version = (SELECT MAX(r2.version) FROM $t r2 WHERE r2.user_id = $alias.user_id AND r2.lecon = $alias.lecon AND r2.statut <> 'corbeille'" . ( LI_Formateurs::sees_all() ? '' : " AND r2.formateur_id = $alias.formateur_id" ) . ')';
+	}
+
 	/** Analyse les fichiers d'une remise et renvoie [rapport, structures]. */
 	public static function analyse( $lecon, $files, $user_id = 0 ) {
 		$docs = array(); $errors = array(); $trace = array();

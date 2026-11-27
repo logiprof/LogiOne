@@ -15,10 +15,12 @@ class LIR_List extends WP_List_Table {
 	protected function get_bulk_actions() {
 		return array( 'export_zip' => 'Exporter les fichiers (ZIP + récapitulatif)', 'export_ia' => 'Exporter pour correction par l\'IA (copies à corriger seulement)', 'export_ia_tout' => 'Exporter pour l\'IA, même déjà corrigée', 'publier' => 'Publier les retours', 'valider_publier' => 'Marquer « Validé » et publier', 'reanalyser' => 'Relancer le contrôle automatique', 'corbeille' => 'Mettre à la corbeille', 'restaurer' => 'Restaurer (sortir de la corbeille)' );
 	}
+	public static function latest_sql( $alias = 'r' ) { return LIR_Core::latest_sql( $alias ); }
 	public static function filters() {
 		return array(
 			'lecon'  => isset( $_REQUEST['lecon'] ) ? (int) $_REQUEST['lecon'] : 0, // phpcs:ignore
-			'statut' => isset( $_REQUEST['statut'] ) ? sanitize_key( $_REQUEST['statut'] ) : '', // phpcs:ignore
+			// 1.54.8 : sans choix explicite, la liste montre seulement les remises « À corriger ».
+			'statut' => isset( $_REQUEST['statut'] ) ? sanitize_key( $_REQUEST['statut'] ) : ( isset( $_REQUEST['filtrer'] ) || isset( $_REQUEST['s'] ) ? '' : 'depose' ), // phpcs:ignore
 			'toutes' => ! empty( $_REQUEST['toutes'] ), // phpcs:ignore
 			'formateur' => isset( $_REQUEST['formateur'] ) ? (int) $_REQUEST['formateur'] : -1, // phpcs:ignore
 			'classe' => isset( $_REQUEST['classe'] ) ? (int) $_REQUEST['classe'] : 0, // phpcs:ignore
@@ -35,7 +37,7 @@ class LIR_List extends WP_List_Table {
 		if ( isset( $f['formateur'] ) && $f['formateur'] >= 0 ) { $w[] = 'r.formateur_id = %d'; $a[] = $f['formateur']; }
 		$scope = LI_Formateurs::scope_sql( 'r' ); if ( $scope ) { $w[] = substr( $scope, 5 ); }
 		if ( $f['statut'] && isset( LIR_Core::STATUTS[ $f['statut'] ] ) ) { $w[] = 'r.statut = %s'; $a[] = $f['statut']; } else { $w[] = "r.statut <> 'corbeille'"; }
-		if ( ! $f['toutes'] && 'corbeille' !== $f['statut'] ) { $w[] = "r.version = (SELECT MAX(r2.version) FROM $t r2 WHERE r2.user_id = r.user_id AND r2.lecon = r.lecon AND r2.statut <> 'corbeille'" . ( LI_Formateurs::sees_all() ? '' : ' AND r2.formateur_id = r.formateur_id' ) . ')'; }
+		if ( ! $f['toutes'] && 'corbeille' !== $f['statut'] ) { $w[] = self::latest_sql( 'r' ); }
 		if ( $f['s'] ) {
 			$like = '%' . $wpdb->esc_like( $f['s'] ) . '%';
 			$w[] = "r.user_id IN (SELECT u.ID FROM {$wpdb->users} u LEFT JOIN {$wpdb->usermeta} m ON m.user_id = u.ID AND m.meta_key IN ('first_name','last_name') WHERE u.display_name LIKE %s OR u.user_email LIKE %s OR u.user_login LIKE %s OR m.meta_value LIKE %s)";
@@ -105,7 +107,7 @@ class LIR_List extends WP_List_Table {
 		submit_button( 'Filtrer', '', 'filtrer', false );
 		echo '</div>';
 	}
-	public function no_items() { echo 'Aucune remise pour ce filtre.'; }
+	public function no_items() { echo 'depose' === self::filters()['statut'] ? '🎉 Aucune remise à corriger. Pour revoir les remises déjà corrigées, choisissez « Tous les statuts » puis « Filtrer ».' : 'Aucune remise pour ce filtre.'; }
 }
 
 class LIR_Admin {
@@ -129,7 +131,8 @@ class LIR_Admin {
 
 	public static function menu() {
 		global $wpdb;
-		$n = (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . LIR_Core::table() . " r WHERE r.statut = 'depose'" . LI_Formateurs::scope_sql( 'r' ) ); // la corbeille n'est pas comptée
+		// Dernière version seulement : une ancienne version remplacée par une nouvelle n'est plus à corriger.
+		$n = (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . LIR_Core::table() . " r WHERE r.statut = 'depose' AND " . LIR_List::latest_sql( 'r' ) . LI_Formateurs::scope_sql( 'r' ) ); // la corbeille n'est pas comptée
 		$bubble = $n ? ' <span class="awaiting-mod">' . $n . '</span>' : '';
 		add_menu_page( 'LogiInfo', 'LogiInfo' . $bubble, LIR_CAP, 'fw-remises', array( __CLASS__, 'page' ), 'data:image/svg+xml;base64,' . base64_encode( '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="#a7aaad" d="M2 3h16v10H2zM4 5v6h12V5zM7 15h6v2H7z"/><path fill="#a7aaad" d="M5 6h4v1H5zm0 2h6v1H5z"/></svg>' ), 26 );
 		add_submenu_page( 'fw-remises', 'Remises des exercices', 'Remises des exercices', LIR_CAP, 'fw-remises', array( __CLASS__, 'page' ) );
@@ -240,7 +243,7 @@ class LIR_Admin {
 	private static function stats() {
 		global $wpdb;
 		$t = LIR_Core::table();
-		$rows = $wpdb->get_results( "SELECT lecon, COUNT(DISTINCT user_id) n, SUM(statut='depose') a FROM $t r WHERE statut <> 'corbeille'" . LI_Formateurs::scope_sql( 'r' ) . ' GROUP BY lecon', ARRAY_A );
+		$rows = $wpdb->get_results( "SELECT lecon, COUNT(DISTINCT user_id) n, SUM(statut='depose' AND " . LIR_List::latest_sql( 'r' ) . ") a FROM $t r WHERE statut <> 'corbeille'" . LI_Formateurs::scope_sql( 'r' ) . ' GROUP BY lecon', ARRAY_A );
 		if ( ! $rows ) { echo '<p class="description">Aucun exercice n\'a encore été déposé. Les leçons Word, Excel et PowerPoint contiennent déjà le formulaire (<code>[fw_remise lecon="1"]</code> pour Word, <code>[fw_remise lecon="1" formation="excel"]</code> pour Excel, <code>[fw_remise lecon="1" formation="powerpoint"]</code> pour PowerPoint) dans vos leçons Sensei.</p>'; return; }
 		$by = array(); foreach ( $rows as $r ) { $by[ (int) $r['lecon'] ] = $r; }
 		echo '<div class="fwr-stats">';

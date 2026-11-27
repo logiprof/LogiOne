@@ -13,7 +13,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'LI_VERSION', '2.9.2' );
+define( 'LI_VERSION', '2.9.3' );
 define( 'LI_DIR', __DIR__ );
 define( 'LI_FILE', __FILE__ );
 define( 'LIR_VERSION', LI_VERSION );
@@ -78,7 +78,7 @@ final class LogiOne_LogiInfo {
 	private static function pending(): int {
 		global $wpdb;
 		if ( ! current_user_can( LIR_CAP ) ) { return 0; }
-		return (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . LIR_Core::table() . " r WHERE r.statut = 'depose'" . LI_Formateurs::scope_sql( 'r' ) ); // phpcs:ignore
+		return (int) $wpdb->get_var( 'SELECT COUNT(*) FROM ' . LIR_Core::table() . " r WHERE r.statut = 'depose' AND " . LIR_Core::latest_sql( 'r' ) . LI_Formateurs::scope_sql( 'r' ) ); // phpcs:ignore
 	}
 
 	/** [logiinfo_portail] : tableau de bord LogiInfo dans le portail LogiOne. */
