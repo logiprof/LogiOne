@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+et collez-le dans le contenu : l'animation prend la largeur du texte.

@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-Les propositions de l'IA s'affichent dans chaque fiche. C'est toujours vous qui validez et publiez.

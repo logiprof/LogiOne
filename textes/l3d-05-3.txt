@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+L'apprenti calcule, puis clique sur Vérifier. Voir la correction montre les réponses, Nouvel exercice change les valeurs.

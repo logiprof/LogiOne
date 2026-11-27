@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+L'entrepôt se met à jour : les zones retirées du calcul disparaissent, et le calcul s'affiche pas à pas.

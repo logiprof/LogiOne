@@ -1,3 +1,0 @@
-fr-CH-ArianeNeural
-+0%
-La note du contrôle automatique est une proposition : saisissez votre note.

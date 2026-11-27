@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+Chaque carte est une animation, avec son code court.

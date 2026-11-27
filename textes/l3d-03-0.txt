@@ -1,0 +1,3 @@
+fr-CH-ArianeNeural
++0%
+L'animation avance étape par étape : ici, de la surface globale à la surface nette de stockage.
