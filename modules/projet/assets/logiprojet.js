@@ -92,14 +92,26 @@
   function classStatusPanel(t) {
     var cl = t.classes || [];
     if (cl.length < 2) { return ''; }
-    return '<section class="lpj-card"><h3>Statut par classe</h3><p class="lpj-muted" style="margin:0 0 10px">Ouvrez ou verrouillez ce travail pour une classe sans toucher aux autres. Une classe en brouillon ne voit pas le travail ; une classe fermée le voit mais ne peut plus déposer.</p>' +
-      '<div style="display:flex;flex-wrap:wrap;gap:12px">' + cl.map(function (c) {
+    return '<section class="lpj-card"><h3>Statut et début par classe</h3><p class="lpj-muted" style="margin:0 0 10px">Ouvrez, verrouillez ou décalez ce travail pour une classe sans toucher aux autres. Une classe en brouillon ne voit pas le travail ; avant sa date de début, une classe ouverte le voit mais ne peut pas l’ouvrir ; une classe fermée le voit mais ne peut plus déposer.</p>' +
+      '<div class="lpj-cls-grid">' + cl.map(function (c) {
         var own = t.class_status && t.class_status[c.id] ? t.class_status[c.id] : '';
-        return '<label class="lpj-field" style="min-width:220px;margin:0"><span><b>' + esc(c.title) + '</b></span><select data-class-status="' + c.id + '">' +
+        var ownStart = t.class_start && t.class_start[c.id] ? t.class_start[c.id] : '';
+        return '<div class="lpj-cls"><b>' + esc(c.title) + '</b>' +
+          '<label class="lpj-field" style="margin:0"><span>Statut</span><select data-class-status="' + c.id + '">' +
           '<option value=""' + (own ? '' : ' selected') + '>Comme le travail (' + esc(ST_T[t.status]) + ')</option>' +
           Object.keys(ST_T).map(function (k) { return '<option value="' + k + '"' + (own === k ? ' selected' : '') + '>' + ST_T[k] + '</option>'; }).join('') +
-          '</select></label>';
+          '</select></label>' +
+          '<label class="lpj-field" style="margin:0"><span>Début</span><input type="datetime-local" data-class-start="' + c.id + '" value="' + esc(ownStart) + '"></label>' +
+          '<small class="lpj-muted">' + (ownStart ? '' : (t.date_debut ? 'Vide : comme le travail (' + esc(fmtDate(t.date_debut)) + ')' : 'Vide : accès dès l’ouverture')) +
+          (c.locked && c.status === 'ouvert' ? (ownStart ? '' : ' · ') + '🔒 visible, s’ouvre le ' + esc(fmtDate(c.start)) : '') + '</small></div>';
       }).join('') + '</div></section>';
+  }
+  function lockBanner(t) {
+    var cl = (t.classes && t.classes.length) ? t.classes : null;
+    var locked = cl ? cl.filter(function (c) { return c.locked && c.status === 'ouvert'; }) : (t.locked_now && t.status === 'ouvert' ? [{ title: '', start: t.date_debut }] : []);
+    if (!locked.length) { return ''; }
+    var txt = cl && cl.length > 1 ? locked.map(function (c) { return '<b>' + esc(c.title) + '</b> le ' + esc(fmtDate(c.start)); }).join(', ') : 'le <b>' + esc(fmtDate(locked[0].start)) + '</b>';
+    return '<div class="lpj-alert is-b">🔒 Les apprentis voient déjà ce travail, mais ne peuvent pas l’ouvrir avant sa date de début. Ouverture : ' + txt + '.</div>';
   }
   function statusBadge(st, map) { return '<span class="lpj-badge st-' + esc(st) + '">' + esc((map || ST_D)[st] || st) + '</span>'; }
 
@@ -110,8 +122,38 @@
     '<rect x="42" y="58" width="26" height="26" rx="3" fill="#2fae5f"/><rect x="70" y="58" width="26" height="26" rx="3" fill="#067030"/></g></svg>';
   function page(kicker, title, sub, body, stamp) {
     return '<header class="lpj-band"><img class="lpj-band-logo" src="' + esc(CFG.logo) + '" alt="LogiProjet by LogiProf">' +
-      '<div class="lpj-band-text"><div class="lpj-band-kicker">' + esc(kicker) + '</div><h1>' + esc(title) + '</h1>' + (sub ? '<div class="lpj-band-sub">' + esc(sub) + '</div>' : '') + '</div>' + (stamp || CUBES) + '</header>' +
+      '<div class="lpj-band-text"><div class="lpj-band-kicker">' + esc(kicker) + '</div><h1>' + esc(title) + '</h1>' + (sub ? '<div class="lpj-band-sub">' + esc(sub) + '</div>' : '') + helpHtml() + '</div>' + (stamp || CUBES) + '</header>' +
       '<div class="lpj-main">' + body + '</div>';
+  }
+  /* ---------- Aide : tutoriels vidéo et manuels (1.54.0) ---------- */
+  function helpLinks(who) {
+    var h = S.me && S.me.help && S.me.help[who];
+    if (!h) { return ''; }
+    return (h.video ? '<button type="button" class="lpj-help-btn" data-help-video="' + who + '">▶ Tutoriel vidéo</button>' : '') +
+      (h.manuel ? '<a class="lpj-help-btn" href="' + esc(h.manuel) + '" target="_blank" rel="noopener">📘 Manuel</a>' : '');
+  }
+  function helpHtml() {
+    if (!S.me || !S.me.help) { return ''; }
+    if (!S.me.is_teacher) { var l = helpLinks('eleve'); return l ? '<div class="lpj-help">' + l + '</div>' : ''; }
+    return '<div class="lpj-help"><details class="lpj-help-menu"><summary class="lpj-help-btn">❔ Aide</summary><div class="lpj-help-pop">' +
+      '<b>Pour vous</b><div class="lpj-help-row">' + helpLinks('enseignant') + '</div>' +
+      '<b>Pour vos apprentis</b><div class="lpj-help-row">' + helpLinks('eleve') + '</div>' +
+      '<small>À projeter en classe ou à transmettre aux apprentis : ils ont aussi ces boutons dans leur LogiProjet.</small></div></details></div>';
+  }
+  function openVideo(who) {
+    var v = S.me.help[who] && S.me.help[who].video;
+    if (!v) { return; }
+    var d = document.createElement('div');
+    d.className = 'lpj-modal-bg lpj-video-bg';
+    d.innerHTML = '<div class="lpj-video" role="dialog" aria-modal="true" aria-label="Tutoriel vidéo"><div class="lpj-video-frame">' +
+      (v.type === 'youtube' ? '<iframe src="' + esc(v.src) + '" title="Tutoriel vidéo" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>' : '<video src="' + esc(v.src) + '" controls autoplay playsinline></video>') +
+      '</div><div class="lpj-video-bar"><a class="lpj-btn lpj-btn-sm" href="' + esc(v.watch) + '" target="_blank" rel="noopener">' + (v.type === 'youtube' ? 'Ouvrir sur YouTube ↗' : 'Ouvrir la vidéo ↗') + '</a><button type="button" class="lpj-btn lpj-btn-sm lpj-btn-yellow" data-close>Fermer ✕</button></div></div>';
+    document.body.appendChild(d);
+    var close = function () { if (d.parentNode) { d.parentNode.removeChild(d); } document.removeEventListener('keydown', esc_); };
+    var esc_ = function (e) { if (e.key === 'Escape') { close(); } };
+    document.addEventListener('keydown', esc_);
+    d.addEventListener('click', function (e) { if (e.target === d || e.target.closest('[data-close]')) { close(); } });
+    d.querySelector('[data-close]').focus();
   }
   function draw(html) { root.innerHTML = html; }
   function loading() { draw(page('LogiProjet', 'Chargement…', '', '<div class="lpj-boot"><span class="lpj-spinner"></span></div>')); }
@@ -140,8 +182,8 @@
           (c.erreur ? '<span class="lpj-badge st-erreur">' + c.erreur + ' erreur' + (c.erreur > 1 ? 's' : '') + '</span>' : '') + '</div></article>';
       }).join('');
       var adminSwitch = S.me.is_admin ? '<label class="lpj-check lpj-admin-switch" title="Réservé aux administrateurs du site"><input type="checkbox" data-all-travaux' + (S.allT ? ' checked' : '') + '> Afficher aussi les travaux des autres enseignants</label>' : '';
-      var body = warn + '<div class="lpj-bar"><h2>' + (S.allT ? 'Tous les travaux' : 'Vos activités') + '</h2>' + adminSwitch + (S.me.skill_url ? '<a class="lpj-btn" href="' + esc(S.me.skill_url) + '" title="Pour créer de nouvelles activités avec Claude, puis les importer ici">Compétence Claude (.zip)</a>' : '') + '<label class="lpj-btn" title="Fichier .json exporté de LogiProjet ou préparé avec Claude">Importer un travail<input type="file" accept=".json,application/json" class="lpj-sr" data-import></label><button class="lpj-btn lpj-btn-yellow" data-go="#/nouveau">+ Nouveau travail</button></div>' +
-        (list.length ? '<div class="lpj-grid">' + tiles + '</div>' : '<div class="lpj-empty"><b>Aucun travail pour l’instant</b>Vous ne voyez que les travaux que vous avez créés. Créez votre premier travail : choisissez le cours Sensei, et la grille se remplit avec ses leçons.<br><br><button class="lpj-btn lpj-btn-yellow" data-go="#/nouveau">+ Nouveau travail</button></div>');
+      var body = warn + '<div class="lpj-bar"><h2>' + (S.allT ? 'Tous les travaux' : 'Vos activités') + '</h2>' + adminSwitch + (S.me.skill_url ? '<a class="lpj-btn" href="' + esc(S.me.skill_url) + '" title="Pour créer de nouvelles activités avec Claude, puis les importer ici">Compétence Claude (.zip)</a>' : '') + '<button class="lpj-btn" data-go="#/modeles" title="Vos modèles de travaux, à réutiliser pour d’autres classes">📚 Bibliothèque de modèles</button><label class="lpj-btn" title="Fichier .json exporté de LogiProjet ou préparé avec Claude">Importer un travail<input type="file" accept=".json,application/json" class="lpj-sr" data-import></label><button class="lpj-btn lpj-btn-yellow" data-go="#/nouveau">+ Nouveau travail</button></div>' +
+        (list.length ? '<div class="lpj-grid">' + tiles + '</div>' : '<div class="lpj-empty"><b>Aucun travail pour l’instant</b>Vous ne voyez que les travaux que vous avez créés. Créez votre premier travail : choisissez le cours Sensei, et la grille se remplit avec ses leçons.<br><br><button class="lpj-btn lpj-btn-yellow" data-go="#/nouveau">+ Nouveau travail</button> <button class="lpj-btn" data-go="#/modeles">📚 Partir d’un modèle</button></div>');
       draw(page('LogiProjet · Espace enseignant', 'Bonjour ' + S.me.first_name, 'Activités notées ou formatives, seul ou en groupe, corrigées avec l’aide de l’IA', body));
     }).catch(fail);
   }
@@ -160,7 +202,8 @@
     Promise.all(p).then(function (r) {
       S.courses = r[0]; S.groups = r[1];
       var t = r[2];
-      S.form = t ? JSON.parse(JSON.stringify(t)) : { id: 0, title: '', module: '', course_id: 0, lessons: [], grille: [], consignes: '', consigne: null, date_debut: '', group_size: 2, graded: true, formats: ['pptx'], consigne_url: '', group_ids: [], due_at: '', oral_bonus: true, allow_solo: true, status: 'brouillon' };
+      S.form = t ? JSON.parse(JSON.stringify(t)) : { id: 0, title: '', module: '', course_id: 0, lessons: [], grille: [], consignes: '', consigne: null, date_debut: '', group_size: 2, graded: true, formats: ['pptx'], consigne_url: '', group_ids: [], due_at: '', oral_bonus: true, allow_solo: true, status: 'brouillon', class_start: {} };
+      if (S.form.class_start && !Array.isArray(S.form.class_start)) { S.form.class_start = Object.assign({}, S.form.class_start); } else { S.form.class_start = {}; }
       S.lessons = [];
       S.dirty = false;
       if (S.form.course_id) {
@@ -193,8 +236,8 @@
 
     var body = '<div class="lpj-crumb"><a href="#/" data-go="#/">Vos travaux</a>' + (f.id ? ' / <a href="#/travail/' + f.id + '" data-go="#/travail/' + f.id + '">' + esc(f.title) + '</a>' : '') + '</div>' +
       '<div class="lpj-bar"><h2>' + (f.id ? 'Modifier le travail' : 'Nouveau travail') + '</h2></div>' +
-      (S.importWarnings && S.importWarnings.length ? '<div class="lpj-alert is-y"><b>Travail importé : à vérifier</b><ul style="margin:6px 0 0 18px;padding:0">' + S.importWarnings.map(function (w) { return '<li>' + esc(w) + '</li>'; }).join('') + '</ul></div>' :
-        (S.importWarnings ? '<div class="lpj-alert is-g"><b>Travail importé.</b> Le cours, les leçons, la grille et la consigne ont été repris. Choisissez les classes et la date limite, puis passez le statut à « Ouvert aux dépôts ».</div>' : '')) +
+      (S.importWarnings && S.importWarnings.length ? '<div class="lpj-alert is-y"><b>' + (S.fromModele ? 'Créé à partir du modèle : à vérifier' : 'Travail importé : à vérifier') + '</b><ul style="margin:6px 0 0 18px;padding:0">' + S.importWarnings.map(function (w) { return '<li>' + esc(w) + '</li>'; }).join('') + '</ul></div>' :
+        (S.importWarnings ? '<div class="lpj-alert is-g"><b>' + (S.fromModele ? 'Travail créé à partir du modèle « ' + esc(S.fromModele) + ' ».' : 'Travail importé.') + '</b> Le cours, les leçons, la grille et la consigne ont été repris. Choisissez les classes, la date de début et la date limite' + (S.fromModele && f.consigne_url ? ', vérifiez le lien vers la consigne PDF' : '') + ', puis passez le statut à « Ouvert aux dépôts ».</div>' : '')) +
       '<div class="lpj-cols"><div>' +
       '<section class="lpj-card"><h3><span class="lpj-num">1</span>Le cours et ses leçons</h3>' +
       '<label class="lpj-field"><span>Cours Sensei</span><select data-f="course_id"><option value="0">Choisir un cours…</option>' + S.courses.map(function (c) {
@@ -207,8 +250,9 @@
       '<div class="lpj-row"><label class="lpj-field"><span>Module</span><input type="text" data-f="module" value="' + esc(f.module) + '" placeholder="M109"></label>' +
       '</div><div class="lpj-row"><label class="lpj-field"><span>Date de début</span><input type="datetime-local" data-f="date_debut" value="' + esc(f.date_debut || '') + '"></label>' +
       '<label class="lpj-field"><span>Date de fin · rendu du fichier</span><input type="datetime-local" data-f="due_at" value="' + esc(f.due_at || '') + '"></label></div>' +
+      classStartRows(f) +
       '<label class="lpj-field"><span>Statut</span><select data-f="status">' + Object.keys(ST_T).map(function (k) { return '<option value="' + k + '"' + (k === f.status ? ' selected' : '') + '>' + ST_T[k] + '</option>'; }).join('') + '</select>' +
-      '<small>Brouillon : invisible pour les apprentis. Ouvert : ils peuvent déposer. Fermé : ils voient le travail, mais ne peuvent plus déposer.</small></label>' +
+      '<small>Brouillon : invisible pour les apprentis. Ouvert : ils voient le travail et, à partir de la date de début, peuvent l’ouvrir et déposer (avant, il apparaît verrouillé). Fermé : ils voient le travail, mais ne peuvent plus déposer.</small></label>' +
       '<label class="lpj-field"><span>Lien vers la consigne PDF (facultatif)</span><input type="url" data-f="consigne_url" value="' + esc(f.consigne_url) + '" placeholder="https://… (médiathèque)"></label>' +
       '</section>' +
       '<section class="lpj-card"><h3><span class="lpj-num">3</span>Classes, groupes et formats</h3><div class="lpj-field"><span>Classes concernées</span>' + groups + '</div>' +
@@ -233,6 +277,14 @@
       '<button class="lpj-btn" data-go="' + (f.id ? '#/travail/' + f.id : '#/') + '"' + (f.id ? '' : ' style="margin-left:auto"') + '>Annuler</button>' +
       '<button class="lpj-btn lpj-btn-yellow" data-act="save-travail" style="margin-left:0">Enregistrer</button></div>';
     draw(page('LogiProjet · Espace enseignant', f.id ? f.title : 'Nouveau travail', f.module ? 'Module ' + f.module : 'Présentation PowerPoint en duo', body));
+  }
+  function classStartRows(f) {
+    var sel = (S.groups || []).filter(function (g) { return f.group_ids.indexOf(g.id) > -1; });
+    if (sel.length < 2) { return ''; }
+    var cs = f.class_start || {};
+    return '<div class="lpj-field"><span>Date de début par classe <small style="font-weight:400">(facultatif)</small></span><div class="lpj-cls-grid">' + sel.map(function (g) {
+      return '<label class="lpj-cls"><b>' + esc(g.title) + '</b><input type="datetime-local" data-class-start="' + g.id + '" value="' + esc(cs[g.id] || '') + '"></label>';
+    }).join('') + '</div><small>Vide : la classe suit la date de début du travail ci-dessus.</small></div>';
   }
   var FORMATS = [['pptx', 'PowerPoint (.pptx)'], ['pdf', 'PDF (.pdf)'], ['docx', 'Word (.docx)'], ['xlsx', 'Excel (.xlsx)'], ['odp', 'Impress (.odp)'], ['key', 'Keynote (.key)'], ['img', 'Image (.jpg, .png)'], ['mp4', 'Vidéo (.mp4)'], ['zip', 'Archive (.zip)']];
   var CF = [
@@ -311,6 +363,7 @@
       var g = parseInt(el.getAttribute('data-group'), 10);
       f.group_ids = f.group_ids.filter(function (x) { return x !== g; });
       if (el.checked) { f.group_ids.push(g); }
+      S.dirty = true; drawForm(); return;
     }
     S.dirty = true;
     var info = root.querySelector('.lpj-sum span');
@@ -355,11 +408,93 @@
     S.importWarnings = null;
     var f = S.form;
     var body = { title: f.title, module: f.module, course_id: f.course_id, lessons: f.lessons, grille: f.grille, consignes: f.consignes, consigne: f.consigne, date_debut: f.date_debut || '', group_size: f.group_size || 2, graded: f.graded !== false, formats: f.formats && f.formats.length ? f.formats : ['pptx'], consigne_url: f.consigne_url, group_ids: f.group_ids, due_at: f.due_at || '', oral_bonus: !!f.oral_bonus, allow_solo: !!f.allow_solo, status: f.status };
+    if (f.class_start) { var cs = {}; Object.keys(f.class_start).forEach(function (g) { if (f.group_ids.indexOf(parseInt(g, 10)) > -1) { cs[g] = f.class_start[g]; } }); body.class_start = cs; }
     var btn = root.querySelector('[data-act="save-travail"]');
     if (btn) { btn.disabled = true; }
     api(f.id ? 'travaux/' + f.id : 'travaux', { method: f.id ? 'PUT' : 'POST', body: body }).then(function (t) {
       S.dirty = false; toast('Travail enregistré.'); go('#/travail/' + t.id);
     }).catch(function (e) { toast(e.message, true); if (btn) { btn.disabled = false; } });
+  }
+
+  /* ---------- Bibliothèque de modèles (1.54.0) ---------- */
+  function askName(title, text, value, withShare, shared, okLabel) {
+    return new Promise(function (resolve) {
+      var bg = document.createElement('div');
+      bg.className = 'lpj-modal-bg';
+      bg.innerHTML = '<div class="lpj-modal" role="dialog" aria-modal="true"><h3>' + esc(title) + '</h3><p>' + esc(text) + '</p>' +
+        '<label class="lpj-field"><span>Nom du modèle</span><input type="text" data-n maxlength="120" value="' + esc(value) + '"></label>' +
+        (withShare ? '<label class="lpj-check"><input type="checkbox" data-sh' + (shared ? ' checked' : '') + '> <span>Partager avec les autres enseignants du site</span></label>' : '') +
+        '<div class="lpj-modal-actions"><button class="lpj-btn" data-r="0">Annuler</button><button class="lpj-btn lpj-btn-yellow" data-r="1">' + esc(okLabel || 'Enregistrer') + '</button></div></div>';
+      document.body.appendChild(bg);
+      var inp = bg.querySelector('[data-n]'); inp.focus(); inp.select();
+      var done = function (ok) {
+        var out = ok ? { name: inp.value.trim(), shared: !!(bg.querySelector('[data-sh]') && bg.querySelector('[data-sh]').checked) } : null;
+        document.body.removeChild(bg); resolve(out);
+      };
+      inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); done(true); } if (e.key === 'Escape') { done(false); } });
+      bg.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-r]');
+        if (!b && e.target !== bg) { return; }
+        done(!!(b && b.getAttribute('data-r') === '1'));
+      });
+    });
+  }
+  function saveModele() {
+    var t = S.travail;
+    askName('Enregistrer comme modèle', 'Le modèle garde le cours, les leçons, la grille, la consigne et les réglages du travail — sans les classes, les dates ni les dépôts. Vous le retrouverez dans la bibliothèque de modèles.', (t.module ? t.module + ' · ' : '') + t.title, true, false).then(function (r) {
+      if (!r) { return; }
+      api('travaux/' + t.id + '/modele', { method: 'POST', body: r }).then(function (m) {
+        toast('Modèle « ' + m.name + ' » ajouté à la bibliothèque.');
+      }).catch(function (e) { toast(e.message, true); });
+    });
+  }
+  function showModeles() {
+    loading();
+    api('modeles').then(function (list) {
+      S.modeles = list;
+      var card = function (m) {
+        return '<article class="lpj-tile lpj-modele">' +
+          '<div class="lpj-meta">' + (m.module ? '<b>' + esc(m.module) + '</b>' : '') + '<span>' + (m.graded ? 'Noté' : 'Formatif') + ' · ' + esc(groupWord(m.group_size)) + '</span>' + (m.shared ? '<span class="lpj-badge st-valide">Partagé</span>' : '') + '</div>' +
+          '<h3>' + esc(m.name) + '</h3>' +
+          (m.title && m.title !== m.name ? '<div class="lpj-muted" style="font-size:14px">Travail : ' + esc(m.title) + '</div>' : '') +
+          '<div class="lpj-meta">' + (m.course ? '<span>' + esc(m.course) + '</span>' : '') + '<span>' + m.lessons + ' leçon' + (m.lessons > 1 ? 's' : '') + ' · ' + m.criteres + ' critères · ' + m.points + ' points</span><span>' + esc(m.formats) + '</span>' + (m.has_pdf ? '<span>Consigne PDF</span>' : '') + '</div>' +
+          '<div class="lpj-meta"><span>' + (m.mine ? 'Votre modèle' : 'Par ' + esc(m.author)) + ' · ' + esc(fmtDate(m.created)) + (m.uses ? ' · utilisé ' + m.uses + ' fois' : '') + '</span></div>' +
+          '<div class="lpj-modele-actions"><button class="lpj-btn lpj-btn-yellow lpj-btn-sm" data-act="use-modele" data-id="' + esc(m.id) + '">Utiliser ce modèle</button>' +
+          (m.can_edit ? '<button class="lpj-btn lpj-btn-sm" data-act="ren-modele" data-id="' + esc(m.id) + '">Renommer</button>' +
+            '<button class="lpj-btn lpj-btn-sm" data-act="share-modele" data-id="' + esc(m.id) + '" data-v="' + (m.shared ? '0' : '1') + '">' + (m.shared ? 'Ne plus partager' : 'Partager') + '</button>' +
+            '<button class="lpj-btn lpj-btn-sm lpj-btn-danger" data-act="del-modele" data-id="' + esc(m.id) + '">Supprimer</button>' : '') + '</div></article>';
+      };
+      var mine = list.filter(function (m) { return m.mine; }), others = list.filter(function (m) { return !m.mine; });
+      var body = '<div class="lpj-crumb"><a href="#/" data-go="#/">Vos travaux</a> / Bibliothèque de modèles</div>' +
+        '<div class="lpj-bar"><h2>Bibliothèque de modèles</h2><button class="lpj-btn" data-go="#/nouveau">+ Travail vide</button></div>' +
+        '<p class="lpj-muted" style="margin:-4px 0 16px">« Utiliser ce modèle » crée un nouveau travail en brouillon avec le cours, les leçons, la grille et la consigne du modèle. Il ne reste qu’à cocher les classes et indiquer les dates. Pour ajouter un modèle : ouvrez un travail, puis « Enregistrer comme modèle ».</p>' +
+        (mine.length ? '<h3 class="lpj-sec-title">Vos modèles</h3><div class="lpj-grid">' + mine.map(card).join('') + '</div>' :
+          '<div class="lpj-empty"><b>Aucun modèle pour l’instant</b>Ouvrez un de vos travaux et cliquez sur « 📚 Enregistrer comme modèle » : vous pourrez le réutiliser ici pour d’autres classes, l’année prochaine.</div>') +
+        (others.length ? '<h3 class="lpj-sec-title" style="margin-top:26px">Partagés par vos collègues</h3><div class="lpj-grid">' + others.map(card).join('') + '</div>' : '');
+      draw(page('LogiProjet · Espace enseignant', 'Bibliothèque de modèles', 'Vos travaux prêts à réutiliser, d’une classe à l’autre', body));
+    }).catch(fail);
+  }
+  function useModele(id) {
+    var m = (S.modeles || []).filter(function (x) { return x.id === id; })[0];
+    api('modeles/' + id + '/utiliser', { method: 'POST', body: {} }).then(function (t) {
+      S.importWarnings = t.warnings || [];
+      S.fromModele = m ? m.name : (t.modele || '');
+      toast('Nouveau travail créé à partir du modèle : choisissez les classes et les dates.');
+      location.hash = '#/travail/' + t.id + '/modifier';
+    }).catch(function (e) { toast(e.message, true); });
+  }
+  function updModele(id, body) {
+    api('modeles/' + id, { method: 'PUT', body: body }).then(function (m) { toast(m.shared ? 'Modèle partagé avec vos collègues.' : 'Modèle enregistré.'); showModeles(); }).catch(function (e) { toast(e.message, true); });
+  }
+  function renModele(id) {
+    var m = (S.modeles || []).filter(function (x) { return x.id === id; })[0];
+    askName('Renommer le modèle', 'Le nouveau nom s’affiche dans la bibliothèque.', m ? m.name : '', false, false).then(function (r) { if (r && r.name) { updModele(id, { name: r.name }); } });
+  }
+  function delModele(id) {
+    var m = (S.modeles || []).filter(function (x) { return x.id === id; })[0];
+    ask('Supprimer ce modèle ?', 'Le modèle « ' + (m ? m.name : '') + ' » sera retiré de la bibliothèque. Les travaux déjà créés à partir de lui ne changent pas.', 'Supprimer', true).then(function (ok) {
+      if (ok) { api('modeles/' + id, { method: 'DELETE' }).then(function () { toast('Modèle supprimé.'); showModeles(); }).catch(function (e) { toast(e.message, true); }); }
+    });
   }
 
   /* ---------- Import / export d'un travail ---------- */
@@ -431,12 +566,14 @@
       '<a class="lpj-btn" href="' + esc(t.print_url) + '" target="_blank" rel="noopener">' + (t.depots.length ? 'Imprimer les grilles' : 'Grille vierge') + '</a>' +
       (t.depots.length ? '<a class="lpj-btn" href="' + esc(t.print_url + '&vierge=1') + '" target="_blank" rel="noopener">Grille vierge</a>' : '') +
       '<a class="lpj-btn" href="' + esc(t.csv_url) + '">Exporter les notes (CSV)</a>' +
-      '<button class="lpj-btn" data-act="export-travail" title="Pour réutiliser ce travail (autre classe, année suivante, collègue)">Exporter le travail</button>' +
+      '<button class="lpj-btn" data-act="save-modele" title="Garder ce travail dans votre bibliothèque pour le réutiliser avec d’autres classes">📚 Enregistrer comme modèle</button>' +
+      '<button class="lpj-btn" data-act="export-travail" title="Fichier .json pour un collègue d’un autre site">Exporter le travail</button>' +
       '<button class="lpj-btn lpj-btn-yellow" data-act="ai-all"' + (todo.length && !S.busy ? '' : ' disabled') + '>Corriger avec l’IA (' + todo.length + ')</button></div>' +
       '<div class="lpj-meta" style="margin-bottom:14px">' + (t.module ? '<span>Module <b>' + esc(t.module) + '</b></span>' : '') +
+      (t.date_debut ? '<span>Début le ' + esc(fmtDate(t.date_debut)) + '</span>' : '') +
       '<span>' + (t.due_at ? 'À rendre le ' + esc(fmtDate(t.due_at)) : 'Sans date limite') + '</span><span>' + t.grille.length + ' critères · ' + t.total + ' points</span>' +
       '<span>' + (groupNames.length ? 'Classes : ' + esc(groupNames.join(', ')) : (t.group_ids.length ? t.group_ids.length + ' classe(s)' : 'Toutes les classes')) + '</span></div>' +
-      dueBanner(t) +
+      dueBanner(t) + lockBanner(t) +
       (!anyOpen(t) ? '<div class="lpj-alert is-y">Ce travail est en <b>brouillon</b> : les apprentis ne le voient pas encore. <button class="lpj-btn lpj-btn-sm lpj-btn-yellow" data-act="open-travail" style="margin-left:8px">Ouvrir aux dépôts</button></div>' : '') +
       (progress ? '<div class="lpj-alert is-b"><b>Correction par l’IA en cours : ' + progress.done + ' / ' + progress.total + '</b> · ne fermez pas cette page.<div class="lpj-progress"><span style="width:' + Math.round(progress.done / progress.total * 100) + '%"></span></div></div>' : '') +
       (S.me.ai_ready ? '' : '<div class="lpj-alert is-y">Aucune clé API configurée : la correction directe par IA est désactivée. Utilisez « Corriger dans Claude » ci-dessous.</div>') +
@@ -702,7 +839,15 @@
     loading();
     api('eleve/travaux').then(function (list) {
       S.elist = list;
+      clearTimeout(S.lockTimer);
+      var next = list.filter(function (t) { return t.locked; }).reduce(function (n, t) { return Math.min(n, t.starts_in); }, Infinity);
+      if (next < 86400) { S.lockTimer = setTimeout(function () { if (!S.me.is_teacher && (location.hash || '#/') === '#/') { studentHome(); } }, (next + 2) * 1000); }
       var tiles = list.map(function (t) {
+        if (t.locked) {
+          return '<article class="lpj-tile is-g lpj-tile-locked" data-locked="' + t.id + '" tabindex="0" title="Ce travail n’a pas encore commencé"><div class="lpj-meta">' + (t.module ? '<b>' + esc(t.module) + '</b>' : '') + '<span>' + (t.graded === false ? 'Activité non notée' : 'Travail noté') + (t.group_size > 1 ? ' en ' + esc(groupWord(t.group_size)) : ' individuel') + '</span></div>' +
+            '<h3>' + esc(t.title) + '</h3><div class="lpj-meta">' + (t.due_at ? '<span>À rendre avant le ' + esc(fmtDate(t.due_at)) + '</span>' : '') + '</div>' +
+            '<div class="lpj-stats"><span class="lpj-badge st-lock">🔒 S’ouvre le ' + esc(fmtDate(t.date_debut)) + '</span></div></article>';
+        }
         var d = t.depot, cls, state;
         if (d && d.status === 'valide') { cls = ''; state = '<span class="lpj-badge st-valide">' + (t.graded === false ? 'Corrigé · retour disponible' : 'Corrigé · note ' + fmtN(d.note_finale)) + '</span>'; }
         else if (t.can_submit && t.retard_actuel && (!d || d.status === 'groupe')) { cls = 'is-r'; state = '<span class="lpj-badge st-erreur">En retard de ' + t.retard_actuel + ' j · à remettre</span>'; }
@@ -723,6 +868,7 @@
     api('eleve/travaux').then(function (list) {
       var t = list.filter(function (x) { return x.id === id; })[0];
       if (!t) { throw new Error('Ce travail n’est pas disponible.'); }
+      if (t.locked) { throw new Error('Ce travail n’a pas encore commencé : il s’ouvre le ' + fmtDate(t.date_debut) + '.'); }
       S.et = t; S.file = null; S.mates = null;
       if (t.can_submit && (t.can_group || !t.depot)) {
         return api('eleve/travaux/' + id + '/camarades').then(function (m) { S.mates = m; });
@@ -1091,6 +1237,10 @@
       if (name.indexOf('o:') === 0) { drawDepot(); } else { refreshSum(); }
       return;
     }
+    var lk = e.target.closest('[data-locked]');
+    if (lk) { var lt = (S.elist || []).filter(function (x) { return String(x.id) === lk.getAttribute('data-locked'); })[0]; toast('Ce travail n’a pas encore commencé. Il s’ouvre le ' + (lt ? fmtDate(lt.date_debut) : '…') + '.'); return; }
+    var hv = e.target.closest('[data-help-video]');
+    if (hv) { e.preventDefault(); var dm = hv.closest('details'); if (dm) { dm.open = false; } openVideo(hv.getAttribute('data-help-video')); return; }
     var nav = e.target.closest('[data-go]');
     var act = e.target.closest('[data-act]');
     if (act) {
@@ -1117,6 +1267,11 @@
       } else if (a === 'open-travail') {
         api('travaux/' + S.travail.id, { method: 'PUT', body: { status: 'ouvert' } }).then(function (t) { S.travail = t; toast('Travail ouvert : les apprentis peuvent déposer.'); drawTravail(); }).catch(function (er) { toast(er.message, true); });
       } else if (a === 'export-travail') { exportTravail();
+      } else if (a === 'save-modele') { saveModele();
+      } else if (a === 'use-modele') { useModele(act.getAttribute('data-id'));
+      } else if (a === 'share-modele') { updModele(act.getAttribute('data-id'), { shared: act.getAttribute('data-v') === '1' });
+      } else if (a === 'ren-modele') { renModele(act.getAttribute('data-id'));
+      } else if (a === 'del-modele') { delModele(act.getAttribute('data-id'));
       } else if (a === 'ai-all') { aiAll(); }
       else if (a === 'ai-one') { aiOne(); }
       else if (a === 'save-depot') { saveDepot('save'); }
@@ -1171,6 +1326,12 @@
       api('travaux/' + S.travail.id, { method: 'PUT', body: { class_status: map } }).then(function (t) { S.travail = t; toast('Statut de la classe enregistré.'); drawTravail(); }).catch(function (er) { toast(er.message, true); drawTravail(); });
       return;
     }
+    if (el.hasAttribute('data-class-start') && S.travail && !S.form) {
+      var smap = {}; root.querySelectorAll('[data-class-start]').forEach(function (x) { smap[x.getAttribute('data-class-start')] = x.value; });
+      api('travaux/' + S.travail.id, { method: 'PUT', body: { class_start: smap } }).then(function (t) { S.travail = t; toast('Date de début de la classe enregistrée.'); drawTravail(); }).catch(function (er) { toast(er.message, true); drawTravail(); });
+      return;
+    }
+    if (el.hasAttribute('data-class-start') && S.form) { S.form.class_start = S.form.class_start || {}; S.form.class_start[el.getAttribute('data-class-start')] = el.value; S.dirty = true; return; }
     if (el.hasAttribute('data-import')) { importTravail(el.files[0]); el.value = ''; return; }
     if (el.hasAttribute('data-all-travaux')) { S.allT = el.checked; try { localStorage.setItem('lpj-tous', el.checked ? '1' : '0'); } catch (er) {} teacherHome(); return; }
     if (el.hasAttribute('data-corr-import')) { importCorrection(el.files[0]); el.value = ''; return; }
@@ -1200,9 +1361,10 @@
       return studentHome();
     }
     S.form = null; S.depot = null;
-    if (!/^\/travail\/\d+\/modifier/.test(h)) { S.importWarnings = null; }
+    if (!/^\/travail\/\d+\/modifier/.test(h)) { S.importWarnings = null; S.fromModele = null; }
     if (!/^\/travail\/\d+$/.test(h)) { S.corrResult = null; }
     if (h === '/nouveau') { return editTravail(0); }
+    if (h === '/modeles') { return showModeles(); }
     if ((m = h.match(/^\/travail\/(\d+)\/modifier/))) { return editTravail(parseInt(m[1], 10)); }
     if ((m = h.match(/^\/travail\/(\d+)\/apercu/))) { return previewTravail(parseInt(m[1], 10)); }
     if ((m = h.match(/^\/travail\/(\d+)/))) { if (!S.groups) { api('groups').then(function (g) { S.groups = g; }).catch(function () {}); } return showTravail(parseInt(m[1], 10)); }

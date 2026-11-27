@@ -13,7 +13,7 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! defined( 'LOGIPROJET_VERSION' ) ) {
-	define( 'LOGIPROJET_VERSION', '1.10.3' );
+	define( 'LOGIPROJET_VERSION', '1.11.0' );
 	define( 'LOGIPROJET_DB_VERSION', '5' );
 	define( 'LOGIPROJET_FILE', __FILE__ );
 	define( 'LOGIPROJET_DIR', plugin_dir_path( __FILE__ ) );
@@ -36,6 +36,8 @@ require_once LOGIPROJET_DIR . 'includes/class-app.php';
 require_once LOGIPROJET_DIR . 'includes/class-print.php';
 require_once LOGIPROJET_DIR . 'includes/class-skill.php';
 require_once LOGIPROJET_DIR . 'includes/class-claude.php';
+require_once LOGIPROJET_DIR . 'includes/class-modeles.php';
+require_once LOGIPROJET_DIR . 'includes/class-help.php';
 
 // Pas de crochet d'activation dans un module : à la première visite, les tables manquantes sont créées
 // (version de base enregistrée différente) ; si elles existent déjà, rien n'est modifié.
@@ -47,3 +49,4 @@ add_action( 'admin_init', array( 'LogiProjet_Settings', 'register' ) );
 add_action( 'admin_post_logiprojet_imprimer', array( 'LogiProjet_Print', 'render' ) );
 add_action( 'admin_post_logiprojet_competence', array( 'LogiProjet_Skill', 'download' ) );
 add_action( 'admin_post_logiprojet_export_correction', array( 'LogiProjet_Claude', 'export' ) );
+add_action( 'admin_post_logiprojet_manuel', array( 'LogiProjet_Help', 'render' ) );

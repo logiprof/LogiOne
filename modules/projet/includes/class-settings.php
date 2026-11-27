@@ -22,6 +22,8 @@ class LogiProjet_Settings {
 			'anthropic_model' => 'claude-sonnet-5-5',
 			'teacher_roles'   => array( 'administrator', 'editor', 'teacher' ),
 			'max_mb'          => 50,
+			'video_eleve'     => 'https://youtu.be/FplArdGdfiI',
+			'video_enseignant'=> 'https://youtu.be/dHyIal8f4W8',
 		);
 	}
 
@@ -88,6 +90,11 @@ class LogiProjet_Settings {
 		}
 		$out['teacher_roles'] = array_values( array_unique( array_merge( array( 'administrator' ), $roles ) ) );
 		$out['max_mb']        = max( 1, min( 500, absint( $in['max_mb'] ?? 50 ) ) );
+		foreach ( array( 'video_eleve', 'video_enseignant' ) as $k ) {
+			if ( array_key_exists( $k, $in ) ) {
+				$out[ $k ] = esc_url_raw( trim( (string) $in[ $k ] ), array( 'http', 'https' ) );
+			}
+		}
 		return $out;
 	}
 
@@ -161,6 +168,26 @@ class LogiProjet_Settings {
 						<th scope="row"><label for="lpj-max">Taille maximale d’un PowerPoint</label></th>
 						<td><input id="lpj-max" type="number" min="1" max="500" name="<?php echo esc_attr( self::OPT ); ?>[max_mb]" value="<?php echo esc_attr( $s['max_mb'] ); ?>"> Mo
 							<p class="description">Votre serveur accepte au maximum <?php echo esc_html( size_format( wp_max_upload_size() ) ); ?> par envoi.</p></td>
+					</tr>
+				</table>
+
+				<h2>Aide : tutoriels vidéo et manuels</h2>
+				<p class="description">Les boutons « Tutoriel vidéo » et « Manuel » s’affichent en haut de LogiProjet. La vidéo s’ouvre dans une fenêtre sur le site (lecteur YouTube sans cookies), avec un bouton « Ouvrir sur YouTube ». Collez un lien YouTube, ou l’adresse d’un fichier MP4 de la Médiathèque (lu sans publicité). Laissez vide pour masquer le bouton.</p>
+				<table class="form-table" role="presentation">
+					<tr>
+						<th scope="row"><label for="lpj-video-eleve">Tutoriel vidéo des apprentis</label></th>
+						<td><input id="lpj-video-eleve" type="url" class="large-text" name="<?php echo esc_attr( self::OPT ); ?>[video_eleve]" value="<?php echo esc_attr( $s['video_eleve'] ); ?>" placeholder="https://youtu.be/…">
+							<p class="description">Visible par les apprentis et par les enseignants (dans « Aide pour les apprentis »).</p></td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="lpj-video-ens">Tutoriel vidéo des enseignants</label></th>
+						<td><input id="lpj-video-ens" type="url" class="large-text" name="<?php echo esc_attr( self::OPT ); ?>[video_enseignant]" value="<?php echo esc_attr( $s['video_enseignant'] ); ?>" placeholder="https://youtu.be/…">
+							<p class="description">Visible seulement par les enseignants.</p></td>
+					</tr>
+					<tr>
+						<th scope="row">Manuels d’utilisation</th>
+						<td><a class="button" href="<?php echo esc_url( LogiProjet_Help::manual_url( 'eleve' ) ); ?>" target="_blank" rel="noopener">Manuel des apprentis</a> <a class="button" href="<?php echo esc_url( LogiProjet_Help::manual_url( 'enseignant' ) ); ?>" target="_blank" rel="noopener">Manuel des enseignants</a>
+							<p class="description">Pages imprimables (bouton « Imprimer / PDF » dans le manuel), intégrées à LogiProjet.</p></td>
 					</tr>
 				</table>
 				<?php submit_button( 'Enregistrer les réglages' ); ?>

@@ -48,6 +48,21 @@ class LogiProjet_Rest {
 				array( 'methods' => 'DELETE', 'callback' => array( __CLASS__, 'delete_travail' ), 'permission_callback' => $teacher, 'args' => $id ),
 			)
 		);
+		register_rest_route(
+			self::NS,
+			'/modeles',
+			array( 'methods' => 'GET', 'callback' => array( 'LogiProjet_Modeles', 'rest_list' ), 'permission_callback' => $teacher )
+		);
+		register_rest_route(
+			self::NS,
+			'/modeles/(?P<id>[a-z0-9]+)',
+			array(
+				array( 'methods' => 'PUT', 'callback' => array( 'LogiProjet_Modeles', 'rest_update' ), 'permission_callback' => $teacher ),
+				array( 'methods' => 'DELETE', 'callback' => array( 'LogiProjet_Modeles', 'rest_delete' ), 'permission_callback' => $teacher ),
+			)
+		);
+		register_rest_route( self::NS, '/modeles/(?P<id>[a-z0-9]+)/utiliser', array( 'methods' => 'POST', 'callback' => array( 'LogiProjet_Modeles', 'rest_use' ), 'permission_callback' => $teacher ) );
+		register_rest_route( self::NS, '/travaux/(?P<id>\d+)/modele', array( 'methods' => 'POST', 'callback' => array( 'LogiProjet_Modeles', 'rest_create' ), 'permission_callback' => $teacher, 'args' => $id ) );
 		register_rest_route( self::NS, '/travaux/import', array( 'methods' => 'POST', 'callback' => array( __CLASS__, 'import_travail' ), 'permission_callback' => $teacher ) );
 		register_rest_route( self::NS, '/travaux/(?P<id>\d+)/correction', array( 'methods' => 'POST', 'callback' => array( __CLASS__, 'import_correction' ), 'permission_callback' => $teacher, 'args' => $id ) );
 		register_rest_route( self::NS, '/travaux/(?P<id>\d+)/export', array( 'methods' => 'GET', 'callback' => array( __CLASS__, 'export_travail' ), 'permission_callback' => $teacher, 'args' => $id ) );
@@ -133,12 +148,25 @@ class LogiProjet_Rest {
 		if ( $teacher ) {
 			$out['group_ids'] = array_map( 'intval', (array) $t['group_ids'] );
 			$out['class_status'] = (object) LogiProjet_Access::class_status( $t );
-			$out['classes']      = array();
+			$cstart              = array();
+			foreach ( LogiProjet_Access::class_start( $t ) as $g => $gmt ) {
+				$cstart[ $g ] = self::local_date( $gmt );
+			}
+			$out['class_start'] = (object) $cstart;
+			$out['classes']     = array();
 			foreach ( (array) $t['group_ids'] as $g ) {
 				if ( 'group' === get_post_type( $g ) ) {
-					$out['classes'][] = array( 'id' => (int) $g, 'title' => html_entity_decode( get_the_title( $g ), ENT_QUOTES, 'UTF-8' ), 'status' => LogiProjet_Access::status_for_group( $t, $g ) );
+					$st               = LogiProjet_Access::start_for_group( $t, $g );
+					$out['classes'][] = array(
+						'id'     => (int) $g,
+						'title'  => html_entity_decode( get_the_title( $g ), ENT_QUOTES, 'UTF-8' ),
+						'status' => LogiProjet_Access::status_for_group( $t, $g ),
+						'start'  => self::local_date( $st ),
+						'locked' => $st && strtotime( $st . ' UTC' ) > time(),
+					);
 				}
 			}
+			$out['locked_now'] = ! empty( $t['date_debut'] ) && strtotime( $t['date_debut'] . ' UTC' ) > time();
 			$out['counts']    = LogiProjet_Store::counts( $t['id'] );
 			$out['author']    = LogiProjet_Sensei::user_label( $t['author_id'] );
 			$out['mine']      = (int) $t['author_id'] === get_current_user_id();
@@ -269,6 +297,7 @@ class LogiProjet_Rest {
 			'settings'    => current_user_can( 'manage_options' ) ? admin_url( 'options-general.php?page=logiprojet' ) : '',
 			'skill_url'   => LogiProjet_Access::is_teacher() ? LogiProjet_Skill::url() : '',
 			'correction_skill_url' => LogiProjet_Access::is_teacher() ? LogiProjet_Skill::url( 'logiprojet-correction' ) : '',
+			'help'        => LogiProjet_Help::for_user(),
 		);
 	}
 
@@ -428,6 +457,10 @@ class LogiProjet_Rest {
 		}
 		$data['author_id'] = get_current_user_id();
 		$id                = LogiProjet_Store::save_travail( $data );
+		$p                 = $req->get_json_params();
+		if ( is_array( $p ) && ! empty( $p['class_start'] ) && is_array( $p['class_start'] ) ) {
+			LogiProjet_Access::save_class_start( $id, $p['class_start'] );
+		}
 		return self::travail_out( LogiProjet_Store::travail( $id ) );
 	}
 
@@ -573,6 +606,9 @@ class LogiProjet_Rest {
 				return self::err( 'La grille d’évaluation est vide : ajoutez au moins un critère avant d’ouvrir le travail.' );
 			}
 			LogiProjet_Access::save_class_status( $t['id'], $map );
+		}
+		if ( is_array( $p ) && array_key_exists( 'class_start', $p ) ) {
+			LogiProjet_Access::save_class_start( $t['id'], is_array( $p['class_start'] ) ? $p['class_start'] : array() );
 		}
 		// Les notes dépendent de la grille : on les recalcule.
 		foreach ( LogiProjet_Store::depots( $t['id'] ) as $d ) {
@@ -887,8 +923,14 @@ class LogiProjet_Rest {
 			if ( ! LogiProjet_Access::student_can_see( $t, $uid ) ) {
 				continue;
 			}
-			$t['status'] = LogiProjet_Access::status_for( $t, $uid );
+			$t['status']     = LogiProjet_Access::status_for( $t, $uid );
+			$t['date_debut'] = LogiProjet_Access::start_for( $t, $uid );
+			if ( LogiProjet_Access::is_locked( $t, $uid ) ) {
+				$out[] = self::locked_out( $t );
+				continue;
+			}
 			$o          = self::travail_out( $t, false );
+			$o['locked'] = false;
 			$d          = LogiProjet_Store::depot_for_user( $t['id'], $uid );
 			$o['depot'] = $d ? self::depot_out( $d, $t, false ) : null;
 			$o['can_submit'] = 'ouvert' === $t['status'] && ( ! $d || 'valide' !== $d['status'] );
@@ -902,6 +944,9 @@ class LogiProjet_Rest {
 		$t = LogiProjet_Store::travail( (int) $req['id'] );
 		if ( ! $t || ! LogiProjet_Access::student_can_see( $t ) ) {
 			return self::err( 'Travail introuvable.', 404 );
+		}
+		if ( LogiProjet_Access::is_locked( $t, get_current_user_id() ) ) {
+			return self::not_started( $t, get_current_user_id() );
 		}
 		return self::classmates( $t, get_current_user_id() );
 	}
@@ -927,10 +972,37 @@ class LogiProjet_Rest {
 	}
 
 	/** Travail visible, ouvert et avant la date limite. */
+	/** Travail pas encore commencé, vu par un apprenti : seulement le titre et les dates, rien du contenu. */
+	private static function locked_out( $t ) {
+		return array(
+			'id'         => $t['id'],
+			'title'      => $t['title'],
+			'module'     => $t['module'],
+			'graded'     => (bool) $t['graded'],
+			'group_size' => (int) $t['group_size'],
+			'due_at'     => self::local_date( $t['due_at'] ),
+			'date_debut' => self::local_date( $t['date_debut'] ),
+			'starts_in'  => max( 0, strtotime( $t['date_debut'] . ' UTC' ) - time() ),
+			'status'     => $t['status'],
+			'locked'     => true,
+			'can_submit' => false,
+			'can_group'  => false,
+			'depot'      => null,
+		);
+	}
+
+	private static function not_started( $t, $uid ) {
+		$st = LogiProjet_Access::start_for( $t, $uid );
+		return self::err( 'Ce travail s’ouvre le ' . get_date_from_gmt( $st, 'd.m.Y' ) . ' à ' . get_date_from_gmt( $st, 'H:i' ) . '.', 403, 'logiprojet_pas_commence' );
+	}
+
 	private static function open_travail_for( $id, $uid ) {
 		$t = LogiProjet_Store::travail( (int) $id );
 		if ( ! $t || ! LogiProjet_Access::student_can_see( $t, $uid ) ) {
 			return self::err( 'Travail introuvable.', 404 );
+		}
+		if ( LogiProjet_Access::is_locked( $t, $uid ) ) {
+			return self::not_started( $t, $uid );
 		}
 		$t['status'] = LogiProjet_Access::status_for( $t, $uid );
 		if ( 'ouvert' !== $t['status'] ) {
@@ -942,7 +1014,9 @@ class LogiProjet_Rest {
 
 	private static function eleve_out( $t, $uid ) {
 		$d               = LogiProjet_Store::depot_for_user( $t['id'], $uid );
+		$t['date_debut'] = LogiProjet_Access::start_for( $t, $uid );
 		$o               = self::travail_out( $t, false );
+		$o['locked']     = false;
 		$o['depot']      = $d ? self::depot_out( $d, $t, false ) : null;
 		$o['can_submit'] = ! $d || 'valide' !== $d['status'];
 		$o['can_group']  = (int) $t['group_size'] > 1 && ( ! $d || 'groupe' === $d['status'] );

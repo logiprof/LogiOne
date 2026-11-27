@@ -113,6 +113,7 @@ class LogiProjet_Store {
 			self::delete_depot( $d['id'] );
 		}
 		$wpdb->delete( LogiProjet_Install::table( 'travaux' ), array( 'id' => absint( $id ) ) ); // phpcs:ignore WordPress.DB
+		LogiProjet_Access::forget( $id );
 	}
 
 	/* ---------- Dépôts ---------- */
