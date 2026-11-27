@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,650
+Plein écran l'ouvre seule, pour la projeter en classe.
+
+2
+00:00:03,600 --> 00:00:05,662
+Voir l'affiche ici.
+

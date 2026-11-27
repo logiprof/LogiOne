@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:06,025
+L'entrepôt se met à jour : les zones retirées du calcul disparaissent, et le calcul s'affiche pas à pas.
+

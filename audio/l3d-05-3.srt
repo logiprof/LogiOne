@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,562
+L'apprenti calcule, puis clique sur Vérifier.
+
+2
+00:00:03,512 --> 00:00:08,262
+Voir la correction montre les réponses, Nouvel exercice change les valeurs.
+

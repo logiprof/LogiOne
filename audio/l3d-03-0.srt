@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:06,275
+L'animation avance étape par étape : ici, de la surface globale à la surface nette de stockage.
+

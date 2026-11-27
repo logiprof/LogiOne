@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,500
+À toi de jouer propose un exercice avec de nouvelles valeurs à chaque fois.
+

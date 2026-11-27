@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:03,812
+Chaque carte est une animation, avec son code court.
+

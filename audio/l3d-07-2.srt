@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,312
+Intégrez-la dans vos leçons avec son code court.
+
+2
+00:00:03,262 --> 00:00:05,000
+Bon cours !
+

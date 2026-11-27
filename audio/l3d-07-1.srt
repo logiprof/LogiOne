@@ -1,0 +1,4 @@
+1
+00:00:00,100 --> 00:00:04,762
+Animez-la étape par étape, avec les vues, le lexique et l'exercice.
+

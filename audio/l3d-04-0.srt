@@ -1,0 +1,8 @@
+1
+00:00:00,100 --> 00:00:03,612
+Changez de vue : 3 D, dessus ou face.
+
+2
+00:00:03,562 --> 00:00:07,500
+Les deux derniers boutons agrandissent la scène et passent en plein écran.
+
