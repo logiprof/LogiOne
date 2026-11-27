@@ -70,10 +70,15 @@ class LogiProjet_Grading {
 	 * 0 si pas d'échéance, pas encore remis, ou remis à temps.
 	 */
 	public static function late_days( $travail, $depot ) {
-		if ( ! $depot || empty( $travail['due_at'] ) || empty( $depot['submitted_at'] ) || 'groupe' === ( $depot['status'] ?? '' ) ) {
+		if ( ! $depot || empty( $depot['submitted_at'] ) || 'groupe' === ( $depot['status'] ?? '' ) ) {
 			return 0;
 		}
-		$late = strtotime( $depot['submitted_at'] . ' UTC' ) - strtotime( $travail['due_at'] . ' UTC' );
+		// 1.54.2 : date de fin de la classe du groupe (date de fin par classe), sinon celle du travail.
+		$due = ! empty( $travail['id'] ) ? LogiProjet_Access::due_for_users( $travail, $depot['members'] ?? array() ) : ( $travail['due_at'] ?? null );
+		if ( empty( $due ) ) {
+			return 0;
+		}
+		$late = strtotime( $depot['submitted_at'] . ' UTC' ) - strtotime( $due . ' UTC' );
 		return $late > 0 ? (int) ceil( $late / DAY_IN_SECONDS ) : 0;
 	}
 

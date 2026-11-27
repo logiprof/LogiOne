@@ -111,8 +111,19 @@ class LogiProjet_Access {
 	 */
 	const CLASS_START_OPTION = 'logiprojet_class_start';
 
+	const CLASS_DUE_OPTION   = 'logiprojet_class_due';
+
 	public static function class_start( $travail ) {
-		$all = get_option( self::CLASS_START_OPTION, array() );
+		return self::class_dates( $travail, self::CLASS_START_OPTION );
+	}
+
+	/** LogiOne 1.54.2 : date de fin (remise) par classe. Même format que les dates de début. */
+	public static function class_due( $travail ) {
+		return self::class_dates( $travail, self::CLASS_DUE_OPTION );
+	}
+
+	private static function class_dates( $travail, $option ) {
+		$all = get_option( $option, array() );
 		$out = array();
 		if ( is_array( $all ) && isset( $all[ (int) $travail['id'] ] ) && is_array( $all[ (int) $travail['id'] ] ) ) {
 			$groups = array_map( 'absint', (array) $travail['group_ids'] );
@@ -127,7 +138,15 @@ class LogiProjet_Access {
 
 	/** Enregistre les dates par classe ($map = [ group_id => 'Y-m-d\TH:i' (heure locale) | '' ]) ; '' = comme le travail. */
 	public static function save_class_start( $travail_id, $map ) {
-		$all = get_option( self::CLASS_START_OPTION, array() );
+		self::save_class_dates( $travail_id, $map, self::CLASS_START_OPTION, 'T08:00' );
+	}
+
+	public static function save_class_due( $travail_id, $map ) {
+		self::save_class_dates( $travail_id, $map, self::CLASS_DUE_OPTION, 'T18:00' );
+	}
+
+	private static function save_class_dates( $travail_id, $map, $option, $default_time ) {
+		$all = get_option( $option, array() );
 		$all = is_array( $all ) ? $all : array();
 		$cur = array();
 		foreach ( (array) $map as $g => $local ) {
@@ -135,7 +154,7 @@ class LogiProjet_Access {
 			if ( ! absint( $g ) || '' === $local ) {
 				continue;
 			}
-			$dt = DateTime::createFromFormat( 'Y-m-d\TH:i', substr( $local . ( 10 === strlen( $local ) ? 'T08:00' : '' ), 0, 16 ), wp_timezone() );
+			$dt = DateTime::createFromFormat( 'Y-m-d\TH:i', substr( $local . ( 10 === strlen( $local ) ? $default_time : '' ), 0, 16 ), wp_timezone() );
 			if ( $dt ) {
 				$cur[ absint( $g ) ] = $dt->setTimezone( new DateTimeZone( 'UTC' ) )->format( 'Y-m-d H:i:s' );
 			}
@@ -145,12 +164,12 @@ class LogiProjet_Access {
 		} else {
 			unset( $all[ (int) $travail_id ] );
 		}
-		update_option( self::CLASS_START_OPTION, $all, false );
+		update_option( $option, $all, false );
 	}
 
 	/** Oublie les réglages par classe d'un travail supprimé. */
 	public static function forget( $travail_id ) {
-		foreach ( array( self::CLASS_STATUS_OPTION, self::CLASS_START_OPTION ) as $opt ) {
+		foreach ( array( self::CLASS_STATUS_OPTION, self::CLASS_START_OPTION, self::CLASS_DUE_OPTION ) as $opt ) {
 			$all = get_option( $opt, array() );
 			if ( is_array( $all ) && isset( $all[ (int) $travail_id ] ) ) {
 				unset( $all[ (int) $travail_id ] );
@@ -190,6 +209,40 @@ class LogiProjet_Access {
 			}
 		}
 		return false === $best ? ( ! empty( $travail['date_debut'] ) ? $travail['date_debut'] : null ) : $best;
+	}
+
+	/** Date de fin (UTC) d'une classe visée par le travail. */
+	public static function due_for_group( $travail, $group_id ) {
+		$cd = self::class_due( $travail );
+		return $cd[ (int) $group_id ] ?? ( $travail['due_at'] ?? null );
+	}
+
+	/**
+	 * Date de fin (UTC) pour un ensemble d'apprentis (un apprenti, ou les membres d'un groupe) :
+	 * celle de leurs classes visées, la plus tardive s'ils sont dans plusieurs classes. null = pas de date limite.
+	 */
+	public static function due_for_users( $travail, $user_ids ) {
+		$groups = array_map( 'absint', (array) $travail['group_ids'] );
+		$cd     = self::class_due( $travail );
+		$base   = ! empty( $travail['due_at'] ) ? $travail['due_at'] : null;
+		if ( ! $groups || ! $cd ) {
+			return $base;
+		}
+		$mine = array();
+		foreach ( array_filter( array_map( 'absint', (array) $user_ids ) ) as $u ) {
+			$mine = array_merge( $mine, LogiProjet_Sensei::user_groups( $u ) );
+		}
+		$best = false;
+		foreach ( array_intersect( $groups, array_unique( $mine ) ) as $g ) {
+			$d = $cd[ $g ] ?? $base;
+			if ( null === $d ) {
+				return null;
+			}
+			if ( false === $best || strcmp( $d, $best ) > 0 ) {
+				$best = $d;
+			}
+		}
+		return false === $best ? $base : $best;
 	}
 
 	/** Vrai si l'apprenti voit le travail mais ne peut pas encore l'ouvrir (date de début pas encore atteinte). */

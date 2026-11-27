@@ -92,7 +92,7 @@
   function classStatusPanel(t) {
     var cl = t.classes || [];
     if (cl.length < 2) { return ''; }
-    return '<section class="lpj-card"><h3>Statut et début par classe</h3><p class="lpj-muted" style="margin:0 0 10px">Ouvrez, verrouillez ou décalez ce travail pour une classe sans toucher aux autres. Une classe en brouillon ne voit pas le travail ; avant sa date de début, une classe ouverte le voit mais ne peut pas l’ouvrir ; une classe fermée le voit mais ne peut plus déposer.</p>' +
+    return '<section class="lpj-card"><h3>Statut et dates par classe</h3><p class="lpj-muted" style="margin:0 0 10px">Ouvrez, verrouillez ou décalez ce travail pour une classe sans toucher aux autres : statut, date de début et date de fin (les pénalités de retard suivent la date de fin de la classe). Une classe en brouillon ne voit pas le travail ; avant sa date de début, une classe ouverte le voit mais ne peut pas l’ouvrir ; une classe fermée le voit mais ne peut plus déposer.</p>' +
       '<div class="lpj-cls-grid">' + cl.map(function (c) {
         var own = t.class_status && t.class_status[c.id] ? t.class_status[c.id] : '';
         var ownStart = t.class_start && t.class_start[c.id] ? t.class_start[c.id] : '';
@@ -102,6 +102,8 @@
           Object.keys(ST_T).map(function (k) { return '<option value="' + k + '"' + (own === k ? ' selected' : '') + '>' + ST_T[k] + '</option>'; }).join('') +
           '</select></label>' +
           '<label class="lpj-field" style="margin:0"><span>Début</span><input type="datetime-local" data-class-start="' + c.id + '" value="' + esc(ownStart) + '"></label>' +
+          '<label class="lpj-field" style="margin:0"><span>Fin · rendu du fichier</span><input type="datetime-local" data-class-due="' + c.id + '" value="' + esc(t.class_due && t.class_due[c.id] ? t.class_due[c.id] : '') + '"></label>' +
+          (t.class_due && t.class_due[c.id] ? '' : '<small class="lpj-muted">Fin vide : ' + (t.due_at ? 'comme le travail (' + esc(fmtDate(t.due_at)) + ')' : 'sans date limite') + '</small>') +
           '<small class="lpj-muted">' + (ownStart ? '' : (t.date_debut ? 'Vide : comme le travail (' + esc(fmtDate(t.date_debut)) + ')' : 'Vide : accès dès l’ouverture')) +
           (c.locked && c.status === 'ouvert' ? (ownStart ? '' : ' · ') + '🔒 visible, s’ouvre le ' + esc(fmtDate(c.start)) : '') + '</small></div>';
       }).join('') + '</div></section>';
@@ -202,8 +204,8 @@
     Promise.all(p).then(function (r) {
       S.courses = r[0]; S.groups = r[1];
       var t = r[2];
-      S.form = t ? JSON.parse(JSON.stringify(t)) : { id: 0, title: '', module: '', course_id: 0, lessons: [], grille: [], consignes: '', consigne: null, date_debut: '', group_size: 2, graded: true, formats: ['pptx'], consigne_url: '', group_ids: [], due_at: '', oral_bonus: true, allow_solo: true, status: 'brouillon', class_start: {} };
-      if (S.form.class_start && !Array.isArray(S.form.class_start)) { S.form.class_start = Object.assign({}, S.form.class_start); } else { S.form.class_start = {}; }
+      S.form = t ? JSON.parse(JSON.stringify(t)) : { id: 0, title: '', module: '', course_id: 0, lessons: [], grille: [], consignes: '', consigne: null, date_debut: '', group_size: 2, graded: true, formats: ['pptx'], consigne_url: '', group_ids: [], due_at: '', oral_bonus: true, allow_solo: true, status: 'brouillon', class_start: {}, class_due: {} };
+      ['class_start', 'class_due'].forEach(function (k) { S.form[k] = S.form[k] && !Array.isArray(S.form[k]) ? Object.assign({}, S.form[k]) : {}; });
       S.lessons = [];
       S.dirty = false;
       if (S.form.course_id) {
@@ -281,10 +283,12 @@
   function classStartRows(f) {
     var sel = (S.groups || []).filter(function (g) { return f.group_ids.indexOf(g.id) > -1; });
     if (sel.length < 2) { return ''; }
-    var cs = f.class_start || {};
-    return '<div class="lpj-field"><span>Date de début par classe <small style="font-weight:400">(facultatif)</small></span><div class="lpj-cls-grid">' + sel.map(function (g) {
-      return '<label class="lpj-cls"><b>' + esc(g.title) + '</b><input type="datetime-local" data-class-start="' + g.id + '" value="' + esc(cs[g.id] || '') + '"></label>';
-    }).join('') + '</div><small>Vide : la classe suit la date de début du travail ci-dessus.</small></div>';
+    var cs = f.class_start || {}, cd = f.class_due || {};
+    return '<div class="lpj-field"><span>Dates par classe <small style="font-weight:400">(facultatif)</small></span><div class="lpj-cls-grid">' + sel.map(function (g) {
+      return '<div class="lpj-cls"><b>' + esc(g.title) + '</b>' +
+        '<label class="lpj-cls-date"><small>Début</small><input type="datetime-local" data-class-start="' + g.id + '" value="' + esc(cs[g.id] || '') + '"></label>' +
+        '<label class="lpj-cls-date"><small>Fin · rendu du fichier</small><input type="datetime-local" data-class-due="' + g.id + '" value="' + esc(cd[g.id] || '') + '"></label></div>';
+    }).join('') + '</div><small>Une date vide suit la date du travail ci-dessus. Les pénalités de retard se calculent avec la date de fin de la classe.</small></div>';
   }
   var FORMATS = [['pptx', 'PowerPoint (.pptx)'], ['pdf', 'PDF (.pdf)'], ['docx', 'Word (.docx)'], ['xlsx', 'Excel (.xlsx)'], ['odp', 'Impress (.odp)'], ['key', 'Keynote (.key)'], ['img', 'Image (.jpg, .png)'], ['mp4', 'Vidéo (.mp4)'], ['zip', 'Archive (.zip)']];
   var CF = [
@@ -408,7 +412,10 @@
     S.importWarnings = null;
     var f = S.form;
     var body = { title: f.title, module: f.module, course_id: f.course_id, lessons: f.lessons, grille: f.grille, consignes: f.consignes, consigne: f.consigne, date_debut: f.date_debut || '', group_size: f.group_size || 2, graded: f.graded !== false, formats: f.formats && f.formats.length ? f.formats : ['pptx'], consigne_url: f.consigne_url, group_ids: f.group_ids, due_at: f.due_at || '', oral_bonus: !!f.oral_bonus, allow_solo: !!f.allow_solo, status: f.status };
-    if (f.class_start) { var cs = {}; Object.keys(f.class_start).forEach(function (g) { if (f.group_ids.indexOf(parseInt(g, 10)) > -1) { cs[g] = f.class_start[g]; } }); body.class_start = cs; }
+    ['class_start', 'class_due'].forEach(function (k) {
+      if (!f[k]) { return; }
+      var m = {}; Object.keys(f[k]).forEach(function (g) { if (f.group_ids.indexOf(parseInt(g, 10)) > -1) { m[g] = f[k][g]; } }); body[k] = m;
+    });
     var btn = root.querySelector('[data-act="save-travail"]');
     if (btn) { btn.disabled = true; }
     api(f.id ? 'travaux/' + f.id : 'travaux', { method: f.id ? 'PUT' : 'POST', body: body }).then(function (t) {
@@ -649,6 +656,18 @@
     return days > 14 ? 'note 1' : (days > 7 ? '−1' : '−0.5');
   }
   function dueBanner(t) {
+    var cl = t.classes || [];
+    if (cl.length > 1 && cl.some(function (c) { return c.due !== cl[0].due; })) {
+      var now = Date.now();
+      return '<div class="lpj-due lpj-due-multi"><span class="lpj-due-label">Remise au plus tard</span><div class="lpj-due-list">' + cl.map(function (c) {
+        if (!c.due) { return '<span><b>' + esc(c.title) + '</b> · sans date limite</span>'; }
+        var ms = new Date(c.due) - now, days = Math.ceil(Math.abs(ms) / 86400000);
+        var when = ms < 0 ? 'dépassée depuis ' + days + ' j' : (days <= 1 ? 'dans moins de 24 h' : 'dans ' + days + ' jours');
+        return '<span class="' + (ms < 0 ? 'is-late' : (days <= 3 ? 'is-soon' : '')) + '"><b>' + esc(c.title) + '</b> · ' + esc(fmtDate(c.due)) + ' <em>' + when + '</em></span>';
+      }).join('') + '</div>' +
+        (t.graded === false ? '<span class="lpj-muted">Activité non notée : les remises en retard sont signalées, sans pénalité.</span>' :
+          '<span class="lpj-due-rule">Retard (selon la classe) : 1 à 7 j <b>−0.5</b> · 8 à 14 j <b>−1</b> · plus de 14 j <b>note 1</b></span>') + '</div>';
+    }
     if (!t.due_at) { return '<div class="lpj-due is-none"><span class="lpj-due-label">Date de remise</span><b>aucune date limite</b><span class="lpj-muted">Ajoutez-la dans « Modifier » pour appliquer les pénalités de retard.</span></div>'; }
     var ms = (t.due_in || 0) * 1000;
     var days = Math.ceil(Math.abs(ms) / 86400000);
@@ -1378,6 +1397,12 @@
       return;
     }
     if (el.hasAttribute('data-class-start') && S.form) { S.form.class_start = S.form.class_start || {}; S.form.class_start[el.getAttribute('data-class-start')] = el.value; S.dirty = true; return; }
+    if (el.hasAttribute('data-class-due') && S.travail && !S.form) {
+      var dmap = {}; root.querySelectorAll('[data-class-due]').forEach(function (x) { dmap[x.getAttribute('data-class-due')] = x.value; });
+      api('travaux/' + S.travail.id, { method: 'PUT', body: { class_due: dmap } }).then(function (t) { S.travail = t; toast('Date de fin de la classe enregistrée.'); drawTravail(); }).catch(function (er) { toast(er.message, true); drawTravail(); });
+      return;
+    }
+    if (el.hasAttribute('data-class-due') && S.form) { S.form.class_due = S.form.class_due || {}; S.form.class_due[el.getAttribute('data-class-due')] = el.value; S.dirty = true; return; }
     if (el.hasAttribute('data-mwho')) { S.mwho = el.value; drawModeleList(); return; }
     if (el.hasAttribute('data-import')) { importTravail(el.files[0]); el.value = ''; return; }
     if (el.hasAttribute('data-all-travaux')) { S.allT = el.checked; try { localStorage.setItem('lpj-tous', el.checked ? '1' : '0'); } catch (er) {} teacherHome(); return; }

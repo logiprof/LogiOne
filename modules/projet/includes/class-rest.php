@@ -153,6 +153,11 @@ class LogiProjet_Rest {
 				$cstart[ $g ] = self::local_date( $gmt );
 			}
 			$out['class_start'] = (object) $cstart;
+			$cdue               = array();
+			foreach ( LogiProjet_Access::class_due( $t ) as $g => $gmt ) {
+				$cdue[ $g ] = self::local_date( $gmt );
+			}
+			$out['class_due'] = (object) $cdue;
 			$out['classes']     = array();
 			foreach ( (array) $t['group_ids'] as $g ) {
 				if ( 'group' === get_post_type( $g ) ) {
@@ -163,6 +168,7 @@ class LogiProjet_Rest {
 						'status' => LogiProjet_Access::status_for_group( $t, $g ),
 						'start'  => self::local_date( $st ),
 						'locked' => $st && strtotime( $st . ' UTC' ) > time(),
+						'due'    => self::local_date( LogiProjet_Access::due_for_group( $t, $g ) ),
 					);
 				}
 			}
@@ -461,6 +467,9 @@ class LogiProjet_Rest {
 		if ( is_array( $p ) && ! empty( $p['class_start'] ) && is_array( $p['class_start'] ) ) {
 			LogiProjet_Access::save_class_start( $id, $p['class_start'] );
 		}
+		if ( is_array( $p ) && ! empty( $p['class_due'] ) && is_array( $p['class_due'] ) ) {
+			LogiProjet_Access::save_class_due( $id, $p['class_due'] );
+		}
 		return self::travail_out( LogiProjet_Store::travail( $id ) );
 	}
 
@@ -609,6 +618,10 @@ class LogiProjet_Rest {
 		}
 		if ( is_array( $p ) && array_key_exists( 'class_start', $p ) ) {
 			LogiProjet_Access::save_class_start( $t['id'], is_array( $p['class_start'] ) ? $p['class_start'] : array() );
+		}
+		if ( is_array( $p ) && array_key_exists( 'class_due', $p ) ) {
+			LogiProjet_Access::save_class_due( $t['id'], is_array( $p['class_due'] ) ? $p['class_due'] : array() );
+			$t = LogiProjet_Store::travail( $t['id'] );
 		}
 		// Les notes dépendent de la grille : on les recalcule.
 		foreach ( LogiProjet_Store::depots( $t['id'] ) as $d ) {
@@ -925,6 +938,7 @@ class LogiProjet_Rest {
 			}
 			$t['status']     = LogiProjet_Access::status_for( $t, $uid );
 			$t['date_debut'] = LogiProjet_Access::start_for( $t, $uid );
+			$t['due_at']     = LogiProjet_Access::due_for_users( $t, array( $uid ) );
 			if ( LogiProjet_Access::is_locked( $t, $uid ) ) {
 				$out[] = self::locked_out( $t );
 				continue;
@@ -1015,6 +1029,7 @@ class LogiProjet_Rest {
 	private static function eleve_out( $t, $uid ) {
 		$d               = LogiProjet_Store::depot_for_user( $t['id'], $uid );
 		$t['date_debut'] = LogiProjet_Access::start_for( $t, $uid );
+		$t['due_at']     = LogiProjet_Access::due_for_users( $t, array( $uid ) );
 		$o               = self::travail_out( $t, false );
 		$o['locked']     = false;
 		$o['depot']      = $d ? self::depot_out( $d, $t, false ) : null;

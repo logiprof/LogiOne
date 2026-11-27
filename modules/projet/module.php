@@ -13,7 +13,7 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! defined( 'LOGIPROJET_VERSION' ) ) {
-	define( 'LOGIPROJET_VERSION', '1.11.1' );
+	define( 'LOGIPROJET_VERSION', '1.11.2' );
 	define( 'LOGIPROJET_DB_VERSION', '5' );
 	define( 'LOGIPROJET_FILE', __FILE__ );
 	define( 'LOGIPROJET_DIR', plugin_dir_path( __FILE__ ) );

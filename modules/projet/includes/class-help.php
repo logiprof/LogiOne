@@ -350,7 +350,7 @@ if ( 'enseignant' === $qui ) {
 		<tr><td><b>Date de début</b></td><td>Avant cette date et cette heure, le travail apparaît chez l’apprenti avec <b>🔒 S’ouvre le …</b>, mais il ne peut pas l’ouvrir (ni la consigne, ni la grille, ni le dépôt). À l’heure dite, il s’ouvre tout seul. Laissez vide pour un accès immédiat.</td></tr>
 		<tr><td><b>Date de fin · rendu du fichier</b></td><td>Après cette date, la remise reste possible tant que le travail est ouvert, mais la pénalité de retard s’applique automatiquement.</td></tr>
 	</table>
-	<div class="new"><b>Plusieurs classes ?</b> Chaque classe peut avoir <b>sa propre date de début</b> et <b>son propre statut</b>. Dans le formulaire, une ligne par classe cochée apparaît sous « Date de début » ; sur la page du travail, le cadre <b>« Statut et début par classe »</b> permet aussi de les changer à tout moment. Une classe sans date suit la date de début du travail.</div>
+	<div class="new"><b>Plusieurs classes ?</b> Chaque classe peut avoir <b>sa propre date de début</b>, <b>sa propre date de fin</b> et <b>son propre statut</b>. Dans le formulaire, un cadre par classe cochée apparaît sous les dates (« Dates par classe ») ; sur la page du travail, le cadre <b>« Statut et dates par classe »</b> permet aussi de les changer à tout moment. Une date vide suit celle du travail. Les pénalités de retard se calculent avec la date de fin de la classe de chaque groupe.</div>
 	<div class="tip">Vous pouvez donc préparer le travail à l’avance, le mettre sur « Ouvert aux dépôts » et laisser LogiProjet l’ouvrir à chaque classe au bon moment, sans repasser par le brouillon.</div>
 </section>
 
@@ -377,7 +377,7 @@ if ( 'enseignant' === $qui ) {
 		<li>Avec <span class="btn">Aperçu apprenti</span>, vous voyez exactement ce que verront les apprentis.</li>
 		<li>Quand tout est prêt, cliquez sur <span class="btn y">Ouvrir aux dépôts</span> (ou choisissez le statut dans le formulaire).</li>
 	</ol>
-	<?php self::fig( $img . 'p-statut-classe.jpg', 'Statut et début par classe : ouvrir, verrouiller ou décaler une seule classe.' ); ?>
+	<?php self::fig( $img . 'p-statut-classe.jpg', 'Statut et dates par classe : ouvrir, verrouiller ou décaler une seule classe.' ); ?>
 </section>
 
 <section id="p6"><h2><span class="n">6</span>Suivre les groupes</h2>
