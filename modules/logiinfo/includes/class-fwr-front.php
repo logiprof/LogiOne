@@ -52,7 +52,7 @@ class LIR_Front {
 			if ( ! move_uploaded_file( $F['tmp_name'][ $k ], LIR_Core::abs_path( $stored_rel ) ) ) { $go( 'err', 'Enregistrement impossible sur le serveur.' ); }
 			$files[] = array( 'name' => $name, 'stored' => $stored_rel, 'size' => (int) $F['size'][ $k ], 'sha1' => (string) @sha1_file( LIR_Core::abs_path( $stored_rel ) ) );
 		}
-		$rep = LIR_Core::analyse( $lecon, $files );
+		$rep = LIR_Core::analyse( $lecon, $files, $uid );
 		global $wpdb;
 		$wpdb->insert( LIR_Core::table(), array(
 			'user_id' => $uid, 'lecon' => $lecon, 'version' => $ver, 'files' => wp_json_encode( $files ), 'created_at' => current_time( 'mysql' ),
@@ -146,7 +146,7 @@ class LIR_Front {
 		if ( $r['detail'] && $r['auto_report'] && ! empty( $r['auto_report']['items'] ) ) {
 			$h .= '<details class="fwr-details"><summary>Détail des points vérifiés</summary><ul class="fwr-crit">';
 			foreach ( $r['auto_report']['items'] as $it ) {
-				$h .= '<li class="' . ( $it['ok'] ? 'ok' : ( $it['pts'] > 0 ? 'mid' : 'ko' ) ) . '">' . esc_html( $it['label'] ) . '</li>';
+				$h .= '<li class="' . ( $it['ok'] ? 'ok' : ( $it['pts'] > 0 ? 'mid' : 'ko' ) ) . '">' . esc_html( $it['label'] ) . ( ! empty( $it['penalty'] ) && ! $it['ok'] ? ' <strong>(' . esc_html( $it['pts'] ) . ' pt)</strong>' : '' ) . '</li>';
 			}
 			$h .= '</ul></details>';
 		}

@@ -65,3 +65,4 @@
 .fwr-idc.ok{background:#F1F8F2;border-color:#B9DDBF}.fwr-idc.info{background:#F6F7F7;border-color:#DCDCDE}.fwr-idc.ko{background:#FDECEA;border-color:#E8A39C;border-left:5px solid #C62828}
 .fwr-decision{border:1px solid #DCDCDE;border-radius:8px;padding:8px 12px 10px;margin:0 0 12px;min-width:0;max-width:100%;box-sizing:border-box}.fwr-dec-opt{margin-right:14px}
 #fwr-motif-box{margin-top:8px}#fwr-motif-box.req input{border-color:#C62828}#fwr-motif-box select{margin-top:6px;max-width:100%}
+.fwr-crit tr.fwr-pen.is-on td{background:#fdecea;color:#8a1c12}.fwr-crit tr.fwr-pen td:first-child{width:28px}

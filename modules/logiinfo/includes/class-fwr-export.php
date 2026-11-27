@@ -122,6 +122,9 @@ class LIR_Export {
 			if ( $g ) { $md .= "\n### Grille d'évaluation officielle\n"; foreach ( $g as $row ) { $md .= '- ' . wp_strip_all_tags( $row[0] ) . ' : ' . wp_strip_all_tags( $row[1] ) . " pts\n"; } }
 			$md .= "\n### Critères du contrôle automatique\n";
 			foreach ( LIR_Core::criteria( $n ) as $c ) { $md .= "- {$c[0]} ({$c[1]} pts)\n"; }
+			$md .= "\n### Pénalités (aucun point à gagner, seulement des points retirés)\n";
+			if ( ! LIR_Core::is_checked( $n ) && LIR_Rules::get( $n ) ) { $md .= '- Texte du fichier de départ perdu ou supprimé par erreur : −' . LIR_Rules::LOSS_PER_PAR . ' pt par paragraphe (au maximum −' . LIR_Rules::LOSS_MAX . "). Garder le texte ne rapporte aucun point : il est toujours fourni.\n"; }
+			if ( LIR_Core::expected_names( $n ) ) { $md .= '- Nom du fichier différent de la consigne (' . implode( ' / ', LIR_Core::expected_names( $n ) ) . ') : −' . LIR_Core::NAME_PENALTY . " pt.\n"; }
 			$z->addFromString( "$dir/consignes_et_criteres.md", $md );
 			if ( LIR_Core::is_checked( $n ) ) {
 				$up = wp_upload_dir();
@@ -149,7 +152,10 @@ class LIR_Export {
 	private static function report_md( $rep ) {
 		if ( ! $rep || empty( $rep['items'] ) ) { return "Aucun contrôle automatique disponible.\n"; }
 		$md = "# Contrôle automatique : {$rep['score']} / {$rep['max']} points\n\n";
-		foreach ( $rep['items'] as $it ) { $md .= ( $it['ok'] ? '- [x] ' : '- [ ] ' ) . $it['label'] . " ({$it['pts']}/{$it['max']})\n"; }
+		foreach ( $rep['items'] as $it ) {
+			if ( ! empty( $it['penalty'] ) ) { $md .= '- ' . ( $it['ok'] ? '[x] ' : '[ ] PÉNALITÉ ' ) . $it['label'] . ( $it['ok'] ? '' : " ({$it['pts']} pt)" ) . "\n"; continue; }
+			$md .= ( $it['ok'] ? '- [x] ' : '- [ ] ' ) . $it['label'] . " ({$it['pts']}/{$it['max']})\n";
+		}
 		if ( ! empty( $rep['errors'] ) ) { $md .= "\nErreurs de lecture : " . implode( ' / ', $rep['errors'] ) . "\n"; }
 		return $md;
 	}

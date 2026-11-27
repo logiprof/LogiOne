@@ -275,6 +275,11 @@ class LIR_Admin {
 		$r = LIR_Core::get( $id );
 		echo '<div class="wrap fwr-wrap">';
 		if ( ! $r || ! LI_Formateurs::can_see( $r ) ) { echo '<h1>Remise introuvable</h1><p>Cette remise n\'existe pas ou elle est attribuée à un autre formateur.</p></div>'; return; }
+		// 1.54.5 : une remise encore à corriger, analysée avec l'ancien barème, est recontrôlée automatiquement (pénalités).
+		if ( 'depose' === $r['statut'] && is_array( $r['auto_report'] ) && (int) ( $r['auto_report']['v'] ?? 1 ) < LIR_Core::REPORT_VERSION ) {
+			LIR_Core::reanalyse( $r['id'] );
+			$r = LIR_Core::get( $id );
+		}
 		$L = LIR_Core::lecon( $r['lecon'] );
 		echo '<p><a href="' . esc_url( admin_url( 'admin.php?page=fw-remises' ) ) . '">← Retour à la liste</a></p>';
 		echo '<h1>' . esc_html( LIR_Core::user_label( $r['user_id'] ) ) . ' – ' . esc_html( LIR_Core::lecon_label( $r['lecon'] ) ) . '</h1>';
@@ -322,6 +327,10 @@ class LIR_Admin {
 			if ( ! empty( $rep['errors'] ) ) { echo '<div class="notice notice-error inline"><p>' . esc_html( implode( ' / ', $rep['errors'] ) ) . '</p></div>'; }
 			echo '<table class="widefat striped fwr-crit"><tbody>';
 			foreach ( $rep['items'] as $it ) {
+				if ( ! empty( $it['penalty'] ) ) {
+					echo '<tr class="fwr-pen' . ( $it['ok'] ? '' : ' is-on' ) . '"><td>' . ( $it['ok'] ? '✅' : '⛔' ) . '</td><td>' . esc_html( $it['label'] ) . '</td><td class="fwr-pts">' . ( $it['ok'] ? '<span title="Pénalité non appliquée">—</span>' : '<strong>' . esc_html( str_replace( '-', '−', (string) $it['pts'] ) ) . '</strong>' ) . '</td></tr>'; // phpcs:ignore
+					continue;
+				}
 				$ic = $it['ok'] ? '✅' : ( $it['pts'] > 0 ? '🟠' : '❌' );
 				echo '<tr><td>' . $ic . '</td><td>' . esc_html( $it['label'] ) . '</td><td class="fwr-pts">' . esc_html( $it['pts'] . '/' . $it['max'] ) . '</td></tr>'; // phpcs:ignore
 			}

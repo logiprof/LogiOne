@@ -128,6 +128,9 @@ class LIR_Docx {
 		foreach ( array( 'creator' => 'dc:creator', 'last_by' => 'cp:lastModifiedBy', 'modified' => 'dcterms:modified' ) as $k => $tag ) {
 			if ( preg_match( '#<' . $tag . '\b[^>]*>([^<]*)</' . $tag . '>#', $core, $c ) ) { $t[ $k ] = html_entity_decode( $c[1], ENT_QUOTES | ENT_XML1, 'UTF-8' ); }
 		}
+		// Fichier de départ de la formation : son auteur (« Évasion Colibri – Formation Word ») n'est pas un apprenti.
+		$t['depart'] = class_exists( 'LIR_Core' ) && LIR_Core::is_depart_name( $t['creator'] );
+		if ( class_exists( 'LIR_Core' ) && LIR_Core::is_depart_name( $t['last_by'] ) ) { $t['last_by'] = ''; }
 		return $t;
 	}
 

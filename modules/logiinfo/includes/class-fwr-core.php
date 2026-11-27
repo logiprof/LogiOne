@@ -4,6 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 class LIR_Core {
 	const DB_VERSION = '7';
+	const REPORT_VERSION = 2; // 2 : pénalités (texte perdu, nom du fichier)
+	const NAME_PENALTY = 1; // points retirés si le nom du fichier ne respecte pas la consigne
 	const STATUTS = array( 'depose' => 'À corriger', 'corrige' => 'Corrigé (non publié)', 'publie' => 'Retour publié', 'corbeille' => 'Corbeille' );
 
 	/** Tables propres à LogiInfo. Elles ne sont jamais supprimées : ni à la désactivation, ni à la mise à jour, ni à la suppression de l'extension. */
@@ -351,8 +353,58 @@ class LIR_Core {
 		return array_map( function ( $r ) { return array( $r[0], $r[1] ); }, LIR_Rules::get( $lecon ) );
 	}
 
+	/**
+	 * Pénalité dans un rapport de contrôle : ligne sans point à gagner (max 0) ; si elle s'applique, $pts sont retirés
+	 * du score (jamais en dessous de 0). Le texte et le nom de fichier sont fournis ou imposés : on ne gagne rien à les respecter.
+	 */
+	public static function add_penalty( &$rep, $label, $pts, $applied ) {
+		$pts = $applied ? round( (float) $pts * 2 ) / 2 : 0;
+		$rep['items'][] = array( 'label' => $label, 'max' => 0, 'pts' => -$pts, 'ok' => ! $applied, 'penalty' => true );
+		$rep['score'] = max( 0, ( $rep['score'] ?? 0 ) - $pts );
+		$rep['pct']   = ! empty( $rep['max'] ) ? round( 100 * $rep['score'] / $rep['max'] ) : 0;
+	}
+
+	/** Noms de fichier demandés dans la consigne (ex. « L01_Prénom_Nom », « L14_Prénom_Nom_lettres »), sans extension. */
+	public static function expected_names( $lecon ) {
+		$L = self::lecon( $lecon );
+		if ( ! $L || empty( $L['consignes'] ) ) { return array(); }
+		preg_match_all( '/\b(L\d{2}_Pr[ée]nom_Nom[A-Za-z0-9_]*)/u', (string) $L['consignes'], $m );
+		return array_values( array_unique( $m[1] ) );
+	}
+
+	/** Vérifie le nom des fichiers déposés : rend null (pas de consigne), ou array( ok, libellé ). */
+	public static function check_names( $lecon, $files, $user_id ) {
+		$want = self::expected_names( $lecon );
+		if ( ! $want || ! $files ) { return null; }
+		$u     = $user_id ? get_userdata( $user_id ) : null;
+		$first = $u ? trim( (string) $u->first_name ) : '';
+		$last  = $u ? trim( (string) $u->last_name ) : '';
+		$c     = array( 'LIR_Rules', 'compact' );
+		$ok_all = true; $bad = array();
+		foreach ( $files as $f ) {
+			$base = pathinfo( (string) $f['name'], PATHINFO_FILENAME );
+			$got  = call_user_func( $c, $base );
+			$hit  = false;
+			foreach ( $want as $w ) {
+				$parts = explode( '_Nom', preg_replace( '/_Pr[ée]nom/u', '', $w ), 2 ); // « L01 » et suffixe éventuel (« _lettres »)
+				$pre   = call_user_func( $c, $parts[0] );
+				$suf   = call_user_func( $c, $parts[1] ?? '' );
+				if ( '' !== $first && '' !== $last ) {
+					if ( $got === $pre . call_user_func( $c, $first ) . call_user_func( $c, $last ) . $suf ) { $hit = true; break; }
+				} elseif ( 0 === strpos( $got, $pre ) && strlen( $got ) > strlen( $pre . $suf ) && ( '' === $suf || substr( $got, -strlen( $suf ) ) === $suf ) ) {
+					$hit = true; break;
+				}
+			}
+			if ( ! $hit ) { $ok_all = false; $bad[] = $f['name']; }
+		}
+		$exp = array();
+		foreach ( $want as $w ) { $exp[] = ( '' !== $first && '' !== $last ) ? str_replace( array( 'Prénom', 'Prenom', 'Nom' ), array( $first, $first, $last ), $w ) : $w; }
+		$exp = implode( ' / ', array_unique( $exp ) );
+		return array( $ok_all, $ok_all ? 'Nom du fichier conforme à la consigne (' . $exp . ')' : 'Nom du fichier incorrect : « ' . implode( ' », « ', $bad ) . ' » au lieu de ' . $exp );
+	}
+
 	/** Analyse les fichiers d'une remise et renvoie [rapport, structures]. */
-	public static function analyse( $lecon, $files ) {
+	public static function analyse( $lecon, $files, $user_id = 0 ) {
 		$docs = array(); $errors = array(); $trace = array();
 		foreach ( $files as $f ) {
 			$x = strtolower( pathinfo( $f['stored'], PATHINFO_EXTENSION ) );
@@ -380,6 +432,10 @@ class LIR_Core {
 		} else {
 			$rep = LIR_Rules::evaluate( $lecon, $docs );
 		}
+		// 1.54.5 : nom du fichier imposé par la consigne (L01_Prénom_Nom…) : pénalité s'il n'est pas respecté.
+		$nm = self::check_names( $lecon, $files, $user_id );
+		if ( $nm ) { self::add_penalty( $rep, $nm[1], self::NAME_PENALTY, ! $nm[0] ); }
+		$rep['v'] = self::REPORT_VERSION;
 		$rep['trace'] = $trace;
 		$rep['errors'] = $errors;
 		$rep['date'] = current_time( 'mysql' );
@@ -456,8 +512,15 @@ class LIR_Core {
 			if ( ! empty( $t['last_by'] ) ) { $n[ $t['last_by'] ] = 1; }
 			if ( ! empty( $t['creator'] ) && empty( $t['depart'] ) ) { $n[ $t['creator'] ] = 1; }
 		}
-		unset( $n['LogiProf'] );
-		return array_keys( $n );
+		// 1.54.5 : les noms des fichiers de départ de la formation (« Évasion Colibri – Formation Word »…) ne sont pas des apprentis.
+		return array_values( array_filter( array_keys( $n ), function ( $x ) { return ! self::is_depart_name( $x ); } ) );
+	}
+	/** Nom enregistré dans les fichiers de départ fournis par la formation (auteur du fichier, pas un apprenti). */
+	public static function is_depart_name( $name ) {
+		$n = strtolower( remove_accents( trim( (string) $name ) ) );
+		if ( '' === $n ) { return false; }
+		if ( in_array( $n, array( 'logiprof', 'openpyxl', 'python-docx', 'python-pptx' ), true ) ) { return true; }
+		return (bool) preg_match( '/^evasion colibri\b/', $n ) || (bool) preg_match( '/\bformation (word|excel|powerpoint)\b/', $n );
 	}
 	/** Forme comparable d'un mot : minuscules, sans accents, « ue/oe/ae » ramenés à « u/o/a » (Müller = Mueller = Muller). */
 	private static function norm_tok( $t ) { return strtr( str_replace( array( 'ae', 'oe', 'ue' ), array( 'a', 'o', 'u' ), $t ), array( 'y' => 'i' ) ); }
@@ -590,7 +653,7 @@ class LIR_Core {
 		global $wpdb;
 		$r = self::get( $id );
 		if ( ! $r ) { return; }
-		$rep = self::analyse( $r['lecon'], $r['files'] );
+		$rep = self::analyse( $r['lecon'], $r['files'], (int) $r['user_id'] );
 		$wpdb->update( self::table(), array( 'auto_score' => $rep['score'], 'auto_max' => $rep['max'], 'auto_report' => wp_json_encode( $rep ) ), array( 'id' => $id ) );
 	}
 

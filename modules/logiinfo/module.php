@@ -13,7 +13,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'LI_VERSION', '2.8.3' );
+define( 'LI_VERSION', '2.9.0' );
 define( 'LI_DIR', __DIR__ );
 define( 'LI_FILE', __FILE__ );
 define( 'LIR_VERSION', LI_VERSION );

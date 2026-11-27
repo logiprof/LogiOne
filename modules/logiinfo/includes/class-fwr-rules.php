@@ -199,8 +199,81 @@ class LIR_Rules {
 			$out['items'][] = array( 'label' => $label, 'max' => $pts, 'pts' => $got, 'ok' => $got >= $pts );
 			$out['score'] += $got; $out['max'] += $pts;
 		}
+		// 1.54.5 : le texte est toujours fourni dans le fichier de départ. Garder le texte ne rapporte aucun point,
+		// mais du texte perdu (supprimé par erreur) est sanctionné.
+		if ( $D && $rules ) {
+			$loss = self::text_loss( $lecon, $D );
+			if ( null !== $loss ) {
+				LIR_Core::add_penalty( $out, $loss['label'], $loss['pts'], $loss['pts'] > 0 );
+			}
+		}
 		$out['pct'] = $out['max'] ? round( 100 * $out['score'] / $out['max'] ) : 0;
 		return $out;
+	}
+
+	/* ================================================================ texte perdu */
+	const LOSS_PER_PAR = 1;   // points retirés par paragraphe perdu
+	const LOSS_MAX     = 3;   // retrait maximal
+
+	/** Lettres et chiffres seulement, en minuscules et sans accents (pour comparer des textes reformatés). */
+	public static function compact( $s ) {
+		$s = function_exists( 'remove_accents' ) ? remove_accents( (string) $s ) : (string) $s;
+		return preg_replace( '/[^a-z0-9]+/', '', strtolower( $s ) );
+	}
+	private static function words( $s ) {
+		$s = function_exists( 'remove_accents' ) ? remove_accents( (string) $s ) : (string) $s;
+		preg_match_all( '/[a-z0-9]{3,}/', strtolower( $s ), $m );
+		return $m[0];
+	}
+	/** Tout le texte d'un document : corps, tableaux, zones de texte, SmartArt, en-têtes et pieds de page. */
+	private static function haystack( $D ) {
+		$t = array();
+		foreach ( $D['paragraphs'] as $p ) { if ( empty( $p['toc'] ) ) { $t[] = $p['text']; } }
+		foreach ( array( 'textboxes', 'smartart', 'headers', 'footers' ) as $k ) { foreach ( (array) $D[ $k ] as $x ) { $t[] = $x['text'] ?? ''; } }
+		return implode( "\n", $t );
+	}
+	/** Paragraphes du résultat attendu (référence), mis en cache. */
+	private static function reference_pars( $lecon ) {
+		static $cache = array();
+		if ( isset( $cache[ $lecon ] ) ) { return $cache[ $lecon ]; }
+		$f = LI_DIR . sprintf( '/reference/L%02d_resultat_attendu.docx', (int) $lecon );
+		$cache[ $lecon ] = null;
+		if ( ! is_file( $f ) ) { return null; }
+		$d = new LIR_Docx( $f );
+		if ( ! $d->ok ) { return null; }
+		$out = array();
+		foreach ( $d->d['paragraphs'] as $p ) {
+			if ( ! empty( $p['toc'] ) || count( self::words( $p['text'] ) ) < 3 ) { continue; }
+			$out[] = $p['text'];
+		}
+		foreach ( array( 'textboxes', 'smartart' ) as $k ) { foreach ( (array) $d->d[ $k ] as $x ) { if ( count( self::words( $x['text'] ?? '' ) ) >= 3 ) { $out[] = $x['text']; } } }
+		return $cache[ $lecon ] = $out;
+	}
+	/**
+	 * Compare le texte de la copie au résultat attendu. Un paragraphe est « perdu » si moins de 60 % de ses mots
+	 * se retrouvent dans la copie, « incomplet » (½) s'il lui manque au moins 2 mots ou plus de 10 % de ses mots.
+	 * Rend null si aucune référence n'existe.
+	 */
+	public static function text_loss( $lecon, $D ) {
+		$ref = self::reference_pars( $lecon );
+		if ( ! $ref ) { return null; }
+		$hay   = self::haystack( $D );
+		$hc    = self::compact( $hay );
+		$have  = array_count_values( self::words( $hay ) );
+		$lost  = 0; $miss = array();
+		foreach ( $ref as $par ) {
+			$c = self::compact( $par );
+			if ( '' === $c || false !== strpos( $hc, $c ) ) { continue; }
+			$w = self::words( $par ); $need = array_count_values( $w ); $ok = 0;
+			foreach ( $need as $k => $n ) { $ok += min( $n, $have[ $k ] ?? 0 ); }
+			$cov = $ok / max( 1, count( $w ) );
+			if ( $cov >= 0.9 && count( $w ) - $ok < 2 ) { continue; } // un mot isolé (faute de frappe, symbole) n'est pas du texte perdu
+			$lost += $cov < 0.6 ? 1 : 0.5;
+			$miss[] = '« ' . mb_substr( trim( preg_replace( '/\s+/u', ' ', $par ) ), 0, 45 ) . '… »' . ( $cov < 0.6 ? '' : ' (incomplet)' );
+		}
+		$pts = min( self::LOSS_MAX, $lost * self::LOSS_PER_PAR );
+		if ( ! $miss ) { return array( 'pts' => 0, 'label' => 'Aucun texte perdu (le texte du fichier de départ est complet)' ); }
+		return array( 'pts' => $pts, 'label' => 'Texte perdu ou supprimé par erreur : ' . implode( ', ', array_slice( $miss, 0, 4 ) ) . ( count( $miss ) > 4 ? ' et ' . ( count( $miss ) - 4 ) . ' autre(s)' : '' ) );
 	}
 
 	public static function main_doc( $lecon, $docs ) {
@@ -217,7 +290,6 @@ class LIR_Rules {
 	private static function L01() {
 		$order = array( 'Bienvenue chez Évasion Colibri', 'Depuis 2009', 'Notre philosophie tient', 'Dans ce catalogue', 'Chaque séjour peut être adapté', 'Léa Morand, directrice' );
 		return array(
-			array( 'Les 6 paragraphes sont présents (aucun texte perdu)', 2, function ( $D ) use ( $order ) { return self::each( $D, $order, function () { return true; } ); } ),
 			array( 'Aucune ligne vide (¶ isolé)', 3, function ( $D ) { $e = self::empty_pars( $D ); return $e === 0 ? 1 : max( 0, 1 - $e / 4 ); } ),
 			array( 'Le paragraphe en double a été supprimé', 2, function ( $D ) { return self::count( $D, 'Notre philosophie tient' ) === 1; } ),
 			array( 'Les paragraphes sont dans le bon ordre', 3, function ( $D ) use ( $order ) {
