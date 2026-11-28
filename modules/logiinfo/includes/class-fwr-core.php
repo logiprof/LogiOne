@@ -66,8 +66,10 @@ class LIR_Core {
 		return $l ? sprintf( '%s %s – %s', array( 'excel' => 'Excel', 'powerpoint' => 'PowerPoint', 'presentation' => 'Présentations' )[ $l['formation'] ] ?? 'Word', sprintf( 'L%02d', $l['num'] ), $l['titre'] ) : 'L' . (int) $n;
 	}
 
+	/** 1.54.9 : la correction par l'IA (export / import) est masquée par défaut ; elle reste en place et se réactive dans les réglages. */
+	public static function ia_on() { return ! empty( self::settings()['ia_actif'] ); }
 	public static function settings() {
-		$d = array( 'max_mo' => 15, 'echelle' => 'suisse', 'detail_defaut' => 1, 'message' => 'Merci ! Votre exercice a bien été déposé. Votre formateur vous fera un retour prochainement.' );
+		$d = array( 'max_mo' => 15, 'echelle' => 'suisse', 'detail_defaut' => 1, 'ia_actif' => 0, 'message' => 'Merci ! Votre exercice a bien été déposé. Votre formateur vous fera un retour prochainement.' );
 		return wp_parse_args( (array) get_option( 'fwr_settings', array() ), $d );
 	}
 

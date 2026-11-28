@@ -13,7 +13,9 @@ class LIR_List extends WP_List_Table {
 	protected function get_sortable_columns() { return array( 'lecon' => array( 'lecon', false ), 'created_at' => array( 'created_at', true ), 'auto' => array( 'auto', false ) ); }
 	protected function column_cb( $r ) { return '<input type="checkbox" name="ids[]" value="' . (int) $r['id'] . '">'; }
 	protected function get_bulk_actions() {
-		return array( 'export_zip' => 'Exporter les fichiers (ZIP + récapitulatif)', 'export_ia' => 'Exporter pour correction par l\'IA (copies à corriger seulement)', 'export_ia_tout' => 'Exporter pour l\'IA, même déjà corrigée', 'publier' => 'Publier les retours', 'valider_publier' => 'Marquer « Validé » et publier', 'reanalyser' => 'Relancer le contrôle automatique', 'corbeille' => 'Mettre à la corbeille', 'restaurer' => 'Restaurer (sortir de la corbeille)' );
+		$a = array( 'export_zip' => 'Exporter les fichiers (ZIP + récapitulatif)', 'export_ia' => 'Exporter pour correction par l\'IA (copies à corriger seulement)', 'export_ia_tout' => 'Exporter pour l\'IA, même déjà corrigée', 'publier' => 'Publier les retours', 'valider_publier' => 'Marquer « Validé » et publier', 'reanalyser' => 'Relancer le contrôle automatique', 'corbeille' => 'Mettre à la corbeille', 'restaurer' => 'Restaurer (sortir de la corbeille)' );
+		if ( ! LIR_Core::ia_on() ) { unset( $a['export_ia'], $a['export_ia_tout'] ); }
+		return $a;
 	}
 	public static function latest_sql( $alias = 'r' ) { return LIR_Core::latest_sql( $alias ); }
 	public static function filters() {
@@ -136,7 +138,8 @@ class LIR_Admin {
 		$bubble = $n ? ' <span class="awaiting-mod">' . $n . '</span>' : '';
 		add_menu_page( 'LogiInfo', 'LogiInfo' . $bubble, LIR_CAP, 'fw-remises', array( __CLASS__, 'page' ), 'data:image/svg+xml;base64,' . base64_encode( '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path fill="#a7aaad" d="M2 3h16v10H2zM4 5v6h12V5zM7 15h6v2H7z"/><path fill="#a7aaad" d="M5 6h4v1H5zm0 2h6v1H5z"/></svg>' ), 26 );
 		add_submenu_page( 'fw-remises', 'Remises des exercices', 'Remises des exercices', LIR_CAP, 'fw-remises', array( __CLASS__, 'page' ) );
-		add_submenu_page( 'fw-remises', 'Correction par l\'IA', 'Correction par l\'IA', LIR_CAP, 'fw-remises-ia', array( 'LIR_Export', 'page_ia' ) );
+		// Masquée quand la correction par l'IA est désactivée (la page reste accessible par son adresse, rien n'est supprimé).
+		add_submenu_page( LIR_Core::ia_on() ? 'fw-remises' : '', 'Correction par l\'IA', 'Correction par l\'IA', LIR_CAP, 'fw-remises-ia', array( 'LIR_Export', 'page_ia' ) );
 	}
 
 	public static function badge( $r ) {
@@ -230,7 +233,7 @@ class LIR_Admin {
 		$q = array_filter( array( 'lecon' => $f['lecon'], 'statut' => $f['statut'], 'toutes' => $f['toutes'] ? 1 : 0, 's' => $f['s'] ) ) + ( $f['formateur'] >= 0 ? array( 'formateur' => $f['formateur'] ) : array() ) + ( $f['classe'] ? array( 'classe' => $f['classe'] ) : array() );
 		echo ' <a class="page-title-action" href="' . esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=fwr_bulk&op=export_zip&tout=1&' . http_build_query( $q ) ), 'fwr_bulk' ) ) . '">⬇ Exporter tout le filtre (ZIP)</a>';
 		echo ' <a class="page-title-action" href="' . esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=fwr_bulk&op=export_csv&tout=1&' . http_build_query( $q ) ), 'fwr_bulk' ) ) . '">⬇ Récapitulatif (CSV / Excel)</a>';
-		echo ' <a class="page-title-action" href="' . esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=fwr_bulk&op=export_ia&tout=1&' . http_build_query( $q ) ), 'fwr_bulk' ) ) . '" title="Seules les copies « À corriger » du filtre sont envoyées">🤖 Exporter le filtre pour l\'IA</a>';
+		if ( LIR_Core::ia_on() ) { echo ' <a class="page-title-action" href="' . esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=fwr_bulk&op=export_ia&tout=1&' . http_build_query( $q ) ), 'fwr_bulk' ) ) . '" title="Seules les copies « À corriger » du filtre sont envoyées">🤖 Exporter le filtre pour l\'IA</a>'; }
 		echo '<hr class="wp-header-end">';
 		self::notice();
 		self::stats();
@@ -324,7 +327,8 @@ class LIR_Admin {
 		}
 
 		/* ---- contrôle auto | observations IA | correction */
-		echo '<div class="fwr-cols3">';
+		$ia_card = LIR_Core::ia_on() || ! empty( $r['ia_at'] ); // observations déjà importées : toujours affichées
+		echo '<div class="fwr-cols3' . ( $ia_card ? '' : ' fwr-no-ia' ) . '">';
 		echo '<div class="fwr-card"><h2>🔎 Contrôle automatique ' . self::badge( $r ) . '</h2>'; // phpcs:ignore
 		$rep = $r['auto_report'];
 		if ( $rep ) {
@@ -348,6 +352,7 @@ class LIR_Admin {
 		}
 		echo '</pre></details></div>';
 
+		if ( $ia_card ) {
 		echo '<div class="fwr-card fwr-ia"><h2>🤖 Observations de l\'IA</h2>';
 		if ( $r['ia_at'] ) {
 			$det = $r['ia_details'];
@@ -363,6 +368,7 @@ class LIR_Admin {
 			echo '<p class="description">Aucune observation pour cette copie. Exportez-la pour l\'IA, faites-la corriger par Claude, puis importez le fichier <code>correction.json</code> : les observations s\'afficheront ici.</p><p><a class="button" href="' . esc_url( admin_url( 'admin.php?page=fw-remises-ia' ) ) . '">Correction par l\'IA</a></p>';
 		}
 		echo '</div>';
+		}
 
 		echo '<div class="fwr-card"><h2>✍️ Ma correction</h2><form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '"><input type="hidden" name="action" value="fwr_save"><input type="hidden" name="id" value="' . (int) $r['id'] . '">';
 		wp_nonce_field( 'fwr_save_' . $r['id'] );
@@ -553,6 +559,7 @@ class LIR_Admin {
 		echo '<tr><th>Échelle de notes</th><td><select name="echelle">';
 		foreach ( array( 'suisse' => 'Note de 1 à 6 (demi-points)', 'vingt' => 'Note sur 20', 'pourcent' => 'Pourcentage' ) as $k => $v ) { echo '<option value="' . esc_attr( $k ) . '"' . selected( $s['echelle'], $k, false ) . '>' . esc_html( $v ) . '</option>'; }
 		echo '</select></td></tr>';
+		echo '<tr><th>Correction par l\'IA</th><td><label><input type="checkbox" name="ia_actif" value="1"' . checked( (int) $s['ia_actif'], 1, false ) . '> Afficher la correction par l\'IA (export des copies pour Claude, import de <code>correction.json</code>)</label><p class="description">Masquée par défaut : le contrôle automatique suffit. La fonctionnalité reste en place ; les observations déjà importées restent visibles.</p></td></tr>';
 		echo '<tr><th>Détail des points vérifiés</th><td><label><input type="checkbox" name="detail_defaut" value="1"' . checked( (int) $s['detail_defaut'], 1, false ) . '> Coché par défaut lors de la correction</label></td></tr>';
 		echo '<tr><th>Message après dépôt</th><td><input type="text" class="large-text" name="message" value="' . esc_attr( $s['message'] ) . '"></td></tr></table>';
 		submit_button( 'Enregistrer' );
@@ -569,6 +576,7 @@ class LIR_Admin {
 			'max_mo' => max( 1, min( 100, (int) ( $_POST['max_mo'] ?? 15 ) ) ),
 			'echelle' => in_array( $_POST['echelle'] ?? '', array( 'suisse', 'vingt', 'pourcent' ), true ) ? sanitize_key( $_POST['echelle'] ) : 'suisse',
 			'detail_defaut' => empty( $_POST['detail_defaut'] ) ? 0 : 1,
+			'ia_actif' => empty( $_POST['ia_actif'] ) ? 0 : 1,
 			'message' => sanitize_text_field( wp_unslash( $_POST['message'] ?? '' ) ),
 		) );
 		wp_safe_redirect( admin_url( 'admin.php?page=fw-remises-reglages&fwr_msg=' . rawurlencode( 'Réglages enregistrés.' ) ) );
