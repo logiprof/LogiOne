@@ -14,7 +14,7 @@ trait LogiEval_Secure_Evaluations_Editor {		private static function render_creat
 			<h2><?php echo esc_html( $evaluation ? __( 'Modifier une évaluation', 'logieval-secure' ) : __( 'Créer une évaluation', 'logieval-secure' ) ); ?></h2>
 			<p><?php esc_html_e( 'Définissez le cadre pédagogique, les dates, les groupes Sensei, les questions et les règles de sécurité.', 'logieval-secure' ); ?></p>
 			<?php if ( $evaluation && isset( $_GET['duplicated'] ) ) : ?>
-				<div class="notice notice-warning inline les-duplicate-notice"><p><strong><?php esc_html_e( 'Copie créée (brouillon).', 'logieval-secure' ); ?></strong> <?php esc_html_e( 'Le groupe classe, les élèves spécifiques et les dates d’ouverture et de fermeture n’ont pas été repris : choisissez-les ci-dessous, puis enregistrez.', 'logieval-secure' ); ?></p></div>
+				<div class="notice notice-warning inline les-duplicate-notice"><p><strong><?php echo esc_html( self::is_formative( $evaluation ) ? __( 'Copie créée en test formatif (brouillon).', 'logieval-secure' ) : __( 'Copie créée (brouillon).', 'logieval-secure' ) ); ?></strong> <?php esc_html_e( 'Le groupe classe, les élèves spécifiques et les dates d’ouverture et de fermeture n’ont pas été repris : choisissez-les ci-dessous, puis enregistrez.', 'logieval-secure' ); ?></p></div>
 			<?php endif; ?>
 			<?php if ( $evaluation && ! self::$embedded_in_evaluation ) : ?>
 				<?php self::render_evaluation_summary( $evaluation ); ?>
@@ -192,8 +192,8 @@ trait LogiEval_Secure_Evaluations_Editor {		private static function render_creat
 					</label>
 				</div>
 				<label class="les-checkbox-line les-formative-choice">
-					<input type="checkbox" name="logiexam_formative" value="1" <?php checked( ! empty( $evaluation['id'] ) && self::is_formative( (int) $evaluation['id'] ) ); ?>>
-					<span><strong><?php esc_html_e( 'Test formatif', 'logieval-secure' ); ?></strong> — <?php esc_html_e( 'pour s’entraîner : pas de correction à faire (ni par l’IA, ni par vous), rien dans LogiNotes, pas de bonus / malus. Dès qu’il a envoyé sa copie, l’élève voit sur sa page LogiExam le corrigé (sa réponse à côté de la réponse attendue) pour s’autocorriger. La passation reste celle d’un examen (code, sécurité).', 'logieval-secure' ); ?></span>
+					<input type="checkbox" name="logiexam_formative" value="1" <?php checked( ! empty( $evaluation['id'] ) ? self::is_formative( (int) $evaluation['id'] ) : ! empty( $_GET['formatif'] ) ); // phpcs:ignore WordPress.Security.NonceVerification ?>>
+					<span><strong><?php esc_html_e( 'Test formatif (non évalué)', 'logieval-secure' ); ?></strong> — <?php esc_html_e( 'pour s’entraîner : rien à corriger, rien dans LogiNotes, pas de bonus / malus. Une fois publié, le test apparaît directement sur la page LogiExam des élèves de la classe, dans l’espace « Tests formatifs », rangé par module (M101, M102…) d’après le cours choisi : sans code, sans minuteur ni mode sécurisé, autant de fois qu’ils veulent. Après l’envoi, l’élève voit le corrigé et peut exporter sa copie en PDF.', 'logieval-secure' ); ?></span>
 				</label>
 				<div data-logiexam-story-settings>
 					<label><?php esc_html_e( 'Introduction générale de l’histoire', 'logieval-secure' ); ?><textarea class="widefat" name="story_intro" rows="5"><?php echo esc_textarea( $evaluation['story_intro'] ?? '' ); ?></textarea></label>
@@ -2208,8 +2208,17 @@ trait LogiEval_Secure_Evaluations_Editor {		private static function render_creat
 		$evaluation['opens_at']         = null;
 		$evaluation['closes_at']        = null;
 
+		$as_formative = self::duplicate_kind_for( $evaluation_id );
+		if ( $as_formative !== self::is_formative( $evaluation_id ) ) {
+			// LogiOne 1.56.0 : copie vers l'autre partie (formative ↔ sommative).
+			$evaluation['title'] = (string) self::get_evaluation( $evaluation_id )['title'];
+		}
+
 		$wpdb->insert( $t['evaluations'], $evaluation );
 		$new_id = (int) $wpdb->insert_id;
+		if ( $new_id ) {
+			self::set_formative( $new_id, $as_formative );
+		}
 
 		if ( $new_id && self::exam_options( $evaluation_id )['shuffle_questions'] ) {
 			// La copie garde l'ordre aléatoire ; elle n'entre pas dans la bibliothèque.

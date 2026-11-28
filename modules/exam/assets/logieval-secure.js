@@ -2588,6 +2588,12 @@
 			}
 			setMessage((json.data && json.data.message) || LogiEvalSecure.i18n.submitted, false);
 			clearLocalDraft();
+			if (json.data && json.data.formative) {
+				// Test formatif : pas de délai de 5 minutes, on affiche le corrigé.
+				state.secureActive = false;
+				if (json.data.corrige_url) window.location.href = json.data.corrige_url;
+				return;
+			}
 			beginPostSubmitLock(json.data && json.data.lock_until);
 		}).catch(() => setMessage(LogiEvalSecure.i18n.error, true));
 	}
@@ -2681,6 +2687,7 @@
 	}
 
 	function guardIsActive() {
+		if (state.formative) return false; // Test formatif : entraînement libre, aucune surveillance.
 		return !state.securityStopped && (state.secureActive || state.lockActive);
 	}
 
@@ -3482,7 +3489,7 @@
 		if (lockScreen) lockScreen.hidden = true;
 		if (companyBox) companyBox.hidden = true;
 		state.lockActive = false;
-		state.secureActive = true;
+		state.secureActive = !state.formative;
 		updateProgress();
 		renderCalculator();
 		if (showIntro === false) {
@@ -3969,6 +3976,76 @@
 			);
 	});
 
+	/* LogiOne 1.56.0 : tests formatifs en libre accès (sans code, sans minuteur ni mode sécurisé). */
+	const formativeArea = root.querySelector('[data-les-formative-area]');
+	if (formativeArea) {
+		const formativeMessage = formativeArea.querySelector('[data-les-formative-message]');
+		formativeArea.addEventListener('click', function (event) {
+			const chip = event.target.closest('[data-les-formative-chip]');
+			if (chip) {
+				const key = chip.dataset.lesFormativeChip;
+				const open = chip.getAttribute('aria-expanded') !== 'true';
+				formativeArea.querySelectorAll('[data-les-formative-chip]').forEach((c) => c.setAttribute('aria-expanded', 'false'));
+				formativeArea.querySelectorAll('[data-les-formative-list]').forEach((l) => { l.hidden = !open || l.dataset.lesFormativeList !== key; });
+				chip.setAttribute('aria-expanded', open ? 'true' : 'false');
+				const list = formativeArea.querySelector('[data-les-formative-list="' + key + '"]');
+				if (open && list && list.scrollIntoView) list.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+				return;
+			}
+			const start = event.target.closest('[data-les-formative-start]');
+			if (!start) return;
+			start.disabled = true;
+			if (formativeMessage) { formativeMessage.textContent = ''; formativeMessage.className = 'les-message'; }
+			post('logieval_secure_start_formative', { evaluation_id: start.dataset.lesFormativeStart }).then((json) => {
+				start.disabled = false;
+				if (!json.success) {
+					if (formativeMessage) {
+						formativeMessage.textContent = (json.data && json.data.message) || LogiEvalSecure.i18n.error;
+						formativeMessage.className = 'les-message is-error';
+					}
+					return;
+				}
+				state.formative = true;
+				state.sebRequired = false;
+				state.watermark = '';
+				state.attemptId = json.data.attempt_id;
+				state.token = json.data.session_token;
+				state.evaluation = json.data.evaluation;
+				state.questions = json.data.questions || [];
+				state.answers = json.data.answers || {};
+				state.expiresAt = null;
+				if (!Object.keys(state.answers).length) clearLocalDraft();
+				root.classList.add('is-formative');
+				const kicker = root.querySelector('.les-exam-header .les-kicker');
+				if (kicker) kicker.textContent = 'Test formatif · entraînement libre, non noté';
+				const timer = root.querySelector('[data-les-timer]');
+				if (timer) timer.hidden = true;
+				if (examHeader && !examHeader.querySelector('[data-les-formative-back]')) {
+					const back = document.createElement('button');
+					back.type = 'button';
+					back.className = 'les-button-secondary les-formative-back';
+					back.setAttribute('data-les-formative-back', '');
+					back.textContent = '← Revenir à la liste';
+					back.addEventListener('click', function () {
+						if (window.confirm('Revenir à la liste des tests ? Vos réponses déjà saisies sont gardées : « Reprendre » vous ramène ici.')) {
+							window.location.reload();
+						}
+					});
+					examHeader.appendChild(back);
+				}
+				renderExam(false);
+				hideAccessPanel();
+				formativeArea.hidden = true;
+				post('logieval_secure_begin_questions', { attempt_id: state.attemptId, session_token: state.token }).catch(() => {});
+				showQuestionArea();
+				if (exam && exam.scrollIntoView) exam.scrollIntoView({ block: 'start' });
+			}).catch(() => {
+				start.disabled = false;
+				if (formativeMessage) { formativeMessage.textContent = LogiEvalSecure.i18n.error; formativeMessage.className = 'les-message is-error'; }
+			});
+		});
+	}
+
 	root.querySelector('[data-les-start-form]').addEventListener('submit', function (event) {
 		event.preventDefault();
 		setMessage('', false);
@@ -3997,6 +4074,7 @@
 			if (resumeState === 'blocked' || resumeState === 'unlocked') {
 				// Retour après rechargement / fermeture de la page : on réaffiche directement l'écran de blocage.
 				renderExam(false);
+				if (formativeArea) formativeArea.hidden = true;
 				activateSecureMode();
 				state.securityActionApplied = true;
 				state.unlockDeadlineOverride = json.data.unlock_requested ? null : (json.data.unlock_deadline_left === undefined ? null : json.data.unlock_deadline_left);
@@ -4021,6 +4099,7 @@
 			}
 			renderExam(true);
 			hideAccessPanel();
+			if (formativeArea) formativeArea.hidden = true;
 			activateSecureMode();
 		}).catch((error) => {
 			if (accessGranted) {

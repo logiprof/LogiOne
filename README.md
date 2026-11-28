@@ -61,6 +61,14 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
 
+## Nouveautés 1.56.0
+
+**LogiExam : tests formatifs séparés des évaluations sommatives.**
+- Espace enseignant : deux onglets, « Évaluations sommatives » (évaluées et notées) et « Tests formatifs » (non évalués). L’onglet choisi est retenu ; « Créer un test formatif » coche directement l’option.
+- « Autres actions » › « Copier en test formatif » / « Copier en évaluation sommative » : copie de l’évaluation (questions comprises) dans l’autre partie, en brouillon.
+- Page élève : espace « Tests formatifs » bien distinct de l’évaluation avec code. Les tests publiés pour la classe y sont rangés en tuiles M100, M200… avec les numéros de modules (M101, M102…) d’après le cours choisi. Sans code, sans minuteur ni mode sécurisé, autant de fois que l’élève veut ; corrigé après l’envoi et export PDF de sa copie (réponses et réponses attendues).
+- Aucune table modifiée : un nouvel essai réutilise la copie existante de l’élève (remise à zéro) ; le nombre d’essais est gardé dans la méta « logiexam_formative_runs ».
+
 ## Nouveautés 1.55.0
 
 - **LogiPlay intégré à LogiOne.** Les 70 jeux de révision (M101 à M809, mathématiques, en français, allemand et italien) font partie de la suite : même menu « LogiPlay » dans l’administration (codes courts et réglages, regroupements, gestion des jeux, statistiques, suivi des élèves), mêmes codes courts (`[jeux_logistique]`, `[jeu_m101]`…) déjà placés dans les pages.

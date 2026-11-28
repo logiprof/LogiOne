@@ -120,7 +120,7 @@ final class LogiEval_Secure_Shortcodes {
 			<div class="les-access les-screen">
 				<div class="les-access-intro">
 					<span class="les-kicker"><?php esc_html_e( 'LogiExam', 'logieval-secure' ); ?></span>
-					<h2><?php esc_html_e( 'Évaluation sécurisée', 'logieval-secure' ); ?></h2>
+					<h2><?php esc_html_e( 'Évaluation notée (avec code)', 'logieval-secure' ); ?></h2>
 					<p><?php esc_html_e( "Connectez-vous avec votre compte WordPress, puis saisissez le code personnel remis par votre enseignant. Ce code est unique, lié à votre compte et à votre groupe classe.", 'logieval-secure' ); ?></p>
 					<ul class="les-checklist">
 						<li><?php esc_html_e( 'Compte WordPress connecté', 'logieval-secure' ); ?></li>
@@ -128,18 +128,19 @@ final class LogiEval_Secure_Shortcodes {
 						<li><?php esc_html_e( 'Code unique personnel généré par l’enseignant', 'logieval-secure' ); ?></li>
 						<li><?php esc_html_e( 'Session sécurisée et journalisée', 'logieval-secure' ); ?></li>
 					</ul>
+					<p class="les-formative-jump"><a href="#les-formatif"><?php esc_html_e( 'Vous voulez vous entraîner ? Les tests formatifs (sans code, non notés) sont plus bas ↓', 'logieval-secure' ); ?></a></p>
 				</div>
 				<form class="les-access-card" data-les-start-form>
 					<label><?php esc_html_e( 'Code personnel', 'logieval-secure' ); ?><input name="code" autocomplete="one-time-code" inputmode="text" required placeholder="EXAM-1234"></label>
 					<button type="submit"><?php esc_html_e( "Entrer dans l'évaluation", 'logieval-secure' ); ?></button>
 					<p class="les-message" data-les-message></p>
 				</form>
-					<?php echo LogiEval_Secure_Evaluations::render_student_formative_copies(); // phpcs:ignore WordPress.Security.EscapeOutput -- échappé dans la méthode. ?>
 					<div class="les-keys-warning is-compact les-keys-wide" role="note">
 						<p class="les-keys-title"><span class="les-keys-icon" aria-hidden="true">⚠</span><?php esc_html_e( 'Attention aux touches du clavier !', 'logieval-secure' ); ?></p>
 						<p class="les-keys-lead"><?php echo wp_kses( __( '<strong>Ne touchez jamais la touche Windows</strong> pendant l’évaluation, ni <kbd>Échap</kbd> ou <kbd>Alt</kbd> + <kbd>Tab</kbd> : une seule mauvaise touche vous fait sortir de l’écran et bloque l’évaluation. Regardez bien sur quelle touche vous appuyez.', 'logieval-secure' ), array( 'strong' => array(), 'kbd' => array() ) ); ?></p>
 					</div>
 			</div>
+			<?php echo LogiEval_Secure_Evaluations::render_student_formative_area(); // phpcs:ignore WordPress.Security.EscapeOutput -- échappé dans la méthode. ?>
 			<div class="les-exam les-screen" data-les-exam hidden>
 				<header class="les-exam-header">
 					<div>

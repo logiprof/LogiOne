@@ -236,7 +236,7 @@ trait LogiEval_Secure_Evaluations_Pdf_Exports {	private static function codes_co
 		ob_start();
 		?>
 		<section class="les-answer-key">
-			<p class="les-answer-key-actions"><a class="button les-button-secondary" href="<?php echo esc_url( $back ); ?>">← <?php esc_html_e( 'Retour', 'logieval-secure' ); ?></a> <button type="button" class="button" onclick="window.print()"><?php esc_html_e( 'Imprimer', 'logieval-secure' ); ?></button></p>
+			<p class="les-answer-key-actions"><a class="button les-button-secondary" href="<?php echo esc_url( $back ); ?>">← <?php esc_html_e( 'Retour', 'logieval-secure' ); ?></a> <button type="button" class="button" onclick="window.print()"><?php esc_html_e( 'Imprimer', 'logieval-secure' ); ?></button> <a class="button" href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=logiexam_formative_export&attempt_id=' . (int) $attempt['id'] ), 'logiexam_formative_export_' . (int) $attempt['id'] ) ); ?>"><?php esc_html_e( 'Exporter en PDF', 'logieval-secure' ); ?></a></p>
 			<span class="les-kicker"><?php esc_html_e( 'Test formatif · corrigé', 'logieval-secure' ); ?></span>
 			<h2><?php echo esc_html( (string) $evaluation['title'] ); ?></h2>
 			<p class="les-answer-key-lead"><?php esc_html_e( 'Pour chaque question, comparez votre réponse avec la réponse attendue et cochez « Juste », « À moitié » ou « À revoir ». Ce test ne compte pas dans vos notes.', 'logieval-secure' ); ?></p>
@@ -791,17 +791,17 @@ trait LogiEval_Secure_Evaluations_Pdf_Exports {	private static function codes_co
 		$doc['y'] -= $height + 28;
 	}
 
-	private static function pdf_report_question_card( array &$doc, int $number, string $question, string $answer, float $points, float $max_points, string $comment ): void {
+	private static function pdf_report_question_card( array &$doc, int $number, string $question, string $answer, float $points, float $max_points, string $comment, ?string $points_label = null ): void {
 		$question_lines = self::pdf_wrap_lines( $question, 64 ); // Laisse la place aux points à droite.
 		$answer_lines   = self::pdf_wrap_lines( 'Réponse élève : ' . $answer, 88 );
-		$comment_lines  = '' !== trim( $comment ) ? self::pdf_wrap_lines( 'Commentaire : ' . $comment, 92 ) : array();
+		$comment_lines  = '' !== trim( $comment ) ? self::pdf_wrap_lines( ( 0 === strpos( $comment, 'Réponse attendue' ) ? '' : 'Commentaire : ' ) . $comment, 92 ) : array();
 		$height = 34 + ( count( $question_lines ) * 14 ) + 18 + ( count( $answer_lines ) * 13 ) + ( count( $comment_lines ) * 13 ) + ( $comment_lines ? 12 : 0 ) + 14;
 		self::pdf_report_ensure_space( $doc, $height + 8 );
 		$top = $doc['y'];
 		$doc['content'] .= self::pdf_fill_rect( 42, $top - $height, 511, $height, 255, 255, 255 );
 		$doc['content'] .= self::pdf_rect( 42, $top - $height, 511, $height );
 		$doc['content'] .= self::pdf_text_styled( 58, $top - 20, 12, $number . '.', 'F2', array( 17, 24, 39 ) );
-		$doc['content'] .= self::pdf_text_styled( 488, $top - 20, 11, self::format_points( $points ) . ' / ' . self::format_points( $max_points ), 'F2', array( 6, 95, 70 ) );
+		$doc['content'] .= self::pdf_text_styled( 488, $top - 20, 11, $points_label ?? ( self::format_points( $points ) . ' / ' . self::format_points( $max_points ) ), 'F2', array( 6, 95, 70 ) );
 		$y = $top - 20;
 		foreach ( $question_lines as $index => $line ) {
 			$doc['content'] .= self::pdf_text_styled( 82, $y - ( $index * 14 ), 11, $line, 'F2', array( 17, 24, 39 ) );
@@ -891,7 +891,7 @@ trait LogiEval_Secure_Evaluations_Pdf_Exports {	private static function codes_co
 		$marks   = LogiEval_Secure_Question_Types::order_marks( $row, (string) ( $row['answer'] ?? '' ) );
 
 		$question_lines = self::pdf_wrap_lines( (string) $row['prompt'], 64 );
-		$comment_lines  = '' !== trim( $comment ) ? self::pdf_wrap_lines( 'Commentaire : ' . $comment, 92 ) : array();
+		$comment_lines  = '' !== trim( $comment ) ? self::pdf_wrap_lines( ( 0 === strpos( $comment, 'Réponse attendue' ) ? '' : 'Commentaire : ' ) . $comment, 92 ) : array();
 		$cell_w = 150;
 		$img_h  = 92;
 		$cells  = array();
@@ -917,7 +917,7 @@ trait LogiEval_Secure_Evaluations_Pdf_Exports {	private static function codes_co
 		$doc['content'] .= self::pdf_fill_rect( 42, $top - $height, 511, $height, 255, 255, 255 );
 		$doc['content'] .= self::pdf_rect( 42, $top - $height, 511, $height );
 		$doc['content'] .= self::pdf_text_styled( 58, $top - 20, 12, $number . '.', 'F2', array( 17, 24, 39 ) );
-		$doc['content'] .= self::pdf_text_styled( 488, $top - 20, 11, self::format_points( $points ) . ' / ' . self::format_points( $max_points ), 'F2', array( 6, 95, 70 ) );
+		$doc['content'] .= self::pdf_text_styled( 488, $top - 20, 11, $points_label ?? ( self::format_points( $points ) . ' / ' . self::format_points( $max_points ) ), 'F2', array( 6, 95, 70 ) );
 		foreach ( $question_lines as $i => $line ) {
 			$doc['content'] .= self::pdf_text_styled( 82, $top - 20 - ( $i * 14 ), 11, $line, 'F2', array( 17, 24, 39 ) );
 		}

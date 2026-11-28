@@ -54,6 +54,9 @@ trait LogiEval_Secure_Evaluations_Accommodations {
 
 	/** Durée de l'évaluation pour cet élève, en secondes (temps supplémentaire compris). */
 	public static function attempt_duration_seconds( array $evaluation, int $user_id ): int {
+		if ( self::is_formative( $evaluation ) ) {
+			return 0; // Test formatif : sans minuteur, à son rythme.
+		}
 		$base = (int) ( $evaluation['duration_minutes'] ?? 0 ) * MINUTE_IN_SECONDS;
 		if ( $base <= 0 ) {
 			return 0;

@@ -181,6 +181,9 @@ trait LogiEval_Secure_Evaluations_Student_Session {
 				wp_send_json_error( array( 'message' => __( 'Session invalide.', 'logieval-secure' ) ), 403 );
 		}
 		self::submit_attempt( $attempt );
+		if ( self::is_formative( (int) $attempt['evaluation_id'] ) ) {
+			wp_send_json_success( self::formative_after_submit( $attempt ) );
+		}
 		$updated_attempt = self::get_attempt( (int) $attempt['id'] );
 			wp_send_json_success(
 				array(
@@ -754,7 +757,7 @@ trait LogiEval_Secure_Evaluations_Student_Session {
 				return null;
 			}
 		$valid = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$t['codes']} WHERE id=%d AND session_token=%s", $attempt['code_id'], $token ) );
-		if ( $valid && wp_doing_ajax() ) {
+		if ( $valid && wp_doing_ajax() && ! self::is_formative( (int) $attempt['evaluation_id'] ) ) {
 			// Safe Exam Browser exigé : chaque demande (réponse, envoi…) doit venir de SEB, pas seulement le démarrage.
 			$seb_refusal = LogiEval_Secure_SEB::check( (int) $attempt['evaluation_id'] );
 			if ( $seb_refusal ) {
@@ -776,14 +779,18 @@ trait LogiEval_Secure_Evaluations_Student_Session {
 		$t          = LogiEval_Secure_Database::tables();
 		$evaluation = self::get_evaluation( (int) $attempt['evaluation_id'] );
 		$data       = array( 'started_at' => current_time( 'mysql' ) );
-		if ( empty( $attempt['expires_at'] ) && $evaluation && ! empty( $evaluation['duration_minutes'] ) ) {
-			$data['expires_at'] = gmdate( 'Y-m-d H:i:s', time() + self::attempt_duration_seconds( $evaluation, (int) $attempt['user_id'] ) );
+		$duration   = $evaluation ? self::attempt_duration_seconds( $evaluation, (int) $attempt['user_id'] ) : 0;
+		if ( empty( $attempt['expires_at'] ) && $duration > 0 ) {
+			$data['expires_at'] = gmdate( 'Y-m-d H:i:s', time() + $duration );
 		}
 		$wpdb->update( $t['attempts'], $data, array( 'id' => (int) $attempt['id'] ) );
 		return array_merge( $attempt, $data );
 	}
 
 	public static function pause_attempt_for_security( array $attempt, string $reason ): void {
+		if ( self::is_formative( (int) $attempt['evaluation_id'] ) ) {
+			return; // Test formatif : entraînement libre, aucun blocage.
+		}
 		$attempt = self::ensure_attempt_started( $attempt );
 		global $wpdb;
 		$t = LogiEval_Secure_Database::tables();
@@ -802,6 +809,9 @@ trait LogiEval_Secure_Evaluations_Student_Session {
 	}
 
 	public static function terminate_attempt_for_security( array $attempt, string $reason ): void {
+		if ( self::is_formative( (int) $attempt['evaluation_id'] ) ) {
+			return;
+		}
 		global $wpdb;
 		$t = LogiEval_Secure_Database::tables();
 		$wpdb->update(

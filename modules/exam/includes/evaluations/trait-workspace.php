@@ -106,7 +106,7 @@ trait LogiEval_Secure_Evaluations_Workspace {
 
 	/** Adresse de la page qui contient le shortcode enseignant, sans paramètres LogiExam. */
 	private static function teacher_base_url(): string {
-		$keys = array( 'logiexam_view', 'evaluation_id', 'step', 'attempt', 'mode', 'question_id', 'saved', 'question_saved', 'imported', 'graded', 'duplicated', 'deleted', 'restored', 'codes', 'correction_incomplete', 'incomplete_attempt', 'reopened', 'open_attempt', 'new_codes', 'share_updated', 'copied', 'settings_saved', 'unlocked', 'finalized', 'correction_status', 'correction_group', 'library_q', 'logiexam_scope', 'question_deleted', 'questions_blocked', 'sensei_course_id', 'question_module', 'question_category', 'les_trash', 'gen_saved', 'gen_created', 'gen_error', 'acc_group', 'acc_saved', 'les_student', 'lp_published', 'lp_snapshot_warnings', 'lp_progress_switch', 'correction_mode', 'les_resume', 'not_finalized' );
+		$keys = array( 'logiexam_view', 'evaluation_id', 'step', 'attempt', 'mode', 'question_id', 'saved', 'question_saved', 'imported', 'graded', 'duplicated', 'deleted', 'restored', 'codes', 'correction_incomplete', 'incomplete_attempt', 'reopened', 'open_attempt', 'new_codes', 'share_updated', 'copied', 'settings_saved', 'unlocked', 'finalized', 'correction_status', 'correction_group', 'library_q', 'logiexam_scope', 'question_deleted', 'questions_blocked', 'sensei_course_id', 'question_module', 'question_category', 'les_trash', 'gen_saved', 'gen_created', 'gen_error', 'acc_group', 'acc_saved', 'les_student', 'lp_published', 'lp_snapshot_warnings', 'lp_progress_switch', 'correction_mode', 'les_resume', 'not_finalized', 'formatif', 'les_kind' );
 		if ( wp_doing_ajax() && ! empty( $_SERVER['HTTP_REFERER'] ) ) {
 			return remove_query_arg( $keys, esc_url_raw( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) );
 		}
@@ -262,8 +262,18 @@ trait LogiEval_Secure_Evaluations_Workspace {
 	 * ------------------------------------------------------------------- */
 
 	private static function render_home_workspace(): void {
-		$evaluations = self::get_evaluations();
+		$all         = self::get_evaluations();
 		$deleted     = self::get_deleted_evaluations();
+		// LogiOne 1.56.0 : partie sommative (évaluée et notée) et partie formative (entraînement libre) séparées.
+		// L'onglet choisi est retenu pour l'enseignant (retour à l'accueil après un enregistrement).
+		if ( isset( $_GET['les_kind'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			update_user_meta( get_current_user_id(), 'logiexam_home_kind', 'formatif' === sanitize_key( (string) $_GET['les_kind'] ) ? 'formatif' : 'sommatif' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		}
+		$kind        = 'formatif' === get_user_meta( get_current_user_id(), 'logiexam_home_kind', true ) ? 'formatif' : 'sommatif';
+		$formatives  = array_values( array_filter( $all, static fn( $e ) => self::is_formative( $e ) ) );
+		$sommatives  = array_values( array_filter( $all, static fn( $e ) => ! self::is_formative( $e ) ) );
+		$evaluations = 'formatif' === $kind ? $formatives : $sommatives;
+		$create_url  = self::app_url( 'create', 'formatif' === $kind ? array( 'formatif' => 1 ) : array() );
 		?>
 		<section class="les-panel les-home" data-les-monitoring data-evaluation-id="0" data-refresh-interval="15000">
 			<div class="les-home-head">
@@ -273,13 +283,32 @@ trait LogiEval_Secure_Evaluations_Workspace {
 				</div>
 				<div class="les-home-head-actions">
 					<a class="button les-button-secondary les-trash-link" href="<?php echo esc_url( add_query_arg( 'les_trash', 1, self::app_url( 'home' ) ) . '#les-trash' ); ?>" data-les-open-trash><span aria-hidden="true">🗑</span> <?php echo esc_html( sprintf( __( 'Corbeille (%d)', 'logieval-secure' ), count( $deleted ) ) ); ?></a>
-					<a class="button button-primary" href="<?php echo esc_url( self::app_url( 'create' ) ); ?>">+ <?php esc_html_e( 'Créer une évaluation', 'logieval-secure' ); ?></a>
+					<a class="button button-primary" href="<?php echo esc_url( $create_url ); ?>">+ <?php echo esc_html( 'formatif' === $kind ? __( 'Créer un test formatif', 'logieval-secure' ) : __( 'Créer une évaluation', 'logieval-secure' ) ); ?></a>
 				</div>
 			</div>
+			<nav class="les-kind-tabs" aria-label="<?php esc_attr_e( 'Type d’évaluation', 'logieval-secure' ); ?>">
+				<a class="les-kind-tab is-sommatif<?php echo 'sommatif' === $kind ? ' is-active' : ''; ?>" href="<?php echo esc_url( self::app_url( 'home', array( 'les_kind' => 'sommatif' ) ) ); ?>"<?php echo 'sommatif' === $kind ? ' aria-current="page"' : ''; ?>>
+					<strong><?php esc_html_e( 'Évaluations sommatives', 'logieval-secure' ); ?> <span><?php echo (int) count( $sommatives ); ?></span></strong>
+					<small><?php esc_html_e( 'Évaluées et notées · code personnel, mode sécurisé', 'logieval-secure' ); ?></small>
+				</a>
+				<a class="les-kind-tab is-formatif<?php echo 'formatif' === $kind ? ' is-active' : ''; ?>" href="<?php echo esc_url( self::app_url( 'home', array( 'les_kind' => 'formatif' ) ) ); ?>"<?php echo 'formatif' === $kind ? ' aria-current="page"' : ''; ?>>
+					<strong><?php esc_html_e( 'Tests formatifs', 'logieval-secure' ); ?> <span><?php echo (int) count( $formatives ); ?></span></strong>
+					<small><?php esc_html_e( 'Non évalués · en libre accès pour les élèves, sans code', 'logieval-secure' ); ?></small>
+				</a>
+			</nav>
+			<?php if ( 'formatif' === $kind ) : ?>
+				<p class="les-formative-note"><?php esc_html_e( 'Un test formatif publié apparaît directement sur la page LogiExam des élèves de ses classes, rangé par module d’après le cours choisi. Ils le font quand ils veulent, autant de fois qu’ils veulent, sans code ; après l’envoi ils voient le corrigé et peuvent exporter leur copie. Pour le reprendre en évaluation notée : « Autres actions » › « Copier en évaluation sommative ».', 'logieval-secure' ); ?></p>
+			<?php endif; ?>
 			<?php self::render_home_notices(); ?>
 			<p class="description" data-les-monitoring-status hidden></p>
 			<div data-les-monitoring-body><?php self::render_monitoring_global_body(); ?></div>
-			<?php if ( empty( $evaluations ) ) : ?>
+			<?php if ( empty( $evaluations ) && 'formatif' === $kind ) : ?>
+				<div class="les-empty-state">
+					<h3><?php esc_html_e( 'Aucun test formatif pour le moment', 'logieval-secure' ); ?></h3>
+					<p><?php esc_html_e( 'Créez un test formatif, ou copiez une de vos évaluations sommatives en test formatif (« Autres actions » sur sa carte).', 'logieval-secure' ); ?></p>
+					<p><a class="button button-primary" href="<?php echo esc_url( $create_url ); ?>"><?php esc_html_e( 'Créer un test formatif', 'logieval-secure' ); ?></a></p>
+				</div>
+			<?php elseif ( empty( $evaluations ) ) : ?>
 				<div class="les-empty-state">
 					<h3><?php esc_html_e( 'Aucune évaluation pour le moment', 'logieval-secure' ); ?></h3>
 					<p><?php esc_html_e( 'Créez une évaluation, ou dupliquez un modèle depuis la bibliothèque partagée.', 'logieval-secure' ); ?></p>
@@ -464,6 +493,7 @@ trait LogiEval_Secure_Evaluations_Workspace {
 					<div class="les-more-actions-menu">
 						<a href="<?php echo esc_url( self::app_url( 'preview', array( 'evaluation_id' => $id ) ) ); ?>"><?php esc_html_e( 'Aperçu élève', 'logieval-secure' ); ?></a>
 						<?php self::render_post_button( 'logieval_secure_duplicate_evaluation', $id, __( 'Dupliquer', 'logieval-secure' ) ); ?>
+						<?php self::render_post_button( 'logieval_secure_duplicate_evaluation', $id, self::is_formative( $evaluation ) ? __( 'Copier en évaluation sommative', 'logieval-secure' ) : __( 'Copier en test formatif', 'logieval-secure' ), '', '', array( 'as_kind' => self::is_formative( $evaluation ) ? 'sommatif' : 'formatif' ) ); ?>
 						<?php self::render_post_button( 'logieval_secure_toggle_library', $id, ! empty( $options['in_library'] ) ? __( 'Retirer de ma bibliothèque', 'logieval-secure' ) : __( 'Ajouter à ma bibliothèque', 'logieval-secure' ) ); ?>
 						<?php self::render_post_button( 'logieval_secure_toggle_share', $id, ! empty( $evaluation['is_shared'] ) ? __( 'Retirer du partage', 'logieval-secure' ) : __( 'Partager avec les enseignants', 'logieval-secure' ) ); ?>
 						<?php self::render_post_button( 'logieval_secure_delete_evaluation', $id, __( 'Supprimer', 'logieval-secure' ), __( 'Placer cette évaluation dans la corbeille ? Rien n’est effacé : vous pourrez la restaurer ensuite.', 'logieval-secure' ), 'is-danger' ); ?>
@@ -474,13 +504,14 @@ trait LogiEval_Secure_Evaluations_Workspace {
 		<?php
 	}
 
-	private static function render_post_button( string $action, int $evaluation_id, string $label, string $confirm = '', string $class = '' ): void {
+	private static function render_post_button( string $action, int $evaluation_id, string $label, string $confirm = '', string $class = '', array $extra = array() ): void {
 		?>
 		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" <?php echo $confirm ? 'onsubmit="return confirm(\'' . esc_js( $confirm ) . '\');"' : ''; ?>>
 			<?php wp_nonce_field( self::NONCE_ACTION ); ?>
 			<?php self::frontend_redirect_field( array() ); ?>
 			<input type="hidden" name="action" value="<?php echo esc_attr( $action ); ?>">
 			<input type="hidden" name="evaluation_id" value="<?php echo esc_attr( $evaluation_id ); ?>">
+			<?php foreach ( $extra as $k => $v ) : ?><input type="hidden" name="<?php echo esc_attr( $k ); ?>" value="<?php echo esc_attr( $v ); ?>"><?php endforeach; ?>
 			<button type="submit" class="<?php echo esc_attr( $class ); ?>"><?php echo esc_html( $label ); ?></button>
 		</form>
 		<?php

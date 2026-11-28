@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'LOGIEVAL_SECURE_VERSION', '3.5.0' );
+define( 'LOGIEVAL_SECURE_VERSION', '3.6.0' );
 // Version des fichiers CSS / JS : suit LogiOne, pour que les navigateurs prennent les nouveautés.
 define( 'LOGIEVAL_SECURE_ASSETS_VERSION', LOGIEVAL_SECURE_VERSION . '-' . LOGIPILOT_VERSION );
 define( 'LOGIEVAL_SECURE_PATH', plugin_dir_path( __FILE__ ) );

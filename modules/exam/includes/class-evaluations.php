@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Les méthodes de la classe sont réparties par thème dans includes/evaluations/.
-foreach ( array( 'access', 'data', 'editor', 'monitoring', 'student-session', 'corrections', 'ai-grading', 'pdf-exports', 'evaluation-export', 'evaluation-paper', 'workspace', 'batch', 'teacher-control', 'generator', 'ai-prompts', 'accommodations', 'ai-exchange', 'student-search' ) as $logieval_part ) {
+foreach ( array( 'access', 'data', 'editor', 'monitoring', 'student-session', 'corrections', 'ai-grading', 'pdf-exports', 'evaluation-export', 'evaluation-paper', 'workspace', 'batch', 'teacher-control', 'generator', 'ai-prompts', 'accommodations', 'ai-exchange', 'student-search', 'formative' ) as $logieval_part ) {
 	require_once __DIR__ . '/evaluations/trait-' . $logieval_part . '.php';
 }
 unset( $logieval_part );
@@ -34,6 +34,7 @@ unset( $logieval_part );
 	use LogiEval_Secure_Evaluations_Accommodations;
 	use LogiEval_Secure_Evaluations_Ai_Exchange;
 	use LogiEval_Secure_Evaluations_Student_Search;
+	use LogiEval_Secure_Evaluations_Formative;
 
 	public static function init(): void {
 		add_action( 'admin_menu', array( __CLASS__, 'register_admin_page' ) );
@@ -75,6 +76,8 @@ unset( $logieval_part );
 		add_action( 'wp_ajax_logieval_secure_toggle_favorite_group', array( __CLASS__, 'ajax_toggle_favorite_group' ) );
 		add_action( 'admin_post_logieval_secure_copy_shared', array( __CLASS__, 'handle_duplicate_evaluation' ) );
 		add_action( 'wp_ajax_logieval_secure_start', array( __CLASS__, 'ajax_start' ) );
+		add_action( 'wp_ajax_logieval_secure_start_formative', array( __CLASS__, 'ajax_start_formative' ) ); // LogiOne 1.56.0
+		add_action( 'admin_post_logiexam_formative_export', array( __CLASS__, 'handle_formative_export' ) );
 		add_action( 'wp_ajax_logieval_secure_begin_questions', array( __CLASS__, 'ajax_begin_questions' ) );
 		add_action( 'wp_ajax_logieval_secure_unlock_deadline', array( __CLASS__, 'ajax_unlock_deadline' ) );
 		add_action( 'wp_ajax_logieval_secure_save_answer', array( __CLASS__, 'ajax_save_answer' ) );
