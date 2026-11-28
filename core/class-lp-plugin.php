@@ -149,6 +149,7 @@ final class LogiPilot_Plugin
         LogiPilot_Snapshots::init();
         LogiPilot_Publisher::init();
         LogiPilot_Diagnostic::init();
+        LogiPilot_Tutorials::init();
         if (defined('LOGIPILOT_TEST_MODE') && class_exists('LogiPilot_Sandbox')) {
             LogiPilot_Sandbox::init();
         }

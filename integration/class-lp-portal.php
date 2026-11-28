@@ -329,6 +329,10 @@ final class LogiPilot_Portal
             $html .= '<a class="lpp-back" href="' . esc_url($home) . '">' . self::icon('back') . 'Retour à LogiOne</a>';
         }
         $html .= '<span class="lpp-current lpp-tile-' . esc_attr($current) . '"><span class="lpp-current-art">' . self::art($current, $tool) . '</span>' . esc_html($tool['label']) . '</span>';
+        // 1.55.1 : tutoriel vidéo de l'outil ouvert (LogiOne › Tutoriels vidéo).
+        if (class_exists('LogiPilot_Tutorials') && !isset($tool['kind'])) {
+            $html .= LogiPilot_Tutorials::button($current, (string) $tool['label'], 'lp-tuto-btn lpp-tuto');
+        }
         if ($fixed === '' && count($tools) > 1) {
             $html .= '<nav class="lpp-switch logipilot-portal-nav" aria-label="Autres outils LogiOne">';
             $menu = '';

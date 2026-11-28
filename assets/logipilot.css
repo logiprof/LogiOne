@@ -426,3 +426,5 @@ tr.logipilot-warning td { color: #8a4b00; }
 .logipilot-portal .lpp-choice-all { background: none; border: 0; color: var(--green, #067030); font: inherit; font-weight: 600; text-decoration: underline; cursor: pointer; }
 .logipilot-portal .lpp-choice-ok { margin: 8px 0 0; color: var(--green, #067030); font-weight: 600; font-size: 14px; }
 .logipilot-portal button.lpp-button { border: 0; cursor: pointer; font: inherit; font-weight: 700; }
+.logipilot-portal .lpp-toolbar .lpp-tuto { color: var(--white, #fff); border-color: rgba(255,255,255,.55); }
+.logipilot-portal .lpp-toolbar .lpp-tuto:hover { color: var(--yellow, #f5c400); border-color: var(--yellow, #f5c400); }
