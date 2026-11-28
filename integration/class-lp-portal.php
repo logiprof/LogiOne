@@ -69,20 +69,22 @@ final class LogiPilot_Portal
         exit;
     }
 
-    /** Panneau « Choisir mes outils » de l'accueil. */
+    /** Pignon « Mes outils » du bandeau : panneau pour choisir les outils affichés. */
     private static function choice_panel(array $tools, array $hidden): string
     {
         $saved = isset($_GET['lp_outils']);
-        $h = '<details class="lpp-choice"' . ($saved ? '' : '') . '><summary><span aria-hidden="true">⚙</span> Choisir mes outils' . ($hidden ? ' <em>' . count($hidden) . ' masqué' . (count($hidden) > 1 ? 's' : '') . '</em>' : '') . '</summary>'
-            . '<form method="post" action="' . esc_url(admin_url('admin-post.php')) . '">' . wp_nonce_field('logione_outils', '_wpnonce', true, false)
-            . '<input type="hidden" name="action" value="logione_outils">'
+        $gear = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>';
+        $h = '<div class="lpp-gear-wrap">' . ($saved ? '<span class="lpp-choice-ok" role="status">✓ Vos outils sont enregistrés</span>' : '')
+            . '<details class="lpp-choice"><summary title="Paramètres : choisir mes outils" aria-label="Paramètres : choisir mes outils">' . $gear . '<span class="lpp-gear-label">Mes outils</span>' . ($hidden ? '<em>' . count($hidden) . ' masqué' . (count($hidden) > 1 ? 's' : '') . '</em>' : '') . '</summary>'
+            . '<div class="lpp-choice-pop"><form method="post" action="' . esc_url(admin_url('admin-post.php')) . '">' . wp_nonce_field('logione_outils', '_wpnonce', true, false)
+            . '<input type="hidden" name="action" value="logione_outils"><h3>Choisir mes outils</h3>'
             . '<p>Cochez les outils à afficher sur votre accueil LogiOne et dans le menu des outils. Les outils décochés restent disponibles : réaffichez-les ici à tout moment. Vos données ne changent pas.</p><div class="lpp-choice-list">';
         foreach ($tools as $key => $tool) {
             $h .= '<label class="lpp-choice-item lpp-tile-' . esc_attr($key) . '"><input type="checkbox" name="outils[]" value="' . esc_attr($key) . '"' . (in_array($key, $hidden, true) ? '' : ' checked') . '><span class="lpp-choice-art">' . self::art($key, $tool) . '</span><span><b>' . esc_html($tool['label']) . '</b>' . (($tool['text'] ?? '') !== '' ? '<small>' . esc_html($tool['text']) . '</small>' : '') . '</span></label>';
         }
 
-        return $h . '</div><p class="lpp-choice-actions"><button type="submit" class="lpp-button">Enregistrer mes outils</button>' . ($hidden ? ' <button type="submit" name="tout" value="1" class="lpp-choice-all">Tout réafficher</button>' : '') . '</p></form></details>'
-            . ($saved ? '<p class="lpp-choice-ok" role="status">✓ Vos outils sont enregistrés.</p>' : '');
+        return $h . '</div><p class="lpp-choice-actions"><button type="submit" class="lpp-button">Enregistrer mes outils</button>' . ($hidden ? ' <button type="submit" name="tout" value="1" class="lpp-choice-all">Tout réafficher</button>' : '') . '</p></form></div></details></div>'
+            . '<script>document.addEventListener("click",function(e){document.querySelectorAll(".lpp-choice[open]").forEach(function(d){if(!d.contains(e.target)){d.open=false;}});});document.addEventListener("keydown",function(e){if(e.key==="Escape"){document.querySelectorAll(".lpp-choice[open]").forEach(function(d){d.open=false;});}});</script>';
     }
 
     /** Outils du portail : libellé, présentation, droit requis, module LogiOne et shortcode affiché. */
@@ -275,6 +277,10 @@ final class LogiPilot_Portal
 
         // Bandeau : logo, compte, administration
         $html .= '<header class="lpp-hero"><div class="lpp-hero-top"><a class="lpp-brand" href="' . esc_url($home) . '">' . self::logo('lpp-logo', true) . '</a>';
+        // 1.55.2 : « Choisir mes outils » tout en haut, derrière un pignon de paramètres.
+        if ($fixed === '' && count($all_tools) > 1) {
+            $html .= self::choice_panel($all_tools, $hidden);
+        }
         $html .= '</div>';
 
         if (!$all_tools) {
@@ -295,7 +301,7 @@ final class LogiPilot_Portal
                     }
                 }
 
-                return $html . '</div>' . self::panel_script() . (count($all_tools) > 1 ? self::choice_panel($all_tools, $hidden) : '') . self::layout_link() . '</div>';
+                return $html . '</div>' . self::panel_script() . self::layout_link() . '</div>';
             }
             $builtin = array_filter($tools, static function ($t) { return !isset($t['kind']); });
             $extra = array_diff_key($tools, $builtin);
@@ -319,7 +325,7 @@ final class LogiPilot_Portal
                 $html .= '</div>' . self::panel_script();
             }
 
-            return $html . (count($all_tools) > 1 ? self::choice_panel($all_tools, $hidden) : '') . self::layout_link() . '</div>';
+            return $html . self::layout_link() . '</div>';
         }
 
         // Outil ouvert : retour à l'accueil LogiOne et accès direct aux autres outils, dans le bandeau

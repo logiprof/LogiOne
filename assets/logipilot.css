@@ -405,15 +405,19 @@ tr.logipilot-warning td { color: #8a4b00; }
 .logipilot-portal:not(.is-tool) .lpp-hero-text .lpp-hint { max-width: none; margin-top: 8px; font-size: 14px; }
 .logipilot-portal:not(.is-tool) .lpp-one { width: clamp(130px, 14vw, 210px); margin-bottom: -28px; }
 
-/* 1.55.0 : « Choisir mes outils » (chaque enseignant choisit les outils de son accueil) */
-.logipilot-portal .lpp-choice { margin: 22px 0 6px; background: var(--white, #fff); border: 1px solid #dfe3e0; border-radius: 14px; padding: 0; }
-.logipilot-portal .lpp-choice > summary { cursor: pointer; list-style: none; padding: 13px 18px; font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 8px; color: var(--ink); }
+/* 1.55.0 / 1.55.2 : « Choisir mes outils » — pignon en haut à droite du bandeau, panneau déroulant */
+.logipilot-portal .lpp-hero-top { position: relative; }
+.logipilot-portal .lpp-gear-wrap { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.logipilot-portal .lpp-choice { position: static; }
+.logipilot-portal .lpp-choice > summary { cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,.45); color: var(--white, #fff); font-weight: 600; font-size: 14px; line-height: 1.2; user-select: none; }
 .logipilot-portal .lpp-choice > summary::-webkit-details-marker { display: none; }
-.logipilot-portal .lpp-choice > summary::after { content: "▾"; margin-left: auto; color: #5b6672; }
-.logipilot-portal .lpp-choice[open] > summary::after { content: "▴"; }
-.logipilot-portal .lpp-choice > summary em { font-style: normal; font-size: 12px; font-weight: 600; background: #fff4c2; color: #6b5300; border-radius: 10px; padding: 2px 8px; }
-.logipilot-portal .lpp-choice form { padding: 0 18px 16px; }
-.logipilot-portal .lpp-choice form > p { margin: 0 0 12px; color: #5b6672; font-size: 14px; }
+.logipilot-portal .lpp-choice > summary:hover, .logipilot-portal .lpp-choice[open] > summary { border-color: var(--yellow, #f5c400); color: var(--yellow, #f5c400); }
+.logipilot-portal .lpp-choice > summary svg { transition: transform .3s; }
+.logipilot-portal .lpp-choice[open] > summary svg { transform: rotate(60deg); }
+.logipilot-portal .lpp-choice > summary em { font-style: normal; font-size: 12px; font-weight: 700; background: var(--yellow, #f5c400); color: var(--ink, #252c35); border-radius: 10px; padding: 1px 8px; }
+.logipilot-portal .lpp-choice-pop { position: absolute; z-index: 60; top: calc(100% - 4px); right: 0; width: min(900px, calc(100vw - 32px)); background: #fff; color: var(--ink, #252c35); border-radius: 14px; box-shadow: 0 18px 50px rgba(0,0,0,.3); padding: 18px 20px; }
+.logipilot-portal .lpp-choice-pop h3 { margin: 0 0 6px; font-size: 18px; font-weight: 700; color: var(--ink, #252c35); }
+.logipilot-portal .lpp-choice-pop form > p { margin: 0 0 12px; color: #5b6672; font-size: 14px; }
 .logipilot-portal .lpp-choice-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
 .logipilot-portal .lpp-choice-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border: 1.5px solid #dfe3e0; border-radius: 10px; cursor: pointer; background: #f6f7f4; }
 .logipilot-portal .lpp-choice-item:has(input:checked) { border-color: var(--green, #067030); background: #fff; }
@@ -424,7 +428,9 @@ tr.logipilot-warning td { color: #8a4b00; }
 .logipilot-portal .lpp-choice-item small { display: block; font-size: 12px; color: #5b6672; line-height: 1.35; }
 .logipilot-portal .lpp-choice-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 14px 0 0 !important; }
 .logipilot-portal .lpp-choice-all { background: none; border: 0; color: var(--green, #067030); font: inherit; font-weight: 600; text-decoration: underline; cursor: pointer; }
-.logipilot-portal .lpp-choice-ok { margin: 8px 0 0; color: var(--green, #067030); font-weight: 600; font-size: 14px; }
+.logipilot-portal .lpp-choice-ok { color: var(--green-bright, #2fae5f); font-weight: 600; font-size: 14px; }
+@media (max-width: 640px) { .logipilot-portal .lpp-gear-label { display: none; } .logipilot-portal .lpp-choice-ok { display: none; } }
 .logipilot-portal button.lpp-button { border: 0; cursor: pointer; font: inherit; font-weight: 700; }
 .logipilot-portal .lpp-toolbar .lpp-tuto { color: var(--white, #fff); border-color: rgba(255,255,255,.55); }
 .logipilot-portal .lpp-toolbar .lpp-tuto:hover { color: var(--yellow, #f5c400); border-color: var(--yellow, #f5c400); }
+.logipilot-portal:has(.lpp-choice[open]) { z-index: 50; }
