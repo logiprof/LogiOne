@@ -1,0 +1,82 @@
+{
+ "module": "M703",
+ "shortcode": "jeu_m703",
+ "titre": "M703 – Le coût du personnel",
+ "sous_titre": "Logisticien·ne CFC · Module M703",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M703 (leçons 3.1 à 3.3) et 81 épreuves, dont 36 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "A2.4 · Droits, obligations et sécurité",
+   "objectifs": [
+    "A2.4 Sur la base des dispositions légales, je décris les droits et les obligations de l’employeur et de l’employé en matière de protection de la santé, de prévention des maladies professionnelles et de sécurité au travail. (C2)"
+   ]
+  },
+  {
+   "titre": "3.1 · Coûts directs et indirects",
+   "objectifs": [
+    "Contenu de la leçon 3.1 (coûts directs et indirects, salaire et rémunération, réduction des coûts, types d’emploi) — sans objectif dans la leçon « Objectifs » du module"
+   ]
+  },
+  {
+   "titre": "3.2 · Salaire, trois piliers et déductions",
+   "objectifs": [
+    "Contenu de la leçon 3.2 (salaire brut et net, trois piliers, déductions) — sans objectif dans la leçon « Objectifs » du module"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M703 – Die Personalkosten",
+  "sous_titre": "Logistiker/-in EFZ · Modul M703",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M703 und 81 Aufgaben, davon 36 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "A2.4 · Rechte, Pflichten und Sicherheit",
+    "objectifs": [
+     "A2.4 Ich beschreibe auf Grundlage der gesetzlichen Bestimmungen die Rechte und Pflichten von Arbeitgeber und Arbeitnehmer bezüglich Gesundheitsschutz, Verhütung von Berufskrankheiten und Arbeitssicherheit. (K2)"
+    ]
+   },
+   {
+    "titre": "3.1 · Direkte und indirekte Kosten",
+    "objectifs": [
+     "Inhalt der Lektion 3.1 (direkte und indirekte Kosten, Lohn und Gehalt, Kostensenkung, Anstellungsarten) — ohne Lernziel in der Lektion «Lernziele» des Moduls"
+    ]
+   },
+   {
+    "titre": "3.2 · Lohn, drei Säulen und Abzüge",
+    "objectifs": [
+     "Inhalt der Lektion 3.2 (Brutto- und Nettolohn, drei Säulen, Abzüge) — ohne Lernziel in der Lektion «Lernziele» des Moduls"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M703 – Il costo del personale",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M703",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M703 e 81 esercizi, di cui il 36 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "A2.4 · Diritti, obblighi e sicurezza",
+    "objectifs": [
+     "A2.4 Sulla base delle disposizioni legali descrivo i diritti e gli obblighi del datore di lavoro e del lavoratore in materia di protezione della salute, di prevenzione delle malattie professionali e di sicurezza sul lavoro. (C2)"
+    ]
+   },
+   {
+    "titre": "3.1 · Costi diretti e indiretti",
+    "objectifs": [
+     "Contenuto della lezione 3.1 (costi diretti e indiretti, salario e retribuzione, riduzione dei costi, tipi d’impiego) — senza obiettivo nella lezione «Obiettivi» del modulo"
+    ]
+   },
+   {
+    "titre": "3.2 · Salario, tre pilastri e deduzioni",
+    "objectifs": [
+     "Contenuto della lezione 3.2 (salario lordo e netto, tre pilastri, deduzioni) — senza obiettivo nella lezione «Obiettivi» del modulo"
+    ]
+   }
+  ]
+ }
+}

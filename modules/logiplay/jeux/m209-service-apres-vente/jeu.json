@@ -1,0 +1,82 @@
+{
+ "module": "M209",
+ "shortcode": "jeu_m209",
+ "titre": "M209 – SAV Service après-vente",
+ "sous_titre": "Logisticien·ne CFC · Module M209",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M209 (leçons 9.0 à 9.4) et 75 épreuves, dont 32 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "D6.2a · Traiter les réclamations",
+   "objectifs": [
+    "J’explique l’utilité et les possibilités d’un traitement des réclamations orienté vers la recherche de solutions (définitions, droit de réclamation, étapes du traitement). (C3) — partie 1 de D6.2"
+   ]
+  },
+  {
+   "titre": "D6.2b · Satisfaction et fidélisation",
+   "objectifs": [
+    "Je déduis des mesures pour maintenir la satisfaction des clients : service après-vente, fidélisation, enquêtes de satisfaction, prudence avec les jeux-concours. (C3) — partie 2 de D6.2"
+   ]
+  },
+  {
+   "titre": "D6.2c · Garantie et geste commercial",
+   "objectifs": [
+    "Je distingue la garantie du vendeur, la garantie du fabricant et la bonne volonté (geste commercial) pour proposer une solution adaptée au client. (C3) — partie 3 de D6.2"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M209 – Kundendienst (After Sales)",
+  "sous_titre": "Logistiker/-in EFZ · Modul M209",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M209 und 75 Aufgaben, davon 32 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "D6.2a · Reklamationen bearbeiten",
+    "objectifs": [
+     "Ich erkläre den Nutzen und die Möglichkeiten einer lösungsorientierten Reklamationsbearbeitung (Definitionen, Reklamationsrecht, Schritte der Bearbeitung). (K3) — Teil 1 von D6.2"
+    ]
+   },
+   {
+    "titre": "D6.2b · Zufriedenheit und Kundenbindung",
+    "objectifs": [
+     "Ich leite Massnahmen ab, um die Zufriedenheit der Kunden zu erhalten: Kundendienst nach dem Kauf, Kundenbindung, Zufriedenheitsumfragen, Vorsicht bei Gewinnspielen. (K3) — Teil 2 von D6.2"
+    ]
+   },
+   {
+    "titre": "D6.2c · Garantie und Kulanz",
+    "objectifs": [
+     "Ich unterscheide die Gewährleistung des Verkäufers, die Herstellergarantie und die Kulanz, um dem Kunden eine passende Lösung vorzuschlagen. (K3) — Teil 3 von D6.2"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M209 – Servizio post-vendita",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M209",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M209 e 75 esercizi, di cui il 32 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "D6.2a · Trattare i reclami",
+    "objectifs": [
+     "Spiego l’utilità e le possibilità di un trattamento dei reclami orientato alla ricerca di soluzioni (definizioni, diritto di reclamo, tappe del trattamento). (C3) — parte 1 di D6.2"
+    ]
+   },
+   {
+    "titre": "D6.2b · Soddisfazione e fidelizzazione",
+    "objectifs": [
+     "Deduco misure per mantenere la soddisfazione dei clienti: servizio post-vendita, fidelizzazione, inchieste di soddisfazione, prudenza con i concorsi. (C3) — parte 2 di D6.2"
+    ]
+   },
+   {
+    "titre": "D6.2c · Garanzia e gesto commerciale",
+    "objectifs": [
+     "Distinguo la garanzia del venditore, la garanzia del fabbricante e la buona volontà (gesto commerciale) per proporre una soluzione adatta al cliente. (C3) — parte 3 di D6.2"
+    ]
+   }
+  ]
+ }
+}

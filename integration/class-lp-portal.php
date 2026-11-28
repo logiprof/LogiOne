@@ -23,6 +23,8 @@ final class LogiPilot_Portal
     public const META_LAST = 'logipilot_portal_module';
     /** Tuile de contenu dépliée sur l'accueil (sans JavaScript, l'adresse suffit). */
     public const PARAM_TILE = 'lp_tuile';
+    /** LogiOne 1.55.0 : outils que l'enseignant a choisi de masquer sur son accueil (méta utilisateur, liste de clés). */
+    public const META_HIDDEN = 'logione_outils_masques';
 
     private static int $page_id = 0;
     private static string $module = '';
@@ -32,6 +34,55 @@ final class LogiPilot_Portal
         add_shortcode('logione', array(__CLASS__, 'render'));
         // Ancien nom, conservé pour les pages déjà créées.
         add_shortcode('logipilot', array(__CLASS__, 'render'));
+        add_action('admin_post_logione_outils', array(__CLASS__, 'save_choice'));
+    }
+
+    /** Outils masqués par l'utilisateur courant. */
+    public static function hidden(): array
+    {
+        $h = get_user_meta(get_current_user_id(), self::META_HIDDEN, true);
+
+        return is_array($h) ? array_values(array_filter(array_map('sanitize_key', $h))) : array();
+    }
+
+    /** Enregistre le choix « Mes outils » (cases cochées = outils affichés). */
+    public static function save_choice(): void
+    {
+        if (!is_user_logged_in()) {
+            wp_die(esc_html('Connectez-vous.'));
+        }
+        check_admin_referer('logione_outils');
+        $all = array_keys(self::available());
+        $shown = isset($_POST['outils']) ? array_map('sanitize_key', (array) wp_unslash($_POST['outils'])) : array();
+        if (!empty($_POST['tout'])) {
+            $shown = $all;
+        }
+        $hidden = array_values(array_diff($all, $shown));
+        if ($hidden) {
+            update_user_meta(get_current_user_id(), self::META_HIDDEN, $hidden);
+        } else {
+            delete_user_meta(get_current_user_id(), self::META_HIDDEN);
+        }
+        $back = wp_get_referer();
+        $back = $back ? remove_query_arg(array(self::PARAM, 'lp_outils'), $back) : home_url('/');
+        wp_safe_redirect(add_query_arg('lp_outils', 'ok', $back));
+        exit;
+    }
+
+    /** Panneau « Choisir mes outils » de l'accueil. */
+    private static function choice_panel(array $tools, array $hidden): string
+    {
+        $saved = isset($_GET['lp_outils']);
+        $h = '<details class="lpp-choice"' . ($saved ? '' : '') . '><summary><span aria-hidden="true">⚙</span> Choisir mes outils' . ($hidden ? ' <em>' . count($hidden) . ' masqué' . (count($hidden) > 1 ? 's' : '') . '</em>' : '') . '</summary>'
+            . '<form method="post" action="' . esc_url(admin_url('admin-post.php')) . '">' . wp_nonce_field('logione_outils', '_wpnonce', true, false)
+            . '<input type="hidden" name="action" value="logione_outils">'
+            . '<p>Cochez les outils à afficher sur votre accueil LogiOne et dans le menu des outils. Les outils décochés restent disponibles : réaffichez-les ici à tout moment. Vos données ne changent pas.</p><div class="lpp-choice-list">';
+        foreach ($tools as $key => $tool) {
+            $h .= '<label class="lpp-choice-item lpp-tile-' . esc_attr($key) . '"><input type="checkbox" name="outils[]" value="' . esc_attr($key) . '"' . (in_array($key, $hidden, true) ? '' : ' checked') . '><span class="lpp-choice-art">' . self::art($key, $tool) . '</span><span><b>' . esc_html($tool['label']) . '</b>' . (($tool['text'] ?? '') !== '' ? '<small>' . esc_html($tool['text']) . '</small>' : '') . '</span></label>';
+        }
+
+        return $h . '</div><p class="lpp-choice-actions"><button type="submit" class="lpp-button">Enregistrer mes outils</button>' . ($hidden ? ' <button type="submit" name="tout" value="1" class="lpp-choice-all">Tout réafficher</button>' : '') . '</p></form></details>'
+            . ($saved ? '<p class="lpp-choice-ok" role="status">✓ Vos outils sont enregistrés.</p>' : '');
     }
 
     /** Outils du portail : libellé, présentation, droit requis, module LogiOne et shortcode affiché. */
@@ -95,6 +146,12 @@ final class LogiPilot_Portal
                 'label' => $labels['logiinfo'], 'tag' => 'logiinfo_portail', 'cap' => 'fwr_corriger', 'can' => array('LogiOne_LogiInfo', 'can_view'), 'module' => 'logiinfo', 'color' => '#0369a1',
                 'text' => 'Les formations informatiques de vos apprentis.',
                 'points' => array('Exercices rendus et contrôle automatique', 'Progression des élèves', 'Correction et retours publiés'),
+            ),
+            // LogiOne 1.55.0 : LogiPlay, jeux de révision gamifiés.
+            'logiplay' => array(
+                'label' => $labels['logiplay'], 'tag' => 'logiplay_portail', 'cap' => 'edit_posts', 'can' => array('LogiOne_LogiPlay', 'can_view'), 'module' => 'logiplay', 'color' => '#067030',
+                'text' => 'Les jeux de révision de vos apprentis.',
+                'points' => array('70 jeux, modules M101 à M809 et mathématiques', 'Examen blanc noté et révision des erreurs', 'Statistiques et classement par classe'),
             ),
         );
 
@@ -196,8 +253,15 @@ final class LogiPilot_Portal
                 . '<div class="lpp-hero-main"><div class="lpp-hero-text"><h2 class="lpp-hello">Espace enseignants</h2><p>Connectez-vous pour retrouver vos outils LogiOne.</p><p><a class="lpp-button" href="' . esc_url($login) . '">Se connecter</a></p></div><div class="lpp-one">' . self::noki() . '</div></div></header></div>';
         }
 
-        $tools = self::available($only);
-        $current = self::current_module($tools, $fixed);
+        $all_tools = self::available($only);
+        // 1.55.0 : chaque enseignant choisit les outils affichés (accueil et menu). Un outil masqué s'ouvre encore par son adresse.
+        $hidden = $fixed === '' ? self::hidden() : array();
+        $tools = array_diff_key($all_tools, array_flip($hidden));
+        if (!$tools) {
+            $tools = $all_tools;
+            $hidden = array();
+        }
+        $current = self::current_module($all_tools, $fixed);
         self::$page_id = (int) get_queried_object_id();
         $base = self::$page_id ? get_permalink(self::$page_id) : home_url(add_query_arg(array()));
 
@@ -213,7 +277,7 @@ final class LogiPilot_Portal
         $html .= '<header class="lpp-hero"><div class="lpp-hero-top"><a class="lpp-brand" href="' . esc_url($home) . '">' . self::logo('lpp-logo', true) . '</a>';
         $html .= '</div>';
 
-        if (!$tools) {
+        if (!$all_tools) {
             return $html . '<div class="lpp-hero-main"><div class="lpp-hero-text"><h2 class="lpp-hello">LogiOne est réservé aux enseignants.</h2><p>Si vous êtes enseignant, demandez à l’administrateur de LogiOne de vous donner les droits nécessaires. Pour passer une évaluation, utilisez la page indiquée par votre enseignant.</p></div></div></header></div>';
         }
 
@@ -231,7 +295,7 @@ final class LogiPilot_Portal
                     }
                 }
 
-                return $html . '</div>' . self::panel_script() . self::layout_link() . '</div>';
+                return $html . '</div>' . self::panel_script() . (count($all_tools) > 1 ? self::choice_panel($all_tools, $hidden) : '') . self::layout_link() . '</div>';
             }
             $builtin = array_filter($tools, static function ($t) { return !isset($t['kind']); });
             $extra = array_diff_key($tools, $builtin);
@@ -255,13 +319,13 @@ final class LogiPilot_Portal
                 $html .= '</div>' . self::panel_script();
             }
 
-            return $html . self::layout_link() . '</div>';
+            return $html . (count($all_tools) > 1 ? self::choice_panel($all_tools, $hidden) : '') . self::layout_link() . '</div>';
         }
 
         // Outil ouvert : retour à l'accueil LogiOne et accès direct aux autres outils, dans le bandeau
-        $tool = $tools[$current];
+        $tool = $all_tools[$current];
         $html .= '<div class="lpp-toolbar">';
-        if ($fixed === '' && count($tools) > 1) {
+        if ($fixed === '' && count($all_tools) > 1) {
             $html .= '<a class="lpp-back" href="' . esc_url($home) . '">' . self::icon('back') . 'Retour à LogiOne</a>';
         }
         $html .= '<span class="lpp-current lpp-tile-' . esc_attr($current) . '"><span class="lpp-current-art">' . self::art($current, $tool) . '</span>' . esc_html($tool['label']) . '</span>';
@@ -406,7 +470,7 @@ final class LogiPilot_Portal
             update_user_meta($user_id, self::META_LAST, $requested);
             return $requested;
         }
-        $ignored = array('page_id', 'p', 'pagename', 'preview', 'lang', self::PARAM);
+        $ignored = array('page_id', 'p', 'pagename', 'preview', 'lang', self::PARAM, 'lp_outils');
         $has_tool_params = (bool) array_diff(array_keys($_GET), $ignored);
         if ($has_tool_params) {
             $last = (string) get_user_meta($user_id, self::META_LAST, true);

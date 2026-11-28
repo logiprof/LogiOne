@@ -1,0 +1,100 @@
+{
+ "module": "M306",
+ "shortcode": "jeu_m306",
+ "titre": "M306 – Contrôle des contenants",
+ "sous_titre": "Logisticien·ne CFC · Module M306",
+ "duree": "10 min par série",
+ "description": "4 objectifs du module M306 (leçons 6.1 à 6.9) et 100 épreuves, dont 32 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "c2.4 · Contenants et supports de charge",
+   "objectifs": [
+    "c2.4 Je décris les supports de charge (EPAL, CHEP et Dispobox), leurs différences et leurs possibilités d’échange ainsi que les procédures d’échange correspondantes (pièce contre pièce, bon d’échange et compte courant). (C2)"
+   ]
+  },
+  {
+   "titre": "c2.5 · Échange et compte courant",
+   "objectifs": [
+    "c2.5 Je décris les exigences posées à un compte courant (pour engins échangeables) et explique les mesures de compensation. (C3) — avec les procédures d’échange de c2.4 (pièce contre pièce, bon d’échange, compte courant)"
+   ]
+  },
+  {
+   "titre": "c3.4 · Tri et état des supports",
+   "objectifs": [
+    "c3.4 Je décris les critères de tri des supports de charge et d’évaluation de leur état ainsi que, selon les résultats, le traitement correspondant (réparation, recyclage, élimination). (C2)"
+   ]
+  },
+  {
+   "titre": "c1.7 · Supports spéciaux et état des marchandises",
+   "objectifs": [
+    "c1.7 Je décris les critères d’évaluation de l’état des marchandises et des engins échangeables livrés (indicateurs de basculement et de choc, chaîne du froid). (C2) — avec les supports spéciaux et les emballages"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M306 – Kontrolle der Behälter",
+  "sous_titre": "Logistiker/-in EFZ · Modul M306",
+  "duree": "10 Min. pro Serie",
+  "description": "4 Lernziele des Moduls M306 und 100 Aufgaben, davon 32 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "c2.4 · Behälter und Ladungsträger",
+    "objectifs": [
+     "c2.4 Ich beschreibe die Ladungsträger (EPAL, CHEP und Dispobox), ihre Unterschiede und Tauschmöglichkeiten sowie die entsprechenden Tauschverfahren (Zug um Zug, Tauschschein und Kontokorrent). (K2)"
+    ]
+   },
+   {
+    "titre": "c2.5 · Tausch und Kontokorrent",
+    "objectifs": [
+     "c2.5 Ich beschreibe die Anforderungen an ein Kontokorrent (für Tauschgeräte) und erkläre die Ausgleichsmassnahmen. (K3) — mit den Tauschverfahren aus c2.4 (Zug um Zug, Tauschschein, Kontokorrent)"
+    ]
+   },
+   {
+    "titre": "c3.4 · Sortieren und Zustand der Ladungsträger",
+    "objectifs": [
+     "c3.4 Ich beschreibe die Kriterien für das Sortieren der Ladungsträger und die Beurteilung ihres Zustands sowie, je nach Ergebnis, die entsprechende Behandlung (Reparatur, Recycling, Entsorgung). (K2)"
+    ]
+   },
+   {
+    "titre": "c1.7 · Spezielle Ladungsträger und Zustand der Waren",
+    "objectifs": [
+     "c1.7 Ich beschreibe die Kriterien zur Beurteilung des Zustands der gelieferten Waren und Tauschgeräte (Kipp- und Schockindikatoren, Kühlkette). (K2) — mit den speziellen Ladungsträgern und Verpackungen"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M306 – Controllo dei contenitori",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M306",
+  "duree": "10 min per serie",
+  "description": "4 obiettivi del modulo M306 e 100 esercizi, di cui il 32 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "c2.4 · Contenitori e supporti di carico",
+    "objectifs": [
+     "c2.4 Descrivo i supporti di carico (EPAL, CHEP e Dispobox), le loro differenze e possibilità di scambio nonché le relative procedure di scambio (pezzo contro pezzo, buono di scambio e conto corrente). (C2)"
+    ]
+   },
+   {
+    "titre": "c2.5 · Scambio e conto corrente",
+    "objectifs": [
+     "c2.5 Descrivo le esigenze poste a un conto corrente (per supporti di scambio) e spiego le misure di compensazione. (C3) — con le procedure di scambio di c2.4 (pezzo contro pezzo, buono di scambio, conto corrente)"
+    ]
+   },
+   {
+    "titre": "c3.4 · Smistamento e stato dei supporti",
+    "objectifs": [
+     "c3.4 Descrivo i criteri di smistamento dei supporti di carico e di valutazione del loro stato nonché, secondo i risultati, il trattamento corrispondente (riparazione, riciclaggio, smaltimento). (C2)"
+    ]
+   },
+   {
+    "titre": "c1.7 · Supporti speciali e stato delle merci",
+    "objectifs": [
+     "c1.7 Descrivo i criteri di valutazione dello stato delle merci e dei supporti di scambio consegnati (indicatori di ribaltamento e d’urto, catena del freddo). (C2) — con i supporti speciali e gli imballaggi"
+    ]
+   }
+  ]
+ }
+}

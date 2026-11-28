@@ -1,0 +1,100 @@
+{
+ "module": "M505",
+ "shortcode": "jeu_m505",
+ "titre": "M505 – Planification et contrôle de la production (PCP)",
+ "sous_titre": "Logisticien·ne CFC · Module M505",
+ "duree": "10 min par série",
+ "description": "4 objectifs du module M505 (leçons PCP, PERT, GANTT, 5.1 à 5.3) et 100 épreuves, dont 33 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "PCP · Rôle et tâches de la PCP",
+   "objectifs": [
+    "Je peux définir le rôle de la PCP et expliquer son importance dans la coordination entre les ventes, les achats et la production ; je comprends ses tâches et leur enchaînement ; je peux analyser un programme de production simple (stock insuffisant)."
+   ]
+  },
+  {
+   "titre": "PCP·PG · Diagrammes PERT et Gantt",
+   "objectifs": [
+    "Planification des délais : construire et lire un diagramme PERT (dates au plus tôt et au plus tard, marges, chemin critique) et un diagramme de Gantt (leçons PERT et GANTT)."
+   ]
+  },
+  {
+   "titre": "FP·TP · Push, pull et production en vrac",
+   "objectifs": [
+    "Je peux décrire les flux poussé (push) et tiré (pull), comparer leurs flux d’informations, stocks, délais et effort de planification, et choisir le mode adapté ; je peux expliquer la production en vrac, ses caractéristiques et des exemples."
+   ]
+  },
+  {
+   "titre": "NB · Nomenclatures et besoins",
+   "objectifs": [
+    "Je comprends la différence entre besoins primaires, secondaires et secondaires nets et leur lien avec le programme de vente ; je peux calculer des besoins nets ; je peux choisir le type de nomenclature (quantitative, structurelle, modulaire ou à variantes) et expliquer l’impact d’une nomenclature erronée."
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M505 – Produktionsplanung und -steuerung (PPS)",
+  "sous_titre": "Logistiker/-in EFZ · Modul M505",
+  "duree": "10 Min. pro Serie",
+  "description": "4 Lernziele des Moduls M505 und 100 Aufgaben, davon 33 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "PCP · Rolle und Aufgaben der PPS",
+    "objectifs": [
+     "Ich kann die Rolle der PPS definieren und ihre Bedeutung für die Abstimmung zwischen Verkauf, Einkauf und Produktion erklären; ich verstehe ihre Aufgaben und deren Abfolge; ich kann ein einfaches Produktionsprogramm analysieren (ungenügender Bestand)."
+    ]
+   },
+   {
+    "titre": "PCP·PG · PERT- und Gantt-Diagramme",
+    "objectifs": [
+     "Terminplanung: ein PERT-Diagramm (früheste und späteste Termine, Puffer, kritischer Pfad) und ein Gantt-Diagramm erstellen und lesen (Lektionen PERT und GANTT)."
+    ]
+   },
+   {
+    "titre": "FP·TP · Push, Pull und Schüttgutproduktion",
+    "objectifs": [
+     "Ich kann den Bring- (Push) und den Holfluss (Pull) beschreiben, ihre Informationsflüsse, Bestände, Fristen und Planungsaufwand vergleichen und die passende Art wählen; ich kann die Schüttgutproduktion, ihre Merkmale und Beispiele erklären."
+    ]
+   },
+   {
+    "titre": "NB · Stücklisten und Bedarf",
+    "objectifs": [
+     "Ich verstehe den Unterschied zwischen Primär-, Sekundär- und Nettobedarf und ihre Verbindung zum Verkaufsprogramm; ich kann Nettobedarfe berechnen; ich kann die Stücklistenart wählen (Mengen-, Struktur-, Baukasten- oder Variantenstückliste) und die Wirkung einer falschen Stückliste erklären."
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M505 – Pianificazione e controllo della produzione (PCP)",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M505",
+  "duree": "10 min per serie",
+  "description": "4 obiettivi del modulo M505 e 100 esercizi, di cui il 33 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "PCP · Ruolo e compiti della PCP",
+    "objectifs": [
+     "So definire il ruolo della PCP e spiegare la sua importanza nel coordinamento tra vendite, acquisti e produzione; capisco i suoi compiti e la loro concatenazione; so analizzare un programma di produzione semplice (scorta insufficiente)."
+    ]
+   },
+   {
+    "titre": "PCP·PG · Diagrammi PERT e Gantt",
+    "objectifs": [
+     "Pianificazione dei termini: costruire e leggere un diagramma PERT (date al più presto e al più tardi, margini, cammino critico) e un diagramma di Gantt (lezioni PERT e GANTT)."
+    ]
+   },
+   {
+    "titre": "FP·TP · Push, pull e produzione alla rinfusa",
+    "objectifs": [
+     "So descrivere i flussi spinti (push) e tirati (pull), confrontare i loro flussi d’informazione, scorte, termini e sforzo di pianificazione, e scegliere la modalità adatta; so spiegare la produzione alla rinfusa, le sue caratteristiche ed esempi."
+    ]
+   },
+   {
+    "titre": "NB · Distinte base e fabbisogni",
+    "objectifs": [
+     "Capisco la differenza tra fabbisogni primari, secondari e secondari netti e il loro legame con il programma di vendita; so calcolare fabbisogni netti; so scegliere il tipo di distinta base (quantitativa, strutturale, modulare o a varianti) e spiegare l’impatto di una distinta base sbagliata."
+    ]
+   }
+  ]
+ }
+}

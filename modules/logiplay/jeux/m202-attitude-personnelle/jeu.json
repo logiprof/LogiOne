@@ -1,0 +1,100 @@
+{
+ "module": "M202",
+ "shortcode": "jeu_m202",
+ "titre": "M202 – L’attitude personnelle",
+ "sous_titre": "Logisticien·ne CFC · Module M202",
+ "duree": "10 min par série",
+ "description": "4 objectifs du module M202 (leçons 2.1 à 2.5) et 105 épreuves, dont 33 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "A3.1 · Les rôles dans l’équipe",
+   "objectifs": [
+    "Je décris les différents rôles dans le monde du travail et explique leurs effets sur le comportement des titulaires de ces rôles. (C2)"
+   ]
+  },
+  {
+   "titre": "A3.2 · Le travail d’équipe",
+   "objectifs": [
+    "Je décris les conditions d’une bonne collaboration en équipe et explique pourquoi le travail d’équipe conduit à de meilleurs résultats que le travail individuel. (C2)"
+   ]
+  },
+  {
+   "titre": "B1.1 · Charte et présentation",
+   "objectifs": [
+    "J’explique l’importance de la charte d’une entreprise ainsi que ma responsabilité individuelle dans le respect des valeurs, de même que l’importance des bonnes manières et d’une présentation soignée (habillement, hygiène, etc.). (C2)"
+   ]
+  },
+  {
+   "titre": "B1.3 · Communication et accueil",
+   "objectifs": [
+    "J’explique l’importance d’un accueil avenant des demandes et des besoins des clients internes et externes. (C2)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M202 – Die persönliche Haltung",
+  "sous_titre": "Logistiker/-in EFZ · Modul M202",
+  "duree": "10 Min. pro Serie",
+  "description": "4 Lernziele des Moduls M202 und 105 Aufgaben, davon 33 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "A3.1 · Die Rollen im Team",
+    "objectifs": [
+     "Ich beschreibe die verschiedenen Rollen in der Arbeitswelt und erkläre ihre Auswirkungen auf das Verhalten der Rolleninhaber. (K2)"
+    ]
+   },
+   {
+    "titre": "A3.2 · Die Teamarbeit",
+    "objectifs": [
+     "Ich beschreibe die Bedingungen einer guten Zusammenarbeit im Team und erkläre, warum Teamarbeit zu besseren Ergebnissen führt als Einzelarbeit. (K2)"
+    ]
+   },
+   {
+    "titre": "B1.1 · Leitbild und Auftreten",
+    "objectifs": [
+     "Ich erkläre die Bedeutung des Leitbilds eines Unternehmens sowie meine persönliche Verantwortung für die Einhaltung der Werte und die Bedeutung guter Umgangsformen und eines gepflegten Auftretens (Kleidung, Hygiene usw.). (K2)"
+    ]
+   },
+   {
+    "titre": "B1.3 · Kommunikation und Empfang",
+    "objectifs": [
+     "Ich erkläre die Bedeutung eines freundlichen Empfangs der Anliegen und Bedürfnisse interner und externer Kunden. (K2)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M202 – L’atteggiamento personale",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M202",
+  "duree": "10 min per serie",
+  "description": "4 obiettivi del modulo M202 e 105 esercizi, di cui il 33 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "A3.1 · I ruoli nella squadra",
+    "objectifs": [
+     "Descrivo i diversi ruoli nel mondo del lavoro e spiego i loro effetti sul comportamento di chi ricopre questi ruoli. (C2)"
+    ]
+   },
+   {
+    "titre": "A3.2 · Il lavoro di squadra",
+    "objectifs": [
+     "Descrivo le condizioni di una buona collaborazione in squadra e spiego perché il lavoro di squadra porta a risultati migliori del lavoro individuale. (C2)"
+    ]
+   },
+   {
+    "titre": "B1.1 · Carta e presentazione",
+    "objectifs": [
+     "Spiego l’importanza della carta di un’azienda nonché la mia responsabilità individuale nel rispetto dei valori, come pure l’importanza delle buone maniere e di una presentazione curata (abbigliamento, igiene, ecc.). (C2)"
+    ]
+   },
+   {
+    "titre": "B1.3 · Comunicazione e accoglienza",
+    "objectifs": [
+     "Spiego l’importanza di un’accoglienza cortese delle richieste e dei bisogni dei clienti interni ed esterni. (C2)"
+    ]
+   }
+  ]
+ }
+}

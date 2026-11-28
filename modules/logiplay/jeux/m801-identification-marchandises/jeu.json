@@ -1,0 +1,82 @@
+{
+ "module": "M801",
+ "shortcode": "jeu_m801",
+ "titre": "M801 – Identification des marchandises",
+ "sous_titre": "Logisticien·ne CFC · Module M801",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M801 (leçons 1.1 à 1.8) et 87 épreuves, dont 33 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "c2.8 a · GTIN, ISBN, SSCC et GS1-128",
+   "objectifs": [
+    "c2.8 Je décris la structure des codes-barres (GTIN-8, GTIN-13, GS1-128, SSCC, DataMatrix, code QR, code à deux dimensions) et leurs domaines d’application. (C2) · partie 1 : codes unidimensionnels"
+   ]
+  },
+  {
+   "titre": "c2.8 b · Codes 2D et placement des étiquettes",
+   "objectifs": [
+    "c2.8 Je décris la structure des codes-barres (GTIN-8, GTIN-13, GS1-128, SSCC, DataMatrix, code QR, code à deux dimensions) et leurs domaines d’application. (C2) · partie 2 : codes bidimensionnels et placement"
+   ]
+  },
+  {
+   "titre": "c2.9 · La RFID",
+   "objectifs": [
+    "c2.9 Je décris le principe de fonctionnement et le domaine d’application de la RFID. (C2)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M801 – Identifikation der Waren",
+  "sous_titre": "Logistiker/-in EFZ · Modul M801",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M801 und 87 Aufgaben, davon 33 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "c2.8 a · GTIN, ISBN, SSCC und GS1-128",
+    "objectifs": [
+     "c2.8 Ich beschreibe den Aufbau der Strichcodes (GTIN-8, GTIN-13, GS1-128, SSCC, DataMatrix, QR-Code, zweidimensionaler Code) und ihre Einsatzbereiche. (K2) · Teil 1: eindimensionale Codes"
+    ]
+   },
+   {
+    "titre": "c2.8 b · 2D-Codes und Platzierung der Etiketten",
+    "objectifs": [
+     "c2.8 Ich beschreibe den Aufbau der Strichcodes (GTIN-8, GTIN-13, GS1-128, SSCC, DataMatrix, QR-Code, zweidimensionaler Code) und ihre Einsatzbereiche. (K2) · Teil 2: zweidimensionale Codes und Platzierung"
+    ]
+   },
+   {
+    "titre": "c2.9 · Die RFID",
+    "objectifs": [
+     "c2.9 Ich beschreibe das Funktionsprinzip und den Einsatzbereich der RFID. (K2)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M801 – Identificazione delle merci",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M801",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M801 e 87 esercizi, di cui il 33 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "c2.8 a · GTIN, ISBN, SSCC e GS1-128",
+    "objectifs": [
+     "c2.8 Descrivo la struttura dei codici a barre (GTIN-8, GTIN-13, GS1-128, SSCC, DataMatrix, codice QR, codice bidimensionale) e i loro campi d’applicazione. (C2) · parte 1: codici unidimensionali"
+    ]
+   },
+   {
+    "titre": "c2.8 b · Codici 2D e posizionamento delle etichette",
+    "objectifs": [
+     "c2.8 Descrivo la struttura dei codici a barre (GTIN-8, GTIN-13, GS1-128, SSCC, DataMatrix, codice QR, codice bidimensionale) e i loro campi d’applicazione. (C2) · parte 2: codici bidimensionali e posizionamento"
+    ]
+   },
+   {
+    "titre": "c2.9 · L’RFID",
+    "objectifs": [
+     "c2.9 Descrivo il principio di funzionamento e il campo d’applicazione dell’RFID. (C2)"
+    ]
+   }
+  ]
+ }
+}

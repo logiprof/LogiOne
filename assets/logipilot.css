@@ -347,6 +347,10 @@ tr.logipilot-warning td { color: #8a4b00; }
 /* LogiProjet : tuile orange clair, cube avec une diapositive (LogiOne 1.51.1) */
 .lpp-tile-projet { --tile-bg: #fde9d9; --tile-fg: var(--ink); --tile-muted: #7c3a12; --cta: #c2410c; }
 .lpp-tile-projet .lpp-iso { --gap: #fde9d9; --check: #c2410c; }
+/* LogiPlay : tuile jaune clair, cube avec un bouton lecture (LogiOne 1.55.0) */
+.lpp-tile-logiplay { --tile-bg: #fff4c2; --tile-fg: var(--ink); --tile-muted: #6b5300; --cta: #067030; }
+.lpp-tile-logiplay .lpp-iso { --gap: #fff4c2; --check: #f5c400; }
+.lpp-iso .play { fill: var(--check, var(--yellow)); stroke: none; }
 .lpp-tile-logi3d { --tile-bg: #e0e7ff; --tile-fg: var(--ink); --tile-muted: #312e81; --cta: #4338ca; }
 .lpp-tile-logi3d .lpp-iso { --gap: #e0e7ff; --check: #4338ca; }
 .lpp-tile-logiinfo { --tile-bg: #e0f2fe; --tile-fg: var(--ink); --tile-muted: #0c4a6e; --cta: #0369a1; }
@@ -400,3 +404,25 @@ tr.logipilot-warning td { color: #8a4b00; }
 .logipilot-portal:not(.is-tool) .lpp-hero-text .lpp-about { max-width: 110ch; font-size: clamp(16px, 1.25vw, 18px); line-height: 1.45; }
 .logipilot-portal:not(.is-tool) .lpp-hero-text .lpp-hint { max-width: none; margin-top: 8px; font-size: 14px; }
 .logipilot-portal:not(.is-tool) .lpp-one { width: clamp(130px, 14vw, 210px); margin-bottom: -28px; }
+
+/* 1.55.0 : « Choisir mes outils » (chaque enseignant choisit les outils de son accueil) */
+.logipilot-portal .lpp-choice { margin: 22px 0 6px; background: var(--white, #fff); border: 1px solid #dfe3e0; border-radius: 14px; padding: 0; }
+.logipilot-portal .lpp-choice > summary { cursor: pointer; list-style: none; padding: 13px 18px; font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 8px; color: var(--ink); }
+.logipilot-portal .lpp-choice > summary::-webkit-details-marker { display: none; }
+.logipilot-portal .lpp-choice > summary::after { content: "▾"; margin-left: auto; color: #5b6672; }
+.logipilot-portal .lpp-choice[open] > summary::after { content: "▴"; }
+.logipilot-portal .lpp-choice > summary em { font-style: normal; font-size: 12px; font-weight: 600; background: #fff4c2; color: #6b5300; border-radius: 10px; padding: 2px 8px; }
+.logipilot-portal .lpp-choice form { padding: 0 18px 16px; }
+.logipilot-portal .lpp-choice form > p { margin: 0 0 12px; color: #5b6672; font-size: 14px; }
+.logipilot-portal .lpp-choice-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; }
+.logipilot-portal .lpp-choice-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border: 1.5px solid #dfe3e0; border-radius: 10px; cursor: pointer; background: #f6f7f4; }
+.logipilot-portal .lpp-choice-item:has(input:checked) { border-color: var(--green, #067030); background: #fff; }
+.logipilot-portal .lpp-choice-item input { width: 18px; height: 18px; accent-color: var(--green, #067030); flex: none; margin: 0; }
+.logipilot-portal .lpp-choice-art { width: 34px; flex: none; }
+.logipilot-portal .lpp-choice-art .lpp-iso, .logipilot-portal .lpp-choice-art img { display: block; width: 100%; height: auto; }
+.logipilot-portal .lpp-choice-item b { display: block; font-size: 14px; font-weight: 700; }
+.logipilot-portal .lpp-choice-item small { display: block; font-size: 12px; color: #5b6672; line-height: 1.35; }
+.logipilot-portal .lpp-choice-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 14px 0 0 !important; }
+.logipilot-portal .lpp-choice-all { background: none; border: 0; color: var(--green, #067030); font: inherit; font-weight: 600; text-decoration: underline; cursor: pointer; }
+.logipilot-portal .lpp-choice-ok { margin: 8px 0 0; color: var(--green, #067030); font-weight: 600; font-size: 14px; }
+.logipilot-portal button.lpp-button { border: 0; cursor: pointer; font: inherit; font-weight: 700; }

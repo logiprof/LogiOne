@@ -1,0 +1,136 @@
+{
+ "module": "M611",
+ "shortcode": "jeu_m611",
+ "titre": "M611 – La préparation de commandes",
+ "sous_titre": "Logisticien·ne CFC · Module M611",
+ "duree": "10 min par série",
+ "description": "6 objectifs du module M611 (leçons 11.1 à 11.7) et 162 épreuves, dont 38 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "h1.1 · Supports papier et numériques",
+   "objectifs": [
+    "h1.1 Je compare les moyens conventionnels (papier) et numériques (SMD, Pick by voice, etc.) dans la préparation des commandes en termes de rentabilité, d’ergonomie et de risque d’erreur. (C2)"
+   ]
+  },
+  {
+   "titre": "h1.2·h1.6·h1.7 · Partielles, ERP et réapprovisionnement",
+   "objectifs": [
+    "h1.2 J’explique l’impact des préparations des commandes partielles sur le temps d’exécution d’une préparation de commandes. (C2) · h1.6 J’explique la procédure de correction des quantités dans l’ERP de l’entreprise après la préparation de commandes. (C2) · h1.7 J’explique comment le réapprovisionnement garantit la disponibilité des marchandises dans l’entrepôt de préparation des commandes sur la base du contrôle des quantités. (C2)"
+   ]
+  },
+  {
+   "titre": "h1.4 · Automatisation et trieurs",
+   "objectifs": [
+    "h1.4 J’explique les techniques d’automatisation de la préparation des commandes et décris leur domaine d’application. (C2)"
+   ]
+  },
+  {
+   "titre": "h3.1 · Les trois domaines du système",
+   "objectifs": [
+    "h3.1 Je décris les trois domaines du système de préparation des commandes, à savoir le flux de matériel, le flux de données et l’organisation ; leur lien et leur effet sur la performance de préparation des commandes. (C3)"
+   ]
+  },
+  {
+   "titre": "h3.2·h3.5·h3.7 · Temps partiels et calculs",
+   "objectifs": [
+    "h3.2 Je distingue les différentes activités de préparation des commandes et les affecte aux temps partiels corrects. (C3) · h3.5 J’explique les facteurs qui influencent le temps de traitement d’une préparation de commandes. (C3) · h3.7 Je calcule le pourcentage des temps partiels par rapport au temps total de préparation des commandes, j’interprète les résultats et je propose des possibilités d’optimisation. (C4)"
+   ]
+  },
+  {
+   "titre": "h3.6·h3.8·h3.11 · Trajets, points faibles et sécurité",
+   "objectifs": [
+    "h3.6 Je montre à l’aide d’études de cas les possibilités de raccourcir les trajets et les temps de préparation de commandes. (C3) · h3.8 J’identifie les points faibles du flux de données et de l’organisation et décris les mesures d’amélioration dans la préparation des commandes. (C4) · h3.11 Je décris les risques et les dangers dans la préparation des commandes et les mesures d’amélioration de la protection de la santé et de l’environnement, de l’ergonomie et de la sécurité au travail. (C3)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M611 – Die Kommissionierung",
+  "sous_titre": "Logistiker/-in EFZ · Modul M611",
+  "duree": "10 Min. pro Serie",
+  "description": "6 Lernziele des Moduls M611 und 162 Aufgaben, davon 38 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "h1.1 · Papier und digitale Datenträger",
+    "objectifs": [
+     "h1.1 Ich vergleiche konventionelle (Papier) und digitale Mittel (MDE, Pick-by-Voice usw.) in der Kommissionierung bezüglich Wirtschaftlichkeit, Ergonomie und Fehlerrisiko. (K2)"
+    ]
+   },
+   {
+    "titre": "h1.2·h1.6·h1.7 · Teilaufträge, ERP und Nachschub",
+    "objectifs": [
+     "h1.2 Ich erkläre die Auswirkung von Teilkommissionierungen auf die Durchführungszeit einer Kommissionierung. (K2) · h1.6 Ich erkläre das Vorgehen zur Korrektur der Mengen im ERP des Betriebs nach der Kommissionierung. (K2) · h1.7 Ich erkläre, wie der Nachschub auf der Grundlage der Mengenkontrolle die Verfügbarkeit der Waren im Kommissionierlager sichert. (K2)"
+    ]
+   },
+   {
+    "titre": "h1.4 · Automatisierung und Sorter",
+    "objectifs": [
+     "h1.4 Ich erkläre die Automatisierungstechniken der Kommissionierung und beschreibe ihren Einsatzbereich. (K2)"
+    ]
+   },
+   {
+    "titre": "h3.1 · Die drei Bereiche des Systems",
+    "objectifs": [
+     "h3.1 Ich beschreibe die drei Bereiche des Kommissioniersystems, nämlich den Materialfluss, den Datenfluss und die Organisation, ihren Zusammenhang und ihre Wirkung auf die Kommissionierleistung. (K3)"
+    ]
+   },
+   {
+    "titre": "h3.2·h3.5·h3.7 · Teilzeiten und Berechnungen",
+    "objectifs": [
+     "h3.2 Ich unterscheide die verschiedenen Tätigkeiten der Kommissionierung und ordne sie den richtigen Teilzeiten zu. (K3) · h3.5 Ich erkläre die Faktoren, welche die Bearbeitungszeit einer Kommissionierung beeinflussen. (K3) · h3.7 Ich berechne den Anteil der Teilzeiten an der gesamten Kommissionierzeit in Prozent, interpretiere die Ergebnisse und schlage Optimierungsmöglichkeiten vor. (K4)"
+    ]
+   },
+   {
+    "titre": "h3.6·h3.8·h3.11 · Wege, Schwachstellen und Sicherheit",
+    "objectifs": [
+     "h3.6 Ich zeige anhand von Fallstudien Möglichkeiten zur Verkürzung von Wegen und Kommissionierzeiten. (K3) · h3.8 Ich erkenne die Schwachstellen des Datenflusses und der Organisation und beschreibe Verbesserungsmassnahmen in der Kommissionierung. (K4) · h3.11 Ich beschreibe die Risiken und Gefahren in der Kommissionierung und die Massnahmen zur Verbesserung von Gesundheits- und Umweltschutz, Ergonomie und Arbeitssicherheit. (K3)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M611 – La preparazione delle commissioni",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M611",
+  "duree": "10 min per serie",
+  "description": "6 obiettivi del modulo M611 e 162 esercizi, di cui il 38 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "h1.1 · Supporti cartacei e digitali",
+    "objectifs": [
+     "h1.1 Confronto i mezzi convenzionali (carta) e digitali (terminali mobili, Pick by voice ecc.) nella preparazione delle commissioni in termini di redditività, ergonomia e rischio d’errore. (C2)"
+    ]
+   },
+   {
+    "titre": "h1.2·h1.6·h1.7 · Parziali, ERP e riapprovvigionamento",
+    "objectifs": [
+     "h1.2 Spiego l’impatto delle preparazioni di commissioni parziali sul tempo d’esecuzione di una preparazione di commissioni. (C2) · h1.6 Spiego la procedura di correzione delle quantità nell’ERP dell’azienda dopo la preparazione delle commissioni. (C2) · h1.7 Spiego come il riapprovvigionamento garantisce la disponibilità delle merci nel magazzino di preparazione delle commissioni sulla base del controllo delle quantità. (C2)"
+    ]
+   },
+   {
+    "titre": "h1.4 · Automazione e smistatori",
+    "objectifs": [
+     "h1.4 Spiego le tecniche d’automazione della preparazione delle commissioni e descrivo il loro campo d’applicazione. (C2)"
+    ]
+   },
+   {
+    "titre": "h3.1 · I tre ambiti del sistema",
+    "objectifs": [
+     "h3.1 Descrivo i tre ambiti del sistema di preparazione delle commissioni, cioè il flusso di materiale, il flusso di dati e l’organizzazione; il loro legame e il loro effetto sulla prestazione della preparazione delle commissioni. (C3)"
+    ]
+   },
+   {
+    "titre": "h3.2·h3.5·h3.7 · Tempi parziali e calcoli",
+    "objectifs": [
+     "h3.2 Distinguo le diverse attività della preparazione delle commissioni e le attribuisco ai tempi parziali corretti. (C3) · h3.5 Spiego i fattori che influenzano il tempo di trattamento di una preparazione di commissioni. (C3) · h3.7 Calcolo la percentuale dei tempi parziali rispetto al tempo totale di preparazione delle commissioni, interpreto i risultati e propongo possibilità d’ottimizzazione. (C4)"
+    ]
+   },
+   {
+    "titre": "h3.6·h3.8·h3.11 · Tragitti, punti deboli e sicurezza",
+    "objectifs": [
+     "h3.6 Mostro con l’aiuto di studi di casi le possibilità di accorciare i tragitti e i tempi di preparazione delle commissioni. (C3) · h3.8 Identifico i punti deboli del flusso di dati e dell’organizzazione e descrivo le misure di miglioramento nella preparazione delle commissioni. (C4) · h3.11 Descrivo i rischi e i pericoli nella preparazione delle commissioni e le misure di miglioramento della protezione della salute e dell’ambiente, dell’ergonomia e della sicurezza sul lavoro. (C3)"
+    ]
+   }
+  ]
+ }
+}

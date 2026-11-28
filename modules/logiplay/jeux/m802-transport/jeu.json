@@ -1,0 +1,82 @@
+{
+ "module": "M802",
+ "shortcode": "jeu_m802",
+ "titre": "M802 – Le transport",
+ "sous_titre": "Logisticien·ne CFC · Module M802",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M802 (leçons 2.1 à 2.3) et 80 épreuves, dont 38 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "d2.1 · Surveillance et données de transport",
+   "objectifs": [
+    "d2.1 Je décris les exigences relatives aux données, aux informations et aux supports de données ainsi que les critères de contrôle de l’exhaustivité et de l’exactitude des données. (C2)"
+   ]
+  },
+  {
+   "titre": "d2.2 · Track and Trace et transmission aux clients",
+   "objectifs": [
+    "d2.2 Je décris, en fonction du moyen de transport (camion, train) et des marchandises à livrer, les directives relatives au placement (sur le moyen de transport ou la marchandise) et à la transmission des données aux clients. (C2)"
+   ]
+  },
+  {
+   "titre": "d3.3 · d3.4 · Plan de tournée et plan de chargement",
+   "objectifs": [
+    "d3.3 Je décris l’importance du plan de tournée, les critères pour le définir (rentabilité, écologie, sécurité, durabilité des produits, temps, ressources) et détermine à l’aide d’une étude de cas le meilleur itinéraire et un itinéraire de rechange. (C3) · d3.4 J’établis un plan de chargement à l’aide d’un exemple afin de permettre un chargement sûr et efficace. (C3)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M802 – Der Transport",
+  "sous_titre": "Logistiker/-in EFZ · Modul M802",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M802 und 80 Aufgaben, davon 38 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "d2.1 · Transportüberwachung und Transportdaten",
+    "objectifs": [
+     "d2.1 Ich beschreibe die Anforderungen an Daten, Informationen und Datenträger sowie die Kriterien für die Kontrolle der Vollständigkeit und Richtigkeit der Daten. (K2)"
+    ]
+   },
+   {
+    "titre": "d2.2 · Track and Trace und Datenübermittlung an die Kunden",
+    "objectifs": [
+     "d2.2 Ich beschreibe je nach Transportmittel (Lastwagen, Bahn) und zu liefernden Waren die Richtlinien für die Anbringung (am Transportmittel oder an der Ware) und die Übermittlung der Daten an die Kunden. (K2)"
+    ]
+   },
+   {
+    "titre": "d3.3 · d3.4 · Tourenplan und Ladeplan",
+    "objectifs": [
+     "d3.3 Ich beschreibe die Bedeutung des Tourenplans und die Kriterien für seine Festlegung (Wirtschaftlichkeit, Ökologie, Sicherheit, Haltbarkeit der Produkte, Zeit, Ressourcen) und bestimme anhand einer Fallstudie die beste Route und eine Ausweichroute. (K3) · d3.4 Ich erstelle anhand eines Beispiels einen Ladeplan, der ein sicheres und effizientes Laden ermöglicht. (K3)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M802 – Il trasporto",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M802",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M802 e 80 esercizi, di cui il 38 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "d2.1 · Sorveglianza e dati di trasporto",
+    "objectifs": [
+     "d2.1 Descrivo le esigenze relative ai dati, alle informazioni e ai supporti di dati e i criteri di controllo della completezza e dell’esattezza dei dati. (C2)"
+    ]
+   },
+   {
+    "titre": "d2.2 · Track and Trace e trasmissione ai clienti",
+    "objectifs": [
+     "d2.2 Descrivo, in funzione del mezzo di trasporto (camion, treno) e delle merci da consegnare, le direttive relative al posizionamento (sul mezzo di trasporto o sulla merce) e alla trasmissione dei dati ai clienti. (C2)"
+    ]
+   },
+   {
+    "titre": "d3.3 · d3.4 · Piano del giro e piano di carico",
+    "objectifs": [
+     "d3.3 Descrivo l’importanza del piano del giro, i criteri per definirlo (redditività, ecologia, sicurezza, durata di conservazione dei prodotti, tempo, risorse) e determino con l’aiuto di uno studio di caso il miglior itinerario e un itinerario alternativo. (C3) · d3.4 Allestisco un piano di carico con l’aiuto di un esempio per permettere un carico sicuro ed efficiente. (C3)"
+    ]
+   }
+  ]
+ }
+}

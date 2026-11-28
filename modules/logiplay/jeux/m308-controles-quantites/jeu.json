@@ -1,0 +1,82 @@
+{
+ "module": "M308",
+ "shortcode": "jeu_m308",
+ "titre": "M308 – Les contrôles de quantités",
+ "sous_titre": "Logisticien·ne CFC · Module M308",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M308 (leçons 8.0 à 8.3) et 75 épreuves, dont 33 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "c2.10a · Unités et comptage",
+   "objectifs": [
+    "c2.10 Je décris les travaux effectués dans le cadre du contrôle détaillé et explique les différences avec l’identification globale. (C2) — partie 1 : unités de mesure, histoire du mètre, comptage par quantités partielles"
+   ]
+  },
+  {
+   "titre": "c2.10b · Mesurer longueurs et volumes",
+   "objectifs": [
+    "c2.10 Je décris les travaux effectués dans le cadre du contrôle détaillé et explique les différences avec l’identification globale. (C2) — partie 2 : outils de mesure des longueurs et des volumes"
+   ]
+  },
+  {
+   "titre": "c2.10c · Peser",
+   "objectifs": [
+    "c2.10 Je décris les travaux effectués dans le cadre du contrôle détaillé et explique les différences avec l’identification globale. (C2) — partie 3 : balances, tare, poids net et brut, vérification des instruments"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M308 – Die Mengenkontrollen",
+  "sous_titre": "Logistiker/-in EFZ · Modul M308",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M308 und 75 Aufgaben, davon 33 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "c2.10a · Einheiten und Zählen",
+    "objectifs": [
+     "c2.10 Ich beschreibe die Arbeiten der Feinkontrolle und erkläre die Unterschiede zur Grobidentifikation. (K2) — Teil 1: Masseinheiten, Geschichte des Meters, Zählen mit Teilmengen"
+    ]
+   },
+   {
+    "titre": "c2.10b · Längen und Volumen messen",
+    "objectifs": [
+     "c2.10 Ich beschreibe die Arbeiten der Feinkontrolle und erkläre die Unterschiede zur Grobidentifikation. (K2) — Teil 2: Messmittel für Längen und Volumen"
+    ]
+   },
+   {
+    "titre": "c2.10c · Wägen",
+    "objectifs": [
+     "c2.10 Ich beschreibe die Arbeiten der Feinkontrolle und erkläre die Unterschiede zur Grobidentifikation. (K2) — Teil 3: Waagen, Tara, Netto- und Bruttogewicht, Eichung der Instrumente"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M308 – I controlli delle quantità",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M308",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M308 e 75 esercizi, di cui il 33 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "c2.10a · Unità e conteggio",
+    "objectifs": [
+     "c2.10 Descrivo i lavori effettuati nell’ambito del controllo dettagliato e spiego le differenze rispetto all’identificazione globale. (C2) — parte 1: unità di misura, storia del metro, conteggio per quantità parziali"
+    ]
+   },
+   {
+    "titre": "c2.10b · Misurare lunghezze e volumi",
+    "objectifs": [
+     "c2.10 Descrivo i lavori effettuati nell’ambito del controllo dettagliato e spiego le differenze rispetto all’identificazione globale. (C2) — parte 2: strumenti di misura delle lunghezze e dei volumi"
+    ]
+   },
+   {
+    "titre": "c2.10c · Pesare",
+    "objectifs": [
+     "c2.10 Descrivo i lavori effettuati nell’ambito del controllo dettagliato e spiego le differenze rispetto all’identificazione globale. (C2) — parte 3: bilance, tara, peso netto e lordo, verifica degli strumenti"
+    ]
+   }
+  ]
+ }
+}

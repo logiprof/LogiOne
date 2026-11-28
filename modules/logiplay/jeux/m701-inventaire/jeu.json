@@ -1,0 +1,82 @@
+{
+ "module": "M701",
+ "shortcode": "jeu_m701",
+ "titre": "M701 – L’inventaire",
+ "sous_titre": "Logisticien·ne CFC · Module M701",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M701 (leçons 1.1 à 1.5) et 77 épreuves, dont 39 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "C6.1·C6.2 · Obligation et types d’inventaire",
+   "objectifs": [
+    "C6.1 Je montre l’importance de l’inventaire pour une entreprise de logistique. (C2) · C6.2 J’énumère les différents types d’inventaire (inventaire à jour fixe, inventaire tournant, inventaire par sondage) et décris la procédure correspondante. (C2)"
+   ]
+  },
+  {
+   "titre": "C6.3 · Préparation et déroulement",
+   "objectifs": [
+    "C6.3 J’énumère tous les éléments importants relatif à la préparation, à la mise en oeuvre (y compris les outils de travail) et au suivi de l’inventaire. (C2)"
+   ]
+  },
+  {
+   "titre": "B3.4·C6.4·G3.2·G3.3 · Écarts, causes et évaluation",
+   "objectifs": [
+    "B3.4 J’explique le principe des systèmes d’indicateurs de l’entreprise et leur importance pour l’entreprise et pour l’exécution des mandats. (C2) · C6.4 Je compare à l’aide d’exemples de cas la valeur réelle avec la valeur théorique, j’interprète les différences et je décris les mesures possibles à cet effet. (C3) · G3.2 Je calcule et analyse les différences d’inventaire à l’aide d’une étude de cas, je les explique et je propose des améliorations. (C4) · G3.3 Je décris les possibilités et l’utilité de l’évaluation des résultats d’inventaire, j’établis des évaluations simples à l’aide d’études de cas et j’interprète les résultats. (C2)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M701 – Die Inventur",
+  "sous_titre": "Logistiker/-in EFZ · Modul M701",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M701 und 77 Aufgaben, davon 39 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "C6.1·C6.2 · Pflicht und Inventurarten",
+    "objectifs": [
+     "C6.1 Ich zeige die Bedeutung der Inventur für ein Logistikunternehmen. (K2) · C6.2 Ich zähle die verschiedenen Inventurarten auf (Stichtagsinventur, permanente Inventur, Stichprobeninventur) und beschreibe das jeweilige Vorgehen. (K2)"
+    ]
+   },
+   {
+    "titre": "C6.3 · Vorbereitung und Ablauf",
+    "objectifs": [
+     "C6.3 Ich zähle alle wichtigen Elemente zur Vorbereitung, Durchführung (einschliesslich Arbeitsmittel) und Nachbearbeitung der Inventur auf. (K2)"
+    ]
+   },
+   {
+    "titre": "B3.4·C6.4·G3.2·G3.3 · Abweichungen, Ursachen und Auswertung",
+    "objectifs": [
+     "B3.4 Ich erkläre das Prinzip der Kennzahlensysteme des Betriebs und ihre Bedeutung für den Betrieb und für die Ausführung der Aufträge. (K2) · C6.4 Ich vergleiche anhand von Fallbeispielen den Ist-Wert mit dem Soll-Wert, interpretiere die Unterschiede und beschreibe mögliche Massnahmen. (K3) · G3.2 Ich berechne und analysiere Inventurdifferenzen anhand einer Fallstudie, erkläre sie und schlage Verbesserungen vor. (K4) · G3.3 Ich beschreibe die Möglichkeiten und den Nutzen der Auswertung von Inventurergebnissen, erstelle einfache Auswertungen anhand von Fallstudien und interpretiere die Ergebnisse. (K2)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M701 – L’inventario",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M701",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M701 e 77 esercizi, di cui il 39 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "C6.1·C6.2 · Obbligo e tipi d’inventario",
+    "objectifs": [
+     "C6.1 Mostro l’importanza dell’inventario per un’azienda di logistica. (C2) · C6.2 Elenco i diversi tipi d’inventario (inventario a data fissa, inventario permanente, inventario a campione) e descrivo la procedura corrispondente. (C2)"
+    ]
+   },
+   {
+    "titre": "C6.3 · Preparazione e svolgimento",
+    "objectifs": [
+     "C6.3 Elenco tutti gli elementi importanti relativi alla preparazione, all’esecuzione (compresi gli strumenti di lavoro) e al seguito dell’inventario. (C2)"
+    ]
+   },
+   {
+    "titre": "B3.4·C6.4·G3.2·G3.3 · Differenze, cause e valutazione",
+    "objectifs": [
+     "B3.4 Spiego il principio dei sistemi d’indicatori dell’azienda e la loro importanza per l’azienda e per l’esecuzione dei mandati. (C2) · C6.4 Confronto con l’aiuto di esempi di casi il valore reale con il valore teorico, interpreto le differenze e descrivo le misure possibili a questo scopo. (C3) · G3.2 Calcolo e analizzo le differenze d’inventario con l’aiuto di uno studio di caso, le spiego e propongo miglioramenti. (C4) · G3.3 Descrivo le possibilità e l’utilità della valutazione dei risultati d’inventario, allestisco valutazioni semplici con l’aiuto di studi di casi e interpreto i risultati. (C2)"
+    ]
+   }
+  ]
+ }
+}

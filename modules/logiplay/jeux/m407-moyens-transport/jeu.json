@@ -1,0 +1,100 @@
+{
+ "module": "M407",
+ "shortcode": "jeu_m407",
+ "titre": "M407 – Moyens de transport",
+ "sous_titre": "Logisticien·ne CFC · Module M407",
+ "duree": "10 min par série",
+ "description": "4 objectifs du module M407 (leçons 7.1 à 7.4) et 100 épreuves, dont 34 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "C3.3a · Classer et choisir un moyen de transport",
+   "objectifs": [
+    "C3.3 Je décris des moyens ou types de transport appropriés pour le transport interne (cross-docking, transbordement, production, stockage). (C2) — partie : critères de subdivision et de choix"
+   ]
+  },
+  {
+   "titre": "C3.3b · Équipements de transport interne",
+   "objectifs": [
+    "C3.3 Je décris des moyens ou types de transport appropriés pour le transport interne. (C2) — partie : moyens manuels, convoyeurs, ponts roulants, engins de manutention, chariots élévateurs et transstockeurs"
+   ]
+  },
+  {
+   "titre": "C1.3a · La loi du levier",
+   "objectifs": [
+    "C1.3 Je décris les engins de manutention et de levage, leurs caractéristiques et leurs domaines d’utilisation dans la réception des marchandises. (C2) — partie : levier à deux bras et stabilité du chariot élévateur"
+   ]
+  },
+  {
+   "titre": "C1.3b · Diagrammes de charge et engins de levage",
+   "objectifs": [
+    "C1.3 Je décris les engins de manutention et de levage (chariot élévateur, pont roulant, palonnier, table élévatrice à ciseaux, aides au levage et au transport, exosquelettes), leurs caractéristiques et leurs domaines d’utilisation dans la réception des marchandises. (C2) — partie : diagrammes de capacité et engins de levage"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M407 – Transportmittel",
+  "sous_titre": "Logistiker/-in EFZ · Modul M407",
+  "duree": "10 Min. pro Serie",
+  "description": "4 Lernziele des Moduls M407 und 100 Aufgaben, davon 34 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "C3.3a · Transportmittel einteilen und wählen",
+    "objectifs": [
+     "C3.3 Ich beschreibe geeignete Transportmittel oder -arten für den internen Transport (Cross-Docking, Umschlag, Produktion, Lagerung). (K2) — Teil: Einteilungs- und Auswahlkriterien"
+    ]
+   },
+   {
+    "titre": "C3.3b · Ausrüstung für den internen Transport",
+    "objectifs": [
+     "C3.3 Ich beschreibe geeignete Transportmittel oder -arten für den internen Transport. (K2) — Teil: manuelle Mittel, Förderer, Brückenkrane, Flurförderzeuge, Gabelstapler und Regalbediengeräte"
+    ]
+   },
+   {
+    "titre": "C1.3a · Das Hebelgesetz",
+    "objectifs": [
+     "C1.3 Ich beschreibe die Flurförder- und Hebegeräte, ihre Eigenschaften und ihre Einsatzbereiche im Wareneingang. (K2) — Teil: zweiarmiger Hebel und Stabilität des Gabelstaplers"
+    ]
+   },
+   {
+    "titre": "C1.3b · Lastdiagramme und Hebegeräte",
+    "objectifs": [
+     "C1.3 Ich beschreibe die Flurförder- und Hebegeräte (Gabelstapler, Brückenkran, Traverse, Scherenhubtisch, Hebe- und Transporthilfen, Exoskelette), ihre Eigenschaften und ihre Einsatzbereiche im Wareneingang. (K2) — Teil: Tragfähigkeitsdiagramme und Hebegeräte"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M407 – Mezzi di trasporto",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M407",
+  "duree": "10 min per serie",
+  "description": "4 obiettivi del modulo M407 e 100 esercizi, di cui il 34 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "C3.3a · Classificare e scegliere un mezzo di trasporto",
+    "objectifs": [
+     "C3.3 Descrivo mezzi o tipi di trasporto adatti per il trasporto interno (cross-docking, trasbordo, produzione, stoccaggio). (C2) — parte: criteri di suddivisione e di scelta"
+    ]
+   },
+   {
+    "titre": "C3.3b · Equipaggiamenti di trasporto interno",
+    "objectifs": [
+     "C3.3 Descrivo mezzi o tipi di trasporto adatti per il trasporto interno. (C2) — parte: mezzi manuali, trasportatori, carriponte, mezzi di movimentazione, carrelli elevatori e trasloelevatori"
+    ]
+   },
+   {
+    "titre": "C1.3a · La legge della leva",
+    "objectifs": [
+     "C1.3 Descrivo i mezzi di movimentazione e di sollevamento, le loro caratteristiche e i loro campi d’impiego nella ricezione delle merci. (C2) — parte: leva a due bracci e stabilità del carrello elevatore"
+    ]
+   },
+   {
+    "titre": "C1.3b · Diagrammi di carico e mezzi di sollevamento",
+    "objectifs": [
+     "C1.3 Descrivo i mezzi di movimentazione e di sollevamento (carrello elevatore, carroponte, bilancino, tavola elevatrice a pantografo, ausili di sollevamento e di trasporto, esoscheletri), le loro caratteristiche e i loro campi d’impiego nella ricezione delle merci. (C2) — parte: diagrammi di portata e mezzi di sollevamento"
+    ]
+   }
+  ]
+ }
+}

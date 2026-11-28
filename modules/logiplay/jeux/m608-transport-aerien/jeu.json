@@ -1,0 +1,100 @@
+{
+ "module": "M608",
+ "shortcode": "jeu_m608",
+ "titre": "M608 – Le transport aérien",
+ "sous_titre": "Logisticien·ne CFC · Module M608",
+ "duree": "10 min par série",
+ "description": "4 objectifs du module M608 (leçons 8.1 à 8.8) et 100 épreuves, dont 32 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "B3.2 · Importance du fret aérien",
+   "objectifs": [
+    "B3.2 Je décris les bases du transport des marchandises (contrat de dépôt, transporteur, Incoterms, etc.). (C2) — partie : fret aérien, AWB, DGR IATA, trafic de remplacement"
+   ]
+  },
+  {
+   "titre": "C1.5 · Documents de transport",
+   "objectifs": [
+    "C1.5 Je décris les documents de transport (CMR, LTA, AWB, connaissement) et la différence avec le bulletin de livraison. (C2)"
+   ]
+  },
+  {
+   "titre": "D3.2 · Usages, aéroports et ULD",
+   "objectifs": [
+    "D3.2 Je décris les moyens de transport (camionnette, camion, scooter, train, avion, bateau) pour la distribution et la livraison des marchandises, avec leurs avantages et inconvénients et les critères de choix. (C2) — partie : avion"
+   ]
+  },
+  {
+   "titre": "D3.5·D4.1 · Sécurisation et marchandises dangereuses",
+   "objectifs": [
+    "D3.5 Je décris les moyens de protection couramment utilisés (…) avec leurs avantages et inconvénients, les critères d’évaluation de leur état et la responsabilité de l’évaluation avant utilisation. (C2) — D4.1 Je décris les différents moyens de sécurisation pour chaque moyen de transport. (C2) — partie : avion"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M608 – Der Lufttransport",
+  "sous_titre": "Logistiker/-in EFZ · Modul M608",
+  "duree": "10 Min. pro Serie",
+  "description": "4 Lernziele des Moduls M608 und 100 Aufgaben, davon 32 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "B3.2 · Bedeutung der Luftfracht",
+    "objectifs": [
+     "B3.2 Ich beschreibe die Grundlagen des Gütertransports (Hinterlegungsvertrag, Frachtführer, Incoterms usw.). (K2) — Teil: Luftfracht, AWB, IATA-DGR, Luftfrachtersatzverkehr"
+    ]
+   },
+   {
+    "titre": "C1.5 · Transportdokumente",
+    "objectifs": [
+     "C1.5 Ich beschreibe die Transportdokumente (CMR, Luftfrachtbrief, AWB, Konnossement) und den Unterschied zum Lieferschein. (K2)"
+    ]
+   },
+   {
+    "titre": "D3.2 · Einsatz, Flughäfen und ULD",
+    "objectifs": [
+     "D3.2 Ich beschreibe die Transportmittel (Lieferwagen, Lastwagen, Roller, Zug, Flugzeug, Schiff) für die Verteilung und Lieferung der Waren mit ihren Vor- und Nachteilen sowie die Auswahlkriterien. (K2) — Teil: Flugzeug"
+    ]
+   },
+   {
+    "titre": "D3.5·D4.1 · Sicherung und Gefahrgut",
+    "objectifs": [
+     "D3.5 Ich beschreibe die üblichen Schutzmittel (…) mit ihren Vor- und Nachteilen, den Kriterien zur Beurteilung ihres Zustands und der Verantwortung für die Beurteilung vor der Verwendung. (K2) — D4.1 Ich beschreibe die verschiedenen Sicherungsmittel für jedes Transportmittel. (K2) — Teil: Flugzeug"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M608 – Il trasporto aereo",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M608",
+  "duree": "10 min per serie",
+  "description": "4 obiettivi del modulo M608 e 100 esercizi, di cui il 32 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "B3.2 · Importanza del trasporto aereo merci",
+    "objectifs": [
+     "B3.2 Descrivo le basi del trasporto delle merci (contratto di deposito, trasportatore, Incoterms, ecc.). (C2) — parte: trasporto aereo merci, AWB, DGR IATA, traffico sostitutivo"
+    ]
+   },
+   {
+    "titre": "C1.5 · Documenti di trasporto",
+    "objectifs": [
+     "C1.5 Descrivo i documenti di trasporto (CMR, LTA, AWB, polizza di carico) e la differenza con il bollettino di consegna. (C2)"
+    ]
+   },
+   {
+    "titre": "D3.2 · Usi, aeroporti e ULD",
+    "objectifs": [
+     "D3.2 Descrivo i mezzi di trasporto (furgone, camion, scooter, treno, aereo, nave) per la distribuzione e la consegna delle merci, con i loro vantaggi e svantaggi e i criteri di scelta. (C2) — parte: aereo"
+    ]
+   },
+   {
+    "titre": "D3.5·D4.1 · Fissaggio e merci pericolose",
+    "objectifs": [
+     "D3.5 Descrivo i mezzi di protezione comunemente usati (…) con i loro vantaggi e svantaggi, i criteri di valutazione del loro stato e la responsabilità della valutazione prima dell’uso. (C2) — D4.1 Descrivo i diversi mezzi di fissaggio per ogni mezzo di trasporto. (C2) — parte: aereo"
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,136 @@
+{
+ "module": "MATHS",
+ "shortcode": "jeu_maths_fondamentaux",
+ "titre": "Mathématiques – Fondamentaux",
+ "sous_titre": "Logisticien·ne CFC · Mathématiques, modules 1 à 3",
+ "duree": "10 min par série",
+ "description": "6 objectifs des 3 modules du cours de mathématiques fondamentales (12 leçons) et 167 épreuves, dont 38 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "Mod. 1a · Longueurs et masses",
+   "objectifs": [
+    "Convertir des longueurs et des masses avec les tableaux d’unités"
+   ]
+  },
+  {
+   "titre": "Mod. 1b · Force et poids",
+   "objectifs": [
+    "Calculer le poids (force en newtons) d’une charge à partir de sa masse, et l’inverse"
+   ]
+  },
+  {
+   "titre": "Mod. 1c · Pourcentages",
+   "objectifs": [
+    "Calculer une part, un taux et une valeur après hausse ou rabais"
+   ]
+  },
+  {
+   "titre": "Mod. 2a · Surfaces et volumes",
+   "objectifs": [
+    "Calculer et convertir des surfaces et des volumes utiles en entrepôt"
+   ]
+  },
+  {
+   "titre": "Mod. 2b · Temps, distances et vitesses",
+   "objectifs": [
+    "Calculer des durées, des heures d’arrivée, des distances et des vitesses"
+   ]
+  },
+  {
+   "titre": "Mod. 3 · Problèmes à plusieurs étapes",
+   "objectifs": [
+    "Résoudre un problème logistique en plusieurs étapes et vérifier que le résultat est réaliste"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "Mathematik – Grundlagen",
+  "sous_titre": "Logistiker/-in EFZ · Mathematik, Module 1 bis 3",
+  "duree": "10 Min. pro Serie",
+  "description": "Die 3 Module des Kurses Mathematik – Grundlagen (12 Lektionen) und 167 Aufgaben, davon 38 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "Mod. 1a · Längen und Massen",
+    "objectifs": [
+     "Längen und Massen mit den Einheitentabellen umrechnen"
+    ]
+   },
+   {
+    "titre": "Mod. 1b · Kraft und Gewicht",
+    "objectifs": [
+     "Das Gewicht (Kraft in Newton) einer Last aus ihrer Masse berechnen, und umgekehrt"
+    ]
+   },
+   {
+    "titre": "Mod. 1c · Prozentrechnen",
+    "objectifs": [
+     "Einen Anteil, einen Prozentsatz und einen Wert nach Erhöhung oder Rabatt berechnen"
+    ]
+   },
+   {
+    "titre": "Mod. 2a · Flächen und Volumen",
+    "objectifs": [
+     "Nützliche Flächen und Volumen im Lager berechnen und umrechnen"
+    ]
+   },
+   {
+    "titre": "Mod. 2b · Zeit, Strecken und Geschwindigkeiten",
+    "objectifs": [
+     "Dauern, Ankunftszeiten, Strecken und Geschwindigkeiten berechnen"
+    ]
+   },
+   {
+    "titre": "Mod. 3 · Aufgaben in mehreren Schritten",
+    "objectifs": [
+     "Eine Logistikaufgabe in mehreren Schritten lösen und prüfen, ob das Ergebnis realistisch ist"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "Matematica – Fondamenti",
+  "sous_titre": "Impiegato/a in logistica AFC · Matematica, moduli da 1 a 3",
+  "duree": "10 min per serie",
+  "description": "I 3 moduli del corso di matematica di base (12 lezioni) e 167 esercizi, di cui il 38 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "Mod. 1a · Lunghezze e masse",
+    "objectifs": [
+     "Convertire lunghezze e masse con le tabelle delle unità"
+    ]
+   },
+   {
+    "titre": "Mod. 1b · Forza e peso",
+    "objectifs": [
+     "Calcolare il peso (forza in newton) di un carico a partire dalla sua massa, e viceversa"
+    ]
+   },
+   {
+    "titre": "Mod. 1c · Percentuali",
+    "objectifs": [
+     "Calcolare una parte, un tasso e un valore dopo un aumento o uno sconto"
+    ]
+   },
+   {
+    "titre": "Mod. 2a · Superfici e volumi",
+    "objectifs": [
+     "Calcolare e convertire superfici e volumi utili in magazzino"
+    ]
+   },
+   {
+    "titre": "Mod. 2b · Tempi, distanze e velocità",
+    "objectifs": [
+     "Calcolare durate, orari d’arrivo, distanze e velocità"
+    ]
+   },
+   {
+    "titre": "Mod. 3 · Problemi in più fasi",
+    "objectifs": [
+     "Risolvere un problema logistico in più fasi e verificare che il risultato sia realistico"
+    ]
+   }
+  ]
+ }
+}

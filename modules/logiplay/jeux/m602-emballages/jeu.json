@@ -1,0 +1,118 @@
+{
+ "module": "M602",
+ "shortcode": "jeu_m602",
+ "titre": "M602 – Les emballages",
+ "sous_titre": "Logisticien·ne CFC · Module M602",
+ "duree": "10 min par série",
+ "description": "5 objectifs du module M602 (leçons 2.1 à 2.5) et 125 épreuves, dont 36 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "B4.1 · Fonctions et durabilité",
+   "objectifs": [
+    "B4.1 Je décris l’origine, la compatibilité environnementale et l’utilisation des matériaux et matières premières utilisés dans la logistique (emballages, consommables, engins échangeables, produits de nettoyage, etc.). (C2)"
+   ]
+  },
+  {
+   "titre": "C2.2 · Marquages et normes",
+   "objectifs": [
+    "C2.2 Je décris les marquages des marchandises et des unités de transport et leur signification. (C2)"
+   ]
+  },
+  {
+   "titre": "C2.7 · Contraintes et dommages",
+   "objectifs": [
+    "C2.7 Je décris les dommages liés au transport (mécaniques, climatiques, température, nuisibles, forces physiques lors du transport, etc.). (C2)"
+   ]
+  },
+  {
+   "titre": "D1.3 · Termes d’emballage (DIN)",
+   "objectifs": [
+    "D1.3 Je cite les termes d’emballage en vigueur selon la norme DIN 55405. (C2)"
+   ]
+  },
+  {
+   "titre": "D1.4 · Choisir le bon emballage",
+   "objectifs": [
+    "D1.4 Je décris les critères (écologiques, économiques et de sécurité) pour le choix de l’emballage approprié des marchandises. (C2)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M602 – Die Verpackungen",
+  "sous_titre": "Logistiker/-in EFZ · Modul M602",
+  "duree": "10 Min. pro Serie",
+  "description": "5 Lernziele des Moduls M602 und 125 Aufgaben, davon 36 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "B4.1 · Funktionen und Nachhaltigkeit",
+    "objectifs": [
+     "B4.1 Ich beschreibe Herkunft, Umweltverträglichkeit und Verwendung der in der Logistik eingesetzten Materialien und Rohstoffe (Verpackungen, Verbrauchsmaterial, Tauschgeräte, Reinigungsmittel usw.). (K2)"
+    ]
+   },
+   {
+    "titre": "C2.2 · Markierungen und Normen",
+    "objectifs": [
+     "C2.2 Ich beschreibe die Markierungen der Waren und der Transporteinheiten und ihre Bedeutung. (K2)"
+    ]
+   },
+   {
+    "titre": "C2.7 · Belastungen und Schäden",
+    "objectifs": [
+     "C2.7 Ich beschreibe die transportbedingten Schäden (mechanisch, klimatisch, Temperatur, Schädlinge, physikalische Kräfte beim Transport usw.). (K2)"
+    ]
+   },
+   {
+    "titre": "D1.3 · Verpackungsbegriffe (DIN)",
+    "objectifs": [
+     "D1.3 Ich nenne die geltenden Verpackungsbegriffe nach der Norm DIN 55405. (K2)"
+    ]
+   },
+   {
+    "titre": "D1.4 · Die richtige Verpackung wählen",
+    "objectifs": [
+     "D1.4 Ich beschreibe die Kriterien (ökologisch, wirtschaftlich und sicherheitsbezogen) für die Wahl der geeigneten Verpackung der Waren. (K2)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M602 – Gli imballaggi",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M602",
+  "duree": "10 min per serie",
+  "description": "5 obiettivi del modulo M602 e 125 esercizi, di cui il 36 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "B4.1 · Funzioni e sostenibilità",
+    "objectifs": [
+     "B4.1 Descrivo l’origine, la compatibilità ambientale e l’uso dei materiali e delle materie prime usati nella logistica (imballaggi, materiali di consumo, mezzi di scambio, prodotti di pulizia, ecc.). (C2)"
+    ]
+   },
+   {
+    "titre": "C2.2 · Marcature e norme",
+    "objectifs": [
+     "C2.2 Descrivo le marcature delle merci e delle unità di trasporto e il loro significato. (C2)"
+    ]
+   },
+   {
+    "titre": "C2.7 · Sollecitazioni e danni",
+    "objectifs": [
+     "C2.7 Descrivo i danni legati al trasporto (meccanici, climatici, temperatura, parassiti, forze fisiche durante il trasporto, ecc.). (C2)"
+    ]
+   },
+   {
+    "titre": "D1.3 · Termini d’imballaggio (DIN)",
+    "objectifs": [
+     "D1.3 Cito i termini d’imballaggio in vigore secondo la norma DIN 55405. (C2)"
+    ]
+   },
+   {
+    "titre": "D1.4 · Scegliere l’imballaggio giusto",
+    "objectifs": [
+     "D1.4 Descrivo i criteri (ecologici, economici e di sicurezza) per la scelta dell’imballaggio appropriato delle merci. (C2)"
+    ]
+   }
+  ]
+ }
+}

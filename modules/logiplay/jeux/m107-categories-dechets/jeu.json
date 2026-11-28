@@ -1,0 +1,100 @@
+{
+ "module": "M107",
+ "shortcode": "jeu_m107",
+ "titre": "M107 – Les catégories de déchets CH",
+ "sous_titre": "Logisticien·ne CFC · Module M107",
+ "duree": "10 min par série",
+ "description": "4 objectifs du module M107 (leçons 7 à 7.4) et 109 épreuves, dont 37 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "B4.6 · Les catégories de déchets",
+   "objectifs": [
+    "Je nomme les déchets produits par une entreprise logistique et les classe dans les quatre principales catégories de déchets (déchets de chantier, déchets urbains, boues d’épuration, déchets spéciaux). (C2)"
+   ]
+  },
+  {
+   "titre": "C5.1 · Se protéger et secourir",
+   "objectifs": [
+    "Je décris les mesures et les moyens de protection de la santé, de la sécurité et de la protection de l’environnement lors de la manipulation de substances dangereuses ainsi que les mesures spécifiques de premiers secours. (C2)"
+   ]
+  },
+  {
+   "titre": "C5.2 · Reconnaître le danger",
+   "objectifs": [
+    "J’identifie les substances et matériaux dangereux pour l’environnement (étiquettes, pictogrammes, fiches de données de sécurité des fabricants, classes de danger) et les mesures de protection lors de la manipulation de produits chimiques et de matières dangereuses. (C2)"
+   ]
+  },
+  {
+   "titre": "C5.6 · Avarie et incendie",
+   "objectifs": [
+    "Je décris la procédure et les mesures de sécurité à prendre en cas d’avarie avec des marchandises dangereuses ou en cas d’incendie ou d’incident chimique (autoprotection, détection, alerte, sécurisation). (C2)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M107 – Die Abfallkategorien CH",
+  "sous_titre": "Logistiker/-in EFZ · Modul M107",
+  "duree": "10 Min. pro Serie",
+  "description": "4 Lernziele des Moduls M107 und 109 Aufgaben, davon 37 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "B4.6 · Die Abfallkategorien",
+    "objectifs": [
+     "Ich nenne die Abfälle eines Logistikunternehmens und ordne sie den vier Hauptkategorien zu (Bauabfälle, Siedlungsabfälle, Klärschlamm, Sonderabfälle). (K2)"
+    ]
+   },
+   {
+    "titre": "C5.1 · Sich schützen und helfen",
+    "objectifs": [
+     "Ich beschreibe die Massnahmen und Mittel zum Schutz von Gesundheit, Sicherheit und Umwelt beim Umgang mit gefährlichen Stoffen sowie die spezifischen Erste-Hilfe-Massnahmen. (K2)"
+    ]
+   },
+   {
+    "titre": "C5.2 · Die Gefahr erkennen",
+    "objectifs": [
+     "Ich erkenne umweltgefährdende Stoffe und Materialien (Etiketten, Piktogramme, Sicherheitsdatenblätter der Hersteller, Gefahrenklassen) und die Schutzmassnahmen beim Umgang mit Chemikalien und gefährlichen Stoffen. (K2)"
+    ]
+   },
+   {
+    "titre": "C5.6 · Havarie und Brand",
+    "objectifs": [
+     "Ich beschreibe das Vorgehen und die Sicherheitsmassnahmen bei einer Havarie mit gefährlichen Gütern, bei einem Brand oder einem Chemieereignis (Selbstschutz, Erkennen, Alarmieren, Sichern). (K2)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M107 – Le categorie di rifiuti in Svizzera",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M107",
+  "duree": "10 min per serie",
+  "description": "4 obiettivi del modulo M107 e 109 esercizi, di cui il 37 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "B4.6 · Le categorie di rifiuti",
+    "objectifs": [
+     "Nomino i rifiuti prodotti da un’azienda logistica e li classifico nelle quattro principali categorie di rifiuti (rifiuti edili, rifiuti urbani, fanghi di depurazione, rifiuti speciali). (C2)"
+    ]
+   },
+   {
+    "titre": "C5.1 · Proteggersi e soccorrere",
+    "objectifs": [
+     "Descrivo le misure e i mezzi di protezione della salute, della sicurezza e dell’ambiente durante la manipolazione di sostanze pericolose e le misure specifiche di primo soccorso. (C2)"
+    ]
+   },
+   {
+    "titre": "C5.2 · Riconoscere il pericolo",
+    "objectifs": [
+     "Identifico le sostanze e i materiali pericolosi per l’ambiente (etichette, pittogrammi, schede di dati di sicurezza dei fabbricanti, classi di pericolo) e le misure di protezione durante la manipolazione di prodotti chimici e merci pericolose. (C2)"
+    ]
+   },
+   {
+    "titre": "C5.6 · Avaria e incendio",
+    "objectifs": [
+     "Descrivo la procedura e le misure di sicurezza da adottare in caso di avaria con merci pericolose o in caso di incendio o di incidente chimico (autoprotezione, rilevamento, allarme, messa in sicurezza). (C2)"
+    ]
+   }
+  ]
+ }
+}

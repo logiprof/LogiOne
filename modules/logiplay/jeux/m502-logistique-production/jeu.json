@@ -1,0 +1,82 @@
+{
+ "module": "M502",
+ "shortcode": "jeu_m502",
+ "titre": "M502 – La logistique de production",
+ "sous_titre": "Logisticien·ne CFC · Module M502",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M502 (leçons 2.1 à 2.4) et 75 épreuves, dont 37 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "LP1 · Rôle et règle des 6 B",
+   "objectifs": [
+    "Je peux définir la logistique de production et expliquer sa position entre l’approvisionnement et la distribution. (C1) — Je comprends comment elle planifie et contrôle le flux de marchandises. (C2) — J’applique la règle des 6 B à une situation concrète de production. (C3)"
+   ]
+  },
+  {
+   "titre": "LP2 · Objectifs et dysfonctionnements",
+   "objectifs": [
+    "Je peux énumérer les principaux objectifs de la logistique de production (délais courts, qualité, coûts, capacité, organisation) et expliquer leur impact. (C2) — J’analyse les conséquences d’une rupture d’approvisionnement ou d’un retard et propose des mesures correctives. (C3)"
+   ]
+  },
+  {
+   "titre": "LP3 · Stocks de production et élimination",
+   "objectifs": [
+    "J’identifie les types d’entrepôts liés à la production (amont, intermédiaire, aval, proximité) et leur rôle. (C1-C2) — Je décris le processus logistique d’élimination (collecte, tri, emballage, stockage, évacuation) et applique les priorités prévention, valorisation, élimination. (C3)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M502 – Die Produktionslogistik",
+  "sous_titre": "Logistiker/-in EFZ · Modul M502",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M502 und 75 Aufgaben, davon 37 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "LP1 · Rolle und 6-R-Regel",
+    "objectifs": [
+     "Ich kann die Produktionslogistik definieren und ihre Stellung zwischen Beschaffung und Distribution erklären. (K1) — Ich verstehe, wie sie den Warenfluss plant und steuert. (K2) — Ich wende die 6-R-Regel auf eine konkrete Produktionssituation an. (K3)"
+    ]
+   },
+   {
+    "titre": "LP2 · Ziele und Störungen",
+    "objectifs": [
+     "Ich kann die wichtigsten Ziele der Produktionslogistik (kurze Fristen, Qualität, Kosten, Kapazität, Organisation) aufzählen und ihre Wirkung erklären. (K2) — Ich analysiere die Folgen eines Versorgungsunterbruchs oder einer Verspätung und schlage Korrekturmassnahmen vor. (K3)"
+    ]
+   },
+   {
+    "titre": "LP3 · Produktionsbestände und Entsorgung",
+    "objectifs": [
+     "Ich erkenne die Lagerarten der Produktion (vorgelagert, Zwischenlager, nachgelagert, Handlager) und ihre Rolle. (K1–K2) — Ich beschreibe den logistischen Entsorgungsprozess (Sammeln, Sortieren, Verpacken, Lagern, Abführen) und wende die Prioritäten Vermeidung, Verwertung, Entsorgung an. (K3)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M502 – La logistica di produzione",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M502",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M502 e 75 esercizi, di cui il 37 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "LP1 · Ruolo e regola delle 6 G",
+    "objectifs": [
+     "So definire la logistica di produzione e spiegare la sua posizione tra l’approvvigionamento e la distribuzione. (C1) — Capisco come pianifica e controlla il flusso delle merci. (C2) — Applico la regola delle 6 G a una situazione concreta di produzione. (C3)"
+    ]
+   },
+   {
+    "titre": "LP2 · Obiettivi e disfunzioni",
+    "objectifs": [
+     "So elencare gli obiettivi principali della logistica di produzione (termini brevi, qualità, costi, capacità, organizzazione) e spiegarne l’impatto. (C2) — Analizzo le conseguenze di una rottura d’approvvigionamento o di un ritardo e propongo misure correttive. (C3)"
+    ]
+   },
+   {
+    "titre": "LP3 · Scorte di produzione e smaltimento",
+    "objectifs": [
+     "Identifico i tipi di magazzino legati alla produzione (a monte, intermedio, a valle, di prossimità) e il loro ruolo. (C1-C2) — Descrivo il processo logistico di smaltimento (raccolta, smistamento, imballaggio, stoccaggio, evacuazione) e applico le priorità prevenzione, valorizzazione, smaltimento. (C3)"
+    ]
+   }
+  ]
+ }
+}

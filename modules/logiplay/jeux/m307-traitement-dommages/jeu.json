@@ -1,0 +1,82 @@
+{
+ "module": "M307",
+ "shortcode": "jeu_m307",
+ "titre": "M307 – Contrôle sommaire et traitement des dommages",
+ "sous_titre": "Logisticien·ne CFC · Module M307",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M307 (leçons 7.1 à 7.3) et 75 épreuves, dont 41 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "c2.6 · Erreurs, écarts et protocole",
+   "objectifs": [
+    "c2.6 J’explique l’importance de la signature de réception sur les documents de transport et d’accompagnement et je décris comment les écarts sont consignés sur les documents. (C2)"
+   ]
+  },
+  {
+   "titre": "c2.7 · Dommages liés au transport",
+   "objectifs": [
+    "c2.7 Je décris les dommages liés au transport (mécaniques, climatiques, température, nuisibles, forces physiques lors du transport, etc.). (C2)"
+   ]
+  },
+  {
+   "titre": "c1.7 · Indicateurs et enregistreurs",
+   "objectifs": [
+    "c1.7 Je décris les critères d’évaluation de l’état des marchandises et des engins échangeables livrés (indicateurs de basculement et de choc, chaîne du froid). (C2)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M307 – Summarische Kontrolle und Schadenbehandlung",
+  "sous_titre": "Logistiker/-in EFZ · Modul M307",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M307 und 75 Aufgaben, davon 41 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "c2.6 · Fehler, Differenzen und Protokoll",
+    "objectifs": [
+     "c2.6 Ich erkläre die Bedeutung der Empfangsunterschrift auf den Transport- und Begleitdokumenten und beschreibe, wie Differenzen auf den Dokumenten festgehalten werden. (K2)"
+    ]
+   },
+   {
+    "titre": "c2.7 · Transportschäden",
+    "objectifs": [
+     "c2.7 Ich beschreibe die Transportschäden (mechanisch, klimatisch, Temperatur, Schädlinge, physikalische Kräfte beim Transport usw.). (K2)"
+    ]
+   },
+   {
+    "titre": "c1.7 · Indikatoren und Datenlogger",
+    "objectifs": [
+     "c1.7 Ich beschreibe die Kriterien zur Beurteilung des Zustands der gelieferten Waren und Tauschgeräte (Kipp- und Schockindikatoren, Kühlkette). (K2)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M307 – Controllo sommario e trattamento dei danni",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M307",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M307 e 75 esercizi, di cui il 41 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "c2.6 · Errori, differenze e verbale",
+    "objectifs": [
+     "c2.6 Spiego l’importanza della firma di ricezione sui documenti di trasporto e di accompagnamento e descrivo come le differenze vengono annotate sui documenti. (C2)"
+    ]
+   },
+   {
+    "titre": "c2.7 · Danni legati al trasporto",
+    "objectifs": [
+     "c2.7 Descrivo i danni legati al trasporto (meccanici, climatici, temperatura, parassiti, forze fisiche durante il trasporto, ecc.). (C2)"
+    ]
+   },
+   {
+    "titre": "c1.7 · Indicatori e registratori",
+    "objectifs": [
+     "c1.7 Descrivo i criteri di valutazione dello stato delle merci e dei supporti di scambio consegnati (indicatori di ribaltamento e d’urto, catena del freddo). (C2)"
+    ]
+   }
+  ]
+ }
+}

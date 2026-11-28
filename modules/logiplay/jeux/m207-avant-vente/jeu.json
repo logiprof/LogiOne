@@ -1,0 +1,82 @@
+{
+ "module": "M207",
+ "shortcode": "jeu_m207",
+ "titre": "M207 – L’avant vente",
+ "sous_titre": "Logisticien·ne CFC · Module M207",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M207 (leçons 7.1 à 7.4) et 76 épreuves, dont 39 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "M207.1 · Les besoins et Maslow",
+   "objectifs": [
+    "Je peux expliquer la définition d’un besoin et son importance pour la vente, décrire les cinq niveaux de la pyramide de Maslow avec des exemples, analyser quel besoin est prioritaire dans une situation et l’utiliser pour répondre aux clients."
+   ]
+  },
+  {
+   "titre": "M207.2 · Vente et motifs d’achat",
+   "objectifs": [
+    "Je peux identifier les rôles de l’acheteur et du vendeur et l’objectif de la vente pour une entreprise, et lister et expliquer les différentes motivations d’achat avec des exemples."
+   ]
+  },
+  {
+   "titre": "M207.3 · Évaluer les fournisseurs",
+   "objectifs": [
+    "Je peux discuter des critères d’évaluation des fournisseurs (qualité, livraison, prix, risque de défaillance, confiance, fiabilité, dépendance), utiliser une grille de scoring pour les comparer et choisir le meilleur fournisseur."
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M207 – Der Vorverkauf",
+  "sous_titre": "Logistiker/-in EFZ · Modul M207",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M207 und 76 Aufgaben, davon 39 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "M207.1 · Die Bedürfnisse und Maslow",
+    "objectifs": [
+     "Ich kann die Definition eines Bedürfnisses und seine Bedeutung für den Verkauf erklären, die fünf Stufen der Maslow-Pyramide mit Beispielen beschreiben, analysieren, welches Bedürfnis in einer Situation Vorrang hat, und dies nutzen, um auf die Kunden einzugehen."
+    ]
+   },
+   {
+    "titre": "M207.2 · Verkauf und Kaufmotive",
+    "objectifs": [
+     "Ich kann die Rollen von Käufer und Verkäufer sowie das Ziel des Verkaufs für ein Unternehmen bestimmen und die verschiedenen Kaufmotive mit Beispielen aufzählen und erklären."
+    ]
+   },
+   {
+    "titre": "M207.3 · Lieferanten beurteilen",
+    "objectifs": [
+     "Ich kann die Kriterien zur Beurteilung von Lieferanten besprechen (Qualität, Lieferung, Preis, Ausfallrisiko, Vertrauen, Zuverlässigkeit, Abhängigkeit), sie mit einem Scoring-Raster vergleichen und den besten Lieferanten wählen."
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M207 – La prevendita",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M207",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M207 e 76 esercizi, di cui il 39 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "M207.1 · I bisogni e Maslow",
+    "objectifs": [
+     "So spiegare la definizione di un bisogno e la sua importanza per la vendita, descrivere i cinque livelli della piramide di Maslow con esempi, analizzare quale bisogno è prioritario in una situazione e usarla per rispondere ai clienti."
+    ]
+   },
+   {
+    "titre": "M207.2 · Vendita e motivi d’acquisto",
+    "objectifs": [
+     "So identificare i ruoli dell’acquirente e del venditore e l’obiettivo della vendita per un’azienda, ed elencare e spiegare le diverse motivazioni d’acquisto con esempi."
+    ]
+   },
+   {
+    "titre": "M207.3 · Valutare i fornitori",
+    "objectifs": [
+     "So discutere i criteri di valutazione dei fornitori (qualità, consegna, prezzo, rischio d’insolvenza, fiducia, affidabilità, dipendenza), usare una griglia di valutazione per confrontarli e scegliere il fornitore migliore."
+    ]
+   }
+  ]
+ }
+}

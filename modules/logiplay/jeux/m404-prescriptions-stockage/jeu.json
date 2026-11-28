@@ -1,0 +1,82 @@
+{
+ "module": "M404",
+ "shortcode": "jeu_m404",
+ "titre": "M404 – Prescriptions de stockage",
+ "sous_titre": "Logisticien·ne CFC · Module M404",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M404 (leçons 4.1 à 4.4) et 75 épreuves, dont 36 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "C4.1a · Entrepôts ouverts, couverts et fermés",
+   "objectifs": [
+    "C4.1 J’explique les différents systèmes, formes, types et principes de stockage avec leurs caractéristiques, leurs possibilités et leur rentabilité. (C2) — partie 1 : entrepôts à ciel ouvert, couverts et fermés"
+   ]
+  },
+  {
+   "titre": "C4.1b · Hauteur et structure de l’entrepôt",
+   "objectifs": [
+    "C4.1 J’explique les différents systèmes, formes, types et principes de stockage avec leurs caractéristiques, leurs possibilités et leur rentabilité. (C2) — partie 2 : entrepôts de faible, moyenne et grande hauteur ; entrepôts mécanisés, automatiques et systèmes complexes"
+   ]
+  },
+  {
+   "titre": "C4.1c · Conditions pour un stockage optimal",
+   "objectifs": [
+    "C4.1 J’explique les différents systèmes, formes, types et principes de stockage avec leurs caractéristiques, leurs possibilités et leur rentabilité. (C2) — partie 3 : propreté, spaciosité et netteté"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M404 – Lagervorschriften",
+  "sous_titre": "Logistiker/-in EFZ · Modul M404",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M404 und 75 Aufgaben, davon 36 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "C4.1a · Offene, überdachte und geschlossene Lager",
+    "objectifs": [
+     "C4.1 Ich erkläre die verschiedenen Lagersysteme, -formen, -arten und -grundsätze mit ihren Merkmalen, Möglichkeiten und ihrer Wirtschaftlichkeit. (K2) — Teil 1: Freilager, überdachte und geschlossene Lager"
+    ]
+   },
+   {
+    "titre": "C4.1b · Höhe und Struktur des Lagers",
+    "objectifs": [
+     "C4.1 Ich erkläre die verschiedenen Lagersysteme, -formen, -arten und -grundsätze mit ihren Merkmalen, Möglichkeiten und ihrer Wirtschaftlichkeit. (K2) — Teil 2: Flach-, Mittelhoch- und Hochregallager; mechanisierte, automatische Lager und komplexe Systeme"
+    ]
+   },
+   {
+    "titre": "C4.1c · Bedingungen für eine optimale Lagerung",
+    "objectifs": [
+     "C4.1 Ich erkläre die verschiedenen Lagersysteme, -formen, -arten und -grundsätze mit ihren Merkmalen, Möglichkeiten und ihrer Wirtschaftlichkeit. (K2) — Teil 3: Sauberkeit, Geräumigkeit und Übersichtlichkeit"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M404 – Prescrizioni di stoccaggio",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M404",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M404 e 75 esercizi, di cui il 36 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "C4.1a · Magazzini all’aperto, coperti e chiusi",
+    "objectifs": [
+     "C4.1 Spiego i diversi sistemi, forme, tipi e principi di stoccaggio con le loro caratteristiche, le loro possibilità e la loro redditività. (C2) — parte 1: magazzini all’aperto, coperti e chiusi"
+    ]
+   },
+   {
+    "titre": "C4.1b · Altezza e struttura del magazzino",
+    "objectifs": [
+     "C4.1 Spiego i diversi sistemi, forme, tipi e principi di stoccaggio con le loro caratteristiche, le loro possibilità e la loro redditività. (C2) — parte 2: magazzini a bassa, media e grande altezza; magazzini meccanizzati, automatici e sistemi complessi"
+    ]
+   },
+   {
+    "titre": "C4.1c · Condizioni per uno stoccaggio ottimale",
+    "objectifs": [
+     "C4.1 Spiego i diversi sistemi, forme, tipi e principi di stoccaggio con le loro caratteristiche, le loro possibilità e la loro redditività. (C2) — parte 3: pulizia, spaziosità e ordine"
+    ]
+   }
+  ]
+ }
+}

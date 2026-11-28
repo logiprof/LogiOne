@@ -1,0 +1,82 @@
+{
+ "module": "M110",
+ "shortcode": "jeu_m110",
+ "titre": "M110 – Définition de la gestion des marchandises",
+ "sous_titre": "Logisticien·ne CFC · Module M110",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M110 (leçons 10.1 à 10.6) et 82 épreuves, dont 33 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "G1.2 · Les données de base",
+   "objectifs": [
+    "Je décris la structure, l’importance et l’utilité des données de base des marchandises. (C2)"
+   ]
+  },
+  {
+   "titre": "G3.6 · Calculer stockage et transport",
+   "objectifs": [
+    "Je calcule, à l’aide de données de base, les principes de base pour le stockage et le transport de marchandises (structure de l’entrepôt, place nécessaire, disponibilités). (C3)"
+   ]
+  },
+  {
+   "titre": "G4.1 · Évaluer les besoins",
+   "objectifs": [
+    "Je décris l’évaluation des besoins en fonction de la consommation (passée) et sur la prévisualisation des besoins futurs à l’aide d’exemples pratiques et j’effectue des calculs simples. (C3)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M110 – Definition der Warenbewirtschaftung",
+  "sous_titre": "Logistiker/-in EFZ · Modul M110",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M110 und 82 Aufgaben, davon 33 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "G1.2 · Die Stammdaten",
+    "objectifs": [
+     "Ich beschreibe den Aufbau, die Bedeutung und den Nutzen der Stammdaten von Waren. (K2)"
+    ]
+   },
+   {
+    "titre": "G3.6 · Lagerung und Transport berechnen",
+    "objectifs": [
+     "Ich berechne mithilfe von Stammdaten die Grundlagen für die Lagerung und den Transport von Waren (Lageraufbau, Platzbedarf, Verfügbarkeiten). (K3)"
+    ]
+   },
+   {
+    "titre": "G4.1 · Den Bedarf ermitteln",
+    "objectifs": [
+     "Ich beschreibe die Bedarfsermittlung aufgrund des (vergangenen) Verbrauchs und die Vorschau auf den künftigen Bedarf anhand von Praxisbeispielen und führe einfache Berechnungen durch. (K3)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M110 – Definizione della gestione delle merci",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M110",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M110 e 82 esercizi, di cui il 33 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "G1.2 · I dati di base",
+    "objectifs": [
+     "Descrivo la struttura, l’importanza e l’utilità dei dati di base delle merci. (C2)"
+    ]
+   },
+   {
+    "titre": "G3.6 · Calcolare stoccaggio e trasporto",
+    "objectifs": [
+     "Calcolo, con l’aiuto dei dati di base, i principi di base per lo stoccaggio e il trasporto di merci (struttura del magazzino, spazio necessario, disponibilità). (C3)"
+    ]
+   },
+   {
+    "titre": "G4.1 · Valutare il fabbisogno",
+    "objectifs": [
+     "Descrivo la valutazione del fabbisogno in funzione del consumo (passato) e della previsione del fabbisogno futuro con l’aiuto di esempi pratici ed effettuo calcoli semplici. (C3)"
+    ]
+   }
+  ]
+ }
+}

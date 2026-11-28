@@ -1,0 +1,82 @@
+{
+ "module": "M310",
+ "shortcode": "jeu_m310",
+ "titre": "M310 – Préparation à la mise en stock",
+ "sous_titre": "Logisticien·ne CFC · Module M310",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M310 (leçons 10.1 à 10.3) et 75 épreuves, dont 36 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "M310.1 · Préparer la mise en stock",
+   "objectifs": [
+    "Je peux expliquer les différentes étapes de la préparation à la mise en stock, identifier les situations nécessitant un reconditionnement ou un réemballage, proposer des emballages adaptés aux besoins commerciaux (nouvelle taille, promotion, bundle) et appliquer les exigences des systèmes automatisés de stockage."
+   ]
+  },
+  {
+   "titre": "M310.2 · Enregistrement et fiche de stock",
+   "objectifs": [
+    "Je peux expliquer le processus d’enregistrement des marchandises dans un système ERP, faire la différence entre une réception planifiée et non planifiée, et enregistrer correctement un article en respectant les informations clés comme le numéro d’article, l’unité de vente et le stock maximum."
+   ]
+  },
+  {
+   "titre": "M310.3 · Types de stock et comptabilisation",
+   "objectifs": [
+    "Je peux expliquer les notions de stock disponible, stock réservé, stock bloqué et stock d’assurance qualité, interpréter l’impact des seuils de stock, comptabiliser les entrées et sorties de stock et garantir un suivi précis des mouvements grâce aux outils de gestion informatisée."
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M310 – Vorbereitung zur Einlagerung",
+  "sous_titre": "Logistiker/-in EFZ · Modul M310",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M310 und 75 Aufgaben, davon 36 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "M310.1 · Die Einlagerung vorbereiten",
+    "objectifs": [
+     "Ich kann die verschiedenen Schritte der Vorbereitung zur Einlagerung erklären, Situationen erkennen, die ein Umpacken oder Neuverpacken verlangen, verkaufsgerechte Verpackungen vorschlagen (neue Grösse, Aktion, Bundle) und die Anforderungen automatischer Lagersysteme anwenden."
+    ]
+   },
+   {
+    "titre": "M310.2 · Erfassung und Lagerkarte",
+    "objectifs": [
+     "Ich kann den Ablauf der Warenerfassung in einem ERP-System erklären, den Unterschied zwischen geplantem und ungeplantem Wareneingang machen und einen Artikel korrekt erfassen, unter Beachtung der wichtigen Angaben wie Artikelnummer, Verkaufseinheit und Höchstbestand."
+    ]
+   },
+   {
+    "titre": "M310.3 · Bestandsarten und Buchung",
+    "objectifs": [
+     "Ich kann die Begriffe verfügbarer, reservierter, gesperrter und QS-Bestand erklären, die Wirkung der Bestandsgrenzen deuten, Lagerzu- und -abgänge buchen und mit den Informatikmitteln eine genaue Verfolgung der Bewegungen sichern."
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M310 – Preparazione all’immagazzinamento",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M310",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M310 e 75 esercizi, di cui il 36 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "M310.1 · Preparare l’immagazzinamento",
+    "objectifs": [
+     "So spiegare le diverse tappe della preparazione all’immagazzinamento, identificare le situazioni che richiedono un ricondizionamento o un reimballaggio, proporre imballaggi adatti ai bisogni commerciali (nuova dimensione, promozione, bundle) e applicare le esigenze dei sistemi automatizzati di stoccaggio."
+    ]
+   },
+   {
+    "titre": "M310.2 · Registrazione e scheda di magazzino",
+    "objectifs": [
+     "So spiegare il processo di registrazione delle merci in un sistema ERP, distinguere tra una ricezione pianificata e non pianificata e registrare correttamente un articolo rispettando le informazioni chiave come il numero d’articolo, l’unità di vendita e la scorta massima."
+    ]
+   },
+   {
+    "titre": "M310.3 · Tipi di scorta e contabilizzazione",
+    "objectifs": [
+     "So spiegare le nozioni di scorta disponibile, scorta riservata, scorta bloccata e scorta di garanzia della qualità, interpretare l’impatto delle soglie di scorta, contabilizzare le entrate e le uscite di magazzino e garantire un seguito preciso dei movimenti grazie agli strumenti di gestione informatizzata."
+    ]
+   }
+  ]
+ }
+}

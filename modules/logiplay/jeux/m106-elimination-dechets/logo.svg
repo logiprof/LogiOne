@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs><clipPath id="r"><rect width="256" height="256" rx="40"/></clipPath></defs>
+  <g clip-path="url(#r)"><rect width="256" height="256" fill="#313a45"/><rect width="256" height="16" fill="#067030"/></g>
+  <g transform="translate(48 52) scale(6.6)"><path d="M7 19H4.5a1.5 1.5 0 0 1-1.3-2.2L5 13.5M12 4.5a1.5 1.5 0 0 1 2.6 0L17 8.5M17 19h2.5a1.5 1.5 0 0 0 1.3-2.2L19 13.5" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 16l-2 3 2 3M3 10l2 3.5 3.5-1M15 7.5l2 1 1-3.5" fill="none" stroke="#ffffff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <rect x="186" y="186" width="34" height="34" rx="6" fill="#f5c400"/>
+  <rect x="146" y="196" width="30" height="24" rx="5" fill="#2fae5f"/>
+</svg>

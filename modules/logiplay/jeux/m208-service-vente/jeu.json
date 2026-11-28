@@ -1,0 +1,82 @@
+{
+ "module": "M208",
+ "shortcode": "jeu_m208",
+ "titre": "M208 – Le service à la vente",
+ "sous_titre": "Logisticien·ne CFC · Module M208",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M208 (leçons 8.1 à 8.8) et 77 épreuves, dont 34 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "M208.1 · Inciter à acheter",
+   "objectifs": [
+    "Je peux expliquer les motivations qui influencent le comportement d’achat, utiliser la psychologie de vente (hauteur des yeux, odeurs), gérer les incitations (timbres, points, coupons) et mettre en œuvre la promotion des ventes (réductions, offres, démonstrations, ventes additionnelles)."
+   ]
+  },
+  {
+   "titre": "M208.2 · Situations et entretiens de vente",
+   "objectifs": [
+    "Je peux distinguer les besoins des clients lors d’achats quotidiens et lors d’achats nécessitant des conseils spécialisés, et adapter mon approche de vente (entretien de vente, face à face, téléphone)."
+   ]
+  },
+  {
+   "titre": "M208.3 · Contrat de vente et CGV",
+   "objectifs": [
+    "Je comprends les droits et obligations du contrat de vente, les conditions générales de vente et les procédures de résiliation, et je peux les appliquer dans des situations réelles."
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M208 – Der Service beim Verkauf",
+  "sous_titre": "Logistiker/-in EFZ · Modul M208",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M208 und 77 Aufgaben, davon 34 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "M208.1 · Zum Kauf anregen",
+    "objectifs": [
+     "Ich kann die Motive erklären, die das Kaufverhalten beeinflussen, die Verkaufspsychologie nutzen (Augenhöhe, Gerüche), Kaufanreize steuern (Rabattmarken, Punkte, Gutscheine) und die Verkaufsförderung umsetzen (Rabatte, Angebote, Vorführungen, Zusatzverkäufe)."
+    ]
+   },
+   {
+    "titre": "M208.2 · Verkaufssituationen und Verkaufsgespräche",
+    "objectifs": [
+     "Ich kann die Bedürfnisse der Kunden bei Alltagskäufen und bei beratungsintensiven Käufen unterscheiden und meinen Verkaufsansatz anpassen (Verkaufsgespräch, persönlich, Telefon)."
+    ]
+   },
+   {
+    "titre": "M208.3 · Kaufvertrag und AGB",
+    "objectifs": [
+     "Ich verstehe die Rechte und Pflichten aus dem Kaufvertrag, die allgemeinen Geschäftsbedingungen und die Verfahren zur Auflösung und kann sie in realen Situationen anwenden."
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M208 – Il servizio di vendita",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M208",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M208 e 77 esercizi, di cui il 34 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "M208.1 · Incitare all’acquisto",
+    "objectifs": [
+     "So spiegare le motivazioni che influenzano il comportamento d’acquisto, usare la psicologia della vendita (altezza degli occhi, odori), gestire gli incentivi (bollini, punti, buoni) e attuare la promozione delle vendite (riduzioni, offerte, dimostrazioni, vendite aggiuntive)."
+    ]
+   },
+   {
+    "titre": "M208.2 · Situazioni e colloqui di vendita",
+    "objectifs": [
+     "So distinguere i bisogni dei clienti negli acquisti quotidiani e negli acquisti che richiedono una consulenza specializzata, e adattare il mio approccio di vendita (colloquio di vendita, faccia a faccia, telefono)."
+    ]
+   },
+   {
+    "titre": "M208.3 · Contratto di vendita e CGV",
+    "objectifs": [
+     "Capisco i diritti e gli obblighi del contratto di vendita, le condizioni generali di vendita e le procedure di disdetta, e so applicarli in situazioni reali."
+    ]
+   }
+  ]
+ }
+}

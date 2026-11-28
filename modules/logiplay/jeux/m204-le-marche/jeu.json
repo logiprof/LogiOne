@@ -1,0 +1,154 @@
+{
+ "module": "M204",
+ "shortcode": "jeu_m204",
+ "titre": "M204 – Le marché",
+ "sous_titre": "Logisticien·ne CFC · Module M204",
+ "duree": "10 min par série",
+ "description": "7 objectifs du module M204 (leçons 4 à 4.3) et 175 épreuves, dont 34 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "M204.1 · L’étude de marché",
+   "objectifs": [
+    "Je peux analyser l’importance de l’étude de marché pour les entreprises, en identifiant les informations nécessaires à la prise de décision et en décrivant les méthodes utilisées pour recueillir ces données."
+   ]
+  },
+  {
+   "titre": "M204.2 · Le besoin",
+   "objectifs": [
+    "Je peux expliquer le concept de besoin dans la création d’un marché, en décrivant comment il influence la demande et en donnant des exemples de besoins spécifiques ayant conduit à la création de nouveaux produits ou services."
+   ]
+  },
+  {
+   "titre": "M204.3 · Les formes de marché",
+   "objectifs": [
+    "Je peux comparer les types de marchés (monopole, oligopole, polypole) en expliquant leurs caractéristiques et en évaluant leur impact sur la concurrence et les stratégies des entreprises."
+   ]
+  },
+  {
+   "titre": "M204.4 · Classer les marchés",
+   "objectifs": [
+    "Je peux décrire les critères de classification des marchés, tels que les objets échangés, les fonctions et l’accès, en donnant des exemples concrets pour chaque catégorie."
+   ]
+  },
+  {
+   "titre": "M204.5 · La taille du marché",
+   "objectifs": [
+    "Je peux expliquer les défis logistiques liés à la taille d’un marché, en comparant les spécificités des marchés locaux, régionaux, nationaux et globaux."
+   ]
+  },
+  {
+   "titre": "M204.6 · Les marchés fermés",
+   "objectifs": [
+    "Je peux décrire les mécanismes d’accès aux marchés fermés, en expliquant les restrictions telles que les licences, concessions et exigences de capital minimum."
+   ]
+  },
+  {
+   "titre": "M204.7 · Le monopole",
+   "objectifs": [
+    "Je peux analyser les causes et les conséquences d’un monopole sur un marché, en expliquant comment il influence les prix et les stratégies des entreprises concurrentes."
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M204 – Der Markt",
+  "sous_titre": "Logistiker/-in EFZ · Modul M204",
+  "duree": "10 Min. pro Serie",
+  "description": "7 Lernziele des Moduls M204 und 175 Aufgaben, davon 34 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "M204.1 · Die Marktforschung",
+    "objectifs": [
+     "Ich kann die Bedeutung der Marktforschung für Unternehmen analysieren, indem ich die für Entscheide nötigen Informationen bestimme und die Methoden beschreibe, mit denen diese Daten erhoben werden."
+    ]
+   },
+   {
+    "titre": "M204.2 · Das Bedürfnis",
+    "objectifs": [
+     "Ich kann den Begriff des Bedürfnisses bei der Entstehung eines Marktes erklären, beschreiben, wie es die Nachfrage beeinflusst, und Beispiele spezifischer Bedürfnisse nennen, die zu neuen Produkten oder Dienstleistungen geführt haben."
+    ]
+   },
+   {
+    "titre": "M204.3 · Die Marktformen",
+    "objectifs": [
+     "Ich kann die Marktformen (Monopol, Oligopol, Polypol) vergleichen, ihre Merkmale erklären und ihre Wirkung auf die Konkurrenz und die Strategien der Unternehmen beurteilen."
+    ]
+   },
+   {
+    "titre": "M204.4 · Märkte einteilen",
+    "objectifs": [
+     "Ich kann die Kriterien zur Einteilung der Märkte beschreiben, wie die gehandelten Objekte, die Funktionen und den Zugang, und für jede Kategorie konkrete Beispiele nennen."
+    ]
+   },
+   {
+    "titre": "M204.5 · Die Grösse des Marktes",
+    "objectifs": [
+     "Ich kann die logistischen Herausforderungen erklären, die mit der Grösse eines Marktes verbunden sind, indem ich die Besonderheiten lokaler, regionaler, nationaler und globaler Märkte vergleiche."
+    ]
+   },
+   {
+    "titre": "M204.6 · Die geschlossenen Märkte",
+    "objectifs": [
+     "Ich kann die Mechanismen des Zugangs zu geschlossenen Märkten beschreiben und Einschränkungen wie Lizenzen, Konzessionen und Mindestkapital erklären."
+    ]
+   },
+   {
+    "titre": "M204.7 · Das Monopol",
+    "objectifs": [
+     "Ich kann Ursachen und Folgen eines Monopols auf einem Markt analysieren und erklären, wie es die Preise und die Strategien der konkurrierenden Unternehmen beeinflusst."
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M204 – Il mercato",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M204",
+  "duree": "10 min per serie",
+  "description": "7 obiettivi del modulo M204 e 175 esercizi, di cui il 34 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "M204.1 · La ricerca di mercato",
+    "objectifs": [
+     "So analizzare l’importanza della ricerca di mercato per le aziende, identificando le informazioni necessarie per prendere decisioni e descrivendo i metodi utilizzati per raccogliere questi dati."
+    ]
+   },
+   {
+    "titre": "M204.2 · Il bisogno",
+    "objectifs": [
+     "So spiegare il concetto di bisogno nella creazione di un mercato, descrivendo come influenza la domanda e dando esempi di bisogni specifici che hanno portato alla creazione di nuovi prodotti o servizi."
+    ]
+   },
+   {
+    "titre": "M204.3 · Le forme di mercato",
+    "objectifs": [
+     "So confrontare i tipi di mercato (monopolio, oligopolio, polipolio) spiegandone le caratteristiche e valutandone l’impatto sulla concorrenza e sulle strategie delle aziende."
+    ]
+   },
+   {
+    "titre": "M204.4 · Classificare i mercati",
+    "objectifs": [
+     "So descrivere i criteri di classificazione dei mercati, come gli oggetti scambiati, le funzioni e l’accesso, dando esempi concreti per ogni categoria."
+    ]
+   },
+   {
+    "titre": "M204.5 · La dimensione del mercato",
+    "objectifs": [
+     "So spiegare le sfide logistiche legate alla dimensione di un mercato, confrontando le specificità dei mercati locali, regionali, nazionali e globali."
+    ]
+   },
+   {
+    "titre": "M204.6 · I mercati chiusi",
+    "objectifs": [
+     "So descrivere i meccanismi di accesso ai mercati chiusi, spiegando le restrizioni come licenze, concessioni ed esigenze di capitale minimo."
+    ]
+   },
+   {
+    "titre": "M204.7 · Il monopolio",
+    "objectifs": [
+     "So analizzare le cause e le conseguenze di un monopolio su un mercato, spiegando come influenza i prezzi e le strategie delle aziende concorrenti."
+    ]
+   }
+  ]
+ }
+}

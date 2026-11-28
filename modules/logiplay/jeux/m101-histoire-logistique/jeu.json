@@ -1,0 +1,100 @@
+{
+ "module": "M101",
+ "shortcode": "jeu_m101",
+ "titre": "M101 – Histoire de la logistique",
+ "sous_titre": "Logisticien·ne CFC · Module M101",
+ "duree": "10 min par série",
+ "description": "4 objectifs du module M101 (leçons 1.1 à 1.3) et 100 épreuves, dont 32 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "M101.1 · La logistique militaire",
+   "objectifs": [
+    "Je peux analyser l’impact de la logistique militaire sur les succès et échecs des campagnes de Napoléon Bonaparte, en décrivant les méthodes utilisées pour le ravitaillement et le transport du matériel de guerre."
+   ]
+  },
+  {
+   "titre": "M101.2 · La Route de la Soie",
+   "objectifs": [
+    "Je peux décrire le rôle de la Route de la Soie dans le commerce entre la Chine et l’Europe, en identifiant les principaux produits échangés et les adaptations logistiques nécessaires pour traverser des déserts et des montagnes."
+   ]
+  },
+  {
+   "titre": "M101.3 · L’informatique",
+   "objectifs": [
+    "Je peux décrire comment l’informatique a transformé la logistique depuis les années 1960, en fournissant des exemples concrets de l’optimisation des chaînes d’approvisionnement et de la gestion en temps réel des stocks."
+   ]
+  },
+  {
+   "titre": "M101.4 · Les innovations",
+   "objectifs": [
+    "Je peux évaluer l’importance des innovations logistiques, telles que le code-barres ou le modèle de conteneur, sur l’efficacité et la traçabilité des chaînes d’approvisionnement modernes."
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M101 – Geschichte der Logistik",
+  "sous_titre": "Logistiker/-in EFZ · Modul M101",
+  "duree": "10 Min. pro Serie",
+  "description": "4 Lernziele des Moduls M101 und 100 Aufgaben, davon 32 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "M101.1 · Die militärische Logistik",
+    "objectifs": [
+     "Ich kann den Einfluss der militärischen Logistik auf Erfolge und Misserfolge der Feldzüge von Napoleon Bonaparte analysieren und die Methoden für die Versorgung und den Transport des Kriegsmaterials beschreiben."
+    ]
+   },
+   {
+    "titre": "M101.2 · Die Seidenstrasse",
+    "objectifs": [
+     "Ich kann die Rolle der Seidenstrasse im Handel zwischen China und Europa beschreiben und dabei die wichtigsten gehandelten Produkte sowie die logistischen Anpassungen zur Durchquerung von Wüsten und Gebirgen nennen."
+    ]
+   },
+   {
+    "titre": "M101.3 · Die Informatik",
+    "objectifs": [
+     "Ich kann beschreiben, wie die Informatik die Logistik seit den 1960er-Jahren verändert hat, und konkrete Beispiele für die Optimierung der Lieferketten und die Echtzeit-Bestandsführung geben."
+    ]
+   },
+   {
+    "titre": "M101.4 · Die Innovationen",
+    "objectifs": [
+     "Ich kann die Bedeutung logistischer Innovationen wie des Strichcodes oder des Containermodells für die Effizienz und die Rückverfolgbarkeit moderner Lieferketten beurteilen."
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M101 – Storia della logistica",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M101",
+  "duree": "10 min per serie",
+  "description": "4 obiettivi del modulo M101 e 100 esercizi, di cui il 32 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "M101.1 · La logistica militare",
+    "objectifs": [
+     "So analizzare l’impatto della logistica militare sui successi e sui fallimenti delle campagne di Napoleone Bonaparte, descrivendo i metodi utilizzati per il rifornimento e il trasporto del materiale bellico."
+    ]
+   },
+   {
+    "titre": "M101.2 · La Via della Seta",
+    "objectifs": [
+     "So descrivere il ruolo della Via della Seta nel commercio tra la Cina e l’Europa, identificando i principali prodotti scambiati e gli adattamenti logistici necessari per attraversare deserti e montagne."
+    ]
+   },
+   {
+    "titre": "M101.3 · L’informatica",
+    "objectifs": [
+     "So descrivere come l’informatica ha trasformato la logistica dagli anni ’60, fornendo esempi concreti dell’ottimizzazione delle catene di approvvigionamento e della gestione in tempo reale delle scorte."
+    ]
+   },
+   {
+    "titre": "M101.4 · Le innovazioni",
+    "objectifs": [
+     "So valutare l’importanza delle innovazioni logistiche, come il codice a barre o il modello di container, per l’efficienza e la tracciabilità delle moderne catene di approvvigionamento."
+    ]
+   }
+  ]
+ }
+}

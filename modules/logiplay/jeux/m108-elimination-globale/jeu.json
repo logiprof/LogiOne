@@ -1,0 +1,82 @@
+{
+ "module": "M108",
+ "shortcode": "jeu_m108",
+ "titre": "M108 – L’élimination globale",
+ "sous_titre": "Logisticien·ne CFC · Module M108",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M108 (leçons 8.1 à 8.3) et 81 épreuves, dont 33 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "M108.1 · Le management environnemental",
+   "objectifs": [
+    "Je décris les composantes d’un système de management environnemental (identification des impacts, audits), ses avantages internes et externes, ainsi que le processus et les avantages de la certification ISO 14001. (C2)"
+   ]
+  },
+  {
+   "titre": "M108.2 · Les problèmes mondiaux",
+   "objectifs": [
+    "Je décris les problèmes environnementaux mondiaux (changement climatique, pénurie d’eau, pollution de l’air, érosion des sols, surpopulation, déforestation, extinction des espèces, déchets plastiques) et leurs effets sur les entreprises de logistique. (C2)"
+   ]
+  },
+  {
+   "titre": "M108.3 · L’Agenda 2030",
+   "objectifs": [
+    "Je décris les objectifs de développement durable de l’Agenda 2030 (notamment eau, énergie et consommation durable), les initiatives des entreprises de logistique pour les atteindre et le rôle de la coopération internationale. (C2)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M108 – Die globale Entsorgung",
+  "sous_titre": "Logistiker/-in EFZ · Modul M108",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M108 und 81 Aufgaben, davon 33 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "M108.1 · Das Umweltmanagement",
+    "objectifs": [
+     "Ich beschreibe die Bestandteile eines Umweltmanagementsystems (Erfassung der Umweltauswirkungen, Audits), seine internen und externen Vorteile sowie den Ablauf und die Vorteile der Zertifizierung nach ISO 14001. (K2)"
+    ]
+   },
+   {
+    "titre": "M108.2 · Die globalen Probleme",
+    "objectifs": [
+     "Ich beschreibe die globalen Umweltprobleme (Klimawandel, Wasserknappheit, Luftverschmutzung, Bodenerosion, Überbevölkerung, Abholzung, Artensterben, Plastikabfälle) und ihre Auswirkungen auf Logistikunternehmen. (K2)"
+    ]
+   },
+   {
+    "titre": "M108.3 · Die Agenda 2030",
+    "objectifs": [
+     "Ich beschreibe die Ziele für nachhaltige Entwicklung der Agenda 2030 (insbesondere Wasser, Energie und nachhaltiger Konsum), die Initiativen von Logistikunternehmen, um sie zu erreichen, und die Rolle der internationalen Zusammenarbeit. (K2)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M108 – Lo smaltimento globale",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M108",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M108 e 81 esercizi, di cui il 33 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "M108.1 · La gestione ambientale",
+    "objectifs": [
+     "Descrivo le componenti di un sistema di gestione ambientale (identificazione degli impatti, audit), i suoi vantaggi interni ed esterni, nonché il processo e i vantaggi della certificazione ISO 14001. (C2)"
+    ]
+   },
+   {
+    "titre": "M108.2 · I problemi mondiali",
+    "objectifs": [
+     "Descrivo i problemi ambientali mondiali (cambiamento climatico, scarsità d’acqua, inquinamento dell’aria, erosione del suolo, sovrappopolazione, deforestazione, estinzione delle specie, rifiuti di plastica) e i loro effetti sulle aziende logistiche. (C2)"
+    ]
+   },
+   {
+    "titre": "M108.3 · L’Agenda 2030",
+    "objectifs": [
+     "Descrivo gli obiettivi di sviluppo sostenibile dell’Agenda 2030 (in particolare acqua, energia e consumo sostenibile), le iniziative delle aziende logistiche per raggiungerli e il ruolo della cooperazione internazionale. (C2)"
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,82 @@
+{
+ "module": "M309",
+ "shortcode": "jeu_m309",
+ "titre": "M309 – Contrôle de la qualité",
+ "sous_titre": "Logisticien·ne CFC · Module M309",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M309 (leçons 9.1 à 9.7) et 75 épreuves, dont 36 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "c2.11a · La qualité et ses niveaux",
+   "objectifs": [
+    "c2.11 Je décris les instruments de contrôle de la qualité que sont l’échantillonnage, le contrôle complet, le contrôle par échantillonnage multiple, le contrôle des fonctions, le prélèvement d’échantillons, je les exécute à l’aide d’une étude de cas et j’évalue les résultats. (C3) — partie 1 : assurance qualité, définition, critères et niveaux de qualité"
+   ]
+  },
+  {
+   "titre": "c2.11b · Techniques de contrôle",
+   "objectifs": [
+    "c2.11 Je décris les instruments de contrôle de la qualité que sont l’échantillonnage, le contrôle complet, le contrôle par échantillonnage multiple, le contrôle des fonctions, le prélèvement d’échantillons, je les exécute à l’aide d’une étude de cas et j’évalue les résultats. (C3) — partie 2 : contrôle complet, échantillonnage simple et multiple, contrôle du fonctionnement"
+   ]
+  },
+  {
+   "titre": "g1.6 · Prélèvement d’échantillons",
+   "objectifs": [
+    "g1.6 Je décris le processus du prélèvement d’échantillons et son importance pour le client. (C3) — avec c1.7 (critères d’évaluation de l’état des marchandises)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M309 – Qualitätskontrolle",
+  "sous_titre": "Logistiker/-in EFZ · Modul M309",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M309 und 75 Aufgaben, davon 36 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "c2.11a · Die Qualität und ihre Stufen",
+    "objectifs": [
+     "c2.11 Ich beschreibe die Instrumente der Qualitätskontrolle (Stichprobe, Vollkontrolle, mehrfache Stichprobenprüfung, Funktionskontrolle, Musterentnahme), führe sie anhand einer Fallstudie aus und beurteile die Ergebnisse. (K3) — Teil 1: Qualitätssicherung, Definition, Kriterien und Qualitätsstufen"
+    ]
+   },
+   {
+    "titre": "c2.11b · Kontrolltechniken",
+    "objectifs": [
+     "c2.11 Ich beschreibe die Instrumente der Qualitätskontrolle (Stichprobe, Vollkontrolle, mehrfache Stichprobenprüfung, Funktionskontrolle, Musterentnahme), führe sie anhand einer Fallstudie aus und beurteile die Ergebnisse. (K3) — Teil 2: Vollkontrolle, einfache und mehrfache Stichprobe, Funktionskontrolle"
+    ]
+   },
+   {
+    "titre": "g1.6 · Musterentnahme",
+    "objectifs": [
+     "g1.6 Ich beschreibe den Ablauf der Musterentnahme und ihre Bedeutung für den Kunden. (K3) — mit c1.7 (Kriterien zur Beurteilung des Zustands der Waren)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M309 – Controllo della qualità",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M309",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M309 e 75 esercizi, di cui il 36 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "c2.11a · La qualità e i suoi livelli",
+    "objectifs": [
+     "c2.11 Descrivo gli strumenti di controllo della qualità che sono il campionamento, il controllo completo, il controllo per campionamento multiplo, il controllo delle funzioni, il prelievo di campioni, li eseguo con l’aiuto di uno studio di caso e ne valuto i risultati. (C3) — parte 1: garanzia della qualità, definizione, criteri e livelli di qualità"
+    ]
+   },
+   {
+    "titre": "c2.11b · Tecniche di controllo",
+    "objectifs": [
+     "c2.11 Descrivo gli strumenti di controllo della qualità che sono il campionamento, il controllo completo, il controllo per campionamento multiplo, il controllo delle funzioni, il prelievo di campioni, li eseguo con l’aiuto di uno studio di caso e ne valuto i risultati. (C3) — parte 2: controllo completo, campionamento semplice e multiplo, controllo di funzionamento"
+    ]
+   },
+   {
+    "titre": "g1.6 · Prelievo di campioni",
+    "objectifs": [
+     "g1.6 Descrivo il processo di prelievo di campioni e la sua importanza per il cliente. (C3) — con c1.7 (criteri di valutazione dello stato delle merci)"
+    ]
+   }
+  ]
+ }
+}

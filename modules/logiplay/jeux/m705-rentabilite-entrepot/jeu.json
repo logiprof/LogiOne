@@ -1,0 +1,82 @@
+{
+ "module": "M705",
+ "shortcode": "jeu_m705",
+ "titre": "M705 – La rentabilité de l’entrepôt",
+ "sous_titre": "Logisticien·ne CFC · Module M705",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M705 (leçons 5.1 à 5.4) et 86 épreuves, dont 33 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "G2.10 · Coûts et taux de couverture",
+   "objectifs": [
+    "G2.10 J’explique les facteurs de coûts d’un emplacement de stockage et calcule à l’aide d’exemples les coûts des surfaces de stockage (coûts fixes et variables). (C3)"
+   ]
+  },
+  {
+   "titre": "G4.2 · G4.3 · Stocks minimum, maximum, point de commande",
+   "objectifs": [
+    "G4.2 J’explique l’origine d’un stock de sécurité (= stock minimum) et d’un stock maximum (capacités de stockage, consommation, fiabilité de livraison, qualité des fournisseurs, stock moyen, rotation des stocks, délais de réapprovisionnement) et j’effectue des calculs à cet effet. (C3) · G4.3 J’explique l’importance du point de commande, le calcule sur la base de la consommation à l’aide d’un exemple de cas et en déduis les conséquences pour l’approvisionnement. (C3)"
+   ]
+  },
+  {
+   "titre": "G4.9 · Écarts de stock et minimisation des coûts",
+   "objectifs": [
+    "G4.9 Je calcule les stocks de marchandises effectifs à déclarés et le stock minimal et j’en déduis les résultats des mesures à prendre. (C4)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M705 – Die Rentabilität des Lagers",
+  "sous_titre": "Logistiker/-in EFZ · Modul M705",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M705 und 86 Aufgaben, davon 33 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "G2.10 · Kosten und Kostendeckungsgrad",
+    "objectifs": [
+     "G2.10 Ich erkläre die Kostenfaktoren eines Lagerstandorts und berechne anhand von Beispielen die Kosten der Lagerflächen (fixe und variable Kosten). (K3)"
+    ]
+   },
+   {
+    "titre": "G4.2 · G4.3 · Mindestbestand, Höchstbestand, Bestellpunkt",
+    "objectifs": [
+     "G4.2 Ich erkläre die Herkunft eines Sicherheitsbestands (= Mindestbestand) und eines Höchstbestands (Lagerkapazitäten, Verbrauch, Liefertreue, Qualität der Lieferanten, Durchschnittsbestand, Lagerumschlag, Wiederbeschaffungszeiten) und führe dazu Berechnungen durch. (K3) · G4.3 Ich erkläre die Bedeutung des Bestellpunkts, berechne ihn auf Grundlage des Verbrauchs anhand eines Fallbeispiels und leite daraus die Folgen für die Beschaffung ab. (K3)"
+    ]
+   },
+   {
+    "titre": "G4.9 · Bestandsabweichungen und Kostenminimierung",
+    "objectifs": [
+     "G4.9 Ich berechne die tatsächlichen und gemeldeten Warenbestände und den Mindestbestand und leite daraus die Ergebnisse der zu treffenden Massnahmen ab. (K4)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M705 – La redditività del magazzino",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M705",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M705 e 86 esercizi, di cui il 33 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "G2.10 · Costi e tasso di copertura",
+    "objectifs": [
+     "G2.10 Spiego i fattori di costo di un’ubicazione di stoccaggio e calcolo con l’aiuto di esempi i costi delle superfici di stoccaggio (costi fissi e variabili). (C3)"
+    ]
+   },
+   {
+    "titre": "G4.2 · G4.3 · Scorte minime, massime, punto di riordino",
+    "objectifs": [
+     "G4.2 Spiego l’origine di una scorta di sicurezza (= scorta minima) e di una scorta massima (capacità di stoccaggio, consumo, affidabilità di consegna, qualità dei fornitori, stock medio, rotazione delle scorte, termini di riapprovvigionamento) ed effettuo calcoli a questo scopo. (C3) · G4.3 Spiego l’importanza del punto di riordino, lo calcolo sulla base del consumo con l’aiuto di un esempio di caso e ne deduco le conseguenze per l’approvvigionamento. (C3)"
+    ]
+   },
+   {
+    "titre": "G4.9 · Differenze di stock e minimizzazione dei costi",
+    "objectifs": [
+     "G4.9 Calcolo gli stock di merci effettivi e dichiarati e la scorta minima e ne deduco i risultati delle misure da prendere. (C4)"
+    ]
+   }
+  ]
+ }
+}

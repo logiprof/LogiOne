@@ -1,0 +1,82 @@
+{
+ "module": "M501",
+ "shortcode": "jeu_m501",
+ "titre": "M501 – La production",
+ "sous_titre": "Logisticien·ne CFC · Module M501",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M501 (leçons 5.1 à 5.4) et 75 épreuves, dont 36 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "PR1 · Définition et facteurs de production",
+   "objectifs": [
+    "Je peux définir le terme production et distinguer les trois grandes catégories de production (biens matériels, énergies, services). (C1) — Je comprends comment les facteurs de production (travail humain, moyens techniques, matières premières) transforment des inputs en outputs dans un processus de création de valeur. (C2)"
+   ]
+  },
+  {
+   "titre": "PR2 · Objectifs de la production",
+   "objectifs": [
+    "Je peux énumérer les principaux objectifs d’une production efficace (coûts, rendement, qualité, délais, charge, satisfaction) et expliquer leur importance. (C2) — J’analyse une situation de production et propose des actions pour améliorer le rendement, la qualité et le respect des délais. (C3)"
+   ]
+  },
+  {
+   "titre": "PR3 · Développement et structure du produit",
+   "objectifs": [
+    "Je peux décrire les cinq étapes du développement d’un produit (idée, études, prototype, modèle de série, commercialisation). (C1) — Je comprends le rôle de la planification entre les services. (C2) — J’explique la structure d’un produit, sa standardisation et le bon moment pour personnaliser. (C2-C3)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M501 – Die Produktion",
+  "sous_titre": "Logistiker/-in EFZ · Modul M501",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M501 und 75 Aufgaben, davon 36 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "PR1 · Definition und Produktionsfaktoren",
+    "objectifs": [
+     "Ich kann den Begriff Produktion definieren und die drei grossen Produktionskategorien (Sachgüter, Energien, Dienstleistungen) unterscheiden. (K1) — Ich verstehe, wie die Produktionsfaktoren (menschliche Arbeit, technische Mittel, Rohstoffe) in einem Wertschöpfungsprozess Inputs in Outputs umwandeln. (K2)"
+    ]
+   },
+   {
+    "titre": "PR2 · Ziele der Produktion",
+    "objectifs": [
+     "Ich kann die wichtigsten Ziele einer wirksamen Produktion (Kosten, Leistung, Qualität, Fristen, Auslastung, Zufriedenheit) aufzählen und ihre Bedeutung erklären. (K2) — Ich analysiere eine Produktionssituation und schlage Massnahmen zur Verbesserung von Leistung, Qualität und Termintreue vor. (K3)"
+    ]
+   },
+   {
+    "titre": "PR3 · Entwicklung und Struktur des Produkts",
+    "objectifs": [
+     "Ich kann die fünf Schritte der Produktentwicklung beschreiben (Idee, Studien, Prototyp, Serienmodell, Vermarktung). (K1) — Ich verstehe die Rolle der Planung zwischen den Abteilungen. (K2) — Ich erkläre die Struktur eines Produkts, seine Standardisierung und den richtigen Zeitpunkt für Individualisierung. (K2–K3)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M501 – La produzione",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M501",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M501 e 75 esercizi, di cui il 36 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "PR1 · Definizione e fattori di produzione",
+    "objectifs": [
+     "So definire il termine produzione e distinguere le tre grandi categorie di produzione (beni materiali, energie, servizi). (C1) — Capisco come i fattori di produzione (lavoro umano, mezzi tecnici, materie prime) trasformano input in output in un processo di creazione di valore. (C2)"
+    ]
+   },
+   {
+    "titre": "PR2 · Obiettivi della produzione",
+    "objectifs": [
+     "So elencare gli obiettivi principali di una produzione efficiente (costi, rendimento, qualità, termini, carico, soddisfazione) e spiegarne l’importanza. (C2) — Analizzo una situazione di produzione e propongo azioni per migliorare il rendimento, la qualità e il rispetto dei termini. (C3)"
+    ]
+   },
+   {
+    "titre": "PR3 · Sviluppo e struttura del prodotto",
+    "objectifs": [
+     "So descrivere le cinque tappe dello sviluppo di un prodotto (idea, studi, prototipo, modello di serie, commercializzazione). (C1) — Capisco il ruolo della pianificazione tra i servizi. (C2) — Spiego la struttura di un prodotto, la sua standardizzazione e il momento giusto per personalizzare. (C2-C3)"
+    ]
+   }
+  ]
+ }
+}

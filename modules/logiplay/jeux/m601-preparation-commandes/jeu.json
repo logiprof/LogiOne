@@ -1,0 +1,82 @@
+{
+ "module": "M601",
+ "shortcode": "jeu_m601",
+ "titre": "M601 – La préparation de commandes",
+ "sous_titre": "Logisticien·ne CFC · Module M601",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M601 (leçons 1.1 à 1.3) et 75 épreuves, dont 35 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "PC1 · Bases de la préparation",
+   "objectifs": [
+    "Je distingue les types de préparation (statique, dynamique), les modes de déplacement (1D, 2D), de prélèvement (manuel, automatique), de transfert (centralisé, décentralisé), de préparation des informations (batch, temps réel) et la préparation par un ou plusieurs secteurs. (leçon 1.1)"
+   ]
+  },
+  {
+   "titre": "PC2 · Modes et organisation",
+   "objectifs": [
+    "Je compare les modes de préparation et leur organisation opérationnelle : orienté commande ou orienté article, en série ou en parallèle, Pick-and-Pack, préparation par allée de prélèvement ou sérielle. (leçon 1.2)"
+   ]
+  },
+  {
+   "titre": "PC3 · Préparation assistée",
+   "objectifs": [
+    "Je décris les solutions technologiques de préparation de commandes assistée (Pick-by-Scan, Pick-by-Voice, Pick-by-Light, Pick-by-Vision), leurs avantages et leurs inconvénients. (leçon 1.3)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M601 – Die Kommissionierung",
+  "sous_titre": "Logistiker/-in EFZ · Modul M601",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M601 und 75 Aufgaben, davon 35 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "PC1 · Grundlagen der Kommissionierung",
+    "objectifs": [
+     "Ich unterscheide die Kommissionierarten (statisch, dynamisch), die Fortbewegung (1D, 2D), die Entnahme (manuell, automatisch), die Abgabe (zentral, dezentral), die Informationsaufbereitung (Batch, Echtzeit) und die Kommissionierung in einem oder mehreren Bereichen. (Lektion 1.1)"
+    ]
+   },
+   {
+    "titre": "PC2 · Arten und Organisation",
+    "objectifs": [
+     "Ich vergleiche die Kommissionierarten und ihre betriebliche Organisation: auftrags- oder artikelorientiert, seriell oder parallel, Pick-and-Pack, Kommissionierung nach Entnahmegang oder seriell. (Lektion 1.2)"
+    ]
+   },
+   {
+    "titre": "PC3 · Unterstützte Kommissionierung",
+    "objectifs": [
+     "Ich beschreibe die technischen Lösungen der unterstützten Kommissionierung (Pick-by-Scan, Pick-by-Voice, Pick-by-Light, Pick-by-Vision) sowie ihre Vor- und Nachteile. (Lektion 1.3)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M601 – La preparazione degli ordini",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M601",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M601 e 75 esercizi, di cui il 35 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "PC1 · Basi della preparazione",
+    "objectifs": [
+     "Distinguo i tipi di preparazione (statica, dinamica), i modi di spostamento (1D, 2D), di prelievo (manuale, automatico), di trasferimento (centralizzato, decentralizzato), di preparazione delle informazioni (batch, tempo reale) e la preparazione per uno o più settori. (lezione 1.1)"
+    ]
+   },
+   {
+    "titre": "PC2 · Modalità e organizzazione",
+    "objectifs": [
+     "Confronto le modalità di preparazione e la loro organizzazione operativa: orientata all’ordine o all’articolo, in serie o in parallelo, Pick-and-Pack, preparazione per corridoio di prelievo o seriale. (lezione 1.2)"
+    ]
+   },
+   {
+    "titre": "PC3 · Preparazione assistita",
+    "objectifs": [
+     "Descrivo le soluzioni tecnologiche di preparazione degli ordini assistita (Pick-by-Scan, Pick-by-Voice, Pick-by-Light, Pick-by-Vision), i loro vantaggi e i loro svantaggi. (lezione 1.3)"
+    ]
+   }
+  ]
+ }
+}

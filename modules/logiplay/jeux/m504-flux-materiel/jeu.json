@@ -1,0 +1,100 @@
+{
+ "module": "M504",
+ "shortcode": "jeu_m504",
+ "titre": "M504 – Le flux de matériel",
+ "sous_titre": "Logisticien·ne CFC · Module M504",
+ "duree": "10 min par série",
+ "description": "4 objectifs du module M504 (leçons 4.1 à 4.8) et 100 épreuves, dont 32 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "B3.4a · Flux de matériel et Kanban",
+   "objectifs": [
+    "B3.4 J’explique le principe des systèmes d’indicateurs de l’entreprise et leur importance pour l’entreprise et pour l’exécution des mandats. (C2) — partie : flux internes et externes, Kanban comme indicateur de réapprovisionnement"
+   ]
+  },
+  {
+   "titre": "B3.4b·B5.1 · Two-Bin, commande optique et saisie",
+   "objectifs": [
+    "B3.4 : Two-Bin et systèmes optiques comme indicateurs de commande. (C2) — B5.1 J’explique le but et l’utilité d’une saisie correcte des temps de travail et de processus et montre les possibilités d’évaluation des données. (C2)"
+   ]
+  },
+  {
+   "titre": "B3.4c·B4.4 · Juste-à-temps et Just in Sequence",
+   "objectifs": [
+    "B3.4 : JIT et JIS nécessitent des indicateurs précis pour coordonner les flux. (C2) — B4.4 Je décris des mesures pour améliorer l’efficacité des ressources et de l’énergie : réduction des stocks grâce au JIT. (C2) — avec B5.1 : saisie des délais"
+   ]
+  },
+  {
+   "titre": "B4.4 · Automatisation à faible coût et Jidoka",
+   "objectifs": [
+    "B4.4 Je décris, à l’aide d’un exemple pratique, des mesures concrètes pour améliorer l’efficacité des ressources et de l’énergie dans le processus logistique (LCA, Jidoka, trajets simplifiés). (C2)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M504 – Der Materialfluss",
+  "sous_titre": "Logistiker/-in EFZ · Modul M504",
+  "duree": "10 Min. pro Serie",
+  "description": "4 Lernziele des Moduls M504 und 100 Aufgaben, davon 32 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "B3.4a · Materialfluss und Kanban",
+    "objectifs": [
+     "B3.4 Ich erkläre das Prinzip der Kennzahlensysteme des Betriebs und ihre Bedeutung für den Betrieb und für die Ausführung der Aufträge. (K2) — Teil: interne und externe Flüsse, Kanban als Nachschubsignal"
+    ]
+   },
+   {
+    "titre": "B3.4b·B5.1 · Zwei-Behälter-System, optische Bestellung und Erfassung",
+    "objectifs": [
+     "B3.4: Zwei-Behälter-System und optische Systeme als Bestellsignale. (K2) — B5.1 Ich erkläre Zweck und Nutzen einer korrekten Erfassung der Arbeits- und Prozesszeiten und zeige Möglichkeiten der Datenauswertung. (K2)"
+    ]
+   },
+   {
+    "titre": "B3.4c·B4.4 · Just-in-Time und Just-in-Sequence",
+    "objectifs": [
+     "B3.4: JIT und JIS verlangen genaue Kennzahlen zur Abstimmung der Flüsse. (K2) — B4.4 Ich beschreibe Massnahmen zur Verbesserung der Ressourcen- und Energieeffizienz: Bestandssenkung dank JIT. (K2) — mit B5.1: Erfassung der Fristen"
+    ]
+   },
+   {
+    "titre": "B4.4 · Kostengünstige Automatisierung und Jidoka",
+    "objectifs": [
+     "B4.4 Ich beschreibe anhand eines Praxisbeispiels konkrete Massnahmen zur Verbesserung der Ressourcen- und Energieeffizienz im logistischen Prozess (LCA, Jidoka, vereinfachte Wege). (K2)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M504 – Il flusso dei materiali",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M504",
+  "duree": "10 min per serie",
+  "description": "4 obiettivi del modulo M504 e 100 esercizi, di cui il 32 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "B3.4a · Flusso dei materiali e Kanban",
+    "objectifs": [
+     "B3.4 Spiego il principio dei sistemi di indicatori dell’azienda e la loro importanza per l’azienda e per l’esecuzione dei mandati. (C2) — parte: flussi interni ed esterni, Kanban come indicatore di riapprovvigionamento"
+    ]
+   },
+   {
+    "titre": "B3.4b·B5.1 · Two-Bin, ordinazione ottica e registrazione",
+    "objectifs": [
+     "B3.4: Two-Bin e sistemi ottici come indicatori d’ordinazione. (C2) — B5.1 Spiego lo scopo e l’utilità di una registrazione corretta dei tempi di lavoro e di processo e mostro le possibilità di valutazione dei dati. (C2)"
+    ]
+   },
+   {
+    "titre": "B3.4c·B4.4 · Just in time e Just in Sequence",
+    "objectifs": [
+     "B3.4: JIT e JIS richiedono indicatori precisi per coordinare i flussi. (C2) — B4.4 Descrivo misure per migliorare l’efficienza delle risorse e dell’energia: riduzione delle scorte grazie al JIT. (C2) — con B5.1: registrazione dei termini"
+    ]
+   },
+   {
+    "titre": "B4.4 · Automazione a basso costo e Jidoka",
+    "objectifs": [
+     "B4.4 Descrivo, con l’aiuto di un esempio pratico, misure concrete per migliorare l’efficienza delle risorse e dell’energia nel processo logistico (LCA, Jidoka, tragitti semplificati). (C2)"
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,118 @@
+{
+ "module": "M109",
+ "shortcode": "jeu_m109",
+ "titre": "M109 – Accès et protection des données",
+ "sous_titre": "Logisticien·ne CFC · Module M109",
+ "duree": "10 min par série",
+ "description": "5 objectifs du module M109 (leçons 9.1 à 9.5) et 139 épreuves, dont 37 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "A2.2 · Autorisations d’accès",
+   "objectifs": [
+    "J’explique le principe des autorisations d’accès aux bâtiments et aux installations ainsi que les droits d’accès aux applications et je décris les systèmes utilisés dans mon entreprise pour faire respecter ces autorisations et ces droits. (C2)"
+   ]
+  },
+  {
+   "titre": "A2.3 · Sécurité informatique",
+   "objectifs": [
+    "J’explique comment j’utilise systématiquement les moyens informatiques et comment je protège l’entreprise des dangers liés notamment à l’utilisation d’Internet (sécurité des données, attaques de pirates, virus, phishing, etc.). (C2)"
+   ]
+  },
+  {
+   "titre": "B1.5 · Secrets et protection des données",
+   "objectifs": [
+    "J’explique les bases et les effets de la protection des données et de la vie privée ainsi que du secret postal. (C2)"
+   ]
+  },
+  {
+   "titre": "B1.6 · Conséquences en pratique",
+   "objectifs": [
+    "J’explique les conséquences des dispositions légales relatives à la protection des données et de la vie privée et au secret postal pour l’activité pratique, ainsi qu’une conséquence pour le client et l’entreprise en cas de violation. (C2)"
+   ]
+  },
+  {
+   "titre": "D5.3 · Personnes autorisées à recevoir",
+   "objectifs": [
+    "J’explique les conditions cadres légales relatives aux personnes autorisées à recevoir des marchandises à livrer. (C2)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M109 – Zutritt und Datenschutz",
+  "sous_titre": "Logistiker/-in EFZ · Modul M109",
+  "duree": "10 Min. pro Serie",
+  "description": "5 Lernziele des Moduls M109 und 139 Aufgaben, davon 37 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "A2.2 · Zutrittsberechtigungen",
+    "objectifs": [
+     "Ich erkläre das Prinzip der Zutrittsberechtigungen zu Gebäuden und Anlagen sowie der Zugriffsrechte auf Anwendungen und beschreibe die Systeme, mit denen mein Betrieb diese Berechtigungen und Rechte durchsetzt. (K2)"
+    ]
+   },
+   {
+    "titre": "A2.3 · Informatiksicherheit",
+    "objectifs": [
+     "Ich erkläre, wie ich die Informatikmittel systematisch nutze und wie ich den Betrieb vor Gefahren, insbesondere aus der Internetnutzung, schütze (Datensicherheit, Hackerangriffe, Viren, Phishing usw.). (K2)"
+    ]
+   },
+   {
+    "titre": "B1.5 · Geheimnisse und Datenschutz",
+    "objectifs": [
+     "Ich erkläre die Grundlagen und Auswirkungen des Daten- und Persönlichkeitsschutzes sowie des Postgeheimnisses. (K2)"
+    ]
+   },
+   {
+    "titre": "B1.6 · Folgen in der Praxis",
+    "objectifs": [
+     "Ich erkläre die Folgen der gesetzlichen Bestimmungen zum Daten- und Persönlichkeitsschutz und zum Postgeheimnis für die praktische Tätigkeit sowie eine Folge für Kunde und Betrieb bei einer Verletzung. (K2)"
+    ]
+   },
+   {
+    "titre": "D5.3 · Empfangsberechtigte Personen",
+    "objectifs": [
+     "Ich erkläre die gesetzlichen Rahmenbedingungen zu den Personen, die berechtigt sind, zuzustellende Waren entgegenzunehmen. (K2)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M109 – Accesso e protezione dei dati",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M109",
+  "duree": "10 min per serie",
+  "description": "5 obiettivi del modulo M109 e 139 esercizi, di cui il 37 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "A2.2 · Autorizzazioni d’accesso",
+    "objectifs": [
+     "Spiego il principio delle autorizzazioni d’accesso agli edifici e agli impianti e dei diritti d’accesso alle applicazioni e descrivo i sistemi utilizzati nella mia azienda per far rispettare queste autorizzazioni e questi diritti. (C2)"
+    ]
+   },
+   {
+    "titre": "A2.3 · Sicurezza informatica",
+    "objectifs": [
+     "Spiego come utilizzo sistematicamente i mezzi informatici e come proteggo l’azienda dai pericoli legati in particolare all’uso di Internet (sicurezza dei dati, attacchi di pirati, virus, phishing, ecc.). (C2)"
+    ]
+   },
+   {
+    "titre": "B1.5 · Segreti e protezione dei dati",
+    "objectifs": [
+     "Spiego le basi e gli effetti della protezione dei dati e della sfera privata nonché del segreto postale. (C2)"
+    ]
+   },
+   {
+    "titre": "B1.6 · Conseguenze nella pratica",
+    "objectifs": [
+     "Spiego le conseguenze delle disposizioni legali relative alla protezione dei dati e della sfera privata e al segreto postale per l’attività pratica, nonché una conseguenza per il cliente e per l’azienda in caso di violazione. (C2)"
+    ]
+   },
+   {
+    "titre": "D5.3 · Persone autorizzate a ricevere",
+    "objectifs": [
+     "Spiego le condizioni quadro legali relative alle persone autorizzate a ricevere merci da consegnare. (C2)"
+    ]
+   }
+  ]
+ }
+}

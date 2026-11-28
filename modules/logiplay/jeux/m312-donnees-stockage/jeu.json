@@ -1,0 +1,100 @@
+{
+ "module": "M312",
+ "shortcode": "jeu_m312",
+ "titre": "M312 – Données de stockage",
+ "sous_titre": "Logisticien·ne CFC · Module M312",
+ "duree": "10 min par série",
+ "description": "4 objectifs du module M312 (leçons 12.1 à 12.5) et 100 épreuves, dont 34 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "G2.12 · Conservation, péremption et pertes",
+   "objectifs": [
+    "G2.12 Je décris les causes et les conséquences de la perte de matériel, de la durée de conservation et des dates de péremption des marchandises. (C2)"
+   ]
+  },
+  {
+   "titre": "G4.2·G4.3 · Seuils de stock et point de commande",
+   "objectifs": [
+    "G4.2 J’explique l’origine d’un stock de sécurité et d’un stock maximum (capacités de stockage, consommation, fiabilité de livraison, qualité des fournisseurs, stock moyen, rotation des stocks, délais de réapprovisionnement) et j’effectue des calculs à cet effet. (C3) — G4.3 J’explique l’importance du point de commande, le calcule sur la base de la consommation à l’aide d’un exemple de cas et en déduis les conséquences pour l’approvisionnement. (C3)"
+   ]
+  },
+  {
+   "titre": "G3.1 · Tenir à jour les données de stock",
+   "objectifs": [
+    "G3.1 Je tiens à jour les données relatives aux stocks (stock disponible, stock total, stock bloqué, stock d’assurance qualité, stock réservé) et explique les différences. (C3)"
+   ]
+  },
+  {
+   "titre": "G3.2·G4.9·H1.6 · Inventaire, écarts et corrections",
+   "objectifs": [
+    "G3.2 Je calcule et analyse les différences d’inventaire à l’aide d’une étude de cas, je les explique et je propose des améliorations. (C4) — G4.9 Je calcule les stocks de marchandises effectifs à déclarés et le stock minimal et j’en déduis les résultats des mesures à prendre. (C4) — H1.6 J’explique la procédure de correction des quantités dans l’ERP de l’entreprise après la préparation de commandes. (C2)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M312 – Lagerdaten",
+  "sous_titre": "Logistiker/-in EFZ · Modul M312",
+  "duree": "10 Min. pro Serie",
+  "description": "4 Lernziele des Moduls M312 und 100 Aufgaben, davon 34 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "G2.12 · Haltbarkeit, Verfall und Verluste",
+    "objectifs": [
+     "G2.12 Ich beschreibe die Ursachen und Folgen von Materialverlust, Haltbarkeitsdauer und Verfalldaten der Waren. (K2)"
+    ]
+   },
+   {
+    "titre": "G4.2·G4.3 · Bestandsgrenzen und Bestellpunkt",
+    "objectifs": [
+     "G4.2 Ich erkläre die Herkunft eines Sicherheits- und eines Höchstbestands (Lagerkapazitäten, Verbrauch, Liefertreue, Qualität der Lieferanten, Durchschnittsbestand, Lagerumschlag, Wiederbeschaffungszeiten) und führe Berechnungen dazu durch. (K3) — G4.3 Ich erkläre die Bedeutung des Bestellpunkts, berechne ihn anhand eines Fallbeispiels auf Grund des Verbrauchs und leite Folgen für die Beschaffung ab. (K3)"
+    ]
+   },
+   {
+    "titre": "G3.1 · Bestandsdaten nachführen",
+    "objectifs": [
+     "G3.1 Ich führe die Bestandsdaten nach (verfügbarer Bestand, Gesamtbestand, gesperrter Bestand, QS-Bestand, reservierter Bestand) und erkläre die Unterschiede. (K3)"
+    ]
+   },
+   {
+    "titre": "G3.2·G4.9·H1.6 · Inventur, Differenzen und Korrekturen",
+    "objectifs": [
+     "G3.2 Ich berechne und analysiere Inventurdifferenzen anhand einer Fallstudie, erkläre sie und schlage Verbesserungen vor. (K4) — G4.9 Ich berechne effektive und ausgewiesene Warenbestände sowie den Mindestbestand und leite Massnahmen ab. (K4) — H1.6 Ich erkläre den Ablauf der Mengenkorrektur im ERP des Unternehmens nach der Kommissionierung. (K2)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M312 – Dati di magazzino",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M312",
+  "duree": "10 min per serie",
+  "description": "4 obiettivi del modulo M312 e 100 esercizi, di cui il 34 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "G2.12 · Conservazione, scadenza e perdite",
+    "objectifs": [
+     "G2.12 Descrivo le cause e le conseguenze della perdita di materiale, della durata di conservazione e delle date di scadenza delle merci. (C2)"
+    ]
+   },
+   {
+    "titre": "G4.2·G4.3 · Soglie di scorta e punto di riordino",
+    "objectifs": [
+     "G4.2 Spiego l’origine di una scorta di sicurezza e di una scorta massima (capacità di stoccaggio, consumo, affidabilità della consegna, qualità dei fornitori, scorta media, rotazione delle scorte, termini di riapprovvigionamento) ed effettuo calcoli a questo scopo. (C3) — G4.3 Spiego l’importanza del punto di riordino, lo calcolo sulla base del consumo con l’aiuto di un caso pratico e ne deduco le conseguenze per l’approvvigionamento. (C3)"
+    ]
+   },
+   {
+    "titre": "G3.1 · Tenere aggiornati i dati di magazzino",
+    "objectifs": [
+     "G3.1 Tengo aggiornati i dati relativi alle scorte (scorta disponibile, scorta totale, scorta bloccata, scorta di garanzia della qualità, scorta riservata) e spiego le differenze. (C3)"
+    ]
+   },
+   {
+    "titre": "G3.2·G4.9·H1.6 · Inventario, differenze e correzioni",
+    "objectifs": [
+     "G3.2 Calcolo e analizzo le differenze d’inventario con l’aiuto di un caso pratico, le spiego e propongo miglioramenti. (C4) — G4.9 Calcolo le scorte di merci effettive e dichiarate e la scorta minima e ne deduco i risultati delle misure da prendere. (C4) — H1.6 Spiego la procedura di correzione delle quantità nell’ERP dell’azienda dopo la preparazione degli ordini. (C2)"
+    ]
+   }
+  ]
+ }
+}

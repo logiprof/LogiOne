@@ -1,0 +1,100 @@
+{
+ "module": "M405",
+ "shortcode": "jeu_m405",
+ "titre": "M405 – Dangers dans les entrepôts",
+ "sous_titre": "Logisticien·ne CFC · Module M405",
+ "duree": "10 min par série",
+ "description": "4 objectifs du module M405 (leçons 5.1 à 5.5) et 100 épreuves, dont 34 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "B3.8·C4.2 · Accidents et stockage sûr",
+   "objectifs": [
+    "B3.8 Je décris à l’aide d’exemples les risques et dangers apparaissant dans le processus logistique pour moi-même, pour les collaborateurs et pour les tiers. (C2) — C4.2 J’interprète les données relatives aux informations sur la charge autorisée au sol et en déduis des conclusions pour mon travail. (C3)"
+   ]
+  },
+  {
+   "titre": "A1.3·B3.9 · Horaires, secours et EPI",
+   "objectifs": [
+    "A1.3 J’explique les bases légales relatives à la capacité de travail et d’intervention (prescriptions de sécurité et de protection de la santé, protection des jeunes travailleurs, temps de repos…). (C2) — A2.5 J’énumère les éléments des EPI adaptés au travail, j’explique leur effet, leur utilisation et leur entretien. (C2) — B3.9 Je cite les principaux éléments d’une organisation d’urgence et explique les procédures, le comportement et les mesures à prendre selon le plan d’urgence de l’entreprise. (C2)"
+   ]
+  },
+  {
+   "titre": "C5.6 · Risque d’incendie",
+   "objectifs": [
+    "C5.6 Je décris la procédure et les mesures de sécurité à prendre en cas d’avarie avec des marchandises dangereuses ou en cas d’incendie ou d’incident chimique (autoprotection, détection, alerte, sécurisation). (C2)"
+   ]
+  },
+  {
+   "titre": "C5.2·B3.8 · Matières dangereuses, vol et nuisibles",
+   "objectifs": [
+    "C5.1 Je décris les mesures et moyens de protection lors de la manipulation de substances dangereuses ainsi que les premiers secours. (C2) — C5.2 J’identifie les substances dangereuses (étiquettes, pictogrammes, FDS, classes de danger) et les mesures de protection. (C2) — avec B3.8 : risque de vol et nuisibles"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M405 – Gefahren in Lagern",
+  "sous_titre": "Logistiker/-in EFZ · Modul M405",
+  "duree": "10 Min. pro Serie",
+  "description": "4 Lernziele des Moduls M405 und 100 Aufgaben, davon 34 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "B3.8·C4.2 · Unfälle und sichere Lagerung",
+    "objectifs": [
+     "B3.8 Ich beschreibe anhand von Beispielen die Risiken und Gefahren, die im logistischen Prozess für mich, für Mitarbeitende und für Dritte auftreten. (K2) — C4.2 Ich interpretiere die Angaben zur zulässigen Bodenbelastung und ziehe Schlüsse für meine Arbeit. (K3)"
+    ]
+   },
+   {
+    "titre": "A1.3·B3.9 · Arbeitszeiten, Erste Hilfe und PSA",
+    "objectifs": [
+     "A1.3 Ich erkläre die rechtlichen Grundlagen zur Arbeits- und Einsatzfähigkeit (Sicherheits- und Gesundheitsschutzvorschriften, Jugendarbeitsschutz, Ruhezeiten …). (K2) — A2.5 Ich zähle die für die Arbeit geeigneten Elemente der PSA auf und erkläre ihre Wirkung, ihren Gebrauch und ihre Pflege. (K2) — B3.9 Ich nenne die wichtigsten Elemente einer Notfallorganisation und erkläre Abläufe, Verhalten und Massnahmen gemäss Notfallplan des Betriebs. (K2)"
+    ]
+   },
+   {
+    "titre": "C5.6 · Brandgefahr",
+    "objectifs": [
+     "C5.6 Ich beschreibe das Vorgehen und die Sicherheitsmassnahmen bei Havarien mit gefährlichen Gütern oder bei einem Brand oder Chemieereignis (Selbstschutz, Erkennen, Alarmieren, Sichern). (K2)"
+    ]
+   },
+   {
+    "titre": "C5.2·B3.8 · Gefährliche Stoffe, Diebstahl und Schädlinge",
+    "objectifs": [
+     "C5.1 Ich beschreibe die Schutzmassnahmen und -mittel beim Umgang mit gefährlichen Stoffen sowie die Erste Hilfe. (K2) — C5.2 Ich erkenne gefährliche Stoffe (Etiketten, Piktogramme, SDB, Gefahrenklassen) und die Schutzmassnahmen. (K2) — mit B3.8: Diebstahlrisiko und Schädlinge"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M405 – Pericoli nei magazzini",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M405",
+  "duree": "10 min per serie",
+  "description": "4 obiettivi del modulo M405 e 100 esercizi, di cui il 34 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "B3.8·C4.2 · Infortuni e stoccaggio sicuro",
+    "objectifs": [
+     "B3.8 Descrivo con l’aiuto di esempi i rischi e i pericoli che si presentano nel processo logistico per me stesso, per i collaboratori e per terzi. (C2) — C4.2 Interpreto i dati relativi alle informazioni sul carico ammesso al suolo e ne traggo conclusioni per il mio lavoro. (C3)"
+    ]
+   },
+   {
+    "titre": "A1.3·B3.9 · Orari, soccorsi e DPI",
+    "objectifs": [
+     "A1.3 Spiego le basi legali relative alla capacità di lavoro e d’intervento (prescrizioni di sicurezza e di protezione della salute, protezione dei giovani lavoratori, tempi di riposo…). (C2) — A2.5 Elenco gli elementi dei DPI adatti al lavoro, spiego il loro effetto, il loro uso e la loro manutenzione. (C2) — B3.9 Cito gli elementi principali di un’organizzazione d’emergenza e spiego le procedure, il comportamento e le misure da prendere secondo il piano d’emergenza dell’azienda. (C2)"
+    ]
+   },
+   {
+    "titre": "C5.6 · Rischio d’incendio",
+    "objectifs": [
+     "C5.6 Descrivo la procedura e le misure di sicurezza da prendere in caso di avaria con merci pericolose o in caso d’incendio o d’incidente chimico (autoprotezione, rilevamento, allarme, messa in sicurezza). (C2)"
+    ]
+   },
+   {
+    "titre": "C5.2·B3.8 · Materie pericolose, furto e parassiti",
+    "objectifs": [
+     "C5.1 Descrivo le misure e i mezzi di protezione durante la manipolazione di sostanze pericolose e i primi soccorsi. (C2) — C5.2 Identifico le sostanze pericolose (etichette, pittogrammi, SDS, classi di pericolo) e le misure di protezione. (C2) — con B3.8: rischio di furto e parassiti"
+    ]
+   }
+  ]
+ }
+}

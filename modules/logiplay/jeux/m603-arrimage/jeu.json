@@ -1,0 +1,82 @@
+{
+ "module": "M603",
+ "shortcode": "jeu_m603",
+ "titre": "M603 – L’arrimage des marchandises",
+ "sous_titre": "Logisticien·ne CFC · Module M603",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M603 (leçons 3.1 à 3.3) et 75 épreuves, dont 32 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "C3.2a · Filmage, rétraction, cerclage",
+   "objectifs": [
+    "C3.2 Je décris les techniques et les moyens auxiliaires utilisés pour sécuriser les marchandises sur les supports de charge. (C2) — partie : filmage, rétraction et cerclage (leçon 3.1)"
+   ]
+  },
+  {
+   "titre": "C3.2b · Choisir le bon feuillard",
+   "objectifs": [
+    "C3.2 Je décris les techniques et les moyens auxiliaires utilisés pour sécuriser les marchandises sur les supports de charge. (C2) — partie : types de feuillards, résistance à la traction, allongement, capacité de rétraction (leçon 3.2)"
+   ]
+  },
+  {
+   "titre": "C3.2c · Types de fermeture",
+   "objectifs": [
+    "C3.2 Je décris les techniques et les moyens auxiliaires utilisés pour sécuriser les marchandises sur les supports de charge. (C2) — partie : fermetures de feuillards (boucle, chape, sans chape) (leçon 3.3)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M603 – Die Sicherung der Waren",
+  "sous_titre": "Logistiker/-in EFZ · Modul M603",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M603 und 75 Aufgaben, davon 32 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "C3.2a · Stretchen, Schrumpfen, Umreifen",
+    "objectifs": [
+     "C3.2 Ich beschreibe die Techniken und Hilfsmittel zur Sicherung der Waren auf den Ladungsträgern. (K2) — Teil: Stretchen, Schrumpfen und Umreifen (Lektion 3.1)"
+    ]
+   },
+   {
+    "titre": "C3.2b · Das richtige Umreifungsband wählen",
+    "objectifs": [
+     "C3.2 Ich beschreibe die Techniken und Hilfsmittel zur Sicherung der Waren auf den Ladungsträgern. (K2) — Teil: Bandarten, Zugfestigkeit, Dehnung, Schrumpfvermögen (Lektion 3.2)"
+    ]
+   },
+   {
+    "titre": "C3.2c · Verschlussarten",
+    "objectifs": [
+     "C3.2 Ich beschreibe die Techniken und Hilfsmittel zur Sicherung der Waren auf den Ladungsträgern. (K2) — Teil: Verschlüsse der Umreifungsbänder (Schnalle, Hülse, hülsenlos) (Lektion 3.3)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M603 – Il fissaggio delle merci",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M603",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M603 e 75 esercizi, di cui il 32 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "C3.2a · Filmatura, termoretrazione, reggiatura",
+    "objectifs": [
+     "C3.2 Descrivo le tecniche e i mezzi ausiliari usati per assicurare le merci sui supporti di carico. (C2) — parte: filmatura, termoretrazione e reggiatura (lezione 3.1)"
+    ]
+   },
+   {
+    "titre": "C3.2b · Scegliere la reggia giusta",
+    "objectifs": [
+     "C3.2 Descrivo le tecniche e i mezzi ausiliari usati per assicurare le merci sui supporti di carico. (C2) — parte: tipi di reggia, resistenza alla trazione, allungamento, capacità di ritorno (lezione 3.2)"
+    ]
+   },
+   {
+    "titre": "C3.2c · Tipi di chiusura",
+    "objectifs": [
+     "C3.2 Descrivo le tecniche e i mezzi ausiliari usati per assicurare le merci sui supporti di carico. (C2) — parte: chiusure delle regge (fibbia, sigillo, senza sigillo) (lezione 3.3)"
+    ]
+   }
+  ]
+ }
+}

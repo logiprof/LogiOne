@@ -1,0 +1,64 @@
+{
+ "module": "M809",
+ "shortcode": "jeu_m809",
+ "titre": "M809 – Poste de contrôle",
+ "sous_titre": "Logisticien·ne CFC · Module M809",
+ "duree": "10 min par série",
+ "description": "2 objectifs du module M809 (leçons 9.1 et 9.2) et 54 épreuves, dont 35 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "H3.1 · Intralogistique et flux",
+   "objectifs": [
+    "H 3.1 Je décris les trois domaines du système de préparation des commandes, à savoir le flux de matériel, le flux de données et l’organisation ; leur lien et leur effet sur la performance de préparation des commandes. (C3)"
+   ]
+  },
+  {
+   "titre": "H3.8 · Poste de contrôle et améliorations",
+   "objectifs": [
+    "H 3.8 J’identifie les points faibles du flux de données et de l’organisation et décris les mesures d’amélioration dans la préparation des commandes. (C4)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M809 – Leitstand",
+  "sous_titre": "Logistiker/-in EFZ · Modul M809",
+  "duree": "10 Min. pro Serie",
+  "description": "2 Lernziele des Moduls M809 und 54 Aufgaben, davon 35 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "H3.1 · Intralogistik und Flüsse",
+    "objectifs": [
+     "H 3.1 Ich beschreibe die drei Bereiche des Kommissioniersystems, nämlich Materialfluss, Datenfluss und Organisation, ihren Zusammenhang und ihre Wirkung auf die Kommissionierleistung. (K3)"
+    ]
+   },
+   {
+    "titre": "H3.8 · Leitstand und Verbesserungen",
+    "objectifs": [
+     "H 3.8 Ich erkenne die Schwachstellen des Datenflusses und der Organisation und beschreibe Verbesserungsmassnahmen in der Kommissionierung. (K4)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M809 – Posto di controllo",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M809",
+  "duree": "10 min per serie",
+  "description": "2 obiettivi del modulo M809 e 54 esercizi, di cui il 35 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "H3.1 · Intralogistica e flussi",
+    "objectifs": [
+     "H 3.1 Descrivo i tre ambiti del sistema di preparazione delle commissioni, cioè il flusso di materiale, il flusso di dati e l’organizzazione; il loro legame e il loro effetto sulla prestazione della preparazione delle commissioni. (C3)"
+    ]
+   },
+   {
+    "titre": "H3.8 · Posto di controllo e miglioramenti",
+    "objectifs": [
+     "H 3.8 Identifico i punti deboli del flusso di dati e dell’organizzazione e descrivo le misure di miglioramento nella preparazione delle commissioni. (C4)"
+    ]
+   }
+  ]
+ }
+}

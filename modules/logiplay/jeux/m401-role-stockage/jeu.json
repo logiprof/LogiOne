@@ -1,0 +1,82 @@
+{
+ "module": "M401",
+ "shortcode": "jeu_m401",
+ "titre": "M401 – Le rôle du stockage",
+ "sous_titre": "Logisticien·ne CFC · Module M401",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M401 (leçons 1.1 et 1.2) et 75 épreuves, dont 40 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "B3.1a · Réserve et sécurité",
+   "objectifs": [
+    "B3.1 Je décris à l’aide d’exemples pratiques les processus logistiques de différentes entreprises de logistique (prestataire de services, entreprise commerciale, entreprise de production). (C2) — partie 1 : fonction de réserve, stockage chaotique et fonction de sécurité"
+   ]
+  },
+  {
+   "titre": "B3.1b · Transformation, contrôle et tri",
+   "objectifs": [
+    "B3.1 Je décris à l’aide d’exemples pratiques les processus logistiques de différentes entreprises de logistique (prestataire de services, entreprise commerciale, entreprise de production). (C2) — partie 2 : fonction de transformation et fonction de contrôle et de tri"
+   ]
+  },
+  {
+   "titre": "C4.1 · Spéculation, affinage et choix du stockage",
+   "objectifs": [
+    "C4.1 J’explique les différents systèmes, formes, types et principes de stockage avec leurs caractéristiques, leurs possibilités et leur rentabilité. (C2)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M401 – Die Rolle der Lagerung",
+  "sous_titre": "Logistiker/-in EFZ · Modul M401",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M401 und 75 Aufgaben, davon 40 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "B3.1a · Reserve und Sicherheit",
+    "objectifs": [
+     "B3.1 Ich beschreibe anhand von Praxisbeispielen die logistischen Prozesse verschiedener Logistikunternehmen (Dienstleister, Handelsunternehmen, Produktionsunternehmen). (K2) — Teil 1: Reservefunktion, chaotische Lagerung und Sicherheitsfunktion"
+    ]
+   },
+   {
+    "titre": "B3.1b · Umformung, Kontrolle und Sortieren",
+    "objectifs": [
+     "B3.1 Ich beschreibe anhand von Praxisbeispielen die logistischen Prozesse verschiedener Logistikunternehmen (Dienstleister, Handelsunternehmen, Produktionsunternehmen). (K2) — Teil 2: Umformungsfunktion sowie Kontroll- und Sortierfunktion"
+    ]
+   },
+   {
+    "titre": "C4.1 · Spekulation, Veredelung und Wahl der Lagerung",
+    "objectifs": [
+     "C4.1 Ich erkläre die verschiedenen Lagersysteme, -formen, -arten und -grundsätze mit ihren Merkmalen, Möglichkeiten und ihrer Wirtschaftlichkeit. (K2)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M401 – Il ruolo dello stoccaggio",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M401",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M401 e 75 esercizi, di cui il 40 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "B3.1a · Riserva e sicurezza",
+    "objectifs": [
+     "B3.1 Descrivo con l’aiuto di esempi pratici i processi logistici di diverse aziende di logistica (fornitore di servizi, azienda commerciale, azienda di produzione). (C2) — parte 1: funzione di riserva, stoccaggio caotico e funzione di sicurezza"
+    ]
+   },
+   {
+    "titre": "B3.1b · Trasformazione, controllo e smistamento",
+    "objectifs": [
+     "B3.1 Descrivo con l’aiuto di esempi pratici i processi logistici di diverse aziende di logistica (fornitore di servizi, azienda commerciale, azienda di produzione). (C2) — parte 2: funzione di trasformazione e funzione di controllo e smistamento"
+    ]
+   },
+   {
+    "titre": "C4.1 · Speculazione, affinamento e scelta dello stoccaggio",
+    "objectifs": [
+     "C4.1 Spiego i diversi sistemi, forme, tipi e principi di stoccaggio con le loro caratteristiche, le loro possibilità e la loro redditività. (C2)"
+    ]
+   }
+  ]
+ }
+}

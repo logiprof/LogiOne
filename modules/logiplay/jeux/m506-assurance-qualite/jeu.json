@@ -1,0 +1,100 @@
+{
+ "module": "M506",
+ "shortcode": "jeu_m506",
+ "titre": "M506 – Assurance qualité (AQ) dans la production",
+ "sous_titre": "Logisticien·ne CFC · Module M506",
+ "duree": "10 min par série",
+ "description": "4 objectifs du module M506 (leçons 6.1 à 6.5) et 100 épreuves, dont 35 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "A1.2 · MQ, AQ et listes de contrôle",
+   "objectifs": [
+    "A1.2 J’élabore des listes de contrôle avec des critères d’évaluation d’une commande (faisabilité, disponibilité des marchandises, du personnel, équipements de travail disponibles, délais, etc.) et évalue, à l’aide de ces listes de contrôle, des exemples de commandes. (C3)"
+   ]
+  },
+  {
+   "titre": "A3.4 · Kaizen, PDCA et amélioration continue",
+   "objectifs": [
+    "A3.4 J’explique à l’aide d’exemples pratiques les principaux instruments d’amélioration de la qualité des produits, des processus et des services ainsi que de la sécurité (par ex. processus CIP, système Kaizen, cycle PDCA, méthode 635, méthode 5S). (C4)"
+   ]
+  },
+  {
+   "titre": "B2.1 · Normes ISO, audits et procédures",
+   "objectifs": [
+    "B2.1 Je décris les normes de qualité en usage dans l’industrie et je cite des exemples de normes de qualité d’entreprise ainsi que leur signification et leur caractère obligatoire. (C2)"
+   ]
+  },
+  {
+   "titre": "B2.3 · Gaspillages, traçabilité et ressources",
+   "objectifs": [
+    "B2.3 J’explique les points faibles / défauts potentiels apparaissant dans mon domaine de compétence et je décris des solutions facilement réalisables pour y remédier. (C2) — avec la traçabilité et l’économie circulaire (leçons 6.3 et 6.4)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M506 – Qualitätssicherung (QS) in der Produktion",
+  "sous_titre": "Logistiker/-in EFZ · Modul M506",
+  "duree": "10 Min. pro Serie",
+  "description": "4 Lernziele des Moduls M506 und 100 Aufgaben, davon 35 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "A1.2 · QM, QS und Checklisten",
+    "objectifs": [
+     "A1.2 Ich erstelle Checklisten mit Kriterien zur Beurteilung eines Auftrags (Machbarkeit, Verfügbarkeit von Waren, Personal und Arbeitsmitteln, Termine usw.) und beurteile mit diesen Checklisten Beispiele von Aufträgen. (K3)"
+    ]
+   },
+   {
+    "titre": "A3.4 · Kaizen, PDCA und kontinuierliche Verbesserung",
+    "objectifs": [
+     "A3.4 Ich erkläre anhand von Praxisbeispielen die wichtigsten Instrumente zur Verbesserung der Qualität von Produkten, Prozessen und Dienstleistungen sowie der Sicherheit (z. B. KVP, Kaizen-System, PDCA-Zyklus, Methode 635, 5S-Methode). (K4)"
+    ]
+   },
+   {
+    "titre": "B2.1 · ISO-Normen, Audits und Verfahren",
+    "objectifs": [
+     "B2.1 Ich beschreibe die in der Industrie gebräuchlichen Qualitätsnormen und nenne Beispiele von betrieblichen Qualitätsnormen sowie deren Bedeutung und Verbindlichkeit. (K2)"
+    ]
+   },
+   {
+    "titre": "B2.3 · Verschwendung, Rückverfolgbarkeit und Ressourcen",
+    "objectifs": [
+     "B2.3 Ich erkläre die Schwachstellen / möglichen Mängel in meinem Kompetenzbereich und beschreibe einfach umsetzbare Lösungen zu ihrer Behebung. (K2) — mit der Rückverfolgbarkeit und der Kreislaufwirtschaft (Lektionen 6.3 und 6.4)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M506 – Assicurazione della qualità (AQ) nella produzione",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M506",
+  "duree": "10 min per serie",
+  "description": "4 obiettivi del modulo M506 e 100 esercizi, di cui il 35 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "A1.2 · GQ, AQ e liste di controllo",
+    "objectifs": [
+     "A1.2 Elaboro liste di controllo con criteri di valutazione di un ordine (fattibilità, disponibilità delle merci, del personale, attrezzature di lavoro disponibili, termini, ecc.) e valuto, con l’aiuto di queste liste di controllo, esempi di ordini. (C3)"
+    ]
+   },
+   {
+    "titre": "A3.4 · Kaizen, PDCA e miglioramento continuo",
+    "objectifs": [
+     "A3.4 Spiego con l’aiuto di esempi pratici i principali strumenti di miglioramento della qualità dei prodotti, dei processi e dei servizi e della sicurezza (p. es. processo CIP, sistema Kaizen, ciclo PDCA, metodo 635, metodo 5S). (C4)"
+    ]
+   },
+   {
+    "titre": "B2.1 · Norme ISO, audit e procedure",
+    "objectifs": [
+     "B2.1 Descrivo le norme di qualità in uso nell’industria e cito esempi di norme di qualità aziendali nonché il loro significato e il loro carattere obbligatorio. (C2)"
+    ]
+   },
+   {
+    "titre": "B2.3 · Sprechi, tracciabilità e risorse",
+    "objectifs": [
+     "B2.3 Spiego i punti deboli / difetti potenziali che compaiono nel mio campo di competenza e descrivo soluzioni facilmente realizzabili per porvi rimedio. (C2) — con la tracciabilità e l’economia circolare (lezioni 6.3 e 6.4)"
+    ]
+   }
+  ]
+ }
+}

@@ -61,6 +61,13 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
 
+## Nouveautés 1.55.0
+
+- **LogiPlay intégré à LogiOne.** Les 70 jeux de révision (M101 à M809, mathématiques, en français, allemand et italien) font partie de la suite : même menu « LogiPlay » dans l’administration (codes courts et réglages, regroupements, gestion des jeux, statistiques, suivi des élèves), mêmes codes courts (`[jeux_logistique]`, `[jeu_m101]`…) déjà placés dans les pages.
+- **Tuile LogiPlay dans le portail** : raccourcis enseignant (statistiques, suivi des élèves, codes courts, gestion des jeux) et le catalogue des jeux tel que le voient les élèves.
+- **Données conservées** : tables `jdr_progression`, `jdr_historique`, `jdr_sessions` et options `jrl_*` / `jdr_*` reprises telles quelles. Si l’extension autonome LogiPlay est encore active, le module n’est pas chargé : désactivez-la (sans la supprimer) pour passer au module. Les mises à jour des jeux arrivent avec LogiOne.
+- **Choisir mes outils.** Sur l’accueil LogiOne, chaque enseignant coche les outils à afficher (accueil et menu des outils). Les outils masqués restent accessibles et se réaffichent d’un clic (« Tout réafficher »). Choix enregistré dans la méta utilisateur `logione_outils_masques`.
+
 ## Nouveautés 1.53.20
 
 - **LogiNotes dans le portail LogiOne :** les boutons « Afficher » (relevé) et « Comparer » ne font plus quitter LogiNotes.

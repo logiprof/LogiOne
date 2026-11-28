@@ -1,0 +1,100 @@
+{
+ "module": "M403",
+ "shortcode": "jeu_m403",
+ "titre": "M403 – Les formes de stockage",
+ "sous_titre": "Logisticien·ne CFC · Module M403",
+ "duree": "10 min par série",
+ "description": "4 objectifs du module M403 (leçons 3.1 à 3.12) et 100 épreuves, dont 35 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "C4.1a · Stockage au sol",
+   "objectifs": [
+    "C4.1 J’explique les différents systèmes, formes, types et principes de stockage avec leurs caractéristiques, leurs possibilités et leur rentabilité. (C2) — partie 1 : stockage au sol, en bloc, empilage, bouteilles sous pression, produits longs, FIFO/FEFO/LIFO"
+   ]
+  },
+  {
+   "titre": "C4.1b · Rayonnages compartimentés et à palettes",
+   "objectifs": [
+    "C4.1 J’explique les différents systèmes, formes, types et principes de stockage avec leurs caractéristiques, leurs possibilités et leur rentabilité. (C2) — partie 2 : rayonnages compartimentés et rayonnages à palettes"
+   ]
+  },
+  {
+   "titre": "C4.1c · Drive-in, dynamique, cantilever et mobile",
+   "objectifs": [
+    "C4.1 J’explique les différents systèmes, formes, types et principes de stockage avec leurs caractéristiques, leurs possibilités et leur rentabilité. (C2) — partie 3 : drive-in, drive-through, rayonnages dynamiques et à accumulation, porte-à-faux, nid d’abeille, rayonnages mobiles"
+   ]
+  },
+  {
+   "titre": "C4.1d · Rotatifs, suspendus et installations modernes",
+   "objectifs": [
+    "C4.1 J’explique les différents systèmes, formes, types et principes de stockage avec leurs caractéristiques, leurs possibilités et leur rentabilité. (C2) — partie 4 : rayonnages rotatifs, stockage suspendu, navettes, robots, hauts rayonnages, Autostore ; avec B3.1 (processus de différentes entreprises)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M403 – Die Lagerformen",
+  "sous_titre": "Logistiker/-in EFZ · Modul M403",
+  "duree": "10 Min. pro Serie",
+  "description": "4 Lernziele des Moduls M403 und 100 Aufgaben, davon 35 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "C4.1a · Bodenlagerung",
+    "objectifs": [
+     "C4.1 Ich erkläre die verschiedenen Lagersysteme, -formen, -arten und -grundsätze mit ihren Merkmalen, Möglichkeiten und ihrer Wirtschaftlichkeit. (K2) — Teil 1: Bodenlagerung, Blocklagerung, Stapeln, Druckgasflaschen, Langgut, FIFO/FEFO/LIFO"
+    ]
+   },
+   {
+    "titre": "C4.1b · Fachboden- und Palettenregale",
+    "objectifs": [
+     "C4.1 Ich erkläre die verschiedenen Lagersysteme, -formen, -arten und -grundsätze mit ihren Merkmalen, Möglichkeiten und ihrer Wirtschaftlichkeit. (K2) — Teil 2: Fachbodenregale und Palettenregale"
+    ]
+   },
+   {
+    "titre": "C4.1c · Einfahr-, Durchlauf-, Kragarm- und Verschieberegale",
+    "objectifs": [
+     "C4.1 Ich erkläre die verschiedenen Lagersysteme, -formen, -arten und -grundsätze mit ihren Merkmalen, Möglichkeiten und ihrer Wirtschaftlichkeit. (K2) — Teil 3: Einfahr- und Durchfahrregale, Durchlauf- und Einschubregale, Kragarm-, Waben- und Verschieberegale"
+    ]
+   },
+   {
+    "titre": "C4.1d · Umlauf-, Hänge- und moderne Anlagen",
+    "objectifs": [
+     "C4.1 Ich erkläre die verschiedenen Lagersysteme, -formen, -arten und -grundsätze mit ihren Merkmalen, Möglichkeiten und ihrer Wirtschaftlichkeit. (K2) — Teil 4: Umlaufregale, Hängelagerung, Shuttles, Roboter, Hochregallager, Autostore; mit B3.1 (Prozesse verschiedener Unternehmen)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M403 – Le forme di stoccaggio",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M403",
+  "duree": "10 min per serie",
+  "description": "4 obiettivi del modulo M403 e 100 esercizi, di cui il 35 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "C4.1a · Stoccaggio a terra",
+    "objectifs": [
+     "C4.1 Spiego i diversi sistemi, forme, tipi e principi di stoccaggio con le loro caratteristiche, le loro possibilità e la loro redditività. (C2) — parte 1: stoccaggio a terra, a blocchi, impilamento, bombole a pressione, prodotti lunghi, FIFO/FEFO/LIFO"
+    ]
+   },
+   {
+    "titre": "C4.1b · Scaffalature a ripiani e portapallet",
+    "objectifs": [
+     "C4.1 Spiego i diversi sistemi, forme, tipi e principi di stoccaggio con le loro caratteristiche, le loro possibilità e la loro redditività. (C2) — parte 2: scaffalature a ripiani e scaffalature portapallet"
+    ]
+   },
+   {
+    "titre": "C4.1c · Drive-in, dinamica, cantilever e mobile",
+    "objectifs": [
+     "C4.1 Spiego i diversi sistemi, forme, tipi e principi di stoccaggio con le loro caratteristiche, le loro possibilità e la loro redditività. (C2) — parte 3: drive-in, drive-through, scaffalature dinamiche e ad accumulo, a sbalzo, a nido d’ape, scaffalature mobili"
+    ]
+   },
+   {
+    "titre": "C4.1d · Rotanti, sospesi e impianti moderni",
+    "objectifs": [
+     "C4.1 Spiego i diversi sistemi, forme, tipi e principi di stoccaggio con le loro caratteristiche, le loro possibilità e la loro redditività. (C2) — parte 4: scaffalature rotanti, stoccaggio sospeso, navette, robot, magazzini verticali, Autostore; con B3.1 (processi di diverse aziende)"
+    ]
+   }
+  ]
+ }
+}

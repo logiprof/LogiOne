@@ -1,0 +1,82 @@
+{
+ "module": "M604",
+ "shortcode": "jeu_m604",
+ "titre": "M604 – Les systèmes de distribution",
+ "sous_titre": "Logisticien·ne CFC · Module M604",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M604 (leçons 4.1 à 4.5) et 75 épreuves, dont 36 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "B3.2 · Bases du transport et Incoterms",
+   "objectifs": [
+    "B3.2 Je décris les bases du transport des marchandises (contrat de dépôt, transporteur, Incoterms, etc.). (C2)"
+   ]
+  },
+  {
+   "titre": "D1.6 · Marché postal et DEC",
+   "objectifs": [
+    "D1.6 Je décris le marché du courrier et des DEC et je nomme les principaux prestataires. (C2)"
+   ]
+  },
+  {
+   "titre": "D3.1 · Systèmes de distribution",
+   "objectifs": [
+    "D3.1 J’explique à l’aide d’exemples pratiques différents systèmes de distribution (régional/national/international ; direct/à plusieurs niveaux). (C2)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M604 – Die Distributionssysteme",
+  "sous_titre": "Logistiker/-in EFZ · Modul M604",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M604 und 75 Aufgaben, davon 36 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "B3.2 · Grundlagen des Transports und Incoterms",
+    "objectifs": [
+     "B3.2 Ich beschreibe die Grundlagen des Gütertransports (Hinterlegungsvertrag, Frachtführer, Incoterms usw.). (K2)"
+    ]
+   },
+   {
+    "titre": "D1.6 · Postmarkt und KEP",
+    "objectifs": [
+     "D1.6 Ich beschreibe den Markt für Briefe und KEP und nenne die wichtigsten Anbieter. (K2)"
+    ]
+   },
+   {
+    "titre": "D3.1 · Distributionssysteme",
+    "objectifs": [
+     "D3.1 Ich erkläre anhand von Praxisbeispielen verschiedene Distributionssysteme (regional/national/international; direkt/mehrstufig). (K2)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M604 – I sistemi di distribuzione",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M604",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M604 e 75 esercizi, di cui il 36 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "B3.2 · Basi del trasporto e Incoterms",
+    "objectifs": [
+     "B3.2 Descrivo le basi del trasporto delle merci (contratto di deposito, trasportatore, Incoterms, ecc.). (C2)"
+    ]
+   },
+   {
+    "titre": "D1.6 · Mercato postale e CEP",
+    "objectifs": [
+     "D1.6 Descrivo il mercato della posta e dei CEP e nomino i principali fornitori. (C2)"
+    ]
+   },
+   {
+    "titre": "D3.1 · Sistemi di distribuzione",
+    "objectifs": [
+     "D3.1 Spiego con l’aiuto di esempi pratici diversi sistemi di distribuzione (regionale/nazionale/internazionale; diretto/a più livelli). (C2)"
+    ]
+   }
+  ]
+ }
+}

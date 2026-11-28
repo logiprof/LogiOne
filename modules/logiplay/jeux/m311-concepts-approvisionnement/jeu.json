@@ -1,0 +1,100 @@
+{
+ "module": "M311",
+ "shortcode": "jeu_m311",
+ "titre": "M311 – Les concepts de l’approvisionnement",
+ "sous_titre": "Logisticien·ne CFC · Module M311",
+ "duree": "10 min par série",
+ "description": "4 objectifs du module M311 (leçons 11.1 à 11.7.3) et 100 épreuves, dont 33 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "G4.5 · Formes et concepts d’approvisionnement",
+   "objectifs": [
+    "G4.5 Je décris des concepts alternatifs d’approvisionnement pour réduire ou éviter les stocks de sécurité et j’explique leurs effets sur l’entreprise. (C4)"
+   ]
+  },
+  {
+   "titre": "G4.1·G4.4 · Stock, délai et procédures de commande",
+   "objectifs": [
+    "G4.1 Je décris l’évaluation des besoins en fonction de la consommation (passée) et sur la prévisualisation des besoins futurs à l’aide d’exemples pratiques et j’effectue des calculs simples. (C3) — G4.4 Je décris les méthodes de commande avec quantités fixes, quantités variables et rythme de commande. (C2)"
+   ]
+  },
+  {
+   "titre": "G4.8 · Quantité optimale de commande (Andler)",
+   "objectifs": [
+    "G4.8 Je calcule la quantité optimale de commande (Andler), j’interprète le résultat et j’en tire des conclusions pour mon travail. (C3)"
+   ]
+  },
+  {
+   "titre": "G3.4 · Analyse ABC",
+   "objectifs": [
+    "G3.4 J’établis dans Excel une analyse ABC (rotation des stocks ou chiffre d’affaires) d’une partie de l’entrepôt ou d’un groupe d’articles et je propose des mesures d’optimisation de l’entrepôt. (C4)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M311 – Die Konzepte der Beschaffung",
+  "sous_titre": "Logistiker/-in EFZ · Modul M311",
+  "duree": "10 Min. pro Serie",
+  "description": "4 Lernziele des Moduls M311 und 100 Aufgaben, davon 33 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "G4.5 · Beschaffungsformen und -konzepte",
+    "objectifs": [
+     "G4.5 Ich beschreibe alternative Beschaffungskonzepte, um Sicherheitsbestände zu verringern oder zu vermeiden, und erkläre ihre Wirkungen auf das Unternehmen. (K4)"
+    ]
+   },
+   {
+    "titre": "G4.1·G4.4 · Bestand, Frist und Bestellverfahren",
+    "objectifs": [
+     "G4.1 Ich beschreibe die Bedarfsermittlung anhand des (bisherigen) Verbrauchs und der Vorschau auf den künftigen Bedarf mit Praxisbeispielen und führe einfache Berechnungen durch. (K3) — G4.4 Ich beschreibe die Bestellverfahren mit festen Mengen, variablen Mengen und Bestellrhythmus. (K2)"
+    ]
+   },
+   {
+    "titre": "G4.8 · Optimale Bestellmenge (Andler)",
+    "objectifs": [
+     "G4.8 Ich berechne die optimale Bestellmenge (Andler), deute das Ergebnis und ziehe Schlüsse für meine Arbeit. (K3)"
+    ]
+   },
+   {
+    "titre": "G3.4 · ABC-Analyse",
+    "objectifs": [
+     "G3.4 Ich erstelle in Excel eine ABC-Analyse (Lagerumschlag oder Umsatz) eines Teils des Lagers oder einer Artikelgruppe und schlage Massnahmen zur Optimierung des Lagers vor. (K4)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M311 – I concetti dell’approvvigionamento",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M311",
+  "duree": "10 min per serie",
+  "description": "4 obiettivi del modulo M311 e 100 esercizi, di cui il 33 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "G4.5 · Forme e concetti d’approvvigionamento",
+    "objectifs": [
+     "G4.5 Descrivo concetti alternativi d’approvvigionamento per ridurre o evitare le scorte di sicurezza e spiego i loro effetti sull’azienda. (C4)"
+    ]
+   },
+   {
+    "titre": "G4.1·G4.4 · Scorta, termine e procedure d’ordinazione",
+    "objectifs": [
+     "G4.1 Descrivo la valutazione del fabbisogno in funzione del consumo (passato) e della previsione del fabbisogno futuro con l’aiuto di esempi pratici ed effettuo calcoli semplici. (C3) — G4.4 Descrivo i metodi d’ordinazione con quantità fisse, quantità variabili e ritmo d’ordinazione. (C2)"
+    ]
+   },
+   {
+    "titre": "G4.8 · Quantità ottimale d’ordinazione (Andler)",
+    "objectifs": [
+     "G4.8 Calcolo la quantità ottimale d’ordinazione (Andler), interpreto il risultato e ne traggo conclusioni per il mio lavoro. (C3)"
+    ]
+   },
+   {
+    "titre": "G3.4 · Analisi ABC",
+    "objectifs": [
+     "G3.4 Allestisco in Excel un’analisi ABC (rotazione delle scorte o cifra d’affari) di una parte del magazzino o di un gruppo di articoli e propongo misure di ottimizzazione del magazzino. (C4)"
+    ]
+   }
+  ]
+ }
+}

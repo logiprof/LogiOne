@@ -1,0 +1,154 @@
+{
+ "module": "M205",
+ "shortcode": "jeu_m205",
+ "titre": "M205 – Le marketing",
+ "sous_titre": "Logisticien·ne CFC · Module M205",
+ "duree": "10 min par série",
+ "description": "7 objectifs du module M205 (leçons 5.1 à 5.5) et 175 épreuves, dont 37 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "M205.1 · Objectifs du marketing",
+   "objectifs": [
+    "Je peux expliquer les différents objectifs du marketing, tels que promouvoir les ventes, augmenter la part de marché, améliorer la notoriété et ancrer une image positive sur le marché."
+   ]
+  },
+  {
+   "titre": "M205.2 · L’offre et la demande",
+   "objectifs": [
+    "Je peux décrire l’effet de l’offre et de la demande sur les prix des produits, en donnant des exemples concrets comme les variations de prix dues à des récoltes abondantes ou des événements climatiques."
+   ]
+  },
+  {
+   "titre": "M205.3 · La mondialisation",
+   "objectifs": [
+    "Je comprends comment la mondialisation limite l’impact de l’offre locale sur les prix et peut donner des exemples de produits importés influençant les marchés locaux."
+   ]
+  },
+  {
+   "titre": "M205.4 · Le marketing-mix",
+   "objectifs": [
+    "Je peux expliquer les quatre éléments du marketing-mix (Produit, Prix, Lieu, Publicité) et leur importance dans la stratégie de marketing d’une entreprise."
+   ]
+  },
+  {
+   "titre": "M205.5 · Les types de publicité",
+   "objectifs": [
+    "Je peux distinguer entre publicité informative et publicité suggestive, en expliquant leurs caractéristiques et leurs objectifs respectifs."
+   ]
+  },
+  {
+   "titre": "M205.6 · Le concept AIDA",
+   "objectifs": [
+    "Je peux appliquer le concept AIDA (Attention, Intérêt, Désir, Action) pour créer une annonce publicitaire efficace qui capte l’attention des clients et les incite à l’achat."
+   ]
+  },
+  {
+   "titre": "M205.7 · Une bonne publicité",
+   "objectifs": [
+    "Je peux évaluer une publicité pour déterminer si elle est originale, véridique et émotionnellement engageante, en identifiant les éléments qui contribuent à son efficacité."
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M205 – Das Marketing",
+  "sous_titre": "Logistiker/-in EFZ · Modul M205",
+  "duree": "10 Min. pro Serie",
+  "description": "7 Lernziele des Moduls M205 und 175 Aufgaben, davon 37 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "M205.1 · Ziele des Marketings",
+    "objectifs": [
+     "Ich kann die verschiedenen Ziele des Marketings erklären, wie den Verkauf fördern, den Marktanteil erhöhen, die Bekanntheit verbessern und ein positives Image im Markt verankern."
+    ]
+   },
+   {
+    "titre": "M205.2 · Angebot und Nachfrage",
+    "objectifs": [
+     "Ich kann die Wirkung von Angebot und Nachfrage auf die Preise der Produkte beschreiben und konkrete Beispiele nennen, wie Preisschwankungen durch reiche Ernten oder Wetterereignisse."
+    ]
+   },
+   {
+    "titre": "M205.3 · Die Globalisierung",
+    "objectifs": [
+     "Ich verstehe, wie die Globalisierung die Wirkung des lokalen Angebots auf die Preise begrenzt, und kann Beispiele importierter Produkte nennen, die lokale Märkte beeinflussen."
+    ]
+   },
+   {
+    "titre": "M205.4 · Der Marketing-Mix",
+    "objectifs": [
+     "Ich kann die vier Elemente des Marketing-Mix (Produkt, Preis, Distribution, Kommunikation) und ihre Bedeutung in der Marketingstrategie eines Unternehmens erklären."
+    ]
+   },
+   {
+    "titre": "M205.5 · Die Werbearten",
+    "objectifs": [
+     "Ich kann zwischen informativer und suggestiver Werbung unterscheiden und ihre Merkmale und Ziele erklären."
+    ]
+   },
+   {
+    "titre": "M205.6 · Das AIDA-Konzept",
+    "objectifs": [
+     "Ich kann das AIDA-Konzept (Attention, Interest, Desire, Action) anwenden, um ein wirksames Inserat zu gestalten, das die Aufmerksamkeit der Kunden gewinnt und sie zum Kauf anregt."
+    ]
+   },
+   {
+    "titre": "M205.7 · Eine gute Werbung",
+    "objectifs": [
+     "Ich kann eine Werbung beurteilen, um festzustellen, ob sie originell, wahrheitsgetreu und emotional ansprechend ist, und die Elemente erkennen, die zu ihrer Wirksamkeit beitragen."
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M205 – Il marketing",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M205",
+  "duree": "10 min per serie",
+  "description": "7 obiettivi del modulo M205 e 175 esercizi, di cui il 37 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "M205.1 · Obiettivi del marketing",
+    "objectifs": [
+     "So spiegare i diversi obiettivi del marketing, come promuovere le vendite, aumentare la quota di mercato, migliorare la notorietà e consolidare un’immagine positiva sul mercato."
+    ]
+   },
+   {
+    "titre": "M205.2 · L’offerta e la domanda",
+    "objectifs": [
+     "So descrivere l’effetto dell’offerta e della domanda sui prezzi dei prodotti, dando esempi concreti come le variazioni di prezzo dovute a raccolti abbondanti o a eventi climatici."
+    ]
+   },
+   {
+    "titre": "M205.3 · La globalizzazione",
+    "objectifs": [
+     "Capisco come la globalizzazione limita l’impatto dell’offerta locale sui prezzi e so dare esempi di prodotti importati che influenzano i mercati locali."
+    ]
+   },
+   {
+    "titre": "M205.4 · Il marketing mix",
+    "objectifs": [
+     "So spiegare i quattro elementi del marketing mix (Prodotto, Prezzo, Punto vendita, Promozione) e la loro importanza nella strategia di marketing di un’azienda."
+    ]
+   },
+   {
+    "titre": "M205.5 · I tipi di pubblicità",
+    "objectifs": [
+     "So distinguere tra pubblicità informativa e pubblicità suggestiva, spiegandone le caratteristiche e gli obiettivi rispettivi."
+    ]
+   },
+   {
+    "titre": "M205.6 · Il concetto AIDA",
+    "objectifs": [
+     "So applicare il concetto AIDA (Attenzione, Interesse, Desiderio, Azione) per creare un annuncio pubblicitario efficace che catturi l’attenzione dei clienti e li inciti all’acquisto."
+    ]
+   },
+   {
+    "titre": "M205.7 · Una buona pubblicità",
+    "objectifs": [
+     "So valutare una pubblicità per determinare se è originale, veritiera ed emotivamente coinvolgente, identificando gli elementi che contribuiscono alla sua efficacia."
+    ]
+   }
+  ]
+ }
+}

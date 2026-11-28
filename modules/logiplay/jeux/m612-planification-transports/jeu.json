@@ -1,0 +1,82 @@
+{
+ "module": "M612",
+ "shortcode": "jeu_m612",
+ "titre": "M612 – La planification des transports",
+ "sous_titre": "Logisticien·ne CFC · Module M612",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M612 (leçons 12.1 à 12.6) et 85 épreuves, dont 35 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "h2.2 · Regroupage et cross-docking",
+   "objectifs": [
+    "h2.2 Je décris les notions de compactage (conditionnement) et de Crossdocking et explique leurs effets sur les charges de transport, le résultat d’exploitation et la réduction de CO2. (C2)"
+   ]
+  },
+  {
+   "titre": "h2.5 · Répartition du poids et arrimage",
+   "objectifs": [
+    "h2.5 J’explique la répartition sûre du poids d’un chargement sur le moyen de transport et l’effet des forces de gravitation et j’en déduis comment les marchandises doivent être sécurisées sur les moyens de transport. (C4)"
+   ]
+  },
+  {
+   "titre": "12.1–12.4 · Tournées, Make or Buy et froid",
+   "objectifs": [
+    "Contenu des leçons 12.1 à 12.4 (planification des tournées, bases légales, Make or Buy, denrées périssables et HACCP) — sans objectif dans la leçon « Objectifs » du module"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M612 – Die Transportplanung",
+  "sous_titre": "Logistiker/-in EFZ · Modul M612",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M612 und 85 Aufgaben, davon 35 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "h2.2 · Bündelung und Cross-Docking",
+    "objectifs": [
+     "h2.2 Ich beschreibe die Begriffe Verdichtung (Verpackung) und Cross-Docking und erkläre ihre Wirkung auf die Transportkosten, das Betriebsergebnis und die CO2-Reduktion. (K2)"
+    ]
+   },
+   {
+    "titre": "h2.5 · Gewichtsverteilung und Ladungssicherung",
+    "objectifs": [
+     "h2.5 Ich erkläre die sichere Verteilung des Gewichts einer Ladung auf dem Transportmittel und die Wirkung der Gravitationskräfte und leite daraus ab, wie die Waren auf den Transportmitteln gesichert werden müssen. (K4)"
+    ]
+   },
+   {
+    "titre": "12.1–12.4 · Touren, Make or Buy und Kühlung",
+    "objectifs": [
+     "Inhalt der Lektionen 12.1 bis 12.4 (Tourenplanung, rechtliche Grundlagen, Make or Buy, verderbliche Lebensmittel und HACCP) — ohne Lernziel in der Lektion «Lernziele» des Moduls"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M612 – La pianificazione dei trasporti",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M612",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M612 e 85 esercizi, di cui il 35 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "h2.2 · Raggruppamento e cross-docking",
+    "objectifs": [
+     "h2.2 Descrivo le nozioni di compattazione (condizionamento) e di cross-docking e spiego i loro effetti sulle spese di trasporto, sul risultato d’esercizio e sulla riduzione di CO2. (C2)"
+    ]
+   },
+   {
+    "titre": "h2.5 · Ripartizione del peso e fissaggio del carico",
+    "objectifs": [
+     "h2.5 Spiego la ripartizione sicura del peso di un carico sul mezzo di trasporto e l’effetto delle forze di gravità e ne deduco come le merci devono essere assicurate sui mezzi di trasporto. (C4)"
+    ]
+   },
+   {
+    "titre": "12.1–12.4 · Giri, Make or Buy e freddo",
+    "objectifs": [
+     "Contenuto delle lezioni da 12.1 a 12.4 (pianificazione dei giri, basi legali, Make or Buy, derrate deperibili e HACCP) — senza obiettivo nella lezione «Obiettivi» del modulo"
+    ]
+   }
+  ]
+ }
+}

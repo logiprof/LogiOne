@@ -1,0 +1,100 @@
+{
+ "module": "M409",
+ "shortcode": "jeu_m409",
+ "titre": "M409 – Les engins de manutention",
+ "sous_titre": "Logisticien·ne CFC · Module M409",
+ "duree": "10 min par série",
+ "description": "4 objectifs du module M409 (leçons 9.1 à 9.8) et 100 épreuves, dont 34 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "H3.3a · Classification et engins simples",
+   "objectifs": [
+    "H3.3 J’explique les catégories d’engins de préparation de commande et cite des exemples pour chaque catégorie. (C2) — partie : classification, tracteurs, engins à timon et préparateurs de commandes"
+   ]
+  },
+  {
+   "titre": "H3.3b · Chariots élévateurs",
+   "objectifs": [
+    "H3.3 J’explique les catégories d’engins de préparation de commande et cite des exemples pour chaque catégorie. (C2) — partie : chariots élévateurs et engins de mise en stock, choix selon l’espace et la charge"
+   ]
+  },
+  {
+   "titre": "H3.4a · Entraînement, mâts et outils portés",
+   "objectifs": [
+    "H3.4 Je décris les engins de levage et explique à l’aide d’exemples les domaines d’application et les possibilités d’utilisation. (C2) — partie : types d’entraînement, mâts, fourches et outils portés"
+   ]
+  },
+  {
+   "titre": "H3.4b · FTS, transstockeurs et Autostore",
+   "objectifs": [
+    "H3.4 Je décris les dispositifs de transport et les engins de levage et explique à l’aide d’exemples les domaines d’application et les possibilités d’utilisation. (C2) — partie : systèmes de transport sans conducteur, transstockeurs et Autostore"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M409 – Die Flurförderzeuge",
+  "sous_titre": "Logistiker/-in EFZ · Modul M409",
+  "duree": "10 Min. pro Serie",
+  "description": "4 Lernziele des Moduls M409 und 100 Aufgaben, davon 34 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "H3.3a · Einteilung und einfache Geräte",
+    "objectifs": [
+     "H3.3 Ich erkläre die Kategorien der Kommissioniergeräte und nenne Beispiele für jede Kategorie. (K2) — Teil: Einteilung, Schlepper, Deichselgeräte und Kommissioniergeräte"
+    ]
+   },
+   {
+    "titre": "H3.3b · Gabelstapler",
+    "objectifs": [
+     "H3.3 Ich erkläre die Kategorien der Kommissioniergeräte und nenne Beispiele für jede Kategorie. (K2) — Teil: Gabelstapler und Einlagerungsgeräte, Wahl nach Platz und Last"
+    ]
+   },
+   {
+    "titre": "H3.4a · Antrieb, Masten und Anbaugeräte",
+    "objectifs": [
+     "H3.4 Ich beschreibe die Hebegeräte und erkläre anhand von Beispielen Einsatzbereiche und Einsatzmöglichkeiten. (K2) — Teil: Antriebsarten, Masten, Gabeln und Anbaugeräte"
+    ]
+   },
+   {
+    "titre": "H3.4b · FTS, Regalbediengeräte und Autostore",
+    "objectifs": [
+     "H3.4 Ich beschreibe die Fördereinrichtungen und Hebegeräte und erkläre anhand von Beispielen Einsatzbereiche und Einsatzmöglichkeiten. (K2) — Teil: fahrerlose Transportsysteme, Regalbediengeräte und Autostore"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M409 – I mezzi di movimentazione",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M409",
+  "duree": "10 min per serie",
+  "description": "4 obiettivi del modulo M409 e 100 esercizi, di cui il 34 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "H3.3a · Classificazione e mezzi semplici",
+    "objectifs": [
+     "H3.3 Spiego le categorie di mezzi di preparazione degli ordini e cito esempi per ogni categoria. (C2) — parte: classificazione, trattori, mezzi a timone e commissionatori"
+    ]
+   },
+   {
+    "titre": "H3.3b · Carrelli elevatori",
+    "objectifs": [
+     "H3.3 Spiego le categorie di mezzi di preparazione degli ordini e cito esempi per ogni categoria. (C2) — parte: carrelli elevatori e mezzi d’immagazzinamento, scelta secondo lo spazio e il carico"
+    ]
+   },
+   {
+    "titre": "H3.4a · Azionamento, montanti e attrezzature applicate",
+    "objectifs": [
+     "H3.4 Descrivo i mezzi di sollevamento e spiego con l’aiuto di esempi i campi d’applicazione e le possibilità d’impiego. (C2) — parte: tipi di azionamento, montanti, forche e attrezzature applicate"
+    ]
+   },
+   {
+    "titre": "H3.4b · FTS, trasloelevatori e Autostore",
+    "objectifs": [
+     "H3.4 Descrivo i dispositivi di trasporto e i mezzi di sollevamento e spiego con l’aiuto di esempi i campi d’applicazione e le possibilità d’impiego. (C2) — parte: sistemi di trasporto senza conducente, trasloelevatori e Autostore"
+    ]
+   }
+  ]
+ }
+}

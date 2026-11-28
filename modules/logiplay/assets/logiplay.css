@@ -1,0 +1,146 @@
+/* =====================================================================
+   LogiPlay — style LogiOne (comme LogiLive et LogiEval)
+   Anthracite et vert LogiProf, jaune « marquage d'entrepôt » pour les actions.
+   Poppins intégrée à l'extension : aucune requête vers Google Fonts.
+   ===================================================================== */
+@font-face { font-family: "LogiPlay Poppins"; src: url("fonts/poppins-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "LogiPlay Poppins"; src: url("fonts/poppins-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "LogiPlay Poppins"; src: url("fonts/poppins-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "LogiPlay Poppins"; src: url("fonts/poppins-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+
+.lpl-app {
+	--ink: #313a45; --ink-deep: #252c35; --ink-soft: #4a5563;
+	--green: #067030; --green-bright: #2fae5f; --green-deep: #0b4d22; --mint: #dcefe3;
+	--paper: #eef0eb; --white: #ffffff; --line: #d9ddd6;
+	--yellow: #f5c400; --yellow-soft: #fff4c2;
+	--muted: #5b6672; --on-ink: #c9d1d9;
+	--radius: 6px;
+	--gutter: clamp(16px, 4vw, 56px);
+	--lpl-font: "LogiPlay Poppins", "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+	position: relative;
+	margin: 0 0 40px !important;
+	padding: 0;
+	overflow-x: clip;
+	background: var(--paper);
+	color: var(--ink);
+	font-family: var(--lpl-font);
+	font-size: 16px;
+	line-height: 1.55;
+	text-align: left;
+}
+/* Pleine largeur : l'application sort de la colonne du thème (--lpl-vw calculée par logiplay.js) */
+.lpl-app.lpl-full {
+	left: calc(50% - var(--lpl-vw, 100vw) / 2);
+	width: var(--lpl-vw, 100vw);
+	max-width: var(--lpl-vw, 100vw) !important;
+}
+.lpl-app.lpl-contenu { width: 100%; max-width: 100% !important; border-radius: var(--radius); overflow: hidden; }
+.lpl-app.lpl-solo { background: transparent; margin-bottom: 24px !important; }
+.lpl-app *, .lpl-app *::before, .lpl-app *::after { box-sizing: border-box; }
+.lpl-app h2, .lpl-app h3 { font-family: var(--lpl-font); letter-spacing: -0.01em; }
+.lpl-app a { text-decoration: none; }
+.lpl-app :focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+
+/* ── Bandeau anthracite ─────────────────────────────────────── */
+.lpl-hero { background: var(--ink); color: var(--white); padding: 0 var(--gutter); }
+.lpl-hero-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 28px; padding: 22px 0 14px; }
+.lpl-brand { display: block; line-height: 0; }
+.lpl-logo { display: block; height: 52px; width: auto; max-width: 100%; }
+.lpl-pill { display: inline-flex; align-items: center; gap: 10px; padding: 7px 16px 7px 12px; border-radius: 999px;
+	background: rgba(255,255,255,.08); color: var(--on-ink); font-size: 14px; font-weight: 500; line-height: 1.2; }
+.lpl-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green-bright); flex: none; }
+.lpl-hero-main { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 24px; }
+.lpl-hero-text { padding: 18px 0 40px; }
+.lpl-app .lpl-kicker { margin: 0 0 6px; color: var(--green-bright); font-weight: 600; font-size: 15px; letter-spacing: .01em; }
+.lpl-app .lpl-hello { margin: 0 0 12px; padding: 0; font-weight: 700; font-size: clamp(32px, 5vw, 62px); line-height: 1.05;
+	letter-spacing: -0.03em; color: var(--white); border: 0; background: none; text-transform: none; }
+.lpl-app .lpl-lead { margin: 0; max-width: 58ch; color: var(--on-ink); font-size: 17px; }
+.lpl-cta { margin: 22px 0 0; }
+.lpl-art { width: clamp(140px, 17vw, 230px); margin-bottom: -18px; position: relative; z-index: 1; }
+
+/* Cubes : faces haut / gauche / droite, comme le cube du logo */
+.lpl-iso { display: block; width: 100%; height: auto; overflow: visible; }
+.lpl-iso polygon { stroke: var(--ink); stroke-width: 2.5; stroke-linejoin: round; }
+.lpl-iso .on .t { fill: var(--green-bright); } .lpl-iso .on .l { fill: var(--green-deep); } .lpl-iso .on .r { fill: var(--green); }
+.lpl-iso .mark .t, .lpl-iso .mark .r { fill: var(--yellow); } .lpl-iso .mark .l { fill: #d9a900; }
+.lpl-iso .p { fill: var(--ink); stroke: var(--ink); stroke-width: 3; stroke-linejoin: round; }
+@keyframes lpl-drop { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: none; } }
+.lpl-iso .c { animation: lpl-drop .5s cubic-bezier(.2, .9, .3, 1.2) both; animation-delay: calc(var(--i) * 70ms + 120ms); }
+
+/* ── Boutons ────────────────────────────────────────────────── */
+.lpl-app .lpl-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 46px; padding: 10px 24px;
+	border-radius: 999px; border: 2px solid transparent; font: 700 15px/1.25 var(--lpl-font); cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
+.lpl-app .lpl-btn-yellow { background: var(--yellow); color: var(--ink); }
+.lpl-app .lpl-btn-yellow:hover { background: #ffd83d; color: var(--ink); }
+
+/* ── Corps ──────────────────────────────────────────────────── */
+.lpl-body { padding: 40px var(--gutter) 56px; }
+.lpl-solo .lpl-body { padding: 0; }
+.lpl-app .lpl-h { display: flex; align-items: baseline; gap: 10px; margin: 6px 0 16px; font-size: 22px; font-weight: 700; color: var(--ink); }
+.lpl-app .lpl-h span { color: var(--muted); font-size: 15px; font-weight: 500; }
+
+/* Tuiles de synthèse */
+.lpl-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin: 0 0 26px; }
+.lpl-tile { display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; min-height: 116px; padding: 18px 22px;
+	background: var(--white); border-radius: var(--radius); border-top: 6px solid var(--ink); }
+.lpl-tile-label { color: var(--muted); font-size: 15px; font-weight: 500; }
+.lpl-tile-num { color: var(--ink); font-size: clamp(32px, 3.2vw, 46px); font-weight: 700; line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.lpl-tile-num small { font-size: .45em; font-weight: 600; color: var(--muted); letter-spacing: 0; }
+.lpl-tile-sub { color: var(--muted); font-size: 13px; }
+.lpl-tile-green { border-top-color: var(--green); } .lpl-tile-green .lpl-tile-num { color: var(--green); }
+.lpl-tile-yellow { border-top-color: var(--yellow); }
+.lpl-tile-grey { border-top-color: #a7afb7; }
+@media (max-width: 900px) { .lpl-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .lpl-hero-main { grid-template-columns: 1fr; } .lpl-art { display: none; } .lpl-hero-text { padding-bottom: 28px; } }
+
+/* Classement de la semaine : tuile blanche, liseré jaune */
+.lpl-app .jrl-podiums { grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 16px; margin: 0 0 30px; }
+.lpl-app .jrl-podium { background: var(--white); color: var(--ink); border-radius: var(--radius); border-top: 6px solid var(--yellow); padding: 20px 22px; }
+.lpl-app .jrl-podium h3 { color: var(--ink) !important; font-size: 18px; font-weight: 700; }
+.lpl-app .jrl-podium__head p { color: var(--muted); font-size: 14px; }
+.lpl-app .jrl-podium__ic { display: grid; place-items: center; width: 44px; height: 44px; border-radius: var(--radius); background: var(--yellow-soft); font-size: 1.5rem; }
+.lpl-app .jrl-podium__top li { background: var(--paper); border-radius: var(--radius); border-top-width: 5px; }
+.lpl-app .jrl-podium__top li.is-moi { outline: 2px solid var(--green-bright); outline-offset: -2px; }
+.lpl-app .jrl-podium__r { color: var(--ink); background: var(--white); border-radius: 999px; padding: 1px 9px; align-self: flex-start; }
+.lpl-app .jrl-podium__top span:last-child { color: var(--muted); }
+.lpl-app .jrl-podium__moi, .lpl-app .jrl-podium__vide { color: var(--ink-soft); }
+.lpl-app .jrl-podium__tout summary { color: var(--green); }
+.lpl-app .jrl-podium__tout li:nth-child(odd) { background: var(--paper); }
+.lpl-app .jrl-podium__tout li.is-moi { background: var(--mint); }
+
+/* ── Cartes des jeux ────────────────────────────────────────── */
+.lpl-app .jdr-grid { margin: 0; gap: 16px; }
+.lpl-app .jdr-card { --jdr-accent: var(--green); background: var(--white); color: var(--ink); border: 0; border-top: 6px solid #a7afb7;
+	border-radius: var(--radius); box-shadow: none; padding: 18px; font-family: var(--lpl-font); transition: transform .15s, box-shadow .15s; }
+.lpl-app .jdr-card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(49, 58, 69, .10); }
+.lpl-app .jdr-card.is-started { border-top-color: var(--green); }
+.lpl-app .jdr-card.is-mastered { border-top-color: var(--yellow); }
+.lpl-app .jdr-card__logo { border-radius: var(--radius); background: var(--paper); }
+.lpl-app .jdr-card .jdr-card__kicker { color: var(--green); font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; }
+.lpl-app .jdr-card h3.jdr-card__title { color: var(--ink) !important; font-family: var(--lpl-font); font-size: 19px; font-weight: 700; letter-spacing: -0.01em; }
+.lpl-app .jdr-card__meta span { background: var(--paper); color: var(--muted); font-size: 13px; font-weight: 500; }
+.lpl-app .jdr-prog { background: var(--paper); border: 0; border-radius: var(--radius); color: var(--ink-soft); }
+.lpl-app .jdr-prog__head { color: var(--ink); font-weight: 600; }
+.lpl-app .jdr-prog__head b { color: var(--green); font-weight: 700; }
+.lpl-app .jdr-prog__bar { background: var(--line); }
+.lpl-app .jdr-prog__bar i { background: var(--green); }
+.lpl-app .jdr-seg { background: #e2e5df; border-radius: 4px; }
+.lpl-app .jdr-prog__stats span { background: var(--white); border: 0; color: var(--muted); }
+.lpl-app .jdr-prog__stats b { color: var(--ink); }
+.lpl-app .jdr-prog__hint { color: var(--muted); }
+.lpl-app .jdr-card__content summary.jdr-obj-btn { color: var(--ink); border: 2px solid var(--line); border-radius: 999px; padding: 6px 16px; background: var(--white); font-weight: 600; }
+.lpl-app .jdr-card__content summary.jdr-obj-btn:hover { border-color: var(--ink); background: var(--white); }
+.lpl-app .jdr-obj > li { color: var(--ink); }
+.lpl-app .jdr-obj > li::marker { color: var(--green); }
+.lpl-app .jdr-play { background: var(--yellow); color: var(--ink); border-radius: 999px; padding: 11px 26px; font-family: var(--lpl-font); font-weight: 700; font-size: 16px; }
+.lpl-app .jdr-play:hover { filter: none; background: #ffd83d; color: var(--ink); }
+.lpl-app .jdr-play:focus-visible { outline: 3px solid var(--ink); }
+.lpl-app .jdr-locked { background: var(--paper); border-color: #a7afb7; border-radius: var(--radius); color: var(--muted); }
+.lpl-app .jdr-doc { background: var(--paper); border: 0; border-radius: var(--radius); }
+.lpl-app .jdr-doc__ic { background: var(--mint); color: var(--green); border-radius: var(--radius); }
+.lpl-app .jdr-doc__t b { color: var(--ink); }
+.lpl-app .jdr-doc__t small { color: var(--muted); }
+.lpl-app .jdr-doc__btn { border-radius: 999px; background: var(--green); border-color: var(--green); }
+.lpl-app .jdr-doc__btn--alt { background: var(--white); color: var(--green); }
+@media (prefers-reduced-motion: reduce) { .lpl-iso .c { animation: none; } .lpl-app .jdr-card { transition: none; } .lpl-app .jdr-card:hover { transform: none; } }
+@media (max-width: 640px) { .lpl-tile { min-height: 96px; padding: 14px 16px; } .lpl-tile-label { font-size: 13px; line-height: 1.3; } .lpl-summary { gap: 10px; } }

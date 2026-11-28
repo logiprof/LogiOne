@@ -1,0 +1,82 @@
+{
+ "module": "M503",
+ "shortcode": "jeu_m503",
+ "titre": "M503 – Organisation de la production",
+ "sous_titre": "Logisticien·ne CFC · Module M503",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M503 (leçons 3.1 à 3.5) et 75 épreuves, dont 37 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "OP1 · Types de fabrication",
+   "objectifs": [
+    "Je peux énumérer et distinguer les principaux types de fabrication (unitaire, multiple, en série, de masse, par variété et par lots). (C1) — Je compare leurs avantages et inconvénients et je choisis le type adapté à un produit en justifiant mon choix. (C2-C3)"
+   ]
+  },
+  {
+   "titre": "OP2 · Organisation de la production",
+   "objectifs": [
+    "Je peux décrire les formes d’organisation du travail (à l’établi, en atelier, à la chaîne, de chantier) et leur fonctionnement. (C1) — Je comprends leur influence sur la productivité, la qualité et les coûts, et je propose l’organisation adaptée à une situation. (C2-C3)"
+   ]
+  },
+  {
+   "titre": "OP3 · Lean Production",
+   "objectifs": [
+    "Je peux expliquer les objectifs et les principes de la Lean Production (réduction des gaspillages, flexibilité). (C2) — J’analyse un processus et suggère des améliorations basées sur la production allégée. (C3)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M503 – Organisation der Produktion",
+  "sous_titre": "Logistiker/-in EFZ · Modul M503",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M503 und 75 Aufgaben, davon 37 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "OP1 · Fertigungsarten",
+    "objectifs": [
+     "Ich kann die wichtigsten Fertigungsarten (Einzel-, Mehrfach-, Serien-, Massen-, Sorten- und Chargenfertigung) aufzählen und unterscheiden. (K1) — Ich vergleiche ihre Vor- und Nachteile und wähle mit Begründung die für ein Produkt passende Art. (K2–K3)"
+    ]
+   },
+   {
+    "titre": "OP2 · Organisation der Produktion",
+    "objectifs": [
+     "Ich kann die Formen der Arbeitsorganisation (Werkbank-, Werkstatt-, Fliess- und Baustellenfertigung) und ihre Funktionsweise beschreiben. (K1) — Ich verstehe ihren Einfluss auf Produktivität, Qualität und Kosten und schlage die für eine Situation passende Organisation vor. (K2–K3)"
+    ]
+   },
+   {
+    "titre": "OP3 · Lean Production",
+    "objectifs": [
+     "Ich kann Ziele und Grundsätze der Lean Production (Verringerung der Verschwendung, Flexibilität) erklären. (K2) — Ich analysiere einen Prozess und schlage Verbesserungen auf Grundlage der schlanken Produktion vor. (K3)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M503 – Organizzazione della produzione",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M503",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M503 e 75 esercizi, di cui il 37 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "OP1 · Tipi di fabbricazione",
+    "objectifs": [
+     "So elencare e distinguere i principali tipi di fabbricazione (unitaria, multipla, in serie, di massa, per varietà e per lotti). (C1) — Confronto i loro vantaggi e svantaggi e scelgo il tipo adatto a un prodotto giustificando la mia scelta. (C2-C3)"
+    ]
+   },
+   {
+    "titre": "OP2 · Organizzazione della produzione",
+    "objectifs": [
+     "So descrivere le forme d’organizzazione del lavoro (al banco, in officina, a catena, di cantiere) e il loro funzionamento. (C1) — Capisco la loro influenza sulla produttività, sulla qualità e sui costi, e propongo l’organizzazione adatta a una situazione. (C2-C3)"
+    ]
+   },
+   {
+    "titre": "OP3 · Lean Production",
+    "objectifs": [
+     "So spiegare gli obiettivi e i principi della Lean Production (riduzione degli sprechi, flessibilità). (C2) — Analizzo un processo e suggerisco miglioramenti basati sulla produzione snella. (C3)"
+    ]
+   }
+  ]
+ }
+}

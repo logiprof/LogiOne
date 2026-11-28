@@ -1,0 +1,172 @@
+{
+ "module": "M203",
+ "shortcode": "jeu_m203",
+ "titre": "M203 – Le défi physique dans le monde du travail",
+ "sous_titre": "Logisticien·ne CFC · Module M203",
+ "duree": "10 min par série",
+ "description": "8 objectifs du module M203 (sous-chapitre 3.6) et 202 épreuves, dont 35 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "A2.5 · Les EPI",
+   "objectifs": [
+    "J’énumère les éléments des équipements de protection individuelle (EPI) adaptés au travail, j’explique leur effet, leur utilisation et leur entretien. (C2)"
+   ]
+  },
+  {
+   "titre": "A2.7 · Mesures préventives",
+   "objectifs": [
+    "Je décris des mesures personnelles préventives concrètes pour la protection de la santé et de l’environnement afin d’éviter les maladies professionnelles et pour la sécurité au travail. (C2)"
+   ]
+  },
+  {
+   "titre": "A2.8 · Contraintes physiques",
+   "objectifs": [
+    "Je décris les contraintes physiques (squelette, articulations, musculature) liées à l’activité professionnelle, leurs effets et les mesures préventives pour les éviter ou les réduire. (C2)"
+   ]
+  },
+  {
+   "titre": "B2.5 · Situations de pression",
+   "objectifs": [
+    "Je décris des méthodes, des procédures et des comportements permettant de prévenir, de désamorcer et de gérer des situations de pression. (C2)"
+   ]
+  },
+  {
+   "titre": "B3.8 · Risques et dangers",
+   "objectifs": [
+    "Je décris à l’aide d’exemples les risques et dangers apparaissant dans le processus logistique pour moi-même, pour les collaborateurs et pour les tiers. (C2)"
+   ]
+  },
+  {
+   "titre": "B3.9 · Organisation d’urgence",
+   "objectifs": [
+    "Je cite les principaux éléments d’une organisation d’urgence et explique les procédures, le comportement et les mesures à prendre selon le plan d’urgence de l’entreprise. (C2)"
+   ]
+  },
+  {
+   "titre": "C1.3 · Engins de manutention",
+   "objectifs": [
+    "Je décris les engins de manutention et de levage (chariot élévateur, pont roulant, palonnier, table élévatrice à ciseaux, aides au levage et au transport, exosquelettes), leurs caractéristiques et leurs domaines d’utilisation dans la réception des marchandises. (C2)"
+   ]
+  },
+  {
+   "titre": "D1.7 · Moyens auxiliaires",
+   "objectifs": [
+    "Je connais différents moyens auxiliaires permettant de ranger les marchandises de manière ergonomique et sûre et j’explique leurs avantages à l’aide d’un exemple (chariot élévateur, exosquelette, diable, etc.) (C2)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M203 – Die körperliche Herausforderung in der Arbeitswelt",
+  "sous_titre": "Logistiker/-in EFZ · Modul M203",
+  "duree": "10 Min. pro Serie",
+  "description": "8 Lernziele des Moduls M203 und 202 Aufgaben, davon 35 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "A2.5 · Die PSA",
+    "objectifs": [
+     "Ich zähle die Elemente der für die Arbeit geeigneten persönlichen Schutzausrüstung (PSA) auf und erkläre ihre Wirkung, ihre Verwendung und ihre Pflege. (K2)"
+    ]
+   },
+   {
+    "titre": "A2.7 · Vorbeugende Massnahmen",
+    "objectifs": [
+     "Ich beschreibe konkrete persönliche Massnahmen zum Schutz von Gesundheit und Umwelt, um Berufskrankheiten zu vermeiden und die Arbeitssicherheit zu gewährleisten. (K2)"
+    ]
+   },
+   {
+    "titre": "A2.8 · Körperliche Belastungen",
+    "objectifs": [
+     "Ich beschreibe die mit der beruflichen Tätigkeit verbundenen körperlichen Belastungen (Skelett, Gelenke, Muskulatur), ihre Auswirkungen und die vorbeugenden Massnahmen, um sie zu vermeiden oder zu verringern. (K2)"
+    ]
+   },
+   {
+    "titre": "B2.5 · Drucksituationen",
+    "objectifs": [
+     "Ich beschreibe Methoden, Vorgehensweisen und Verhaltensweisen, um Drucksituationen vorzubeugen, sie zu entschärfen und zu bewältigen. (K2)"
+    ]
+   },
+   {
+    "titre": "B3.8 · Risiken und Gefahren",
+    "objectifs": [
+     "Ich beschreibe anhand von Beispielen die Risiken und Gefahren, die im logistischen Prozess für mich, für die Mitarbeitenden und für Dritte auftreten. (K2)"
+    ]
+   },
+   {
+    "titre": "B3.9 · Notfallorganisation",
+    "objectifs": [
+     "Ich nenne die wichtigsten Elemente einer Notfallorganisation und erkläre die Abläufe, das Verhalten und die Massnahmen gemäss dem Notfallplan des Unternehmens. (K2)"
+    ]
+   },
+   {
+    "titre": "C1.3 · Förder- und Hebegeräte",
+    "objectifs": [
+     "Ich beschreibe die Förder- und Hebegeräte (Gabelstapler, Brückenkran, Hebebalken, Scherenhubtisch, Hebe- und Transporthilfen, Exoskelette), ihre Merkmale und ihre Einsatzbereiche im Wareneingang. (K2)"
+    ]
+   },
+   {
+    "titre": "D1.7 · Hilfsmittel",
+    "objectifs": [
+     "Ich kenne verschiedene Hilfsmittel, um Waren ergonomisch und sicher einzulagern, und erkläre ihre Vorteile anhand eines Beispiels (Gabelstapler, Exoskelett, Sackkarre usw.). (K2)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M203 – La sfida fisica nel mondo del lavoro",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M203",
+  "duree": "10 min per serie",
+  "description": "8 obiettivi del modulo M203 e 202 esercizi, di cui il 35 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "A2.5 · I DPI",
+    "objectifs": [
+     "Elenco gli elementi dei dispositivi di protezione individuale (DPI) adatti al lavoro, spiego il loro effetto, il loro utilizzo e la loro manutenzione. (C2)"
+    ]
+   },
+   {
+    "titre": "A2.7 · Misure preventive",
+    "objectifs": [
+     "Descrivo misure personali preventive concrete per la protezione della salute e dell’ambiente al fine di evitare le malattie professionali e per la sicurezza sul lavoro. (C2)"
+    ]
+   },
+   {
+    "titre": "A2.8 · Sollecitazioni fisiche",
+    "objectifs": [
+     "Descrivo le sollecitazioni fisiche (scheletro, articolazioni, muscolatura) legate all’attività professionale, i loro effetti e le misure preventive per evitarle o ridurle. (C2)"
+    ]
+   },
+   {
+    "titre": "B2.5 · Situazioni di pressione",
+    "objectifs": [
+     "Descrivo metodi, procedure e comportamenti che permettono di prevenire, disinnescare e gestire situazioni di pressione. (C2)"
+    ]
+   },
+   {
+    "titre": "B3.8 · Rischi e pericoli",
+    "objectifs": [
+     "Descrivo con l’aiuto di esempi i rischi e i pericoli che si presentano nel processo logistico per me stesso, per i collaboratori e per i terzi. (C2)"
+    ]
+   },
+   {
+    "titre": "B3.9 · Organizzazione d’emergenza",
+    "objectifs": [
+     "Cito gli elementi principali di un’organizzazione d’emergenza e spiego le procedure, il comportamento e le misure da prendere secondo il piano d’emergenza dell’azienda. (C2)"
+    ]
+   },
+   {
+    "titre": "C1.3 · Mezzi di movimentazione",
+    "objectifs": [
+     "Descrivo i mezzi di movimentazione e di sollevamento (carrello elevatore, carroponte, bilancino, tavolo elevatore a pantografo, ausili per il sollevamento e il trasporto, esoscheletri), le loro caratteristiche e i loro campi d’impiego nella ricezione delle merci. (C2)"
+    ]
+   },
+   {
+    "titre": "D1.7 · Mezzi ausiliari",
+    "objectifs": [
+     "Conosco diversi mezzi ausiliari che permettono di riporre le merci in modo ergonomico e sicuro e spiego i loro vantaggi con l’aiuto di un esempio (carrello elevatore, esoscheletro, carrello a due ruote, ecc.) (C2)"
+    ]
+   }
+  ]
+ }
+}

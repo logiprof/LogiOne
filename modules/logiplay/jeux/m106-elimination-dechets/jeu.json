@@ -1,0 +1,118 @@
+{
+ "module": "M106",
+ "shortcode": "jeu_m106",
+ "titre": "M106 – L’élimination des déchets CH",
+ "sous_titre": "Logisticien·ne CFC · Module M106",
+ "duree": "10 min par série",
+ "description": "5 objectifs du module M106 (leçons 6.1 à 6.7) et 133 épreuves, dont 36 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "B4.2 · Le principe des 3R",
+   "objectifs": [
+    "J’explique le principe de la gestion des déchets selon les 3R : réduire-réutiliser-recycler (up cycling, recycler, incinérer, mettre en décharge). (C2)"
+   ]
+  },
+  {
+   "titre": "B4.3 · Économie circulaire",
+   "objectifs": [
+    "Je décris les voies d’élimination (économie circulaire), les avantages économiques et environnementaux du recyclage des quantités résiduelles de matériaux et de matières premières utilisés dans une entreprise logistique. (C2)"
+   ]
+  },
+  {
+   "titre": "B4.4 · Ressources et énergie",
+   "objectifs": [
+    "Je décris, à l’aide d’un exemple pratique, des mesures concrètes pour améliorer l’efficacité des ressources et de l’énergie dans le processus logistique. (C2)"
+   ]
+  },
+  {
+   "titre": "B4.5 · Les émissions",
+   "objectifs": [
+    "Je décris différents types d’émissions et les possibilités de les éviter. (C2)"
+   ]
+  },
+  {
+   "titre": "B4.7 · Trier et valoriser",
+   "objectifs": [
+    "Je décris l’utilité du tri et de la valorisation des déchets d’entreprise comme alternative à leur élimination, je cite des exemples concrets de déchets qui deviennent ainsi des matières valorisées. (C2)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M106 – Die Abfallentsorgung CH",
+  "sous_titre": "Logistiker/-in EFZ · Modul M106",
+  "duree": "10 Min. pro Serie",
+  "description": "5 Lernziele des Moduls M106 und 133 Aufgaben, davon 36 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "B4.2 · Das 3-R-Prinzip",
+    "objectifs": [
+     "Ich erkläre das Prinzip der Abfallwirtschaft nach den 3 R: reduzieren, wiederverwenden, rezyklieren (Upcycling, Recycling, Verbrennung, Deponie). (K2)"
+    ]
+   },
+   {
+    "titre": "B4.3 · Kreislaufwirtschaft",
+    "objectifs": [
+     "Ich beschreibe die Entsorgungswege (Kreislaufwirtschaft) sowie die wirtschaftlichen und ökologischen Vorteile des Recyclings von Restmengen an Materialien und Rohstoffen, die in einem Logistikunternehmen verwendet werden. (K2)"
+    ]
+   },
+   {
+    "titre": "B4.4 · Ressourcen und Energie",
+    "objectifs": [
+     "Ich beschreibe anhand eines Praxisbeispiels konkrete Massnahmen zur Verbesserung der Ressourcen- und Energieeffizienz im logistischen Prozess. (K2)"
+    ]
+   },
+   {
+    "titre": "B4.5 · Die Emissionen",
+    "objectifs": [
+     "Ich beschreibe verschiedene Arten von Emissionen und Möglichkeiten, sie zu vermeiden. (K2)"
+    ]
+   },
+   {
+    "titre": "B4.7 · Trennen und verwerten",
+    "objectifs": [
+     "Ich beschreibe den Nutzen der Trennung und Verwertung von Betriebsabfällen als Alternative zu ihrer Entsorgung und nenne konkrete Beispiele von Abfällen, die so zu verwerteten Stoffen werden. (K2)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M106 – Lo smaltimento dei rifiuti in Svizzera",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M106",
+  "duree": "10 min per serie",
+  "description": "5 obiettivi del modulo M106 e 133 esercizi, di cui il 36 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "B4.2 · Il principio delle 3R",
+    "objectifs": [
+     "Spiego il principio della gestione dei rifiuti secondo le 3R: ridurre-riutilizzare-riciclare (upcycling, riciclare, incenerire, mettere in discarica). (C2)"
+    ]
+   },
+   {
+    "titre": "B4.3 · Economia circolare",
+    "objectifs": [
+     "Descrivo le vie di smaltimento (economia circolare), i vantaggi economici e ambientali del riciclaggio delle quantità residue di materiali e materie prime utilizzati in un’azienda logistica. (C2)"
+    ]
+   },
+   {
+    "titre": "B4.4 · Risorse ed energia",
+    "objectifs": [
+     "Descrivo, con l’aiuto di un esempio pratico, misure concrete per migliorare l’efficienza delle risorse e dell’energia nel processo logistico. (C2)"
+    ]
+   },
+   {
+    "titre": "B4.5 · Le emissioni",
+    "objectifs": [
+     "Descrivo diversi tipi di emissioni e le possibilità di evitarle. (C2)"
+    ]
+   },
+   {
+    "titre": "B4.7 · Separare e valorizzare",
+    "objectifs": [
+     "Descrivo l’utilità della separazione e della valorizzazione dei rifiuti aziendali come alternativa al loro smaltimento, cito esempi concreti di rifiuti che diventano così materiali valorizzati. (C2)"
+    ]
+   }
+  ]
+ }
+}

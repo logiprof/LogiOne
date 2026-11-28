@@ -1,0 +1,82 @@
+{
+ "module": "M206",
+ "shortcode": "jeu_m206",
+ "titre": "M206 – Communication",
+ "sous_titre": "Logisticien·ne CFC · Module M206",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M206 (leçons 6.1 à 6.5) et 76 épreuves, dont 36 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "B1.2a · Les bases de la communication",
+   "objectifs": [
+    "J’explique les bases et les règles de la communication (éléments clés, modèle émetteur-récepteur, feedback, interférences, écoute active). (C3) — partie 1 de B1.2"
+   ]
+  },
+  {
+   "titre": "B1.2b · Verbal, non verbal, questions",
+   "objectifs": [
+    "J’identifie la communication verbale et non verbale et j’utilise les questions ouvertes et fermées à bon escient. (C3) — partie 2 de B1.2"
+   ]
+  },
+  {
+   "titre": "B1.2c · Règles et tueurs de conversation",
+   "objectifs": [
+    "Je décris des exemples de violations aux règles de la communication (tueurs de conversation) et je conduis et termine une conversation de manière adaptée. (C3) — partie 3 de B1.2"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M206 – Kommunikation",
+  "sous_titre": "Logistiker/-in EFZ · Modul M206",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M206 und 76 Aufgaben, davon 36 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "B1.2a · Die Grundlagen der Kommunikation",
+    "objectifs": [
+     "Ich erkläre die Grundlagen und Regeln der Kommunikation (Schlüsselelemente, Sender-Empfänger-Modell, Feedback, Störungen, aktives Zuhören). (K3) — Teil 1 von B1.2"
+    ]
+   },
+   {
+    "titre": "B1.2b · Verbal, nonverbal, Fragen",
+    "objectifs": [
+     "Ich erkenne die verbale und nonverbale Kommunikation und setze offene und geschlossene Fragen gezielt ein. (K3) — Teil 2 von B1.2"
+    ]
+   },
+   {
+    "titre": "B1.2c · Regeln und Gesprächskiller",
+    "objectifs": [
+     "Ich beschreibe Beispiele von Verstössen gegen die Kommunikationsregeln (Gesprächskiller) und führe und beende ein Gespräch angemessen. (K3) — Teil 3 von B1.2"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M206 – Comunicazione",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M206",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M206 e 76 esercizi, di cui il 36 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "B1.2a · Le basi della comunicazione",
+    "objectifs": [
+     "Spiego le basi e le regole della comunicazione (elementi chiave, modello emittente-ricevente, feedback, interferenze, ascolto attivo). (C3) — parte 1 di B1.2"
+    ]
+   },
+   {
+    "titre": "B1.2b · Verbale, non verbale, domande",
+    "objectifs": [
+     "Identifico la comunicazione verbale e non verbale e uso le domande aperte e chiuse in modo appropriato. (C3) — parte 2 di B1.2"
+    ]
+   },
+   {
+    "titre": "B1.2c · Regole e killer della conversazione",
+    "objectifs": [
+     "Descrivo esempi di violazioni delle regole della comunicazione (killer della conversazione) e conduco e concludo una conversazione in modo adeguato. (C3) — parte 3 di B1.2"
+    ]
+   }
+  ]
+ }
+}

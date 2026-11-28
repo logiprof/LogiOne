@@ -1,0 +1,118 @@
+{
+ "module": "M102",
+ "shortcode": "jeu_m102",
+ "titre": "M102 – Structure de la logistique",
+ "sous_titre": "Logisticien·ne CFC · Module M102",
+ "duree": "10 min par série",
+ "description": "5 objectifs du module M102 (leçons 2.1 à 2.4) et 125 épreuves, dont 40 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "B3.1 · Processus selon l’entreprise",
+   "objectifs": [
+    "Je décris à l’aide d’exemples pratiques les processus logistiques de différentes entreprises de logistique (prestataire de services, entreprise commerciale, entreprise de production). (C2)"
+   ]
+  },
+  {
+   "titre": "B3.3 · Logistique interne et SCM",
+   "objectifs": [
+    "Je fais la distinction entre la logistique interne et la gestion de la chaîne d’approvisionnement et classe différents processus à l’aide d’exemples. (C2)"
+   ]
+  },
+  {
+   "titre": "B3.5 · Étapes et interfaces",
+   "objectifs": [
+    "Je décris le processus logistique de l’entreprise avec les différentes étapes ainsi que les interfaces internes et externes. (C2)"
+   ]
+  },
+  {
+   "titre": "B3.6 · Points faibles et optimisation",
+   "objectifs": [
+    "Je décris à l’aide d’études de cas les points faibles potentiels des processus logistiques de l’entreprise, ensuite, j’identifie et j’explique les mesures d’optimisation des processus et des interfaces. (C3)"
+   ]
+  },
+  {
+   "titre": "B5.2 · Les flux",
+   "objectifs": [
+    "Je décris à l’aide d’exemples pratiques les flux de marchandises, de valeurs et d’informations dans le processus logistique de diverses entreprises de logistique (prestataire de services, entreprise commerciale, entreprise de production). (C2)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M102 – Aufbau der Logistik",
+  "sous_titre": "Logistiker/-in EFZ · Modul M102",
+  "duree": "10 Min. pro Serie",
+  "description": "5 Lernziele des Moduls M102 und 125 Aufgaben, davon 40 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "B3.1 · Prozesse je nach Unternehmen",
+    "objectifs": [
+     "Ich beschreibe anhand von Praxisbeispielen die logistischen Prozesse verschiedener Logistikunternehmen (Dienstleister, Handelsunternehmen, Produktionsunternehmen). (K2)"
+    ]
+   },
+   {
+    "titre": "B3.3 · Interne Logistik und SCM",
+    "objectifs": [
+     "Ich unterscheide zwischen interner Logistik und Supply Chain Management und ordne verschiedene Prozesse anhand von Beispielen zu. (K2)"
+    ]
+   },
+   {
+    "titre": "B3.5 · Schritte und Schnittstellen",
+    "objectifs": [
+     "Ich beschreibe den logistischen Prozess des Unternehmens mit den verschiedenen Schritten sowie den internen und externen Schnittstellen. (K2)"
+    ]
+   },
+   {
+    "titre": "B3.6 · Schwachstellen und Optimierung",
+    "objectifs": [
+     "Ich beschreibe anhand von Fallstudien mögliche Schwachstellen der logistischen Prozesse des Unternehmens; danach erkenne und erkläre ich Massnahmen zur Optimierung der Prozesse und Schnittstellen. (K3)"
+    ]
+   },
+   {
+    "titre": "B5.2 · Die Flüsse",
+    "objectifs": [
+     "Ich beschreibe anhand von Praxisbeispielen die Waren-, Wert- und Informationsflüsse im logistischen Prozess verschiedener Logistikunternehmen (Dienstleister, Handelsunternehmen, Produktionsunternehmen). (K2)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M102 – Struttura della logistica",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M102",
+  "duree": "10 min per serie",
+  "description": "5 obiettivi del modulo M102 e 125 esercizi, di cui il 40 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "B3.1 · Processi secondo l’azienda",
+    "objectifs": [
+     "Descrivo con esempi pratici i processi logistici di diverse aziende logistiche (fornitore di servizi, azienda commerciale, azienda di produzione). (C2)"
+    ]
+   },
+   {
+    "titre": "B3.3 · Logistica interna e SCM",
+    "objectifs": [
+     "Distinguo tra la logistica interna e la gestione della catena di approvvigionamento e classifico diversi processi con l’aiuto di esempi. (C2)"
+    ]
+   },
+   {
+    "titre": "B3.5 · Tappe e interfacce",
+    "objectifs": [
+     "Descrivo il processo logistico dell’azienda con le diverse tappe e le interfacce interne ed esterne. (C2)"
+    ]
+   },
+   {
+    "titre": "B3.6 · Punti deboli e ottimizzazione",
+    "objectifs": [
+     "Descrivo con l’aiuto di studi di caso i potenziali punti deboli dei processi logistici dell’azienda, poi identifico e spiego le misure di ottimizzazione dei processi e delle interfacce. (C3)"
+    ]
+   },
+   {
+    "titre": "B5.2 · I flussi",
+    "objectifs": [
+     "Descrivo con esempi pratici i flussi di merci, di valori e di informazioni nel processo logistico di diverse aziende logistiche (fornitore di servizi, azienda commerciale, azienda di produzione). (C2)"
+    ]
+   }
+  ]
+ }
+}

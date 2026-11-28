@@ -1,0 +1,64 @@
+{
+ "module": "M105",
+ "shortcode": "jeu_m105",
+ "titre": "M105 – Marchandise",
+ "sous_titre": "Logisticien·ne CFC · Module M105",
+ "duree": "10 min par série",
+ "description": "2 objectifs du module M105 (leçons 5.1 à 5.7) et 64 épreuves, dont 34 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "C4.5 · Ce qui abîme la marchandise",
+   "objectifs": [
+    "Je décris les facteurs possibles qui ont un effet négatif sur la qualité des marchandises dans l’entrepôt (nuisibles, température, humidité de l’air, poussière, lumière). (C2)"
+   ]
+  },
+  {
+   "titre": "G2.12 · Pertes et conservation",
+   "objectifs": [
+    "Je décris les causes et les conséquences de la perte de matériel, de la durée de conservation et des dates de péremption des marchandises. (C2)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M105 – Ware",
+  "sous_titre": "Logistiker/-in EFZ · Modul M105",
+  "duree": "10 Min. pro Serie",
+  "description": "2 Lernziele des Moduls M105 und 64 Aufgaben, davon 34 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "C4.5 · Was die Ware beschädigt",
+    "objectifs": [
+     "Ich beschreibe die möglichen Faktoren, die sich im Lager negativ auf die Qualität der Waren auswirken (Schädlinge, Temperatur, Luftfeuchtigkeit, Staub, Licht). (K2)"
+    ]
+   },
+   {
+    "titre": "G2.12 · Verluste und Haltbarkeit",
+    "objectifs": [
+     "Ich beschreibe die Ursachen und Folgen von Materialverlust, Haltbarkeitsdauer und Verfalldaten der Waren. (K2)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M105 – La merce",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M105",
+  "duree": "10 min per serie",
+  "description": "2 obiettivi del modulo M105 e 64 esercizi, di cui il 34 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "C4.5 · Ciò che danneggia la merce",
+    "objectifs": [
+     "Descrivo i possibili fattori che hanno un effetto negativo sulla qualità delle merci nel magazzino (parassiti, temperatura, umidità dell’aria, polvere, luce). (C2)"
+    ]
+   },
+   {
+    "titre": "G2.12 · Perdite e conservazione",
+    "objectifs": [
+     "Descrivo le cause e le conseguenze della perdita di materiale, della durata di conservazione e delle date di scadenza delle merci. (C2)"
+    ]
+   }
+  ]
+ }
+}

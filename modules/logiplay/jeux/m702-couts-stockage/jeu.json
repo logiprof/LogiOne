@@ -1,0 +1,82 @@
+{
+ "module": "M702",
+ "shortcode": "jeu_m702",
+ "titre": "M702 – Les coûts de stockage",
+ "sous_titre": "Logisticien·ne CFC · Module M702",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M702 (leçons 2.1 à 2.6) et 78 épreuves, dont 33 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "B3.4 · Coûts fixes, variables et indicateurs",
+   "objectifs": [
+    "B3.4 J’explique le principe des systèmes d’indicateurs de l’entreprise et leur importance pour l’entreprise et pour l’exécution des mandats. (C2)"
+   ]
+  },
+  {
+   "titre": "G2.10 · Coûts des locaux de stockage",
+   "objectifs": [
+    "G2.10 J’explique les facteurs de coûts d’un emplacement de stockage et calcule à l’aide d’exemples les coûts des surfaces de stockage (coûts fixes et variables). (C3)"
+   ]
+  },
+  {
+   "titre": "B3.7 · Coûts d’un mandat et réductions",
+   "objectifs": [
+    "B3.7 Je décris, à l’aide d’une étude de cas, les coûts calculés lors de l’exécution d’un mandat de travail, évalue le résultat et en déduis des propositions de réduction des coûts. (C3)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M702 – Die Lagerkosten",
+  "sous_titre": "Logistiker/-in EFZ · Modul M702",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M702 und 78 Aufgaben, davon 33 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "B3.4 · Fixe und variable Kosten, Kennzahlen",
+    "objectifs": [
+     "B3.4 Ich erkläre das Prinzip der Kennzahlensysteme des Betriebs und ihre Bedeutung für den Betrieb und für die Ausführung der Aufträge. (K2)"
+    ]
+   },
+   {
+    "titre": "G2.10 · Kosten der Lagerräume",
+    "objectifs": [
+     "G2.10 Ich erkläre die Kostenfaktoren eines Lagerstandorts und berechne anhand von Beispielen die Kosten der Lagerflächen (fixe und variable Kosten). (K3)"
+    ]
+   },
+   {
+    "titre": "B3.7 · Kosten eines Auftrags und Senkungen",
+    "objectifs": [
+     "B3.7 Ich beschreibe anhand einer Fallstudie die bei der Ausführung eines Arbeitsauftrags berechneten Kosten, beurteile das Ergebnis und leite Vorschläge zur Kostensenkung ab. (K3)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M702 – I costi di stoccaggio",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M702",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M702 e 78 esercizi, di cui il 33 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "B3.4 · Costi fissi, variabili e indicatori",
+    "objectifs": [
+     "B3.4 Spiego il principio dei sistemi d’indicatori dell’azienda e la loro importanza per l’azienda e per l’esecuzione dei mandati. (C2)"
+    ]
+   },
+   {
+    "titre": "G2.10 · Costi dei locali di stoccaggio",
+    "objectifs": [
+     "G2.10 Spiego i fattori di costo di un’ubicazione di stoccaggio e calcolo con l’aiuto di esempi i costi delle superfici di stoccaggio (costi fissi e variabili). (C3)"
+    ]
+   },
+   {
+    "titre": "B3.7 · Costi di un mandato e riduzioni",
+    "objectifs": [
+     "B3.7 Descrivo, con l’aiuto di uno studio di caso, i costi calcolati durante l’esecuzione di un mandato di lavoro, valuto il risultato e ne deduco proposte di riduzione dei costi. (C3)"
+    ]
+   }
+  ]
+ }
+}

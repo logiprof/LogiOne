@@ -1,0 +1,118 @@
+{
+ "module": "MATHS",
+ "shortcode": "jeu_maths_applications",
+ "titre": "Mathématiques – Applications professionnelles",
+ "sous_titre": "Logisticien·ne CFC · Mathématiques, modules 4 à 8",
+ "duree": "10 min par série",
+ "description": "5 modules du cours de mathématiques appliquées (leçons 4.1 à 8.4) et 152 épreuves, dont 32 % de mises en situation du métier. Trois modes : Entraînement par module, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "Mod. 4 · Proportionnalité et règle de trois",
+   "objectifs": [
+    "Prévoir une quantité, un temps ou un coût à partir d’une situation connue"
+   ]
+  },
+  {
+   "titre": "Mod. 5 · Pourcentages avancés",
+   "objectifs": [
+    "Lire et calculer des taux, des remises, des hausses et des baisses"
+   ]
+  },
+  {
+   "titre": "Mod. 6 · Taux de remplissage et capacité",
+   "objectifs": [
+    "Mesurer l’occupation d’un stock ou d’un véhicule et la place restante"
+   ]
+  },
+  {
+   "titre": "Mod. 7 · Palettisation et optimisation",
+   "objectifs": [
+    "Calculer combien de colis tiennent sur une palette sans dépasser hauteur et poids"
+   ]
+  },
+  {
+   "titre": "Mod. 8 · Charge utile et répartition",
+   "objectifs": [
+    "Vérifier qu’un chargement respecte la charge utile du véhicule"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "Mathematik – Anwendungen im Beruf",
+  "sous_titre": "Logistiker/-in EFZ · Mathematik, Module 4 bis 8",
+  "duree": "10 Min. pro Serie",
+  "description": "5 Module des Kurses Mathematik – Anwendungen im Beruf (Lektionen 4.1 bis 8.4) und 152 Aufgaben, davon 32 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Modul, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "Mod. 4 · Proportionalität und Dreisatz",
+    "objectifs": [
+     "Eine Menge, eine Zeit oder Kosten aus einer bekannten Situation vorausberechnen"
+    ]
+   },
+   {
+    "titre": "Mod. 5 · Prozentrechnen für Fortgeschrittene",
+    "objectifs": [
+     "Quoten, Rabatte, Erhöhungen und Senkungen lesen und berechnen"
+    ]
+   },
+   {
+    "titre": "Mod. 6 · Füllgrad und Kapazität",
+    "objectifs": [
+     "Die Belegung eines Lagers oder Fahrzeugs und den freien Platz messen"
+    ]
+   },
+   {
+    "titre": "Mod. 7 · Palettierung und Optimierung",
+    "objectifs": [
+     "Berechnen, wie viele Packstücke auf eine Palette passen, ohne Höhe und Gewicht zu überschreiten"
+    ]
+   },
+   {
+    "titre": "Mod. 8 · Nutzlast und Lastverteilung",
+    "objectifs": [
+     "Prüfen, ob eine Ladung die Nutzlast des Fahrzeugs einhält"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "Matematica – Applicazioni professionali",
+  "sous_titre": "Impiegato/a in logistica AFC · Matematica, moduli da 4 a 8",
+  "duree": "10 min per serie",
+  "description": "5 moduli del corso di matematica applicata (lezioni da 4.1 a 8.4) e 152 esercizi, di cui il 32 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per modulo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "Mod. 4 · Proporzionalità e regola del tre",
+    "objectifs": [
+     "Prevedere una quantità, un tempo o un costo a partire da una situazione nota"
+    ]
+   },
+   {
+    "titre": "Mod. 5 · Percentuali avanzate",
+    "objectifs": [
+     "Leggere e calcolare tassi, sconti, aumenti e diminuzioni"
+    ]
+   },
+   {
+    "titre": "Mod. 6 · Tasso di riempimento e capacità",
+    "objectifs": [
+     "Misurare l’occupazione di uno stock o di un veicolo e lo spazio restante"
+    ]
+   },
+   {
+    "titre": "Mod. 7 · Palettizzazione e ottimizzazione",
+    "objectifs": [
+     "Calcolare quanti colli stanno su una paletta senza superare altezza e peso"
+    ]
+   },
+   {
+    "titre": "Mod. 8 · Carico utile e ripartizione",
+    "objectifs": [
+     "Verificare che un carico rispetti il carico utile del veicolo"
+    ]
+   }
+  ]
+ }
+}

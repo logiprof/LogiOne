@@ -79,6 +79,13 @@ final class LogiPilot_Plugin
             'legacy' => 'logiinfo.php',
             'class' => 'LogiOne_LogiInfo',
         ),
+        // LogiOne 1.55.0 : LogiPlay (jeux de révision). Mêmes tables (wp_jdr_*), options et codes courts que l'extension autonome.
+        'logiplay' => array(
+            'label' => 'LogiPlay',
+            'file' => 'modules/logiplay/module.php',
+            'legacy' => 'jeux-revisions-logistique.php',
+            'class' => 'LogiOne_LogiPlay',
+        ),
         'tiles' => array(
             'label' => 'Tuiles de contenu',
             'file' => 'modules/tiles/module.php',

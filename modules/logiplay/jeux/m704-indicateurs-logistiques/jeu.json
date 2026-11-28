@@ -1,0 +1,82 @@
+{
+ "module": "M704",
+ "shortcode": "jeu_m704",
+ "titre": "M704 – Les indicateurs logistiques",
+ "sous_titre": "Logisticien·ne CFC · Module M704",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M704 (leçons 4.1 à 4.5) et 85 épreuves, dont 33 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "G3.3 · Stock moyen, rotation, couverture",
+   "objectifs": [
+    "G3.3 Je décris les possibilités et l’utilité de l’évaluation des résultats d’inventaire, j’établis des évaluations simples à l’aide d’études de cas et j’interprète les résultats. (C2)"
+   ]
+  },
+  {
+   "titre": "G4.2·G1.4 · Stocks min/max et transbordement",
+   "objectifs": [
+    "G4.2 J’explique l’origine d’un stock de sécurité (= stock minimum) et d’un stock maximum (capacités de stockage, consommation, fiabilité de livraison, qualité des fournisseurs, stock moyen, rotation des stocks, délais de réapprovisionnement) et j’effectue des calculs à cet effet. (C3) · G1.4 J’analyse le processus de transbordement et formule des propositions d’amélioration (sécurité, rentabilité, ressources). (C4)"
+   ]
+  },
+  {
+   "titre": "G4.6·G4.7 · Taux de service et erreurs de livraison",
+   "objectifs": [
+    "G4.6 Je décris les principes de la disponibilité des livraisons et des quantités manquantes ainsi que leurs effets sur la gestion des stocks et le résultat d’exploitation. (C3) · G4.7 Je calcule, à l’aide d’une étude de cas, les quantités manquantes et la disponibilité des livraisons pour des marchandises sélectionnées selon les instructions. (C3)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M704 – Die Logistikkennzahlen",
+  "sous_titre": "Logistiker/-in EFZ · Modul M704",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M704 und 85 Aufgaben, davon 33 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "G3.3 · Durchschnittsbestand, Umschlag, Reichweite",
+    "objectifs": [
+     "G3.3 Ich beschreibe die Möglichkeiten und den Nutzen der Auswertung von Inventurergebnissen, erstelle einfache Auswertungen anhand von Fallstudien und interpretiere die Ergebnisse. (K2)"
+    ]
+   },
+   {
+    "titre": "G4.2·G1.4 · Mindest-/Höchstbestand und Umschlag",
+    "objectifs": [
+     "G4.2 Ich erkläre die Herkunft eines Sicherheitsbestands (= Mindestbestand) und eines Höchstbestands (Lagerkapazitäten, Verbrauch, Liefertreue, Qualität der Lieferanten, Durchschnittsbestand, Lagerumschlag, Wiederbeschaffungszeiten) und führe dazu Berechnungen durch. (K3) · G1.4 Ich analysiere den Umschlagprozess und formuliere Verbesserungsvorschläge (Sicherheit, Wirtschaftlichkeit, Ressourcen). (K4)"
+    ]
+   },
+   {
+    "titre": "G4.6·G4.7 · Servicegrad und Lieferfehler",
+    "objectifs": [
+     "G4.6 Ich beschreibe die Grundsätze der Lieferbereitschaft und der Fehlmengen sowie ihre Wirkungen auf die Lagerbewirtschaftung und das Betriebsergebnis. (K3) · G4.7 Ich berechne anhand einer Fallstudie die Fehlmengen und die Lieferbereitschaft für ausgewählte Waren nach Vorgabe. (K3)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M704 – Gli indicatori logistici",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M704",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M704 e 85 esercizi, di cui il 33 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "G3.3 · Stock medio, rotazione, copertura",
+    "objectifs": [
+     "G3.3 Descrivo le possibilità e l’utilità della valutazione dei risultati d’inventario, allestisco valutazioni semplici con l’aiuto di studi di casi e interpreto i risultati. (C2)"
+    ]
+   },
+   {
+    "titre": "G4.2·G1.4 · Scorte min/max e trasbordo",
+    "objectifs": [
+     "G4.2 Spiego l’origine di una scorta di sicurezza (= scorta minima) e di una scorta massima (capacità di stoccaggio, consumo, affidabilità di consegna, qualità dei fornitori, stock medio, rotazione delle scorte, termini di riapprovvigionamento) ed effettuo calcoli a questo scopo. (C3) · G1.4 Analizzo il processo di trasbordo e formulo proposte di miglioramento (sicurezza, redditività, risorse). (C4)"
+    ]
+   },
+   {
+    "titre": "G4.6·G4.7 · Tasso di servizio ed errori di consegna",
+    "objectifs": [
+     "G4.6 Descrivo i principi della disponibilità delle consegne e delle quantità mancanti e i loro effetti sulla gestione delle scorte e sul risultato d’esercizio. (C3) · G4.7 Calcolo, con l’aiuto di uno studio di caso, le quantità mancanti e la disponibilità delle consegne per merci selezionate secondo le istruzioni. (C3)"
+    ]
+   }
+  ]
+ }
+}

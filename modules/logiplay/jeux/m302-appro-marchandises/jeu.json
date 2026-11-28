@@ -1,0 +1,82 @@
+{
+ "module": "M302",
+ "shortcode": "jeu_m302",
+ "titre": "M302 – L’approvisionnement de marchandises",
+ "sous_titre": "Logisticien·ne CFC · Module M302",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M302 (leçons 2.1 à 2.3) et 75 épreuves, dont 35 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "C7.1a · Où acheter ?",
+   "objectifs": [
+    "C7.1 J’énumère les principaux facteurs (stock de sécurité, consommation, rotation, concepts d’approvisionnement) qui conduisent à une commande et j’effectue des calculs simples. (C3) — partie 1 : achat privé ou professionnel, choix du fournisseur, étapes de l’achat"
+   ]
+  },
+  {
+   "titre": "C7.1b · Offre, demande et prix",
+   "objectifs": [
+    "C7.1 J’énumère les principaux facteurs (stock de sécurité, consommation, rotation, concepts d’approvisionnement) qui conduisent à une commande et j’effectue des calculs simples. (C3) — partie 2 : loi de l’offre et de la demande, équilibre du marché"
+   ]
+  },
+  {
+   "titre": "C7.1c · Processus de commande",
+   "objectifs": [
+    "C7.1 J’énumère les principaux facteurs (stock de sécurité, consommation, rotation, concepts d’approvisionnement) qui conduisent à une commande et j’effectue des calculs simples. (C3) — partie 3 : offre, commande, confirmation, facture et concepts d’approvisionnement (JIT, JIC)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M302 – Die Warenbeschaffung",
+  "sous_titre": "Logistiker/-in EFZ · Modul M302",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M302 und 75 Aufgaben, davon 35 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "C7.1a · Wo einkaufen?",
+    "objectifs": [
+     "C7.1 Ich zähle die wichtigsten Faktoren auf (Sicherheitsbestand, Verbrauch, Umschlag, Beschaffungskonzepte), die zu einer Bestellung führen, und führe einfache Berechnungen durch. (K3) — Teil 1: privater oder geschäftlicher Einkauf, Wahl des Lieferanten, Schritte des Einkaufs"
+    ]
+   },
+   {
+    "titre": "C7.1b · Angebot, Nachfrage und Preis",
+    "objectifs": [
+     "C7.1 Ich zähle die wichtigsten Faktoren auf (Sicherheitsbestand, Verbrauch, Umschlag, Beschaffungskonzepte), die zu einer Bestellung führen, und führe einfache Berechnungen durch. (K3) — Teil 2: Gesetz von Angebot und Nachfrage, Marktgleichgewicht"
+    ]
+   },
+   {
+    "titre": "C7.1c · Bestellprozess",
+    "objectifs": [
+     "C7.1 Ich zähle die wichtigsten Faktoren auf (Sicherheitsbestand, Verbrauch, Umschlag, Beschaffungskonzepte), die zu einer Bestellung führen, und führe einfache Berechnungen durch. (K3) — Teil 3: Offerte, Bestellung, Bestätigung, Rechnung und Beschaffungskonzepte (JIT, JIC)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M302 – L’approvvigionamento di merci",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M302",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M302 e 75 esercizi, di cui il 35 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "C7.1a · Dove acquistare?",
+    "objectifs": [
+     "C7.1 Elenco i principali fattori (scorta di sicurezza, consumo, rotazione, concetti d’approvvigionamento) che portano a un ordine ed effettuo calcoli semplici. (C3) — parte 1: acquisto privato o professionale, scelta del fornitore, tappe dell’acquisto"
+    ]
+   },
+   {
+    "titre": "C7.1b · Offerta, domanda e prezzo",
+    "objectifs": [
+     "C7.1 Elenco i principali fattori (scorta di sicurezza, consumo, rotazione, concetti d’approvvigionamento) che portano a un ordine ed effettuo calcoli semplici. (C3) — parte 2: legge della domanda e dell’offerta, equilibrio del mercato"
+    ]
+   },
+   {
+    "titre": "C7.1c · Processo d’ordinazione",
+    "objectifs": [
+     "C7.1 Elenco i principali fattori (scorta di sicurezza, consumo, rotazione, concetti d’approvvigionamento) che portano a un ordine ed effettuo calcoli semplici. (C3) — parte 3: offerta, ordine, conferma, fattura e concetti d’approvvigionamento (JIT, JIC)"
+    ]
+   }
+  ]
+ }
+}

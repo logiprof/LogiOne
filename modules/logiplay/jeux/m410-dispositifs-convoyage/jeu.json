@@ -1,0 +1,100 @@
+{
+ "module": "M410",
+ "shortcode": "jeu_m410",
+ "titre": "M410 – Les dispositifs de convoyage",
+ "sous_titre": "Logisticien·ne CFC · Module M410",
+ "duree": "10 min par série",
+ "description": "4 objectifs du module M410 (leçons 10.1 à 10.3) et 100 épreuves, dont 34 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "H3.4a·H3.7 · Ponts roulants et portiques",
+   "objectifs": [
+    "H3.x Je décris les différents types d’engins de levage et explique leurs principes de fonctionnement. (C2) — H3.7 Je décris les dispositifs de prise de charge des ponts roulants et leur fonctionnement. (C2) — avec H3.4 : ponts, portiques et Container-Carrier"
+   ]
+  },
+  {
+   "titre": "H3.x·H3.7 · Mouflage et sécurité du levage",
+   "objectifs": [
+    "H3.x J’explique les principes d’utilisation des dispositifs de levage et les règles de sécurité associées. (C2) — H3.7 : moufle inférieur, poulies, crochet et angle d’inclinaison"
+   ]
+  },
+  {
+   "titre": "H3.4b · Convoyeurs verticaux",
+   "objectifs": [
+    "H3.4 Je décris les convoyeurs et les dispositifs de transport et explique à l’aide d’exemples les domaines d’application et les possibilités d’utilisation. (C2) — partie : convoyeurs verticaux"
+   ]
+  },
+  {
+   "titre": "H3.4c · Convoyeurs continus et transfert",
+   "objectifs": [
+    "H3.4 Je décris les convoyeurs et les dispositifs de transport et explique à l’aide d’exemples les domaines d’application et les possibilités d’utilisation. (C2) — partie : convoyeurs continus, éléments de transfert et sécurité"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M410 – Die Fördereinrichtungen",
+  "sous_titre": "Logistiker/-in EFZ · Modul M410",
+  "duree": "10 Min. pro Serie",
+  "description": "4 Lernziele des Moduls M410 und 100 Aufgaben, davon 34 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "H3.4a·H3.7 · Brückenkrane und Portalkrane",
+    "objectifs": [
+     "H3.x Ich beschreibe die verschiedenen Hebegeräte und erkläre ihre Funktionsweise. (K2) — H3.7 Ich beschreibe die Lastaufnahmemittel der Brückenkrane und ihre Funktionsweise. (K2) — mit H3.4: Brücken-, Portalkrane und Container-Carrier"
+    ]
+   },
+   {
+    "titre": "H3.x·H3.7 · Flaschenzug und Sicherheit beim Heben",
+    "objectifs": [
+     "H3.x Ich erkläre die Einsatzgrundsätze der Hebeeinrichtungen und die zugehörigen Sicherheitsregeln. (K2) — H3.7: Unterflasche, Rollen, Haken und Neigungswinkel"
+    ]
+   },
+   {
+    "titre": "H3.4b · Senkrechtförderer",
+    "objectifs": [
+     "H3.4 Ich beschreibe die Förderer und Transporteinrichtungen und erkläre anhand von Beispielen Einsatzbereiche und Einsatzmöglichkeiten. (K2) — Teil: Senkrechtförderer"
+    ]
+   },
+   {
+    "titre": "H3.4c · Stetigförderer und Umsetzen",
+    "objectifs": [
+     "H3.4 Ich beschreibe die Förderer und Transporteinrichtungen und erkläre anhand von Beispielen Einsatzbereiche und Einsatzmöglichkeiten. (K2) — Teil: Stetigförderer, Umsetzelemente und Sicherheit"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M410 – I dispositivi di trasporto",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M410",
+  "duree": "10 min per serie",
+  "description": "4 obiettivi del modulo M410 e 100 esercizi, di cui il 34 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "H3.4a·H3.7 · Carriponte e gru a portale",
+    "objectifs": [
+     "H3.x Descrivo i diversi tipi di mezzi di sollevamento e spiego i loro principi di funzionamento. (C2) — H3.7 Descrivo i dispositivi di presa del carico dei carriponte e il loro funzionamento. (C2) — con H3.4: carriponte, gru a portale e Container-Carrier"
+    ]
+   },
+   {
+    "titre": "H3.x·H3.7 · Taglia e sicurezza del sollevamento",
+    "objectifs": [
+     "H3.x Spiego i principi d’uso dei dispositivi di sollevamento e le regole di sicurezza associate. (C2) — H3.7: bozzello inferiore, pulegge, gancio e angolo d’inclinazione"
+    ]
+   },
+   {
+    "titre": "H3.4b · Trasportatori verticali",
+    "objectifs": [
+     "H3.4 Descrivo i trasportatori e i dispositivi di trasporto e spiego con l’aiuto di esempi i campi d’applicazione e le possibilità d’impiego. (C2) — parte: trasportatori verticali"
+    ]
+   },
+   {
+    "titre": "H3.4c · Trasportatori continui e trasferimento",
+    "objectifs": [
+     "H3.4 Descrivo i trasportatori e i dispositivi di trasporto e spiego con l’aiuto di esempi i campi d’applicazione e le possibilità d’impiego. (C2) — parte: trasportatori continui, elementi di trasferimento e sicurezza"
+    ]
+   }
+  ]
+ }
+}

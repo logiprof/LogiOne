@@ -1,0 +1,100 @@
+{
+ "module": "M305",
+ "shortcode": "jeu_m305",
+ "titre": "M305 – Déchargement des marchandises",
+ "sous_titre": "Logisticien·ne CFC · Module M305",
+ "duree": "10 min par série",
+ "description": "4 objectifs du module M305 (introduction, leçons 5.1 et 5.2) et 100 épreuves, dont 34 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "b3.8·c1.1 · Dangers de l’infrastructure",
+   "objectifs": [
+    "b3.8 Je décris à l’aide d’exemples les risques et dangers apparaissant dans le processus logistique pour moi-même, pour les collaborateurs et pour les tiers. (C2) — c1.1 Je décris les travaux préparatoires et les ressources nécessaires (personnel, place, matériel, EPI) pour une réception économique et conforme. (C2)"
+   ]
+  },
+  {
+   "titre": "c1.2·c1.4 · Véhicule et équipements de liaison",
+   "objectifs": [
+    "c1.2 Je décris les mesures et les moyens auxiliaires pour sécuriser le moyen de transport (cale, frein de stationnement, fixation de la rampe et béquilles de sécurité). (C2) — c1.4 Je décris les équipements de travail pour le déchargement (tôle de liaison, pont de chargement, plateforme élévatrice, etc.). (C2)"
+   ]
+  },
+  {
+   "titre": "c1.3·a1.3 · Engins et bases légales",
+   "objectifs": [
+    "c1.3 Je décris les engins de manutention et de levage, leurs caractéristiques et leurs domaines d’utilisation. (C2) — a1.3 J’explique les bases légales relatives à la capacité de travail (sécurité, jeunes travailleurs, temps de repos, équipements). (C2) — a4.3 Indications du fabricant. — d1.7 Moyens auxiliaires ergonomiques."
+   ]
+  },
+  {
+   "titre": "b3.8 · Zones à risque et signalisation",
+   "objectifs": [
+    "b3.8 Je décris à l’aide d’exemples les risques et dangers apparaissant dans le processus logistique pour moi-même, pour les collaborateurs et pour les tiers. (C2) — stockage automatisé, électricité, signalisation"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M305 – Entladen der Waren",
+  "sous_titre": "Logistiker/-in EFZ · Modul M305",
+  "duree": "10 Min. pro Serie",
+  "description": "4 Lernziele des Moduls M305 und 100 Aufgaben, davon 34 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "b3.8·c1.1 · Gefahren der Infrastruktur",
+    "objectifs": [
+     "b3.8 Ich beschreibe anhand von Beispielen die Risiken und Gefahren, die im logistischen Prozess für mich, für Mitarbeitende und für Dritte auftreten. (K2) — c1.1 Ich beschreibe die Vorbereitungsarbeiten und die nötigen Ressourcen (Personal, Platz, Material, PSA) für einen wirtschaftlichen und qualitätsgerechten Wareneingang. (K2)"
+    ]
+   },
+   {
+    "titre": "c1.2·c1.4 · Fahrzeug und Überladeeinrichtungen",
+    "objectifs": [
+     "c1.2 Ich beschreibe die Massnahmen und Hilfsmittel zur Sicherung des Transportmittels (Keil, Feststellbremse, Befestigung der Rampe und Sicherheitsstützen). (K2) — c1.4 Ich beschreibe die Arbeitsmittel für das Entladen (Überladeblech, Überladebrücke, Hubplattform usw.). (K2)"
+    ]
+   },
+   {
+    "titre": "c1.3·a1.3 · Geräte und rechtliche Grundlagen",
+    "objectifs": [
+     "c1.3 Ich beschreibe die Flurförder- und Hebegeräte, ihre Eigenschaften und ihre Einsatzbereiche. (K2) — a1.3 Ich erkläre die rechtlichen Grundlagen zur Arbeitsfähigkeit (Sicherheit, jugendliche Arbeitnehmende, Ruhezeiten, Arbeitsmittel). (K2) — a4.3 Herstellerangaben. — d1.7 Ergonomische Hilfsmittel."
+    ]
+   },
+   {
+    "titre": "b3.8 · Risikozonen und Signalisation",
+    "objectifs": [
+     "b3.8 Ich beschreibe anhand von Beispielen die Risiken und Gefahren, die im logistischen Prozess für mich, für Mitarbeitende und für Dritte auftreten. (K2) — automatische Lager, Elektrizität, Signalisation"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M305 – Scarico delle merci",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M305",
+  "duree": "10 min per serie",
+  "description": "4 obiettivi del modulo M305 e 100 esercizi, di cui il 34 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "b3.8·c1.1 · Pericoli dell’infrastruttura",
+    "objectifs": [
+     "b3.8 Descrivo con l’aiuto di esempi i rischi e i pericoli che si presentano nel processo logistico per me stesso, per i collaboratori e per i terzi. (C2) — c1.1 Descrivo i lavori preparatori e le risorse necessarie (personale, spazio, materiale, DPI) per una ricezione economica e conforme. (C2)"
+    ]
+   },
+   {
+    "titre": "c1.2·c1.4 · Veicolo e attrezzature di collegamento",
+    "objectifs": [
+     "c1.2 Descrivo le misure e i mezzi ausiliari per mettere in sicurezza il mezzo di trasporto (cuneo, freno di stazionamento, fissaggio alla rampa e supporti di sicurezza). (C2) — c1.4 Descrivo le attrezzature di lavoro per lo scarico (lamiera di collegamento, ponte di carico, piattaforma elevatrice, ecc.). (C2)"
+    ]
+   },
+   {
+    "titre": "c1.3·a1.3 · Mezzi e basi legali",
+    "objectifs": [
+     "c1.3 Descrivo i mezzi di movimentazione e di sollevamento, le loro caratteristiche e i loro campi d’impiego. (C2) — a1.3 Spiego le basi legali relative alla capacità lavorativa (sicurezza, giovani lavoratori, tempi di riposo, attrezzature). (C2) — a4.3 Indicazioni del fabbricante. — d1.7 Mezzi ausiliari ergonomici."
+    ]
+   },
+   {
+    "titre": "b3.8 · Zone a rischio e segnaletica",
+    "objectifs": [
+     "b3.8 Descrivo con l’aiuto di esempi i rischi e i pericoli che si presentano nel processo logistico per me stesso, per i collaboratori e per i terzi. (C2) — stoccaggio automatizzato, elettricità, segnaletica"
+    ]
+   }
+  ]
+ }
+}

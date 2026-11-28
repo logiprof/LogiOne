@@ -1,0 +1,82 @@
+{
+ "module": "M303",
+ "shortcode": "jeu_m303",
+ "titre": "M303 – Processus de réception des marchandises",
+ "sous_titre": "Logisticien·ne CFC · Module M303",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M303 (leçons 3.1 à 3.3) et 75 épreuves, dont 35 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "c1.1a · La réception des marchandises",
+   "objectifs": [
+    "c1.1 Je décris les travaux préparatoires et les ressources nécessaires (personnel, place, matériel, EPI) pour une réception économique et conforme à la qualité des marchandises sur la base des présentes commandes. (C2) — partie 1 : rôle de la réception, contrôles, bases juridiques"
+   ]
+  },
+  {
+   "titre": "c1.1b · Accepter en tant qu’acheteur",
+   "objectifs": [
+    "c1.1 Je décris les travaux préparatoires et les ressources nécessaires (personnel, place, matériel, EPI) pour une réception économique et conforme à la qualité des marchandises sur la base des présentes commandes. (C2) — partie 2 : vente mobilière, achat au comptant et sur facture"
+   ]
+  },
+  {
+   "titre": "c1.1c · Réception planifiée ou non",
+   "objectifs": [
+    "c1.1 Je décris les travaux préparatoires et les ressources nécessaires (personnel, place, matériel, EPI) pour une réception économique et conforme à la qualité des marchandises sur la base des présentes commandes. (C2) — partie 3 : réception planifiée et non planifiée, ERP, EPI"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M303 – Prozess des Wareneingangs",
+  "sous_titre": "Logistiker/-in EFZ · Modul M303",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M303 und 75 Aufgaben, davon 35 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "c1.1a · Der Wareneingang",
+    "objectifs": [
+     "c1.1 Ich beschreibe die Vorbereitungsarbeiten und die nötigen Ressourcen (Personal, Platz, Material, PSA) für einen wirtschaftlichen und qualitätsgerechten Wareneingang aufgrund der vorliegenden Bestellungen. (K2) — Teil 1: Rolle des Wareneingangs, Kontrollen, rechtliche Grundlagen"
+    ]
+   },
+   {
+    "titre": "c1.1b · Als Käufer annehmen",
+    "objectifs": [
+     "c1.1 Ich beschreibe die Vorbereitungsarbeiten und die nötigen Ressourcen (Personal, Platz, Material, PSA) für einen wirtschaftlichen und qualitätsgerechten Wareneingang aufgrund der vorliegenden Bestellungen. (K2) — Teil 2: Fahrniskauf, Barkauf und Kauf auf Rechnung"
+    ]
+   },
+   {
+    "titre": "c1.1c · Geplanter oder ungeplanter Wareneingang",
+    "objectifs": [
+     "c1.1 Ich beschreibe die Vorbereitungsarbeiten und die nötigen Ressourcen (Personal, Platz, Material, PSA) für einen wirtschaftlichen und qualitätsgerechten Wareneingang aufgrund der vorliegenden Bestellungen. (K2) — Teil 3: geplanter und ungeplanter Wareneingang, ERP, PSA"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M303 – Processo di ricezione delle merci",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M303",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M303 e 75 esercizi, di cui il 35 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "c1.1a · La ricezione delle merci",
+    "objectifs": [
+     "c1.1 Descrivo i lavori preparatori e le risorse necessarie (personale, spazio, materiale, DPI) per una ricezione economica e conforme alla qualità delle merci sulla base degli ordini in corso. (C2) — parte 1: ruolo della ricezione, controlli, basi giuridiche"
+    ]
+   },
+   {
+    "titre": "c1.1b · Accettare come acquirente",
+    "objectifs": [
+     "c1.1 Descrivo i lavori preparatori e le risorse necessarie (personale, spazio, materiale, DPI) per una ricezione economica e conforme alla qualità delle merci sulla base degli ordini in corso. (C2) — parte 2: vendita mobiliare, acquisto in contanti e su fattura"
+    ]
+   },
+   {
+    "titre": "c1.1c · Ricezione pianificata o no",
+    "objectifs": [
+     "c1.1 Descrivo i lavori preparatori e le risorse necessarie (personale, spazio, materiale, DPI) per una ricezione economica e conforme alla qualità delle merci sulla base degli ordini in corso. (C2) — parte 3: ricezione pianificata e non pianificata, ERP, DPI"
+    ]
+   }
+  ]
+ }
+}

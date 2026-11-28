@@ -1,0 +1,82 @@
+{
+ "module": "M607",
+ "shortcode": "jeu_m607",
+ "titre": "M607 – Le transport ferroviaire",
+ "sous_titre": "Logisticien·ne CFC · Module M607",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M607 (leçons 7.1 à 7.4) et 75 épreuves, dont 32 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "D3.2 · Le rail et ses grands axes",
+   "objectifs": [
+    "D3.2 Je décris les moyens de transport (camionnette, camion, scooter, train, avion, bateau) pour la distribution et la livraison des marchandises, avec leurs avantages et inconvénients et les critères de choix. (C2) — partie : le rail"
+   ]
+  },
+  {
+   "titre": "D3.5 · Chargement des wagons",
+   "objectifs": [
+    "D3.5 Je décris les moyens de protection couramment utilisés pour les camions et les trains (sangles, barres de protection, coussins d’air, cloisons de séparation, chargement ajusté) avec leurs avantages et inconvénients, les critères d’évaluation de leur état et la responsabilité de l’évaluation avant utilisation. (C2)"
+   ]
+  },
+  {
+   "titre": "D4.1 · Marchandises dangereuses et avenir",
+   "objectifs": [
+    "D4.1 Je décris les différents moyens de sécurisation pour chaque moyen de transport. (C2) — signalisation des marchandises dangereuses par rail, documents, comparaison rail-route et innovations (CST)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M607 – Der Bahntransport",
+  "sous_titre": "Logistiker/-in EFZ · Modul M607",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M607 und 75 Aufgaben, davon 32 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "D3.2 · Die Schiene und ihre grossen Achsen",
+    "objectifs": [
+     "D3.2 Ich beschreibe die Transportmittel (Lieferwagen, Lastwagen, Roller, Zug, Flugzeug, Schiff) für die Verteilung und Lieferung der Waren mit ihren Vor- und Nachteilen sowie die Auswahlkriterien. (K2) — Teil: die Schiene"
+    ]
+   },
+   {
+    "titre": "D3.5 · Beladen der Wagen",
+    "objectifs": [
+     "D3.5 Ich beschreibe die bei Lastwagen und Zügen üblichen Schutzmittel (Gurte, Sperrbalken, Luftkissen, Trennwände, formschlüssige Beladung) mit ihren Vor- und Nachteilen, den Kriterien zur Beurteilung ihres Zustands und der Verantwortung für die Beurteilung vor der Verwendung. (K2)"
+    ]
+   },
+   {
+    "titre": "D4.1 · Gefahrgut und Zukunft",
+    "objectifs": [
+     "D4.1 Ich beschreibe die verschiedenen Sicherungsmittel für jedes Transportmittel. (K2) — Kennzeichnung von Gefahrgut auf der Schiene, Dokumente, Vergleich Schiene–Strasse und Innovationen (CST)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M607 – Il trasporto ferroviario",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M607",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M607 e 75 esercizi, di cui il 32 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "D3.2 · La ferrovia e i suoi grandi assi",
+    "objectifs": [
+     "D3.2 Descrivo i mezzi di trasporto (furgone, camion, scooter, treno, aereo, nave) per la distribuzione e la consegna delle merci, con i loro vantaggi e svantaggi e i criteri di scelta. (C2) — parte: la ferrovia"
+    ]
+   },
+   {
+    "titre": "D3.5 · Carico dei vagoni",
+    "objectifs": [
+     "D3.5 Descrivo i mezzi di protezione comunemente usati per i camion e i treni (cinghie, barre di protezione, cuscini d’aria, pareti divisorie, carico adattato) con i loro vantaggi e svantaggi, i criteri di valutazione del loro stato e la responsabilità della valutazione prima dell’uso. (C2)"
+    ]
+   },
+   {
+    "titre": "D4.1 · Merci pericolose e futuro",
+    "objectifs": [
+     "D4.1 Descrivo i diversi mezzi di fissaggio per ogni mezzo di trasporto. (C2) — segnaletica delle merci pericolose per ferrovia, documenti, confronto ferrovia-strada e innovazioni (CST)"
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,82 @@
+{
+ "module": "M301",
+ "shortcode": "jeu_m301",
+ "titre": "M301 – La logistique d’approvisionnement",
+ "sous_titre": "Logisticien·ne CFC · Module M301",
+ "duree": "10 min par série",
+ "description": "3 objectifs du module M301 (leçons 1.1 à 1.5) et 76 épreuves, dont 37 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "c7.1a · Missions et concepts d’achat",
+   "objectifs": [
+    "c7.1 J’énumère les principaux facteurs (stock de sécurité, consommation, rotation, concepts d’approvisionnement) qui conduisent à une commande et j’effectue des calculs simples. (C3) — partie 1 : missions des achats, « Make or Buy », externalisation"
+   ]
+  },
+  {
+   "titre": "c7.1b · Quantités, moment et calculs",
+   "objectifs": [
+    "c7.1 J’énumère les principaux facteurs (stock de sécurité, consommation, rotation, concepts d’approvisionnement) qui conduisent à une commande et j’effectue des calculs simples. (C3) — partie 2 : quantités, moment d’achat, stock de sécurité, consommation, calculs"
+   ]
+  },
+  {
+   "titre": "b3.4 · Systèmes d’indicateurs",
+   "objectifs": [
+    "b3.4 J’explique le principe des systèmes d’indicateurs de l’entreprise et leur importance pour l’entreprise et pour l’exécution des mandats. (C2)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M301 – Die Beschaffungslogistik",
+  "sous_titre": "Logistiker/-in EFZ · Modul M301",
+  "duree": "10 Min. pro Serie",
+  "description": "3 Lernziele des Moduls M301 und 76 Aufgaben, davon 37 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "c7.1a · Aufgaben und Konzepte des Einkaufs",
+    "objectifs": [
+     "c7.1 Ich zähle die wichtigsten Faktoren auf (Sicherheitsbestand, Verbrauch, Umschlag, Beschaffungskonzepte), die zu einer Bestellung führen, und führe einfache Berechnungen durch. (K3) — Teil 1: Aufgaben des Einkaufs, «Make or Buy», Outsourcing"
+    ]
+   },
+   {
+    "titre": "c7.1b · Mengen, Zeitpunkt und Berechnungen",
+    "objectifs": [
+     "c7.1 Ich zähle die wichtigsten Faktoren auf (Sicherheitsbestand, Verbrauch, Umschlag, Beschaffungskonzepte), die zu einer Bestellung führen, und führe einfache Berechnungen durch. (K3) — Teil 2: Mengen, Einkaufszeitpunkt, Sicherheitsbestand, Verbrauch, Berechnungen"
+    ]
+   },
+   {
+    "titre": "b3.4 · Kennzahlensysteme",
+    "objectifs": [
+     "b3.4 Ich erkläre das Prinzip der betrieblichen Kennzahlensysteme und ihre Bedeutung für das Unternehmen und für die Ausführung der Aufträge. (K2)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M301 – La logistica d’approvvigionamento",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M301",
+  "duree": "10 min per serie",
+  "description": "3 obiettivi del modulo M301 e 76 esercizi, di cui il 37 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "c7.1a · Compiti e concetti d’acquisto",
+    "objectifs": [
+     "c7.1 Elenco i principali fattori (scorta di sicurezza, consumo, rotazione, concetti d’approvvigionamento) che portano a un ordine ed effettuo calcoli semplici. (C3) — parte 1: compiti degli acquisti, «Make or Buy», esternalizzazione"
+    ]
+   },
+   {
+    "titre": "c7.1b · Quantità, momento e calcoli",
+    "objectifs": [
+     "c7.1 Elenco i principali fattori (scorta di sicurezza, consumo, rotazione, concetti d’approvvigionamento) che portano a un ordine ed effettuo calcoli semplici. (C3) — parte 2: quantità, momento d’acquisto, scorta di sicurezza, consumo, calcoli"
+    ]
+   },
+   {
+    "titre": "b3.4 · Sistemi di indicatori",
+    "objectifs": [
+     "b3.4 Spiego il principio dei sistemi di indicatori dell’azienda e la loro importanza per l’azienda e per l’esecuzione dei mandati. (C2)"
+    ]
+   }
+  ]
+ }
+}

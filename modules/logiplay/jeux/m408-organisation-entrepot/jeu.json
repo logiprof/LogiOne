@@ -1,0 +1,136 @@
+{
+ "module": "M408",
+ "shortcode": "jeu_m408",
+ "titre": "M408 – Organisation de l’entrepôt",
+ "sous_titre": "Logisticien·ne CFC · Module M408",
+ "duree": "10 min par série",
+ "description": "6 objectifs du module M408 (leçons 8.1 à 8.13) et 150 épreuves, dont 34 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "G2.1·G2.2 · Planification et flux de l’entrepôt",
+   "objectifs": [
+    "G2.1 J’explique la procédure et les critères d’aménagement d’un entrepôt. (C2) — G2.2 Je nomme les différents éléments d’un système de stockage et explique la fonction et les tâches d’un entrepôt. (C2) — avec G1.1 : analyse du processus de réception"
+   ]
+  },
+  {
+   "titre": "G2.3·G2.4 · Types d’entrepôts et formes de stockage",
+   "objectifs": [
+    "G2.3 J’explique les types de stockage en fonction des étapes du processus et du degré d’automatisation. (C2) — G2.4 J’explique les prescriptions (empilable ou non, hauteur d’empilage et charge au sol) pour la réalisation d’un stockage en blocs. (C3)"
+   ]
+  },
+  {
+   "titre": "C4.2 · Charge au sol",
+   "objectifs": [
+    "C4.2 J’interprète les données relatives aux informations sur la charge autorisée au sol et en déduis des conclusions pour mon travail. (C3) — avec G2.9 : calcul de la charge au sol"
+   ]
+  },
+  {
+   "titre": "G2.9 · Surfaces, espace et allées",
+   "objectifs": [
+    "G2.9 Je calcule à l’aide d’une étude de cas la charge au sol, le taux d’utilisation de la surface et de l’espace de l’entrepôt. (C3) — partie : surfaces, espace et largeur d’allée"
+   ]
+  },
+  {
+   "titre": "G2.7·G2.8 · Rayonnages à palettes",
+   "objectifs": [
+    "G2.5 Je décris les dangers et risques des entrepôts à rayonnages et les mesures de sécurité. (C2) — G2.7 J’explique les différentes charges d’un rayonnage à palettes (traverses, au sol et total). (C3) — G2.8 Je calcule la charge sur les rayonnages à palettes à partir d’une étude de cas. (C3)"
+   ]
+  },
+  {
+   "titre": "G2.6·G3.5 · Numérotation et image de stock",
+   "objectifs": [
+    "G2.6 Je décris deux systèmes possibles de numérotation des emplacements de stockage sur les rayonnages. (C2) — G3.5 J’explique le but d’une image de stockage, j’établis un exemple et j’explique ce qui en découle. (C3) — avec la numérotation des articles"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M408 – Organisation des Lagers",
+  "sous_titre": "Logistiker/-in EFZ · Modul M408",
+  "duree": "10 Min. pro Serie",
+  "description": "6 Lernziele des Moduls M408 und 150 Aufgaben, davon 34 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "G2.1·G2.2 · Planung und Flüsse des Lagers",
+    "objectifs": [
+     "G2.1 Ich erkläre das Vorgehen und die Kriterien für die Einrichtung eines Lagers. (K2) — G2.2 Ich nenne die verschiedenen Elemente eines Lagersystems und erkläre Funktion und Aufgaben eines Lagers. (K2) — mit G1.1: Analyse des Wareneingangsprozesses"
+    ]
+   },
+   {
+    "titre": "G2.3·G2.4 · Lagertypen und Lagerformen",
+    "objectifs": [
+     "G2.3 Ich erkläre die Lagertypen nach Prozessschritten und Automatisierungsgrad. (K2) — G2.4 Ich erkläre die Vorschriften (stapelbar oder nicht, Stapelhöhe und Bodenbelastung) für eine Blocklagerung. (K3)"
+    ]
+   },
+   {
+    "titre": "C4.2 · Bodenbelastung",
+    "objectifs": [
+     "C4.2 Ich interpretiere die Angaben zur zulässigen Bodenbelastung und ziehe Schlüsse für meine Arbeit. (K3) — mit G2.9: Berechnung der Bodenbelastung"
+    ]
+   },
+   {
+    "titre": "G2.9 · Flächen, Raum und Gänge",
+    "objectifs": [
+     "G2.9 Ich berechne anhand einer Fallstudie die Bodenbelastung, den Flächen- und den Raumnutzungsgrad des Lagers. (K3) — Teil: Flächen, Raum und Gangbreite"
+    ]
+   },
+   {
+    "titre": "G2.7·G2.8 · Palettenregale",
+    "objectifs": [
+     "G2.5 Ich beschreibe die Gefahren und Risiken von Regallagern und die Sicherheitsmassnahmen. (K2) — G2.7 Ich erkläre die verschiedenen Lasten eines Palettenregals (Traversen-, Boden- und Gesamtlast). (K3) — G2.8 Ich berechne die Last auf Palettenregalen anhand einer Fallstudie. (K3)"
+    ]
+   },
+   {
+    "titre": "G2.6·G3.5 · Nummerierung und Lagerspiegel",
+    "objectifs": [
+     "G2.6 Ich beschreibe zwei mögliche Systeme zur Nummerierung der Lagerplätze in Regalen. (K2) — G3.5 Ich erkläre den Zweck eines Lagerspiegels, erstelle ein Beispiel und erkläre, was sich daraus ergibt. (K3) — mit der Nummerierung der Artikel"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M408 – Organizzazione del magazzino",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M408",
+  "duree": "10 min per serie",
+  "description": "6 obiettivi del modulo M408 e 150 esercizi, di cui il 34 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "G2.1·G2.2 · Pianificazione e flussi del magazzino",
+    "objectifs": [
+     "G2.1 Spiego la procedura e i criteri di sistemazione di un magazzino. (C2) — G2.2 Nomino i diversi elementi di un sistema di stoccaggio e spiego la funzione e i compiti di un magazzino. (C2) — con G1.1: analisi del processo di ricezione"
+    ]
+   },
+   {
+    "titre": "G2.3·G2.4 · Tipi di magazzino e forme di stoccaggio",
+    "objectifs": [
+     "G2.3 Spiego i tipi di stoccaggio in funzione delle tappe del processo e del grado di automazione. (C2) — G2.4 Spiego le prescrizioni (impilabile o no, altezza d’impilamento e carico al suolo) per la realizzazione di uno stoccaggio a blocchi. (C3)"
+    ]
+   },
+   {
+    "titre": "C4.2 · Carico al suolo",
+    "objectifs": [
+     "C4.2 Interpreto i dati relativi alle informazioni sul carico ammesso al suolo e ne traggo conclusioni per il mio lavoro. (C3) — con G2.9: calcolo del carico al suolo"
+    ]
+   },
+   {
+    "titre": "G2.9 · Superfici, spazio e corridoi",
+    "objectifs": [
+     "G2.9 Calcolo con l’aiuto di un caso pratico il carico al suolo, il tasso d’utilizzo della superficie e dello spazio del magazzino. (C3) — parte: superfici, spazio e larghezza dei corridoi"
+    ]
+   },
+   {
+    "titre": "G2.7·G2.8 · Scaffalature portapallet",
+    "objectifs": [
+     "G2.5 Descrivo i pericoli e i rischi dei magazzini con scaffalature e le misure di sicurezza. (C2) — G2.7 Spiego i diversi carichi di una scaffalatura portapallet (traverse, al suolo e totale). (C3) — G2.8 Calcolo il carico sulle scaffalature portapallet a partire da un caso pratico. (C3)"
+    ]
+   },
+   {
+    "titre": "G2.6·G3.5 · Numerazione e mappa di magazzino",
+    "objectifs": [
+     "G2.6 Descrivo due sistemi possibili di numerazione delle ubicazioni di stoccaggio sulle scaffalature. (C2) — G3.5 Spiego lo scopo di una mappa di magazzino, ne allestisco un esempio e spiego ciò che ne deriva. (C3) — con la numerazione degli articoli"
+    ]
+   }
+  ]
+ }
+}

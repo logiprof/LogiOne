@@ -1,0 +1,100 @@
+{
+ "module": "M304",
+ "shortcode": "jeu_m304",
+ "titre": "M304 – Identification de la livraison",
+ "sous_titre": "Logisticien·ne CFC · Module M304",
+ "duree": "10 min par série",
+ "description": "4 objectifs du module M304 (leçons 4.1 à 4.5) et 100 épreuves, dont 34 % de mises en situation du métier. Trois modes : Entraînement par objectif, Examen blanc chronométré noté sur 6 et Révision ciblée des erreurs.",
+ "contenu": [
+  {
+   "titre": "c2.3 · Identification globale",
+   "objectifs": [
+    "c2.3 Je décris les travaux d’une identification globale et en explique le but. (C2) — avec c1.1 (travaux préparatoires et sécurité au déchargement)"
+   ]
+  },
+  {
+   "titre": "c2.2 · Identification détaillée et marquages",
+   "objectifs": [
+    "c2.2 Je décris les marquages des marchandises et des unités de transport et leur signification. (C2) — avec l’identification détaillée de la livraison"
+   ]
+  },
+  {
+   "titre": "c1.5·c1.6 · Documents d’accompagnement",
+   "objectifs": [
+    "c1.5 Je décris les documents de transport (CMR, LTA, AWB, connaissement) et la différence avec le bulletin de livraison. (C2) — c1.6 Je décris les éléments d’un bulletin de livraison complet (destinataire, expéditeur, numéro d’article, désignation de l’article, quantité, unités). (C2)"
+   ]
+  },
+  {
+   "titre": "c2.6·b3.2 · Réserves et transport international",
+   "objectifs": [
+    "c2.6 J’explique l’importance de la signature de réception sur les documents de transport et d’accompagnement et je décris comment les écarts sont consignés sur les documents. (C2) — b3.2 Je décris les bases du transport des marchandises (contrat de dépôt, transporteur, Incoterms, etc.). (C2)"
+   ]
+  }
+ ],
+ "couleur": "#067030",
+ "version": "1.0.0",
+ "de": {
+  "titre": "M304 – Identifikation der Lieferung",
+  "sous_titre": "Logistiker/-in EFZ · Modul M304",
+  "duree": "10 Min. pro Serie",
+  "description": "4 Lernziele des Moduls M304 und 100 Aufgaben, davon 34 % Praxisfälle aus dem Berufsalltag. Drei Modi: Training pro Lernziel, Probeprüfung mit Zeitlimit und Note von 1 bis 6, gezielte Wiederholung der Fehler.",
+  "contenu": [
+   {
+    "titre": "c2.3 · Grobidentifikation",
+    "objectifs": [
+     "c2.3 Ich beschreibe die Arbeiten einer Grobidentifikation und erkläre ihren Zweck. (K2) — mit c1.1 (Vorbereitungsarbeiten und Sicherheit beim Entladen)"
+    ]
+   },
+   {
+    "titre": "c2.2 · Feinidentifikation und Markierungen",
+    "objectifs": [
+     "c2.2 Ich beschreibe die Markierungen der Waren und Transporteinheiten und ihre Bedeutung. (K2) — mit der Feinidentifikation der Lieferung"
+    ]
+   },
+   {
+    "titre": "c1.5·c1.6 · Begleitdokumente",
+    "objectifs": [
+     "c1.5 Ich beschreibe die Transportdokumente (CMR, Luftfrachtbrief/AWB, Konnossement) und den Unterschied zum Lieferschein. (K2) — c1.6 Ich beschreibe die Elemente eines vollständigen Lieferscheins (Empfänger, Absender, Artikelnummer, Artikelbezeichnung, Menge, Einheiten). (K2)"
+    ]
+   },
+   {
+    "titre": "c2.6·b3.2 · Vorbehalte und internationaler Transport",
+    "objectifs": [
+     "c2.6 Ich erkläre die Bedeutung der Empfangsunterschrift auf den Transport- und Begleitdokumenten und beschreibe, wie Differenzen auf den Dokumenten festgehalten werden. (K2) — b3.2 Ich beschreibe die Grundlagen des Warentransports (Hinterlegungsvertrag, Frachtführer, Incoterms usw.). (K2)"
+    ]
+   }
+  ]
+ },
+ "it": {
+  "titre": "M304 – Identificazione della consegna",
+  "sous_titre": "Impiegato/a in logistica AFC · Modulo M304",
+  "duree": "10 min per serie",
+  "description": "4 obiettivi del modulo M304 e 100 esercizi, di cui il 34 % casi pratici del lavoro quotidiano. Tre modalità: allenamento per obiettivo, esame di prova a tempo con nota da 1 a 6, ripasso mirato degli errori.",
+  "contenu": [
+   {
+    "titre": "c2.3 · Identificazione globale",
+    "objectifs": [
+     "c2.3 Descrivo i lavori di un’identificazione globale e ne spiego lo scopo. (C2) — con c1.1 (lavori preparatori e sicurezza allo scarico)"
+    ]
+   },
+   {
+    "titre": "c2.2 · Identificazione dettagliata e marcature",
+    "objectifs": [
+     "c2.2 Descrivo le marcature delle merci e delle unità di trasporto e il loro significato. (C2) — con l’identificazione dettagliata della consegna"
+    ]
+   },
+   {
+    "titre": "c1.5·c1.6 · Documenti di accompagnamento",
+    "objectifs": [
+     "c1.5 Descrivo i documenti di trasporto (CMR, LTA, AWB, polizza di carico) e la differenza con il bollettino di consegna. (C2) — c1.6 Descrivo gli elementi di un bollettino di consegna completo (destinatario, mittente, numero d’articolo, designazione dell’articolo, quantità, unità). (C2)"
+    ]
+   },
+   {
+    "titre": "c2.6·b3.2 · Riserve e trasporto internazionale",
+    "objectifs": [
+     "c2.6 Spiego l’importanza della firma di ricezione sui documenti di trasporto e di accompagnamento e descrivo come le differenze vengono annotate sui documenti. (C2) — b3.2 Descrivo le basi del trasporto delle merci (contratto di deposito, trasportatore, Incoterms, ecc.). (C2)"
+    ]
+   }
+  ]
+ }
+}
