@@ -56,6 +56,12 @@ add_action( 'admin_post_jrl_reglages', function () {
 		update_option( 'jrl_colonnes', in_array( $col, array( 'auto', '1', '2', '3', '4' ), true ) ? $col : 'auto' );
 		foreach ( array( 'jrl_aff_duree', 'jrl_aff_progression', 'jrl_aff_objectifs', 'jrl_cl_podium', 'jrl_cl_jeu', 'jrl_visiteurs' ) as $o ) { update_option( $o, empty( $_POST[ $o ] ) ? '0' : '1' ); }
 	}
+	if ( isset( $_POST['jrl_acces_jeux'] ) ) {
+		// Jeux ouverts aux visiteurs sans compte : les cases cochées ; on enregistre les jeux décochés (fermés).
+		$ouverts = array_map( 'sanitize_key', (array) wp_unslash( $_POST['jrl_sans_compte'] ?? array() ) );
+		$bloques = array_values( array_diff( array_keys( jrl_jeux() ), $ouverts ) );
+		update_option( 'jrl_visiteurs_bloques', $bloques );
+	}
 	$ok = 'reglages'; // LogiOne : LogiPlay se met à jour avec LogiOne (plus de mise à jour GitHub séparée).
 	wp_safe_redirect( admin_url( 'admin.php?page=jeux-logistique&jrl_ok=' . $ok ) ); exit;
 } );
@@ -121,8 +127,18 @@ function jrl_admin_page() {
 		<?php if ( function_exists( 'jrl_groupes_admin' ) ) { jrl_groupes_admin(); } ?>
 
 		<h2>Un jeu</h2>
+		<?php $bloques = (array) get_option( 'jrl_visiteurs_bloques', array() ); $vis_on = '0' !== get_option( 'jrl_visiteurs', '1' ); ?>
+		<p style="max-width:900px">Colonne <strong>« Sans compte »</strong> : cochée, le jeu est accessible aux visiteurs non connectés ; décochée, il faut se connecter pour y jouer (le bouton devient « Se connecter pour jouer »). Par défaut, tous les jeux sont accessibles sans compte.
+			<?php if ( ! $vis_on ) : ?><br><strong style="color:#b32d2e">Le réglage « Les visiteurs non connectés peuvent jouer » (plus haut) est décoché : aucun jeu n’est accessible sans compte pour le moment.</strong><?php endif; ?></p>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+			<?php wp_nonce_field( 'jrl_reglages' ); ?>
+			<input type="hidden" name="action" value="jrl_reglages"><input type="hidden" name="jrl_acces_jeux" value="1">
+		<p>
+			<button type="button" class="button button-small" onclick="this.form.querySelectorAll('input[name=&quot;jrl_sans_compte[]&quot;]').forEach(function(c){c.checked=true})">Tout cocher</button>
+			<button type="button" class="button button-small" onclick="this.form.querySelectorAll('input[name=&quot;jrl_sans_compte[]&quot;]').forEach(function(c){c.checked=false})">Tout décocher</button>
+		</p>
 		<table class="widefat striped" style="max-width:900px">
-			<thead><tr><th>Module</th><th>Jeu</th><th>Shortcode</th><th>Épreuves</th></tr></thead>
+			<thead><tr><th>Module</th><th>Jeu</th><th>Shortcode</th><th>Épreuves</th><th style="text-align:center">Sans compte</th></tr></thead>
 			<tbody>
 			<?php foreach ( $jeux as $slug => $d ) : ?>
 				<tr>
@@ -130,10 +146,13 @@ function jrl_admin_page() {
 					<td><?php echo esc_html( $d['titre'] ); ?></td>
 					<td><code>[<?php echo esc_html( $d['shortcode'] ); ?>]</code><br><small><code>[jeu_revision id="<?php echo esc_html( $slug ); ?>"]</code></small></td>
 					<td><?php echo esc_html( preg_match( '/(\d+) épreuves/u', (string) ( $d['description'] ?? '' ), $m ) ? $m[1] : '' ); ?></td>
+					<td style="text-align:center"><label><input type="checkbox" name="jrl_sans_compte[]" value="<?php echo esc_attr( $slug ); ?>" <?php checked( ! in_array( $slug, $bloques, true ) ); ?>><span class="screen-reader-text"><?php echo esc_html( $d['module'] ); ?> accessible sans compte</span></label></td>
 				</tr>
 			<?php endforeach; ?>
 			</tbody>
 		</table>
+		<p><button class="button button-primary" type="submit">Enregistrer l’accès sans compte</button></p>
+		</form>
 
 		<h2>Mises à jour</h2>
 		<p>LogiPlay <strong><?php echo esc_html( JRL_VERSION ); ?></strong> est intégré à <strong>LogiOne</strong> : les jeux se mettent à jour avec LogiOne. Les progressions des élèves, les regroupements et les réglages sont conservés.</p>

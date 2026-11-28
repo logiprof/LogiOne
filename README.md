@@ -61,6 +61,10 @@ Les droits sont enregistrés par identifiant de rôle. Ils ne sont jamais dédui
 
 Le périmètre « Classes affectées » limite LogiNotes aux classes attribuées à chaque enseignant (listes, écrans, exports et requêtes directes). LogiExam garde sa règle actuelle : chaque enseignant gère ses propres évaluations.
 
+## Nouveautés 1.56.1
+
+**LogiPlay : accès sans compte jeu par jeu.** Dans LogiPlay › Shortcodes et réglages, le tableau « Un jeu » a une colonne « Sans compte » : cochée, le jeu est accessible aux visiteurs non connectés ; décochée, il faut se connecter (bouton « Se connecter pour jouer », et l’adresse directe du jeu renvoie vers la connexion). Par défaut, tous les jeux restent accessibles sans compte. Réglage enregistré dans l’option « jrl_visiteurs_bloques » (liste des jeux fermés aux visiteurs), aucune table modifiée. Le réglage général « Les visiteurs non connectés peuvent jouer » reste prioritaire.
+
 ## Nouveautés 1.56.0
 
 **LogiExam : tests formatifs séparés des évaluations sommatives.**

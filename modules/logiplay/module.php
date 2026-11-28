@@ -11,7 +11,7 @@
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'JRL_VERSION', '2.29.0' );
+define( 'JRL_VERSION', '2.30.0' );
 define( 'JRL_FILE', __FILE__ );
 define( 'JRL_DIR', __DIR__ );
 define( 'JRL_REPO', 'logiprof/jeux-revisions-logistique' );
@@ -55,7 +55,18 @@ add_action( 'init', function () { add_shortcode( 'logiplay_portail', array( 'Log
 /* Moteur commun des jeux de révision (cartes, page du jeu, progression en base, suivi) */
 require_once __DIR__ . '/includes/catalogue.php';
 /* Visiteurs sans compte : ils jouent, la progression reste dans leur navigateur (ni base, ni bilan, ni classement). Réglage dans le menu LogiPlay. */
-add_filter( 'jdr_visiteurs', function () { return '0' !== get_option( 'jrl_visiteurs', '1' ); } );
+add_filter(
+	'jdr_visiteurs',
+	function ( $ok = false, $id = '' ) {
+		if ( '0' === get_option( 'jrl_visiteurs', '1' ) ) {
+			return false;
+		}
+		// LogiOne 1.56.1 : jeux réservés aux comptes (option « jrl_visiteurs_bloques » = liste des jeux fermés aux visiteurs). Par défaut, tous sont ouverts.
+		return ! ( '' !== $id && in_array( $id, (array) get_option( 'jrl_visiteurs_bloques', array() ), true ) );
+	},
+	10,
+	2
+);
 /* Menu Jeux logistique (shortcodes, affichage, regroupements, mises à jour) */
 require_once __DIR__ . '/includes/admin.php';
 /* Regroupements de modules (un shortcode par regroupement) */
